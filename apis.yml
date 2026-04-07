@@ -1,8 +1,7 @@
 aid: quantcdn
 name: QuantCDN
 description: >-
-  Generate, host and maintain a static version of your existing website with
-  ease. 
+  Generate, host and maintain a static version of your existing website with ease.
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -18,8 +17,7 @@ apis:
   - aid: quantcdn:quantcdn
     name: QuantCDN
     description: >-
-      Generate, host and maintain a static version of your existing website with
-      ease. 
+      Generate, host and maintain a static version of your existing website with ease.
     humanURL: ' https://www.quantcdn.io/home'
     tags:
       - API
