@@ -67,6 +67,27 @@ common:
     url: https://docs.quantcdn.io/
   - type: GitHub Organization
     url: https://github.com/quantcdn
+  - type: Integrations
+    url: https://www.quantcdn.io/integrations
+integrations:
+  - name: Craft CMS
+  - name: Drupal
+  - name: Statamic
+  - name: WordPress
+  - name: Astro
+  - name: Docusaurus
+  - name: Eleventy
+  - name: Gatsby
+  - name: Hugo
+  - name: Jekyll
+  - name: Next.js
+  - name: Nuxt
+  - name: SvelteKit
+  - name: Apache PHP
+  - name: Laravel
+  - name: Remix
+  - name: Symfony
+  - name: Terraform
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
