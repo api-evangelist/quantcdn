@@ -48,7 +48,7 @@ apis:
         url: https://docs.quantcdn.io/
       - type: API Documentation
         url: https://docs.quantcdn.io/api/get-started-content/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://docs.quantcdn.io/api/get-started-content/
       - type: OpenAPI
         url: openapi/quantcdn-openapi.yml
@@ -65,7 +65,7 @@ common:
     url: https://www.quantcdn.io/home
   - type: Documentation
     url: https://docs.quantcdn.io/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/quantcdn
   - type: Integrations
     url: https://www.quantcdn.io/integrations
