@@ -1,0 +1,465 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Cron
+  description: 'QuantCDN API — Cron. 7 operations. Lead operation: Get all cron jobs for an environment. Self-contained Naftiko
+    capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Cron
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-cron
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Cron business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron
+      operations:
+      - name: listcronjobs
+        method: GET
+        description: Get all cron jobs for an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+      - name: createcronjob
+        method: POST
+        description: Create a new cron job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}
+      operations:
+      - name: deletecronjob
+        method: DELETE
+        description: Delete a cron job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: cron
+          in: path
+          type: string
+          description: The cron job ID
+          required: true
+      - name: getcronjob
+        method: GET
+        description: Get a cron job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: cron
+          in: path
+          type: string
+          description: The cron job ID
+          required: true
+      - name: updatecronjob
+        method: PATCH
+        description: Update a cron job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: cron
+          in: path
+          type: string
+          description: The cron job ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}/runs
+      operations:
+      - name: listcronjobruns
+        method: GET
+        description: Get all runs for a cron job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: cron
+          in: path
+          type: string
+          description: The cron job ID
+          required: true
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}/runs/{run}
+      operations:
+      - name: getcronrun
+        method: GET
+        description: Get a cron run
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: cron
+          in: path
+          type: string
+          description: The cron job ID
+          required: true
+        - name: run
+          in: path
+          type: string
+          description: The cron run ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-cron-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Cron. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: GET
+        name: listcronjobs
+        description: Get all cron jobs for an environment
+        call: quantcdn-cron.listcronjobs
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createcronjob
+        description: Create a new cron job
+        call: quantcdn-cron.createcronjob
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: DELETE
+        name: deletecronjob
+        description: Delete a cron job
+        call: quantcdn-cron.deletecronjob
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          cron: rest.cron
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getcronjob
+        description: Get a cron job
+        call: quantcdn-cron.getcronjob
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          cron: rest.cron
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: updatecronjob
+        description: Update a cron job
+        call: quantcdn-cron.updatecronjob
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          cron: rest.cron
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}/runs
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: GET
+        name: listcronjobruns
+        description: Get all runs for a cron job
+        call: quantcdn-cron.listcronjobruns
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          cron: rest.cron
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}/runs/{run}
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: GET
+        name: getcronrun
+        description: Get a cron run
+        call: quantcdn-cron.getcronrun
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          cron: rest.cron
+          run: rest.run
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-cron-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Cron. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-all-cron-jobs-environment
+      description: Get all cron jobs for an environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-cron.listcronjobs
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-cron-job
+      description: Create a new cron job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-cron.createcronjob
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-cron-job
+      description: Delete a cron job
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-cron.deletecronjob
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        cron: tools.cron
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-cron-job
+      description: Get a cron job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-cron.getcronjob
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        cron: tools.cron
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-cron-job
+      description: Update a cron job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-cron.updatecronjob
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        cron: tools.cron
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-runs-cron-job
+      description: Get all runs for a cron job
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-cron.listcronjobruns
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        cron: tools.cron
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-cron-run
+      description: Get a cron run
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-cron.getcronrun
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        cron: tools.cron
+        run: tools.run
+      outputParameters:
+      - type: object
+        mapping: $.

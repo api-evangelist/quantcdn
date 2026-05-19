@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — AI Governance
+  description: 'QuantCDN API — AI Governance. 3 operations. Lead operation: Get AI governance configuration for an organisation.
+    Self-contained Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - AI Governance
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-ai-governance
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — AI Governance business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-ai-governance
+      path: /api/v3/organizations/{organisation}/ai/governance
+      operations:
+      - name: getgovernanceconfig
+        method: GET
+        description: Get AI governance configuration for an organisation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+      - name: updategovernanceconfig
+        method: PUT
+        description: Update AI governance configuration for an organisation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-ai-governance-spend
+      path: /api/v3/organizations/{organisation}/ai/governance/spend
+      operations:
+      - name: getgovernancespend
+        method: GET
+        description: Get AI spend summary for an organisation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-ai-governance-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — AI Governance. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/ai/governance
+      name: api-v3-organizations-organisation-ai-governance
+      description: REST surface for api-v3-organizations-organisation-ai-governance.
+      operations:
+      - method: GET
+        name: getgovernanceconfig
+        description: Get AI governance configuration for an organisation
+        call: quantcdn-ai-governance.getgovernanceconfig
+        with:
+          organisation: rest.organisation
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updategovernanceconfig
+        description: Update AI governance configuration for an organisation
+        call: quantcdn-ai-governance.updategovernanceconfig
+        with:
+          organisation: rest.organisation
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/ai/governance/spend
+      name: api-v3-organizations-organisation-ai-governance-spend
+      description: REST surface for api-v3-organizations-organisation-ai-governance-spend.
+      operations:
+      - method: GET
+        name: getgovernancespend
+        description: Get AI spend summary for an organisation
+        call: quantcdn-ai-governance.getgovernancespend
+        with:
+          organisation: rest.organisation
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-ai-governance-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — AI Governance. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-ai-governance-configuration-organisation
+      description: Get AI governance configuration for an organisation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-governance.getgovernanceconfig
+      with:
+        organisation: tools.organisation
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-ai-governance-configuration-organisation
+      description: Update AI governance configuration for an organisation
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-governance.updategovernanceconfig
+      with:
+        organisation: tools.organisation
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ai-spend-summary-organisation
+      description: Get AI spend summary for an organisation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-governance.getgovernancespend
+      with:
+        organisation: tools.organisation
+      outputParameters:
+      - type: object
+        mapping: $.

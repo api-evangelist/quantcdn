@@ -1,0 +1,164 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Containers
+  description: 'QuantCDN API — Containers. 2 operations. Lead operation: Get the containers in an environment. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Containers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-containers
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Containers business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/containers
+      operations:
+      - name: listcontainers
+        method: GET
+        description: Get the containers in an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/containers/{container}
+      operations:
+      - name: updatecontainer
+        method: PUT
+        description: Update a container in an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: container
+          in: path
+          type: string
+          description: The container ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-containers-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Containers. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/containers
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: GET
+        name: listcontainers
+        description: Get the containers in an environment
+        call: quantcdn-containers.listcontainers
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/containers/{container}
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: PUT
+        name: updatecontainer
+        description: Update a container in an environment
+        call: quantcdn-containers.updatecontainer
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          container: rest.container
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-containers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Containers. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-containers-environment
+      description: Get the containers in an environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-containers.listcontainers
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-container-environment
+      description: Update a container in an environment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-containers.updatecontainer
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        container: tools.container
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

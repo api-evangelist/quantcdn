@@ -1,0 +1,242 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — CDN Metrics
+  description: 'QuantCDN API — CDN Metrics. 3 operations. Lead operation: Get daily metrics. Self-contained Naftiko capability
+    covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - CDN Metrics
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-cdn-metrics
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — CDN Metrics business capability. Self-contained, no shared references.
+    resources:
+    - name: v2-organizations-organization-projects-project-metrics-daily
+      path: /v2/organizations/{organization}/projects/{project}/metrics/daily
+      operations:
+      - name: getdailymetrics
+        method: GET
+        description: Get daily metrics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: domain
+          in: query
+          type: string
+          description: Filter by domain ID or domain name
+        - name: metrics[]
+          in: query
+          type: array
+          description: 'Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics
+            by category.'
+        - name: timestamp_format
+          in: query
+          type: string
+          description: Timestamp format in response
+    - name: v2-organizations-organization-projects-project-metrics-hourly
+      path: /v2/organizations/{organization}/projects/{project}/metrics/hourly
+      operations:
+      - name: gethourlymetrics
+        method: GET
+        description: Get hourly metrics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: domain
+          in: query
+          type: string
+          description: Filter by domain ID or domain name
+        - name: metrics[]
+          in: query
+          type: array
+          description: 'Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics
+            by category.'
+        - name: timestamp_format
+          in: query
+          type: string
+          description: Timestamp format in response
+    - name: v2-organizations-organization-projects-project-metrics-monthly
+      path: /v2/organizations/{organization}/projects/{project}/metrics/monthly
+      operations:
+      - name: getmonthlymetrics
+        method: GET
+        description: Get monthly metrics
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: domain
+          in: query
+          type: string
+          description: Filter by domain ID or domain name
+        - name: metrics[]
+          in: query
+          type: array
+          description: 'Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics
+            by category.'
+        - name: timestamp_format
+          in: query
+          type: string
+          description: Timestamp format in response
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-cdn-metrics-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — CDN Metrics. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/v2/organizations/{organization}/projects/{project}/metrics/daily
+      name: v2-organizations-organization-projects-project-metrics-daily
+      description: REST surface for v2-organizations-organization-projects-project-metrics-daily.
+      operations:
+      - method: GET
+        name: getdailymetrics
+        description: Get daily metrics
+        call: quantcdn-cdn-metrics.getdailymetrics
+        with:
+          organization: rest.organization
+          project: rest.project
+          domain: rest.domain
+          metrics[]: rest.metrics[]
+          timestamp_format: rest.timestamp_format
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/organizations/{organization}/projects/{project}/metrics/hourly
+      name: v2-organizations-organization-projects-project-metrics-hourly
+      description: REST surface for v2-organizations-organization-projects-project-metrics-hourly.
+      operations:
+      - method: GET
+        name: gethourlymetrics
+        description: Get hourly metrics
+        call: quantcdn-cdn-metrics.gethourlymetrics
+        with:
+          organization: rest.organization
+          project: rest.project
+          domain: rest.domain
+          metrics[]: rest.metrics[]
+          timestamp_format: rest.timestamp_format
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v2/organizations/{organization}/projects/{project}/metrics/monthly
+      name: v2-organizations-organization-projects-project-metrics-monthly
+      description: REST surface for v2-organizations-organization-projects-project-metrics-monthly.
+      operations:
+      - method: GET
+        name: getmonthlymetrics
+        description: Get monthly metrics
+        call: quantcdn-cdn-metrics.getmonthlymetrics
+        with:
+          organization: rest.organization
+          project: rest.project
+          domain: rest.domain
+          metrics[]: rest.metrics[]
+          timestamp_format: rest.timestamp_format
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-cdn-metrics-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — CDN Metrics. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-daily-metrics
+      description: Get daily metrics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-cdn-metrics.getdailymetrics
+      with:
+        organization: tools.organization
+        project: tools.project
+        domain: tools.domain
+        metrics[]: tools.metrics[]
+        timestamp_format: tools.timestamp_format
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-hourly-metrics
+      description: Get hourly metrics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-cdn-metrics.gethourlymetrics
+      with:
+        organization: tools.organization
+        project: tools.project
+        domain: tools.domain
+        metrics[]: tools.metrics[]
+        timestamp_format: tools.timestamp_format
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-monthly-metrics
+      description: Get monthly metrics
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-cdn-metrics.getmonthlymetrics
+      with:
+        organization: tools.organization
+        project: tools.project
+        domain: tools.domain
+        metrics[]: tools.metrics[]
+        timestamp_format: tools.timestamp_format
+      outputParameters:
+      - type: object
+        mapping: $.

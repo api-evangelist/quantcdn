@@ -1,0 +1,276 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Variables
+  description: 'QuantCDN API — Variables. 4 operations. Lead operation: Get all variables for an environment. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Variables
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-variables
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Variables business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-api_organisation-applications-api_application-environments-
+      path: /api/v3/organizations/{api_organisation}/applications/{api_application}/environments/{api_environment}/variables
+      operations:
+      - name: listenvironmentvariables
+        method: GET
+        description: Get all variables for an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: api_application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: api_environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+      - name: bulksetenvironmentvariables
+        method: PUT
+        description: Bulk set/replace environment variables
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: api_application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: api_environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-api_organisation-applications-api_application-environments-
+      path: /api/v3/organizations/{api_organisation}/applications/{api_application}/environments/{api_environment}/variables/{api_variable}
+      operations:
+      - name: deleteenvironmentvariable
+        method: DELETE
+        description: Delete a variable
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: api_application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: api_environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: api_variable
+          in: path
+          type: string
+          description: The variable key
+          required: true
+      - name: updateenvironmentvariable
+        method: PUT
+        description: Update a variable
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: api_organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: api_application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: api_environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: api_variable
+          in: path
+          type: string
+          description: The variable key
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-variables-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Variables. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{api-organisation}/applications/{api-application}/environments/{api-environment}/variables
+      name: api-v3-organizations-api-organisation-applications-api-application-environments
+      description: REST surface for api-v3-organizations-api_organisation-applications-api_application-environments-.
+      operations:
+      - method: GET
+        name: listenvironmentvariables
+        description: Get all variables for an environment
+        call: quantcdn-variables.listenvironmentvariables
+        with:
+          api_organisation: rest.api_organisation
+          api_application: rest.api_application
+          api_environment: rest.api_environment
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: bulksetenvironmentvariables
+        description: Bulk set/replace environment variables
+        call: quantcdn-variables.bulksetenvironmentvariables
+        with:
+          api_organisation: rest.api_organisation
+          api_application: rest.api_application
+          api_environment: rest.api_environment
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{api-organisation}/applications/{api-application}/environments/{api-environment}/variables/{api-variable}
+      name: api-v3-organizations-api-organisation-applications-api-application-environments
+      description: REST surface for api-v3-organizations-api_organisation-applications-api_application-environments-.
+      operations:
+      - method: DELETE
+        name: deleteenvironmentvariable
+        description: Delete a variable
+        call: quantcdn-variables.deleteenvironmentvariable
+        with:
+          api_organisation: rest.api_organisation
+          api_application: rest.api_application
+          api_environment: rest.api_environment
+          api_variable: rest.api_variable
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateenvironmentvariable
+        description: Update a variable
+        call: quantcdn-variables.updateenvironmentvariable
+        with:
+          api_organisation: rest.api_organisation
+          api_application: rest.api_application
+          api_environment: rest.api_environment
+          api_variable: rest.api_variable
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-variables-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Variables. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-all-variables-environment
+      description: Get all variables for an environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-variables.listenvironmentvariables
+      with:
+        api_organisation: tools.api_organisation
+        api_application: tools.api_application
+        api_environment: tools.api_environment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: bulk-set-replace-environment-variables
+      description: Bulk set/replace environment variables
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-variables.bulksetenvironmentvariables
+      with:
+        api_organisation: tools.api_organisation
+        api_application: tools.api_application
+        api_environment: tools.api_environment
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-variable
+      description: Delete a variable
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-variables.deleteenvironmentvariable
+      with:
+        api_organisation: tools.api_organisation
+        api_application: tools.api_application
+        api_environment: tools.api_environment
+        api_variable: tools.api_variable
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-variable
+      description: Update a variable
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-variables.updateenvironmentvariable
+      with:
+        api_organisation: tools.api_organisation
+        api_application: tools.api_application
+        api_environment: tools.api_environment
+        api_variable: tools.api_variable
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

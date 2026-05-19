@@ -1,0 +1,80 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — AI Usage
+  description: 'QuantCDN API — AI Usage. 1 operations. Lead operation: Get AI usage summary for the authenticated user. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - AI Usage
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-ai-usage
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — AI Usage business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-ai-usage-me
+      path: /api/v3/organizations/{organisation}/ai/usage/me
+      operations:
+      - name: getmyusage
+        method: GET
+        description: Get AI usage summary for the authenticated user
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-ai-usage-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — AI Usage. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/ai/usage/me
+      name: api-v3-organizations-organisation-ai-usage-me
+      description: REST surface for api-v3-organizations-organisation-ai-usage-me.
+      operations:
+      - method: GET
+        name: getmyusage
+        description: Get AI usage summary for the authenticated user
+        call: quantcdn-ai-usage.getmyusage
+        with:
+          organisation: rest.organisation
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-ai-usage-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — AI Usage. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-ai-usage-summary-authenticated
+      description: Get AI usage summary for the authenticated user
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-usage.getmyusage
+      with:
+        organisation: tools.organisation
+      outputParameters:
+      - type: object
+        mapping: $.

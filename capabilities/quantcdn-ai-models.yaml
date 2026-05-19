@@ -1,0 +1,135 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — AI Models
+  description: 'QuantCDN API — AI Models. 2 operations. Lead operation: List available AI models for an organization. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - AI Models
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-ai-models
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — AI Models business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-ai-models
+      path: /api/v3/organizations/{organisation}/ai/models
+      operations:
+      - name: listaimodels
+        method: GET
+        description: List available AI models for an organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: feature
+          in: query
+          type: string
+          description: Filter models by supported feature
+    - name: api-v3-organizations-organisation-ai-models-modelId
+      path: /api/v3/organizations/{organisation}/ai/models/{modelId}
+      operations:
+      - name: getaimodel
+        method: GET
+        description: Get AI Model Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: modelId
+          in: path
+          type: string
+          description: The model identifier (e.g., amazon.nova-lite-v1:0)
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-ai-models-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — AI Models. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/ai/models
+      name: api-v3-organizations-organisation-ai-models
+      description: REST surface for api-v3-organizations-organisation-ai-models.
+      operations:
+      - method: GET
+        name: listaimodels
+        description: List available AI models for an organization
+        call: quantcdn-ai-models.listaimodels
+        with:
+          organisation: rest.organisation
+          feature: rest.feature
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/ai/models/{modelid}
+      name: api-v3-organizations-organisation-ai-models-modelid
+      description: REST surface for api-v3-organizations-organisation-ai-models-modelId.
+      operations:
+      - method: GET
+        name: getaimodel
+        description: Get AI Model Details
+        call: quantcdn-ai-models.getaimodel
+        with:
+          organisation: rest.organisation
+          modelId: rest.modelId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-ai-models-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — AI Models. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-available-ai-models-organization
+      description: List available AI models for an organization
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-models.listaimodels
+      with:
+        organisation: tools.organisation
+        feature: tools.feature
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ai-model-details
+      description: Get AI Model Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-models.getaimodel
+      with:
+        organisation: tools.organisation
+        modelId: tools.modelId
+      outputParameters:
+      - type: object
+        mapping: $.

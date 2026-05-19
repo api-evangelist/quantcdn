@@ -1,0 +1,171 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Tokens
+  description: 'QuantCDN API — Tokens. 3 operations. Lead operation: List API tokens scoped to this organization. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Tokens
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-tokens
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Tokens business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v2-organizations-organization-tokens
+      path: /api/v2/organizations/{organization}/tokens
+      operations:
+      - name: tokenslist
+        method: GET
+        description: List API tokens scoped to this organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+      - name: tokenscreate
+        method: POST
+        description: Create a new API token scoped to this organization
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-tokens-token_id
+      path: /api/v2/organizations/{organization}/tokens/{token_id}
+      operations:
+      - name: tokensdelete
+        method: DELETE
+        description: Revoke an API token
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: token_id
+          in: path
+          type: integer
+          description: Token ID to revoke
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-tokens-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Tokens. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v2/organizations/{organization}/tokens
+      name: api-v2-organizations-organization-tokens
+      description: REST surface for api-v2-organizations-organization-tokens.
+      operations:
+      - method: GET
+        name: tokenslist
+        description: List API tokens scoped to this organization
+        call: quantcdn-tokens.tokenslist
+        with:
+          organization: rest.organization
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: tokenscreate
+        description: Create a new API token scoped to this organization
+        call: quantcdn-tokens.tokenscreate
+        with:
+          organization: rest.organization
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/tokens/{token-id}
+      name: api-v2-organizations-organization-tokens-token-id
+      description: REST surface for api-v2-organizations-organization-tokens-token_id.
+      operations:
+      - method: DELETE
+        name: tokensdelete
+        description: Revoke an API token
+        call: quantcdn-tokens.tokensdelete
+        with:
+          organization: rest.organization
+          token_id: rest.token_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-tokens-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Tokens. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-api-tokens-scoped-this
+      description: List API tokens scoped to this organization
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-tokens.tokenslist
+      with:
+        organization: tools.organization
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-api-token-scoped
+      description: Create a new API token scoped to this organization
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-tokens.tokenscreate
+      with:
+        organization: tools.organization
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: revoke-api-token
+      description: Revoke an API token
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-tokens.tokensdelete
+      with:
+        organization: tools.organization
+        token_id: tools.token_id
+      outputParameters:
+      - type: object
+        mapping: $.

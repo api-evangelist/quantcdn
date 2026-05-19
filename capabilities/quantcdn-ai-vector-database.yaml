@@ -1,0 +1,430 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — AI Vector Database
+  description: 'QuantCDN API — AI Vector Database. 8 operations. Lead operation: List Vector Database Collections. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - AI Vector Database
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-ai-vector-database
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — AI Vector Database business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-ai-vector-db-collections
+      path: /api/v3/organizations/{organisation}/ai/vector-db/collections
+      operations:
+      - name: listvectorcollections
+        method: GET
+        description: List Vector Database Collections
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+      - name: createvectorcollection
+        method: POST
+        description: Create Vector Database Collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-ai-vector-db-collections-collectionId
+      path: /api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionId}
+      operations:
+      - name: deletevectorcollection
+        method: DELETE
+        description: Delete Collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: collectionId
+          in: path
+          type: string
+          description: The collection ID
+          required: true
+      - name: getvectorcollection
+        method: GET
+        description: Get Collection Details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: collectionId
+          in: path
+          type: string
+          description: The collection ID
+          required: true
+    - name: api-v3-organizations-organisation-ai-vector-db-collections-collectionId-document
+      path: /api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionId}/documents
+      operations:
+      - name: deletevectordocuments
+        method: DELETE
+        description: Delete Documents from Collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: Organisation machine name
+          required: true
+        - name: collectionId
+          in: path
+          type: string
+          description: Collection UUID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listvectordocuments
+        method: GET
+        description: List Documents in Collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          required: true
+        - name: collectionId
+          in: path
+          type: string
+          required: true
+        - name: key
+          in: query
+          type: string
+          description: Filter by document key
+        - name: limit
+          in: query
+          type: integer
+        - name: offset
+          in: query
+          type: integer
+      - name: uploadvectordocuments
+        method: POST
+        description: Upload Documents to Collection
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: collectionId
+          in: path
+          type: string
+          description: The collection ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-ai-vector-db-collections-collectionId-query
+      path: /api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionId}/query
+      operations:
+      - name: queryvectorcollection
+        method: POST
+        description: Semantic Search Query
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: collectionId
+          in: path
+          type: string
+          description: The collection ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-ai-vector-database-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — AI Vector Database. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/ai/vector-db/collections
+      name: api-v3-organizations-organisation-ai-vector-db-collections
+      description: REST surface for api-v3-organizations-organisation-ai-vector-db-collections.
+      operations:
+      - method: GET
+        name: listvectorcollections
+        description: List Vector Database Collections
+        call: quantcdn-ai-vector-database.listvectorcollections
+        with:
+          organisation: rest.organisation
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createvectorcollection
+        description: Create Vector Database Collection
+        call: quantcdn-ai-vector-database.createvectorcollection
+        with:
+          organisation: rest.organisation
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionid}
+      name: api-v3-organizations-organisation-ai-vector-db-collections-collectionid
+      description: REST surface for api-v3-organizations-organisation-ai-vector-db-collections-collectionId.
+      operations:
+      - method: DELETE
+        name: deletevectorcollection
+        description: Delete Collection
+        call: quantcdn-ai-vector-database.deletevectorcollection
+        with:
+          organisation: rest.organisation
+          collectionId: rest.collectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getvectorcollection
+        description: Get Collection Details
+        call: quantcdn-ai-vector-database.getvectorcollection
+        with:
+          organisation: rest.organisation
+          collectionId: rest.collectionId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionid}/documents
+      name: api-v3-organizations-organisation-ai-vector-db-collections-collectionid-document
+      description: REST surface for api-v3-organizations-organisation-ai-vector-db-collections-collectionId-document.
+      operations:
+      - method: DELETE
+        name: deletevectordocuments
+        description: Delete Documents from Collection
+        call: quantcdn-ai-vector-database.deletevectordocuments
+        with:
+          organisation: rest.organisation
+          collectionId: rest.collectionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listvectordocuments
+        description: List Documents in Collection
+        call: quantcdn-ai-vector-database.listvectordocuments
+        with:
+          organisation: rest.organisation
+          collectionId: rest.collectionId
+          key: rest.key
+          limit: rest.limit
+          offset: rest.offset
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: uploadvectordocuments
+        description: Upload Documents to Collection
+        call: quantcdn-ai-vector-database.uploadvectordocuments
+        with:
+          organisation: rest.organisation
+          collectionId: rest.collectionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionid}/query
+      name: api-v3-organizations-organisation-ai-vector-db-collections-collectionid-query
+      description: REST surface for api-v3-organizations-organisation-ai-vector-db-collections-collectionId-query.
+      operations:
+      - method: POST
+        name: queryvectorcollection
+        description: Semantic Search Query
+        call: quantcdn-ai-vector-database.queryvectorcollection
+        with:
+          organisation: rest.organisation
+          collectionId: rest.collectionId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-ai-vector-database-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — AI Vector Database. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-vector-database-collections
+      description: List Vector Database Collections
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-vector-database.listvectorcollections
+      with:
+        organisation: tools.organisation
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-vector-database-collection
+      description: Create Vector Database Collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-ai-vector-database.createvectorcollection
+      with:
+        organisation: tools.organisation
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-collection
+      description: Delete Collection
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-ai-vector-database.deletevectorcollection
+      with:
+        organisation: tools.organisation
+        collectionId: tools.collectionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-collection-details
+      description: Get Collection Details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-vector-database.getvectorcollection
+      with:
+        organisation: tools.organisation
+        collectionId: tools.collectionId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-documents-collection
+      description: Delete Documents from Collection
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-ai-vector-database.deletevectordocuments
+      with:
+        organisation: tools.organisation
+        collectionId: tools.collectionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-documents-collection
+      description: List Documents in Collection
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ai-vector-database.listvectordocuments
+      with:
+        organisation: tools.organisation
+        collectionId: tools.collectionId
+        key: tools.key
+        limit: tools.limit
+        offset: tools.offset
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-documents-collection
+      description: Upload Documents to Collection
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-ai-vector-database.uploadvectordocuments
+      with:
+        organisation: tools.organisation
+        collectionId: tools.collectionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: semantic-search-query
+      description: Semantic Search Query
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: quantcdn-ai-vector-database.queryvectorcollection
+      with:
+        organisation: tools.organisation
+        collectionId: tools.collectionId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,94 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — SSH Access
+  description: 'QuantCDN API — SSH Access. 1 operations. Lead operation: Get SSH access credentials for an environment. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - SSH Access
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-ssh-access
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — SSH Access business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/ssh-access
+      operations:
+      - name: getsshaccesscredentials
+        method: GET
+        description: Get SSH access credentials for an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-ssh-access-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — SSH Access. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/ssh-access
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: GET
+        name: getsshaccesscredentials
+        description: Get SSH access credentials for an environment
+        call: quantcdn-ssh-access.getsshaccesscredentials
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-ssh-access-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — SSH Access. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: get-ssh-access-credentials-environment
+      description: Get SSH access credentials for an environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-ssh-access.getsshaccesscredentials
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+      outputParameters:
+      - type: object
+        mapping: $.

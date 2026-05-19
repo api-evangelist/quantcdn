@@ -1,0 +1,255 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Applications
+  description: 'QuantCDN API — Applications. 5 operations. Lead operation: Get all applications for an organisation. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Applications
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-applications
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Applications business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-applications
+      path: /api/v3/organizations/{organisation}/applications
+      operations:
+      - name: listapplications
+        method: GET
+        description: Get all applications for an organisation
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+      - name: createapplication
+        method: POST
+        description: Create a new application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-applications-ecr-login
+      path: /api/v3/organizations/{organisation}/applications/ecr-login
+      operations:
+      - name: getecrlogincredentials
+        method: GET
+        description: Get ECR login credentials
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+    - name: api-v3-organizations-organisation-applications-application
+      path: /api/v3/organizations/{organisation}/applications/{application}
+      operations:
+      - name: deleteapplication
+        method: DELETE
+        description: Delete an application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+      - name: getapplication
+        method: GET
+        description: Get a single application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-applications-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Applications. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/applications
+      name: api-v3-organizations-organisation-applications
+      description: REST surface for api-v3-organizations-organisation-applications.
+      operations:
+      - method: GET
+        name: listapplications
+        description: Get all applications for an organisation
+        call: quantcdn-applications.listapplications
+        with:
+          organisation: rest.organisation
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapplication
+        description: Create a new application
+        call: quantcdn-applications.createapplication
+        with:
+          organisation: rest.organisation
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/ecr-login
+      name: api-v3-organizations-organisation-applications-ecr-login
+      description: REST surface for api-v3-organizations-organisation-applications-ecr-login.
+      operations:
+      - method: GET
+        name: getecrlogincredentials
+        description: Get ECR login credentials
+        call: quantcdn-applications.getecrlogincredentials
+        with:
+          organisation: rest.organisation
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}
+      name: api-v3-organizations-organisation-applications-application
+      description: REST surface for api-v3-organizations-organisation-applications-application.
+      operations:
+      - method: DELETE
+        name: deleteapplication
+        description: Delete an application
+        call: quantcdn-applications.deleteapplication
+        with:
+          organisation: rest.organisation
+          application: rest.application
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getapplication
+        description: Get a single application
+        call: quantcdn-applications.getapplication
+        with:
+          organisation: rest.organisation
+          application: rest.application
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-applications-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Applications. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-all-applications-organisation
+      description: Get all applications for an organisation
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-applications.listapplications
+      with:
+        organisation: tools.organisation
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-application
+      description: Create a new application
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-applications.createapplication
+      with:
+        organisation: tools.organisation
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-ecr-login-credentials
+      description: Get ECR login credentials
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-applications.getecrlogincredentials
+      with:
+        organisation: tools.organisation
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-application
+      description: Delete an application
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-applications.deleteapplication
+      with:
+        organisation: tools.organisation
+        application: tools.application
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-single-application
+      description: Get a single application
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-applications.getapplication
+      with:
+        organisation: tools.organisation
+        application: tools.application
+      outputParameters:
+      - type: object
+        mapping: $.

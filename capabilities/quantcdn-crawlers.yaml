@@ -1,0 +1,479 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Crawlers
+  description: 'QuantCDN API — Crawlers. 8 operations. Lead operation: List crawlers for the project. Self-contained Naftiko
+    capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Crawlers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-crawlers
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Crawlers business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v2-organizations-organization-projects-project-crawlers
+      path: /api/v2/organizations/{organization}/projects/{project}/crawlers
+      operations:
+      - name: crawlerslist
+        method: GET
+        description: List crawlers for the project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: crawlerscreate
+        method: POST
+        description: Create a new crawler
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-crawlers-crawler
+      path: /api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}
+      operations:
+      - name: crawlersdelete
+        method: DELETE
+        description: Delete a crawler
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: crawler
+          in: path
+          type: string
+          description: The UUID of the crawler
+          required: true
+      - name: crawlersread
+        method: GET
+        description: Get details of a single crawler
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: crawler
+          in: path
+          type: string
+          description: The UUID of the crawler
+          required: true
+      - name: crawlersupdate
+        method: PATCH
+        description: Update a crawler
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: crawler
+          in: path
+          type: string
+          description: The UUID of the crawler
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-crawlers-crawler-run
+      path: /api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/run
+      operations:
+      - name: crawlersrun
+        method: POST
+        description: Run a crawler
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: crawler
+          in: path
+          type: string
+          description: Crawler identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: api-v2-organizations-organization-projects-project-crawlers-crawler-runs
+      path: /api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/runs
+      operations:
+      - name: crawlersgetruns
+        method: GET
+        description: Get all runs for a crawler
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: crawler
+          in: path
+          type: string
+          description: Crawler identifier
+          required: true
+    - name: api-v2-organizations-organization-projects-project-crawlers-crawler-runs-run_id
+      path: /api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/runs/{run_id}
+      operations:
+      - name: crawlersgetrunbyid
+        method: GET
+        description: Get a run by ID
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: crawler
+          in: path
+          type: string
+          description: Crawler identifier
+          required: true
+        - name: run_id
+          in: path
+          type: integer
+          description: Run identifier
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-crawlers-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Crawlers. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/crawlers
+      name: api-v2-organizations-organization-projects-project-crawlers
+      description: REST surface for api-v2-organizations-organization-projects-project-crawlers.
+      operations:
+      - method: GET
+        name: crawlerslist
+        description: List crawlers for the project
+        call: quantcdn-crawlers.crawlerslist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: crawlerscreate
+        description: Create a new crawler
+        call: quantcdn-crawlers.crawlerscreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}
+      name: api-v2-organizations-organization-projects-project-crawlers-crawler
+      description: REST surface for api-v2-organizations-organization-projects-project-crawlers-crawler.
+      operations:
+      - method: DELETE
+        name: crawlersdelete
+        description: Delete a crawler
+        call: quantcdn-crawlers.crawlersdelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          crawler: rest.crawler
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: crawlersread
+        description: Get details of a single crawler
+        call: quantcdn-crawlers.crawlersread
+        with:
+          organization: rest.organization
+          project: rest.project
+          crawler: rest.crawler
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: crawlersupdate
+        description: Update a crawler
+        call: quantcdn-crawlers.crawlersupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          crawler: rest.crawler
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/run
+      name: api-v2-organizations-organization-projects-project-crawlers-crawler-run
+      description: REST surface for api-v2-organizations-organization-projects-project-crawlers-crawler-run.
+      operations:
+      - method: POST
+        name: crawlersrun
+        description: Run a crawler
+        call: quantcdn-crawlers.crawlersrun
+        with:
+          organization: rest.organization
+          project: rest.project
+          crawler: rest.crawler
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/runs
+      name: api-v2-organizations-organization-projects-project-crawlers-crawler-runs
+      description: REST surface for api-v2-organizations-organization-projects-project-crawlers-crawler-runs.
+      operations:
+      - method: GET
+        name: crawlersgetruns
+        description: Get all runs for a crawler
+        call: quantcdn-crawlers.crawlersgetruns
+        with:
+          organization: rest.organization
+          project: rest.project
+          crawler: rest.crawler
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/runs/{run-id}
+      name: api-v2-organizations-organization-projects-project-crawlers-crawler-runs-run-id
+      description: REST surface for api-v2-organizations-organization-projects-project-crawlers-crawler-runs-run_id.
+      operations:
+      - method: GET
+        name: crawlersgetrunbyid
+        description: Get a run by ID
+        call: quantcdn-crawlers.crawlersgetrunbyid
+        with:
+          organization: rest.organization
+          project: rest.project
+          crawler: rest.crawler
+          run_id: rest.run_id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-crawlers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Crawlers. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-crawlers-project
+      description: List crawlers for the project
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-crawlers.crawlerslist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-crawler
+      description: Create a new crawler
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-crawlers.crawlerscreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-crawler
+      description: Delete a crawler
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-crawlers.crawlersdelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        crawler: tools.crawler
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-single-crawler
+      description: Get details of a single crawler
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-crawlers.crawlersread
+      with:
+        organization: tools.organization
+        project: tools.project
+        crawler: tools.crawler
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-crawler
+      description: Update a crawler
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-crawlers.crawlersupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        crawler: tools.crawler
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: run-crawler
+      description: Run a crawler
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-crawlers.crawlersrun
+      with:
+        organization: tools.organization
+        project: tools.project
+        crawler: tools.crawler
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-all-runs-crawler
+      description: Get all runs for a crawler
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-crawlers.crawlersgetruns
+      with:
+        organization: tools.organization
+        project: tools.project
+        crawler: tools.crawler
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-run-id
+      description: Get a run by ID
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-crawlers.crawlersgetrunbyid
+      with:
+        organization: tools.organization
+        project: tools.project
+        crawler: tools.crawler
+        run_id: tools.run_id
+      outputParameters:
+      - type: object
+        mapping: $.

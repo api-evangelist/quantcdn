@@ -1,0 +1,297 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Domains
+  description: 'QuantCDN API — Domains. 5 operations. Lead operation: List all domains for a project. Self-contained Naftiko
+    capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Domains
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-domains
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Domains business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v2-organizations-organization-projects-project-domains
+      path: /api/v2/organizations/{organization}/projects/{project}/domains
+      operations:
+      - name: domainslist
+        method: GET
+        description: List all domains for a project
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: domainscreate
+        method: POST
+        description: Add a new domain
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-domains-domain
+      path: /api/v2/organizations/{organization}/projects/{project}/domains/{domain}
+      operations:
+      - name: domainsdelete
+        method: DELETE
+        description: Delete a domain
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: domain
+          in: path
+          type: string
+          description: Domain id
+          required: true
+      - name: domainsread
+        method: GET
+        description: Get details of a single domain
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: domain
+          in: path
+          type: string
+          description: Domain id
+          required: true
+    - name: api-v2-organizations-organization-projects-project-domains-domain-renew
+      path: /api/v2/organizations/{organization}/projects/{project}/domains/{domain}/renew
+      operations:
+      - name: domainsrenew
+        method: POST
+        description: Renew the SSL certificate for a domain
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: domain
+          in: path
+          type: string
+          description: Domain id
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-domains-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Domains. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/domains
+      name: api-v2-organizations-organization-projects-project-domains
+      description: REST surface for api-v2-organizations-organization-projects-project-domains.
+      operations:
+      - method: GET
+        name: domainslist
+        description: List all domains for a project
+        call: quantcdn-domains.domainslist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: domainscreate
+        description: Add a new domain
+        call: quantcdn-domains.domainscreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/domains/{domain}
+      name: api-v2-organizations-organization-projects-project-domains-domain
+      description: REST surface for api-v2-organizations-organization-projects-project-domains-domain.
+      operations:
+      - method: DELETE
+        name: domainsdelete
+        description: Delete a domain
+        call: quantcdn-domains.domainsdelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          domain: rest.domain
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: domainsread
+        description: Get details of a single domain
+        call: quantcdn-domains.domainsread
+        with:
+          organization: rest.organization
+          project: rest.project
+          domain: rest.domain
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/domains/{domain}/renew
+      name: api-v2-organizations-organization-projects-project-domains-domain-renew
+      description: REST surface for api-v2-organizations-organization-projects-project-domains-domain-renew.
+      operations:
+      - method: POST
+        name: domainsrenew
+        description: Renew the SSL certificate for a domain
+        call: quantcdn-domains.domainsrenew
+        with:
+          organization: rest.organization
+          project: rest.project
+          domain: rest.domain
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-domains-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Domains. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-all-domains-project
+      description: List all domains for a project
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-domains.domainslist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: add-new-domain
+      description: Add a new domain
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-domains.domainscreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-domain
+      description: Delete a domain
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-domains.domainsdelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        domain: tools.domain
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-single-domain
+      description: Get details of a single domain
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-domains.domainsread
+      with:
+        organization: tools.organization
+        project: tools.project
+        domain: tools.domain
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: renew-ssl-certificate-domain
+      description: Renew the SSL certificate for a domain
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-domains.domainsrenew
+      with:
+        organization: tools.organization
+        project: tools.project
+        domain: tools.domain
+      outputParameters:
+      - type: object
+        mapping: $.

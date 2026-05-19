@@ -1,0 +1,2343 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Rules
+  description: 'QuantCDN API — Rules. 45 operations. Lead operation: List authentication rules. Self-contained Naftiko capability
+    covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Rules
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-rules
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Rules business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v2-organizations-organization-projects-project-rules-auth
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/auth
+      operations:
+      - name: rulesauthlist
+        method: GET
+        description: List authentication rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: rulesauthcreate
+        method: POST
+        description: Create an authentication rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-auth-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/auth/{rule}
+      operations:
+      - name: rulesauthdelete
+        method: DELETE
+        description: Delete an authentication rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesauthread
+        method: GET
+        description: Get details of an authentication rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesauthupdate
+        method: PATCH
+        description: Update an authentication rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-bot-challenge
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/bot-challenge
+      operations:
+      - name: rulesbotchallengelist
+        method: GET
+        description: List bot challenge rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: rulesbotchallengecreate
+        method: POST
+        description: Create a bot challenge rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-bot-challenge-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/bot-challenge/{rule}
+      operations:
+      - name: rulesbotchallengedelete
+        method: DELETE
+        description: Delete a bot challenge rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesbotchallengeread
+        method: GET
+        description: Get details of a bot challenge rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesbotchallengeupdate
+        method: PATCH
+        description: Update a bot challenge rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-content-filter
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/content-filter
+      operations:
+      - name: rulescontentfilterlist
+        method: GET
+        description: List content filter rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: rulescontentfiltercreate
+        method: POST
+        description: Create a content filter rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-content-filter-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/content-filter/{rule}
+      operations:
+      - name: rulescontentfilterdelete
+        method: DELETE
+        description: Delete a content filter rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulescontentfilterread
+        method: GET
+        description: Get details of a content filter rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulescontentfilterupdate
+        method: PATCH
+        description: Update a content filter rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-custom-response
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/custom-response
+      operations:
+      - name: rulescustomresponselist
+        method: GET
+        description: List custom response rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: rulescustomresponsecreate
+        method: POST
+        description: Create a custom response rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-custom-response-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/custom-response/{rule}
+      operations:
+      - name: rulescustomresponsedelete
+        method: DELETE
+        description: Delete a custom response rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulescustomresponseread
+        method: GET
+        description: Get details of a custom response rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulescustomresponseupdate
+        method: PATCH
+        description: Update a custom response rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-function
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/function
+      operations:
+      - name: rulesfunctionlist
+        method: GET
+        description: List edge function rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: rulesfunctioncreate
+        method: POST
+        description: Create an edge function rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-function-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/function/{rule}
+      operations:
+      - name: rulesfunctiondelete
+        method: DELETE
+        description: Delete an edge function rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesfunctionread
+        method: GET
+        description: Get details of an edge function rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesfunctionupdate
+        method: PATCH
+        description: Update an edge function rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-headers
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/headers
+      operations:
+      - name: rulesheaderslist
+        method: GET
+        description: List header rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: rulesheaderscreate
+        method: POST
+        description: Create a header rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-headers-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/headers/{rule}
+      operations:
+      - name: rulesheadersdelete
+        method: DELETE
+        description: Delete a header rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesheadersread
+        method: GET
+        description: Get details of a header rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesheadersupdate
+        method: PATCH
+        description: Update a header rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-proxy
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/proxy
+      operations:
+      - name: rulesproxylist
+        method: GET
+        description: List proxy rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+      - name: rulesproxycreate
+        method: POST
+        description: Create a proxy rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-proxy-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/proxy/{rule}
+      operations:
+      - name: rulesproxydelete
+        method: DELETE
+        description: Delete a proxy rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: rule
+          in: path
+          type: string
+          required: true
+      - name: rulesproxyread
+        method: GET
+        description: Get details of a proxy rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: rule
+          in: path
+          type: string
+          required: true
+      - name: rulesproxyupdate
+        method: PATCH
+        description: Update a proxy rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: rule
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-redirect
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/redirect
+      operations:
+      - name: rulesredirectlist
+        method: GET
+        description: List redirect rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+      - name: rulesredirectcreate
+        method: POST
+        description: Create a redirect rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-redirect-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/redirect/{rule}
+      operations:
+      - name: rulesredirectdelete
+        method: DELETE
+        description: Delete a redirect rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: rule
+          in: path
+          type: string
+          required: true
+      - name: rulesredirectread
+        method: GET
+        description: Get details of a redirect rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: rule
+          in: path
+          type: string
+          required: true
+      - name: rulesredirectupdate
+        method: PATCH
+        description: Update a redirect rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          required: true
+        - name: project
+          in: path
+          type: string
+          required: true
+        - name: rule
+          in: path
+          type: string
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-serve-static
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/serve-static
+      operations:
+      - name: rulesservestaticlist
+        method: GET
+        description: List serve static rules
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+      - name: rulesservestaticcreate
+        method: POST
+        description: Create a serve static rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v2-organizations-organization-projects-project-rules-serve-static-rule
+      path: /api/v2/organizations/{organization}/projects/{project}/rules/serve-static/{rule}
+      operations:
+      - name: rulesservestaticdelete
+        method: DELETE
+        description: Delete a serve static rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesservestaticread
+        method: GET
+        description: Get details of a serve static rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+      - name: rulesservestaticupdate
+        method: PATCH
+        description: Update a serve static rule
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organization
+          in: path
+          type: string
+          description: Organization identifier
+          required: true
+        - name: project
+          in: path
+          type: string
+          description: Project identifier
+          required: true
+        - name: rule
+          in: path
+          type: string
+          description: Rule identifier
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-rules-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Rules. One Spectral-compliant resource per consumed operation, prefixed with
+      /v1.
+    resources:
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/auth
+      name: api-v2-organizations-organization-projects-project-rules-auth
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-auth.
+      operations:
+      - method: GET
+        name: rulesauthlist
+        description: List authentication rules
+        call: quantcdn-rules.rulesauthlist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulesauthcreate
+        description: Create an authentication rule
+        call: quantcdn-rules.rulesauthcreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/auth/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-auth-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-auth-rule.
+      operations:
+      - method: DELETE
+        name: rulesauthdelete
+        description: Delete an authentication rule
+        call: quantcdn-rules.rulesauthdelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulesauthread
+        description: Get details of an authentication rule
+        call: quantcdn-rules.rulesauthread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulesauthupdate
+        description: Update an authentication rule
+        call: quantcdn-rules.rulesauthupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/bot-challenge
+      name: api-v2-organizations-organization-projects-project-rules-bot-challenge
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-bot-challenge.
+      operations:
+      - method: GET
+        name: rulesbotchallengelist
+        description: List bot challenge rules
+        call: quantcdn-rules.rulesbotchallengelist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulesbotchallengecreate
+        description: Create a bot challenge rule
+        call: quantcdn-rules.rulesbotchallengecreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/bot-challenge/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-bot-challenge-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-bot-challenge-rule.
+      operations:
+      - method: DELETE
+        name: rulesbotchallengedelete
+        description: Delete a bot challenge rule
+        call: quantcdn-rules.rulesbotchallengedelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulesbotchallengeread
+        description: Get details of a bot challenge rule
+        call: quantcdn-rules.rulesbotchallengeread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulesbotchallengeupdate
+        description: Update a bot challenge rule
+        call: quantcdn-rules.rulesbotchallengeupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/content-filter
+      name: api-v2-organizations-organization-projects-project-rules-content-filter
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-content-filter.
+      operations:
+      - method: GET
+        name: rulescontentfilterlist
+        description: List content filter rules
+        call: quantcdn-rules.rulescontentfilterlist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulescontentfiltercreate
+        description: Create a content filter rule
+        call: quantcdn-rules.rulescontentfiltercreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/content-filter/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-content-filter-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-content-filter-rule.
+      operations:
+      - method: DELETE
+        name: rulescontentfilterdelete
+        description: Delete a content filter rule
+        call: quantcdn-rules.rulescontentfilterdelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulescontentfilterread
+        description: Get details of a content filter rule
+        call: quantcdn-rules.rulescontentfilterread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulescontentfilterupdate
+        description: Update a content filter rule
+        call: quantcdn-rules.rulescontentfilterupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/custom-response
+      name: api-v2-organizations-organization-projects-project-rules-custom-response
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-custom-response.
+      operations:
+      - method: GET
+        name: rulescustomresponselist
+        description: List custom response rules
+        call: quantcdn-rules.rulescustomresponselist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulescustomresponsecreate
+        description: Create a custom response rule
+        call: quantcdn-rules.rulescustomresponsecreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/custom-response/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-custom-response-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-custom-response-rule.
+      operations:
+      - method: DELETE
+        name: rulescustomresponsedelete
+        description: Delete a custom response rule
+        call: quantcdn-rules.rulescustomresponsedelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulescustomresponseread
+        description: Get details of a custom response rule
+        call: quantcdn-rules.rulescustomresponseread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulescustomresponseupdate
+        description: Update a custom response rule
+        call: quantcdn-rules.rulescustomresponseupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/function
+      name: api-v2-organizations-organization-projects-project-rules-function
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-function.
+      operations:
+      - method: GET
+        name: rulesfunctionlist
+        description: List edge function rules
+        call: quantcdn-rules.rulesfunctionlist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulesfunctioncreate
+        description: Create an edge function rule
+        call: quantcdn-rules.rulesfunctioncreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/function/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-function-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-function-rule.
+      operations:
+      - method: DELETE
+        name: rulesfunctiondelete
+        description: Delete an edge function rule
+        call: quantcdn-rules.rulesfunctiondelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulesfunctionread
+        description: Get details of an edge function rule
+        call: quantcdn-rules.rulesfunctionread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulesfunctionupdate
+        description: Update an edge function rule
+        call: quantcdn-rules.rulesfunctionupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/headers
+      name: api-v2-organizations-organization-projects-project-rules-headers
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-headers.
+      operations:
+      - method: GET
+        name: rulesheaderslist
+        description: List header rules
+        call: quantcdn-rules.rulesheaderslist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulesheaderscreate
+        description: Create a header rule
+        call: quantcdn-rules.rulesheaderscreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/headers/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-headers-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-headers-rule.
+      operations:
+      - method: DELETE
+        name: rulesheadersdelete
+        description: Delete a header rule
+        call: quantcdn-rules.rulesheadersdelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulesheadersread
+        description: Get details of a header rule
+        call: quantcdn-rules.rulesheadersread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulesheadersupdate
+        description: Update a header rule
+        call: quantcdn-rules.rulesheadersupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/proxy
+      name: api-v2-organizations-organization-projects-project-rules-proxy
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-proxy.
+      operations:
+      - method: GET
+        name: rulesproxylist
+        description: List proxy rules
+        call: quantcdn-rules.rulesproxylist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulesproxycreate
+        description: Create a proxy rule
+        call: quantcdn-rules.rulesproxycreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/proxy/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-proxy-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-proxy-rule.
+      operations:
+      - method: DELETE
+        name: rulesproxydelete
+        description: Delete a proxy rule
+        call: quantcdn-rules.rulesproxydelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulesproxyread
+        description: Get details of a proxy rule
+        call: quantcdn-rules.rulesproxyread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulesproxyupdate
+        description: Update a proxy rule
+        call: quantcdn-rules.rulesproxyupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/redirect
+      name: api-v2-organizations-organization-projects-project-rules-redirect
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-redirect.
+      operations:
+      - method: GET
+        name: rulesredirectlist
+        description: List redirect rules
+        call: quantcdn-rules.rulesredirectlist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulesredirectcreate
+        description: Create a redirect rule
+        call: quantcdn-rules.rulesredirectcreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/redirect/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-redirect-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-redirect-rule.
+      operations:
+      - method: DELETE
+        name: rulesredirectdelete
+        description: Delete a redirect rule
+        call: quantcdn-rules.rulesredirectdelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulesredirectread
+        description: Get details of a redirect rule
+        call: quantcdn-rules.rulesredirectread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulesredirectupdate
+        description: Update a redirect rule
+        call: quantcdn-rules.rulesredirectupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/serve-static
+      name: api-v2-organizations-organization-projects-project-rules-serve-static
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-serve-static.
+      operations:
+      - method: GET
+        name: rulesservestaticlist
+        description: List serve static rules
+        call: quantcdn-rules.rulesservestaticlist
+        with:
+          organization: rest.organization
+          project: rest.project
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: rulesservestaticcreate
+        description: Create a serve static rule
+        call: quantcdn-rules.rulesservestaticcreate
+        with:
+          organization: rest.organization
+          project: rest.project
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v2/organizations/{organization}/projects/{project}/rules/serve-static/{rule}
+      name: api-v2-organizations-organization-projects-project-rules-serve-static-rule
+      description: REST surface for api-v2-organizations-organization-projects-project-rules-serve-static-rule.
+      operations:
+      - method: DELETE
+        name: rulesservestaticdelete
+        description: Delete a serve static rule
+        call: quantcdn-rules.rulesservestaticdelete
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: rulesservestaticread
+        description: Get details of a serve static rule
+        call: quantcdn-rules.rulesservestaticread
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PATCH
+        name: rulesservestaticupdate
+        description: Update a serve static rule
+        call: quantcdn-rules.rulesservestaticupdate
+        with:
+          organization: rest.organization
+          project: rest.project
+          rule: rest.rule
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-rules-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Rules. One tool per consumed operation, routed inline through this capability's
+      consumes block.
+    tools:
+    - name: list-authentication-rules
+      description: List authentication rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesauthlist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-authentication-rule
+      description: Create an authentication rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulesauthcreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-authentication-rule
+      description: Delete an authentication rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulesauthdelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-authentication-rule
+      description: Get details of an authentication rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesauthread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-authentication-rule
+      description: Update an authentication rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesauthupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-bot-challenge-rules
+      description: List bot challenge rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesbotchallengelist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-bot-challenge-rule
+      description: Create a bot challenge rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulesbotchallengecreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-bot-challenge-rule
+      description: Delete a bot challenge rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulesbotchallengedelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-bot-challenge-rule
+      description: Get details of a bot challenge rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesbotchallengeread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-bot-challenge-rule
+      description: Update a bot challenge rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesbotchallengeupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-content-filter-rules
+      description: List content filter rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulescontentfilterlist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-content-filter-rule
+      description: Create a content filter rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulescontentfiltercreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-content-filter-rule
+      description: Delete a content filter rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulescontentfilterdelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-content-filter-rule
+      description: Get details of a content filter rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulescontentfilterread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-content-filter-rule
+      description: Update a content filter rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulescontentfilterupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-custom-response-rules
+      description: List custom response rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulescustomresponselist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-custom-response-rule
+      description: Create a custom response rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulescustomresponsecreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-custom-response-rule
+      description: Delete a custom response rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulescustomresponsedelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-custom-response-rule
+      description: Get details of a custom response rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulescustomresponseread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-custom-response-rule
+      description: Update a custom response rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulescustomresponseupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-edge-function-rules
+      description: List edge function rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesfunctionlist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-edge-function-rule
+      description: Create an edge function rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulesfunctioncreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-edge-function-rule
+      description: Delete an edge function rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulesfunctiondelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-edge-function-rule
+      description: Get details of an edge function rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesfunctionread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-edge-function-rule
+      description: Update an edge function rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesfunctionupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-header-rules
+      description: List header rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesheaderslist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-header-rule
+      description: Create a header rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulesheaderscreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-header-rule
+      description: Delete a header rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulesheadersdelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-header-rule
+      description: Get details of a header rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesheadersread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-header-rule
+      description: Update a header rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesheadersupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-proxy-rules
+      description: List proxy rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesproxylist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-proxy-rule
+      description: Create a proxy rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulesproxycreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-proxy-rule
+      description: Delete a proxy rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulesproxydelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-proxy-rule
+      description: Get details of a proxy rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesproxyread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-proxy-rule
+      description: Update a proxy rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesproxyupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-redirect-rules
+      description: List redirect rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesredirectlist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-redirect-rule
+      description: Create a redirect rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulesredirectcreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-redirect-rule
+      description: Delete a redirect rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulesredirectdelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-redirect-rule
+      description: Get details of a redirect rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesredirectread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-redirect-rule
+      description: Update a redirect rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesredirectupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-serve-static-rules
+      description: List serve static rules
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesservestaticlist
+      with:
+        organization: tools.organization
+        project: tools.project
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-serve-static-rule
+      description: Create a serve static rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-rules.rulesservestaticcreate
+      with:
+        organization: tools.organization
+        project: tools.project
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-serve-static-rule
+      description: Delete a serve static rule
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-rules.rulesservestaticdelete
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-details-serve-static-rule
+      description: Get details of a serve static rule
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesservestaticread
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-serve-static-rule
+      description: Update a serve static rule
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-rules.rulesservestaticupdate
+      with:
+        organization: tools.organization
+        project: tools.project
+        rule: tools.rule
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

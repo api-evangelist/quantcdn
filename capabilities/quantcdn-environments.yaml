@@ -1,0 +1,664 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: QuantCDN API — Environments
+  description: 'QuantCDN API — Environments. 10 operations. Lead operation: Get all environments for an application. Self-contained
+    Naftiko capability covering one Quantcdn business surface.'
+  tags:
+  - Quantcdn
+  - Environments
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    QUANTCDN_API_KEY: QUANTCDN_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: quantcdn-environments
+    baseUri: https://dashboard.quantcdn.io
+    description: QuantCDN API — Environments business capability. Self-contained, no shared references.
+    resources:
+    - name: api-v3-organizations-organisation-applications-application-environments
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments
+      operations:
+      - name: listenvironments
+        method: GET
+        description: Get all environments for an application
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+      - name: createenvironment
+        method: POST
+        description: Create a new environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}
+      operations:
+      - name: deleteenvironment
+        method: DELETE
+        description: Delete an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+      - name: getenvironment
+        method: GET
+        description: Get a single environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+      - name: updateenvironment
+        method: PUT
+        description: Update Environment Compose Definition
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/logs
+      operations:
+      - name: getenvironmentlogs
+        method: GET
+        description: Get the logs for an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: startTime
+          in: query
+          type: string
+          description: Start time for log retrieval (ISO 8601 format or Unix timestamp)
+        - name: endTime
+          in: query
+          type: string
+          description: End time for log retrieval (ISO 8601 format or Unix timestamp)
+        - name: containerName
+          in: query
+          type: string
+          description: Filter logs by specific container name
+        - name: filterPattern
+          in: query
+          type: string
+          description: CloudWatch Logs filter pattern for searching log content
+        - name: limit
+          in: query
+          type: integer
+          description: Maximum number of log entries to return per page
+        - name: nextToken
+          in: query
+          type: string
+          description: Pagination token from previous response for retrieving next page of results
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/metrics
+      operations:
+      - name: getenvironmentmetrics
+        method: GET
+        description: Get the metrics for an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: startTime
+          in: query
+          type: integer
+          description: Start time for metrics retrieval (Unix timestamp in milliseconds)
+        - name: endTime
+          in: query
+          type: integer
+          description: End time for metrics retrieval (Unix timestamp in milliseconds)
+        - name: period
+          in: query
+          type: integer
+          description: Period in seconds for metric aggregation (e.g., 60 for 1 minute, 300 for 5 minutes)
+        - name: statistics
+          in: query
+          type: string
+          description: Comma-separated list of CloudWatch statistics (e.g., Average, Maximum, Minimum, Sum, SampleCount)
+        - name: containerName
+          in: query
+          type: string
+          description: Filter metrics by specific container name
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/state
+      operations:
+      - name: updateenvironmentstate
+        method: PUT
+        description: Update the state of an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: api-v3-organizations-organisation-applications-application-environments-environm
+      path: /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/sync/{type}
+      operations:
+      - name: listsyncoperations
+        method: GET
+        description: List the sync operations for an environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: type
+          in: path
+          type: string
+          description: The sync type
+          required: true
+      - name: synctoenvironment
+        method: POST
+        description: Perform a sync operation from a source environment to the current environment
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: organisation
+          in: path
+          type: string
+          description: The organisation ID
+          required: true
+        - name: application
+          in: path
+          type: string
+          description: The application ID
+          required: true
+        - name: environment
+          in: path
+          type: string
+          description: The environment ID
+          required: true
+        - name: type
+          in: path
+          type: string
+          description: The sync type
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.QUANTCDN_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: quantcdn-environments-rest
+    port: 8080
+    description: REST adapter for QuantCDN API — Environments. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments
+      name: api-v3-organizations-organisation-applications-application-environments
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments.
+      operations:
+      - method: GET
+        name: listenvironments
+        description: Get all environments for an application
+        call: quantcdn-environments.listenvironments
+        with:
+          organisation: rest.organisation
+          application: rest.application
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createenvironment
+        description: Create a new environment
+        call: quantcdn-environments.createenvironment
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: DELETE
+        name: deleteenvironment
+        description: Delete an environment
+        call: quantcdn-environments.deleteenvironment
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: getenvironment
+        description: Get a single environment
+        call: quantcdn-environments.getenvironment
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateenvironment
+        description: Update Environment Compose Definition
+        call: quantcdn-environments.updateenvironment
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/logs
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: GET
+        name: getenvironmentlogs
+        description: Get the logs for an environment
+        call: quantcdn-environments.getenvironmentlogs
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          startTime: rest.startTime
+          endTime: rest.endTime
+          containerName: rest.containerName
+          filterPattern: rest.filterPattern
+          limit: rest.limit
+          nextToken: rest.nextToken
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/metrics
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: GET
+        name: getenvironmentmetrics
+        description: Get the metrics for an environment
+        call: quantcdn-environments.getenvironmentmetrics
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          startTime: rest.startTime
+          endTime: rest.endTime
+          period: rest.period
+          statistics: rest.statistics
+          containerName: rest.containerName
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/state
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: PUT
+        name: updateenvironmentstate
+        description: Update the state of an environment
+        call: quantcdn-environments.updateenvironmentstate
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/sync/{type}
+      name: api-v3-organizations-organisation-applications-application-environments-environm
+      description: REST surface for api-v3-organizations-organisation-applications-application-environments-environm.
+      operations:
+      - method: GET
+        name: listsyncoperations
+        description: List the sync operations for an environment
+        call: quantcdn-environments.listsyncoperations
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          type: rest.type
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: synctoenvironment
+        description: Perform a sync operation from a source environment to the current environment
+        call: quantcdn-environments.synctoenvironment
+        with:
+          organisation: rest.organisation
+          application: rest.application
+          environment: rest.environment
+          type: rest.type
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: quantcdn-environments-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for QuantCDN API — Environments. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: get-all-environments-application
+      description: Get all environments for an application
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-environments.listenvironments
+      with:
+        organisation: tools.organisation
+        application: tools.application
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-environment
+      description: Create a new environment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-environments.createenvironment
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-environment
+      description: Delete an environment
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: quantcdn-environments.deleteenvironment
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-single-environment
+      description: Get a single environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-environments.getenvironment
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-environment-compose-definition
+      description: Update Environment Compose Definition
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-environments.updateenvironment
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-logs-environment
+      description: Get the logs for an environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-environments.getenvironmentlogs
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        startTime: tools.startTime
+        endTime: tools.endTime
+        containerName: tools.containerName
+        filterPattern: tools.filterPattern
+        limit: tools.limit
+        nextToken: tools.nextToken
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-metrics-environment
+      description: Get the metrics for an environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-environments.getenvironmentmetrics
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        startTime: tools.startTime
+        endTime: tools.endTime
+        period: tools.period
+        statistics: tools.statistics
+        containerName: tools.containerName
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-state-environment
+      description: Update the state of an environment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: quantcdn-environments.updateenvironmentstate
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-sync-operations-environment
+      description: List the sync operations for an environment
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: quantcdn-environments.listsyncoperations
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        type: tools.type
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: perform-sync-operation-source-environment
+      description: Perform a sync operation from a source environment to the current environment
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: quantcdn-environments.synctoenvironment
+      with:
+        organisation: tools.organisation
+        application: tools.application
+        environment: tools.environment
+        type: tools.type
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
