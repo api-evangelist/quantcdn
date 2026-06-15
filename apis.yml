@@ -1,165 +1,92 @@
 aid: quantcdn
 name: QuantCDN
-description: QuantCDN is an edge delivery, static site hosting, and cloud applications platform that lets teams generate,
-  host, and maintain static and dynamic versions of their websites with a global CDN, WAF, edge functions, key-value storage,
-  AI inference, and DNS management.
+description: >-
+  QuantCDN is an edge delivery, static site hosting, and cloud applications platform that lets teams generate, host, and
+  maintain static and dynamic versions of their websites with a global CDN, WAF, edge functions, key-value storage, AI
+  inference, and DNS management.
 type: Index
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-- CDN
-- Edge
-- Static Hosting
-- Jamstack
-- DNS
-- WAF
-- Edge Computing
-- Key-Value Storage
-- AI Inference
-created: '2025-02-12'
-modified: '2026-05-19'
-url: https://raw.githubusercontent.com/api-evangelist/quantcdn/refs/heads/main/apis.yml
-specificationVersion: '0.19'
-apis:
-- aid: quantcdn:quantcdn
-  name: QuantCDN API
-  description: Unified API for the QuantCDN Admin and QuantCloud Platform covering CDN projects, static site content, deployments,
-    edge functions, key-value storage, DNS, WAF rules, AI agents, AI inference, AI orchestrations, and platform administration.
-  humanURL: https://www.quantcdn.io/home
-  baseURL: https://dashboard.quantcdn.io
-  tags:
   - CDN
   - Edge
   - Static Hosting
+  - Jamstack
   - DNS
   - WAF
   - Edge Computing
   - Key-Value Storage
   - AI Inference
-  properties:
+created: '2025-02-12'
+modified: '2026-05-19'
+url: https://raw.githubusercontent.com/api-evangelist/quantcdn/refs/heads/main/apis.yml
+specificationVersion: '0.19'
+apis:
+  - aid: quantcdn:quantcdn
+    name: QuantCDN API
+    description: >-
+      Unified API for the QuantCDN Admin and QuantCloud Platform covering CDN projects, static site content,
+      deployments, edge functions, key-value storage, DNS, WAF rules, AI agents, AI inference, AI orchestrations, and
+      platform administration.
+    humanURL: https://www.quantcdn.io/home
+    baseURL: https://dashboard.quantcdn.io
+    tags:
+      - CDN
+      - Edge
+      - Static Hosting
+      - DNS
+      - WAF
+      - Edge Computing
+      - Key-Value Storage
+      - AI Inference
+    properties:
+      - type: Documentation
+        url: https://docs.quantcdn.io/
+      - type: API Documentation
+        url: https://docs.quantcdn.io/api/get-started-content/
+      - type: GettingStarted
+        url: https://docs.quantcdn.io/api/get-started-content/
+      - type: OpenAPI
+        url: openapi/quantcdn-openapi.yml
+      - type: SDK
+        url: https://github.com/quantcdn/quant-python-client
+      - type: SDK
+        url: https://github.com/quantcdn/quant-ts-client
+      - type: SDK
+        url: https://github.com/quantcdn/quant-php-client
+      - type: SDK
+        url: https://github.com/quantcdn/quant-admin-go
+common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/quantcdn
+  - type: Website
+    url: https://www.quantcdn.io/home
   - type: Documentation
     url: https://docs.quantcdn.io/
-  - type: API Documentation
-    url: https://docs.quantcdn.io/api/get-started-content/
-  - type: GettingStarted
-    url: https://docs.quantcdn.io/api/get-started-content/
-  - type: OpenAPI
-    url: openapi/quantcdn-openapi.yml
-  - type: SDK
-    url: https://github.com/quantcdn/quant-python-client
-  - type: SDK
-    url: https://github.com/quantcdn/quant-ts-client
-  - type: SDK
-    url: https://github.com/quantcdn/quant-php-client
-  - type: SDK
-    url: https://github.com/quantcdn/quant-admin-go
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-agents.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-custom-tools.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-file-storage.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-filter-policies.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-governance.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-inference.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-models.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-monitoring.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-orchestrations.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-sessions.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-skills.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-slack-bots.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-task-management.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-tools.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-usage.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ai-vector-database.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-applications.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-backup-management.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-cdn-metrics.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-commands.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-compose.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-containers.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-crawlerschedules.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-crawlers.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-cron.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-domains.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-environments.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-headers.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-kv.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-organizations.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-projects.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-purge.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-rules.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-ssh-access.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-scalingpolicy.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-tokens.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-variables.yaml
-  - type: NaftikoCapability
-    url: capabilities/quantcdn-volumes.yaml
-common:
-- type: LinkedIn
-  url: https://www.linkedin.com/company/quantcdn
-- type: Website
-  url: https://www.quantcdn.io/home
-- type: Documentation
-  url: https://docs.quantcdn.io/
-- type: GitHubOrganization
-  url: https://github.com/quantcdn
-- type: Integrations
-  url: https://www.quantcdn.io/integrations
+  - type: GitHubOrganization
+    url: https://github.com/quantcdn
+  - type: Integrations
+    url: https://www.quantcdn.io/integrations
 integrations:
-- name: Craft CMS
-- name: Drupal
-- name: Statamic
-- name: WordPress
-- name: Astro
-- name: Docusaurus
-- name: Eleventy
-- name: Gatsby
-- name: Hugo
-- name: Jekyll
-- name: Next.js
-- name: Nuxt
-- name: SvelteKit
-- name: Apache PHP
-- name: Laravel
-- name: Remix
-- name: Symfony
-- name: Terraform
+  - name: Craft CMS
+  - name: Drupal
+  - name: Statamic
+  - name: WordPress
+  - name: Astro
+  - name: Docusaurus
+  - name: Eleventy
+  - name: Gatsby
+  - name: Hugo
+  - name: Jekyll
+  - name: Next.js
+  - name: Nuxt
+  - name: SvelteKit
+  - name: Apache PHP
+  - name: Laravel
+  - name: Remix
+  - name: Symfony
+  - name: Terraform
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
