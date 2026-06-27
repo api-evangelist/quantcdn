@@ -49,13 +49,13 @@ apis:
         url: https://docs.quantcdn.io/api/get-started-content/
       - type: OpenAPI
         url: openapi/quantcdn-openapi.yml
-      - type: SDK
+      - type: SDKs
         url: https://github.com/quantcdn/quant-python-client
-      - type: SDK
+      - type: SDKs
         url: https://github.com/quantcdn/quant-ts-client
-      - type: SDK
+      - type: SDKs
         url: https://github.com/quantcdn/quant-php-client
-      - type: SDK
+      - type: SDKs
         url: https://github.com/quantcdn/quant-admin-go
 common:
   - type: LinkedIn
