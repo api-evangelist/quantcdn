@@ -58,6 +58,12 @@ apis:
       - type: SDKs
         url: https://github.com/quantcdn/quant-admin-go
 common:
+  - type: VulnerabilityDisclosure
+    url: security/quantcdn-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/quantcdn-domain-security.yml
+  - type: Authentication
+    url: authentication/quantcdn-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/quantcdn
   - type: Website
@@ -68,6 +74,8 @@ common:
     url: https://github.com/quantcdn
   - type: Integrations
     url: https://www.quantcdn.io/integrations
+  - url: https://www.quantcdn.io/blog
+    type: Blog
 integrations:
   - name: Craft CMS
   - name: Drupal

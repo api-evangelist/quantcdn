@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/quantcdn-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your
+    API token from the QuantCDN dashboard under Profile > API Tokens.'
+  sources:
+  - openapi/quantcdn-openapi.yml
