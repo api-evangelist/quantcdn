@@ -1,0 +1,311 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Filter Policies API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: AI Filter Policies
+  name: AI Filter Policies
+paths:
+  /api/v3/organizations/{organisation}/ai/filter-policies:
+    get:
+      operationId: listFilterPolicies
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: List of filter policies
+        '500':
+          description: Failed to retrieve filter policies
+      summary: List AI filter policies for an organisation
+      tags:
+      - AI Filter Policies
+    post:
+      operationId: createFilterPolicy
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createFilterPolicy_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Filter policy created successfully
+        '422':
+          description: Validation error
+        '500':
+          description: Failed to create filter policy
+      summary: Create an AI filter policy for an organisation
+      tags:
+      - AI Filter Policies
+  /api/v3/organizations/{organisation}/ai/filter-policies/{policyId}:
+    delete:
+      operationId: deleteFilterPolicy
+      parameters:
+      - explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: policyId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Filter policy deleted successfully
+        '500':
+          description: Failed to delete filter policy
+      summary: Delete a specific AI filter policy
+      tags:
+      - AI Filter Policies
+    get:
+      operationId: getFilterPolicy
+      parameters:
+      - explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: policyId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Filter policy details
+        '404':
+          description: Filter policy not found
+      summary: Get a specific AI filter policy
+      tags:
+      - AI Filter Policies
+    put:
+      operationId: updateFilterPolicy
+      parameters:
+      - explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: policyId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateFilterPolicy_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Filter policy updated successfully
+        '422':
+          description: Validation error
+        '500':
+          description: Failed to update filter policy
+      summary: Update a specific AI filter policy
+      tags:
+      - AI Filter Policies
+  /api/v3/organizations/{organisation}/ai/filter-policies/{policyId}/enable:
+    put:
+      operationId: enableFilterPolicy
+      parameters:
+      - explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: policyId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Filter policy enabled successfully
+        '500':
+          description: Failed to enable filter policy
+      summary: Enable a specific AI filter policy
+      tags:
+      - AI Filter Policies
+  /api/v3/organizations/{organisation}/ai/filter-policies/{policyId}/disable:
+    put:
+      operationId: disableFilterPolicy
+      parameters:
+      - explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: policyId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Filter policy disabled successfully
+        '500':
+          description: Failed to disable filter policy
+      summary: Disable a specific AI filter policy
+      tags:
+      - AI Filter Policies
+components:
+  schemas:
+    createFilterPolicy_request:
+      properties:
+        name:
+          maxLength: 255
+          type: string
+        description:
+          maxLength: 1000
+          nullable: true
+          type: string
+        enabled:
+          type: boolean
+        rules:
+          items:
+            $ref: '#/components/schemas/createFilterPolicy_request_rules_inner'
+          maxItems: 100
+          minItems: 1
+          type: array
+      required:
+      - name
+      - rules
+      type: object
+    createFilterPolicy_request_rules_inner_match:
+      description: Match criteria
+      properties:
+        type:
+          enum:
+          - word
+          - regex
+          type: string
+        values:
+          description: Required when type=word
+          items:
+            maxLength: 100
+            type: string
+          type: array
+        pattern:
+          description: Required when type=regex
+          maxLength: 500
+          type: string
+      type: object
+    updateFilterPolicy_request:
+      properties:
+        name:
+          maxLength: 255
+          type: string
+        description:
+          maxLength: 1000
+          nullable: true
+          type: string
+        enabled:
+          type: boolean
+        rules:
+          items:
+            $ref: '#/components/schemas/createFilterPolicy_request_rules_inner'
+          maxItems: 100
+          minItems: 1
+          type: array
+      type: object
+    createFilterPolicy_request_rules_inner:
+      properties:
+        name:
+          type: string
+        match:
+          $ref: '#/components/schemas/createFilterPolicy_request_rules_inner_match'
+        action:
+          enum:
+          - BLOCK
+          - REDACT
+          type: string
+        applyTo:
+          enum:
+          - input
+          - output
+          - both
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

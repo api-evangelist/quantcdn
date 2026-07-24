@@ -1,0 +1,385 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Domains API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Domain and DNS management
+  name: Domains
+paths:
+  /api/v2/organizations/{organization}/projects/{project}/domains:
+    get:
+      operationId: Domains_list
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2Domain'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List all domains for a project
+      tags:
+      - Domains
+    post:
+      operationId: Domains_create
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2DomainRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Domain'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Add a new domain
+      tags:
+      - Domains
+  /api/v2/organizations/{organization}/projects/{project}/domains/{domain}:
+    delete:
+      operationId: Domains_delete
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Domain id
+        example: '0000'
+        explode: false
+        in: path
+        name: domain
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The domain has been deleted.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a domain
+      tags:
+      - Domains
+    get:
+      operationId: Domains_read
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Domain id
+        example: '0000'
+        explode: false
+        in: path
+        name: domain
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Domain'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a single domain
+      tags:
+      - Domains
+  /api/v2/organizations/{organization}/projects/{project}/domains/{domain}/renew:
+    post:
+      operationId: Domains_renew
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Domain id
+        example: '0000'
+        explode: false
+        in: path
+        name: domain
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '202':
+          description: The SSL certificate renewal has been initiated.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Renew the SSL certificate for a domain
+      tags:
+      - Domains
+components:
+  schemas:
+    V2DomainRequest:
+      example:
+        domain: test-domain.com
+      properties:
+        domain:
+          description: Domain name
+          example: test-domain.com
+          type: string
+      required:
+      - domain
+      type: object
+    V2Domain_dns_validation_records_inner:
+      properties:
+        name:
+          description: DNS record name (host/subdomain)
+          example: _abc123.example.com
+          type: string
+        type:
+          description: DNS record type (typically CNAME)
+          example: CNAME
+          type: string
+        value:
+          description: DNS record value to point to
+          example: _xyz789.validation.example.com.
+          type: string
+      type: object
+    V2Domain:
+      example:
+        dns_validation_records:
+        - name: _abc123.example.com
+          type: CNAME
+          value: _xyz789.validation.example.com.
+        domain: test-domain.com
+        dns_engaged: 1
+        id: 123
+        dns_go_live_records:
+        - type: CNAME
+          name: www
+          value: cdn.example.com
+          description: Add a CNAME record with the host set to your subdomain pointing to the CDN endpoint.
+      properties:
+        id:
+          description: Domain ID
+          example: 123
+          type: integer
+        domain:
+          description: Domain name
+          example: test-domain.com
+          type: string
+        dns_engaged:
+          description: DNS engagement status. 1 indicates DNS is properly configured and engaged, 0 indicates DNS configuration is pending or incomplete.
+          example: 1
+          type: integer
+        dns_validation_records:
+          description: DNS validation records required for SSL certificate validation. Present for domains pending certificate validation. Each record contains the CNAME information needed to validate domain ownership.
+          example:
+          - name: _abc123.example.com
+            type: CNAME
+            value: _xyz789.validation.example.com.
+          items:
+            $ref: '#/components/schemas/V2Domain_dns_validation_records_inner'
+          nullable: true
+          type: array
+        dns_go_live_records:
+          description: DNS records required to route traffic to the CDN. These records differ based on domain type (apex vs subdomain). Present when the CDN is configured and ready to receive traffic.
+          example:
+          - type: CNAME
+            name: www
+            value: cdn.example.com
+            description: Add a CNAME record with the host set to your subdomain pointing to the CDN endpoint.
+          items:
+            $ref: '#/components/schemas/V2Domain_dns_go_live_records_inner'
+          nullable: true
+          type: array
+      required:
+      - dns_engaged
+      - domain
+      - id
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    V2Domain_dns_go_live_records_inner:
+      properties:
+        type:
+          description: DNS record type (CNAME, A, or ALIAS)
+          example: CNAME
+          type: string
+        name:
+          description: DNS record name/host (@ for apex/root domains, subdomain name for subdomains)
+          example: www
+          type: string
+        value:
+          description: DNS record value (IP addresses for A records, domain name for CNAME/ALIAS)
+          example: cdn.example.com
+          nullable: true
+          type: string
+        description:
+          description: Human-readable instructions for configuring this DNS record
+          example: Add a CNAME record with the host set to your subdomain pointing to the CDN endpoint.
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

@@ -1,0 +1,521 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Cron API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Scheduled task management
+  name: Cron
+paths:
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron:
+    get:
+      operationId: listCronJobs
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cron'
+          description: The cron jobs
+        '404':
+          description: The environment not found
+      summary: Get all cron jobs for an environment
+      tags:
+      - Cron
+    post:
+      operationId: createCronJob
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCronJob_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cron'
+          description: The created cron job
+        '400':
+          description: The request is invalid
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/patchEnvironmentCompose_400_response'
+          description: The request is invalid
+      summary: Create a new cron job
+      tags:
+      - Cron
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}:
+    delete:
+      operationId: deleteCronJob
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The cron job ID
+        explode: false
+        in: path
+        name: cron
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The cron job deleted
+      summary: Delete a cron job
+      tags:
+      - Cron
+    get:
+      operationId: getCronJob
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The cron job ID
+        explode: false
+        in: path
+        name: cron
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cron'
+          description: The cron job
+        '404':
+          description: The cron job not found
+      summary: Get a cron job
+      tags:
+      - Cron
+    patch:
+      operationId: updateCronJob
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The cron job ID
+        explode: false
+        in: path
+        name: cron
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateCronJob_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cron'
+          description: The updated cron job
+        '404':
+          description: The cron job not found
+      summary: Update a cron job
+      tags:
+      - Cron
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}/runs:
+    get:
+      operationId: listCronJobRuns
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The cron job ID
+        example: test-cron
+        explode: false
+        in: path
+        name: cron
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/CronRun'
+                type: array
+          description: The runs
+      summary: Get all runs for a cron job
+      tags:
+      - Cron
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/cron/{cron}/runs/{run}:
+    get:
+      operationId: getCronRun
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The cron job ID
+        example: test-cron
+        explode: false
+        in: path
+        name: cron
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The cron run ID
+        explode: false
+        in: path
+        name: run
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CronRun'
+          description: The cron run
+      summary: Get a cron run
+      tags:
+      - Cron
+components:
+  schemas:
+    createCronJob_request:
+      properties:
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
+        scheduleExpression:
+          type: string
+        command:
+          items:
+            type: string
+          type: array
+        targetContainerName:
+          nullable: true
+          type: string
+        isEnabled:
+          default: true
+          nullable: true
+          type: boolean
+      required:
+      - command
+      - name
+      - scheduleExpression
+      type: object
+    updateCronJob_request:
+      properties:
+        description:
+          nullable: true
+          type: string
+        scheduleExpression:
+          nullable: true
+          type: string
+        command:
+          items:
+            type: string
+          nullable: true
+          type: array
+        targetContainerName:
+          nullable: true
+          type: string
+        isEnabled:
+          nullable: true
+          type: boolean
+      type: object
+    patchEnvironmentCompose_400_response:
+      example:
+        message: message
+        errors: '{}'
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+      type: object
+    Cron:
+      example:
+        targetContainerName: targetContainerName
+        scheduleExpression: scheduleExpression
+        isEnabled: true
+        name: name
+        description: description
+        command:
+        - command
+        - command
+      properties:
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
+        scheduleExpression:
+          type: string
+        command:
+          items:
+            type: string
+          type: array
+        targetContainerName:
+          nullable: true
+          type: string
+        isEnabled:
+          type: boolean
+      type: object
+    CronRun:
+      example:
+        output:
+        - output
+        - output
+        scheduleName: scheduleName
+        targetContainerName: targetContainerName
+        runType: EXEC
+        exitCode: 0
+        startTime: 2000-01-23 04:56:07+00:00
+        runId: runId
+        endTime: 2000-01-23 04:56:07+00:00
+        command: command
+        status: PENDING
+      properties:
+        runId:
+          type: string
+        runType:
+          enum:
+          - EXEC
+          - CRON
+          type: string
+        command:
+          nullable: true
+          type: string
+        status:
+          enum:
+          - PENDING
+          - RUNNING
+          - SUCCEEDED
+          - FAILED
+          - TIMED_OUT
+          - UNKNOWN
+          type: string
+        startTime:
+          format: date-time
+          nullable: true
+          type: string
+        endTime:
+          format: date-time
+          nullable: true
+          type: string
+        exitCode:
+          nullable: true
+          type: integer
+        output:
+          items:
+            type: string
+          type: array
+        scheduleName:
+          nullable: true
+          type: string
+        targetContainerName:
+          nullable: true
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

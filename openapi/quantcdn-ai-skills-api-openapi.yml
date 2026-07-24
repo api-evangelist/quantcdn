@@ -1,0 +1,920 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Skills API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Reusable prompts, workflows, and instructions for agents
+  name: AI Skills
+paths:
+  /api/v3/organizations/{organisation}/ai/skills:
+    get:
+      description: "Lists all skills available to the organization. Skills are reusable prompts,\n     * workflows, or instructions that can be assigned to agents or invoked directly.\n     *\n     * **Skill Sources:**\n     * - `inline`: Created directly via the API\n     * - `skills.sh`: Imported from skills.sh registry\n     * - `github`: Imported from a GitHub repository\n     * - `local`: Uploaded from local file"
+      operationId: listSkills
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter skills by tag
+        explode: true
+        in: query
+        name: tag
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter skills by collection namespace (e.g. 'superpowers')
+        explode: true
+        in: query
+        name: namespace
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Maximum number of skills to return
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listSkills_200_response'
+          description: List of skills retrieved successfully
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to retrieve skills
+      summary: List Organization's Skills
+      tags:
+      - AI Skills
+    post:
+      description: "Creates a new skill with inline content. Use this for custom skills\n     * that are defined directly in your organization.\n     *\n     * **Trigger Conditions:**\n     * - Natural language description of when to use the skill\n     * - Used by AI to determine when to suggest or apply the skill\n     * - Example: 'When the user asks about code review or security analysis'"
+      operationId: createSkill
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createSkill_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createSkill_201_response'
+          description: Skill created successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to create skill
+      summary: Create Inline Skill
+      tags:
+      - AI Skills
+  /api/v3/organizations/{organisation}/ai/skills/{skillId}:
+    delete:
+      description: Permanently deletes a skill. This will also remove it from any agents that have it assigned.
+      operationId: deleteSkill
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The skill ID
+        explode: false
+        in: path
+        name: skillId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteSkill_200_response'
+          description: Skill deleted successfully
+        '403':
+          description: Access denied
+        '404':
+          description: Skill not found
+        '500':
+          description: Failed to delete skill
+      summary: Delete Skill
+      tags:
+      - AI Skills
+    get:
+      description: Retrieves full details of a skill including its content, source information, and metadata.
+      operationId: getSkill
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The skill ID
+        explode: false
+        in: path
+        name: skillId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getSkill_200_response'
+          description: Skill details retrieved successfully
+        '403':
+          description: Access denied
+        '404':
+          description: Skill not found
+        '500':
+          description: Failed to retrieve skill
+      summary: Get Skill Details
+      tags:
+      - AI Skills
+    put:
+      description: "Updates an existing skill. For imported skills, this updates\n     * local overrides (name, tags, triggerCondition) but not the source content.\n     * Use the sync endpoint to update source content."
+      operationId: updateSkill
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The skill ID
+        explode: false
+        in: path
+        name: skillId
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateSkill_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateSkill_200_response'
+          description: Skill updated successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '404':
+          description: Skill not found
+        '500':
+          description: Failed to update skill
+      summary: Update Skill
+      tags:
+      - AI Skills
+  /api/v3/organizations/{organisation}/ai/skills/import:
+    post:
+      description: "Imports a skill from an external source like skills.sh registry or GitHub repository.\n     *\n     * **Supported Sources:**\n     * - `skills.sh`: Import from the skills.sh community registry\n     * - `github`: Import from a GitHub repository (public or private)\n     *\n     * **Version Control:**\n     * - Skills can be pinned to specific versions\n     * - Use the sync endpoint to update to latest version"
+      operationId: importSkill
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/importSkill_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/importSkill_201_response'
+          description: Skill imported successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '502':
+          description: Failed to fetch skill from source
+        '500':
+          description: Failed to import skill
+      summary: Import Skill from External Source
+      tags:
+      - AI Skills
+  /api/v3/organizations/{organisation}/ai/skills/{skillId}/sync:
+    post:
+      description: "Re-fetches skill content from its original source.\n     * Only applicable to skills imported from external sources (skills.sh, github).\n     * Inline skills cannot be synced.\n     *\n     * **Version Behavior:**\n     * - If version is pinned, fetches that specific version\n     * - If no version specified, fetches latest"
+      operationId: syncSkill
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The skill ID
+        explode: false
+        in: path
+        name: skillId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/importSkill_201_response'
+          description: Skill synced successfully
+        '400':
+          description: Cannot sync inline skill
+        '403':
+          description: Access denied
+        '404':
+          description: Skill not found
+        '502':
+          description: Failed to fetch skill from source
+        '500':
+          description: Failed to sync skill
+      summary: Sync Skill from Source
+      tags:
+      - AI Skills
+  /api/v3/organizations/{organisation}/ai/skills/collections:
+    get:
+      description: Lists distinct namespaces (collections) for the organization, with skill counts and skill names for each collection.
+      operationId: listSkillCollections
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listSkillCollections_200_response'
+          description: Collections retrieved successfully
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to retrieve collections
+      summary: List Skill Collections
+      tags:
+      - AI Skills
+  /api/v3/organizations/{organisation}/ai/skills/import-collection:
+    post:
+      description: "Discovers all skill directories under a given path in a GitHub repository\n     * and imports each as a skill within the specified namespace. Each subdirectory must contain a SKILL.md file.\n     *\n     * **Namespace:** Used for grouping and slash-command invocation (e.g., `/superpowers:brainstorming`).\n     *\n     * **Idempotent:** If a skill with the same namespace + name already exists, it is updated."
+      operationId: importSkillCollection
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/importSkillCollection_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/importSkillCollection_201_response'
+          description: Collection imported successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '502':
+          description: GitHub API error
+        '500':
+          description: Failed to import collection
+      summary: Import Skill Collection from GitHub
+      tags:
+      - AI Skills
+  /api/v3/organizations/{organisation}/ai/skills/collections/{namespace}/sync:
+    post:
+      description: "Re-syncs all skills in a namespace from their GitHub source. Detects new\n     * skills added to the repository and flags skills removed from the source. Does NOT auto-delete removed skills."
+      operationId: syncSkillCollection
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Collection namespace
+        explode: false
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/syncSkillCollection_200_response'
+          description: Collection synced successfully
+        '400':
+          description: Invalid request
+        '403':
+          description: Access denied
+        '404':
+          description: Collection not found
+        '502':
+          description: GitHub API error
+        '500':
+          description: Failed to sync collection
+      summary: Sync Skill Collection
+      tags:
+      - AI Skills
+  /api/v3/organizations/{organisation}/ai/skills/collections/{namespace}:
+    delete:
+      description: Permanently deletes all skills in the specified namespace.
+      operationId: deleteSkillCollection
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Collection namespace
+        explode: false
+        in: path
+        name: namespace
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteSkillCollection_200_response'
+          description: Collection deleted successfully
+        '403':
+          description: Access denied
+        '404':
+          description: Collection not found
+        '500':
+          description: Failed to delete collection
+      summary: Delete Skill Collection
+      tags:
+      - AI Skills
+components:
+  schemas:
+    deleteSkillCollection_200_response:
+      example:
+        success: true
+        message: Collection deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Collection deleted successfully
+          type: string
+      type: object
+    deleteSkill_200_response:
+      example:
+        success: true
+        message: Skill deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Skill deleted successfully
+          type: string
+      type: object
+    createSkill_request:
+      properties:
+        name:
+          example: code-review
+          type: string
+        description:
+          example: Expert code review with security analysis
+          type: string
+        content:
+          example: You are an expert code reviewer...
+          type: string
+        triggerCondition:
+          example: When the user asks for code review
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        requiredTools:
+          items:
+            type: string
+          type: array
+        namespace:
+          type: string
+        files:
+          type: object
+        disableModelInvocation:
+          type: boolean
+        allowedTools:
+          items:
+            type: string
+          type: array
+        installedBy:
+          type: string
+      required:
+      - content
+      - name
+      - triggerCondition
+      type: object
+    updateSkill_200_response:
+      example:
+        success: true
+        skill: '{}'
+        message: Skill updated successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        skill:
+          type: object
+        message:
+          example: Skill updated successfully
+          type: string
+      type: object
+    syncSkillCollection_200_response:
+      example:
+        skills:
+        - '{}'
+        - '{}'
+        synced: 0
+        removedFromSource:
+        - removedFromSource
+        - removedFromSource
+        created: 6
+        namespace: namespace
+        failed: 1
+      properties:
+        namespace:
+          type: string
+        synced:
+          type: integer
+        created:
+          type: integer
+        failed:
+          type: integer
+        removedFromSource:
+          items:
+            type: string
+          type: array
+        skills:
+          items:
+            type: object
+          type: array
+      type: object
+    getSkill_200_response:
+      example:
+        skill:
+          triggerCondition: triggerCondition
+          requiredTools:
+          - requiredTools
+          - requiredTools
+          installedAt: 2000-01-23 04:56:07+00:00
+          description: description
+          source: '{}'
+          content: content
+          tags:
+          - tags
+          - tags
+          skillId: skillId
+          name: name
+          namespace: namespace
+          files: '{}'
+          disableModelInvocation: true
+          allowedTools:
+          - allowedTools
+          - allowedTools
+          updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        skill:
+          $ref: '#/components/schemas/getSkill_200_response_skill'
+      type: object
+    getSkill_200_response_skill:
+      example:
+        triggerCondition: triggerCondition
+        requiredTools:
+        - requiredTools
+        - requiredTools
+        installedAt: 2000-01-23 04:56:07+00:00
+        description: description
+        source: '{}'
+        content: content
+        tags:
+        - tags
+        - tags
+        skillId: skillId
+        name: name
+        namespace: namespace
+        files: '{}'
+        disableModelInvocation: true
+        allowedTools:
+        - allowedTools
+        - allowedTools
+        updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        skillId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        content:
+          type: string
+        triggerCondition:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        source:
+          type: object
+        requiredTools:
+          items:
+            type: string
+          type: array
+        files:
+          type: object
+        namespace:
+          type: string
+        disableModelInvocation:
+          type: boolean
+        allowedTools:
+          items:
+            type: string
+          type: array
+        installedAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      type: object
+    importSkillCollection_request:
+      properties:
+        namespace:
+          example: superpowers
+          pattern: ^[a-z0-9][a-z0-9-]{0,62}[a-z0-9]$
+          type: string
+        source:
+          $ref: '#/components/schemas/importSkillCollection_request_source'
+        tags:
+          items:
+            type: string
+          type: array
+        installedBy:
+          type: string
+      required:
+      - namespace
+      - source
+      type: object
+    importSkill_request:
+      properties:
+        source:
+          $ref: '#/components/schemas/importSkill_request_source'
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        triggerCondition:
+          type: string
+        requiredTools:
+          items:
+            type: string
+          type: array
+        disableModelInvocation:
+          type: boolean
+        allowedTools:
+          items:
+            type: string
+          type: array
+        installedBy:
+          type: string
+      required:
+      - source
+      type: object
+    importSkillCollection_201_response:
+      example:
+        skills:
+        - '{}'
+        - '{}'
+        imported: 0
+        namespace: namespace
+        failed: 6
+        errors:
+        - '{}'
+        - '{}'
+      properties:
+        namespace:
+          type: string
+        imported:
+          type: integer
+        failed:
+          type: integer
+        skills:
+          items:
+            type: object
+          type: array
+        errors:
+          items:
+            type: object
+          type: array
+      type: object
+    listSkillCollections_200_response_collections_inner:
+      example:
+        skills:
+        - skills
+        - skills
+        namespace: superpowers
+        count: 14
+      properties:
+        namespace:
+          example: superpowers
+          type: string
+        count:
+          example: 14
+          type: integer
+        skills:
+          items:
+            type: string
+          type: array
+      type: object
+    listSkillCollections_200_response:
+      example:
+        collections:
+        - skills:
+          - skills
+          - skills
+          namespace: superpowers
+          count: 14
+        - skills:
+          - skills
+          - skills
+          namespace: superpowers
+          count: 14
+      properties:
+        collections:
+          items:
+            $ref: '#/components/schemas/listSkillCollections_200_response_collections_inner'
+          type: array
+      type: object
+    updateSkill_request:
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        content:
+          type: string
+        triggerCondition:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        requiredTools:
+          items:
+            type: string
+          type: array
+        source:
+          type: object
+        files:
+          type: object
+        disableModelInvocation:
+          type: boolean
+        allowedTools:
+          items:
+            type: string
+          type: array
+        namespace:
+          type: string
+      type: object
+    listSkills_200_response:
+      example:
+        skills:
+        - skillId: skillId
+          triggerCondition: triggerCondition
+          installedAt: 2000-01-23 04:56:07+00:00
+          name: name
+          namespace: namespace
+          description: description
+          source: '{}'
+          tags:
+          - tags
+          - tags
+          updatedAt: 2000-01-23 04:56:07+00:00
+        - skillId: skillId
+          triggerCondition: triggerCondition
+          installedAt: 2000-01-23 04:56:07+00:00
+          name: name
+          namespace: namespace
+          description: description
+          source: '{}'
+          tags:
+          - tags
+          - tags
+          updatedAt: 2000-01-23 04:56:07+00:00
+        count: 0
+      properties:
+        skills:
+          items:
+            $ref: '#/components/schemas/listSkills_200_response_skills_inner'
+          type: array
+        count:
+          type: integer
+      type: object
+    importSkillCollection_request_source:
+      properties:
+        type:
+          enum:
+          - github
+          type: string
+        repo:
+          example: obra/superpowers
+          type: string
+        path:
+          example: skills
+          type: string
+        version:
+          example: main
+          type: string
+      required:
+      - repo
+      - type
+      type: object
+    listSkills_200_response_skills_inner:
+      example:
+        skillId: skillId
+        triggerCondition: triggerCondition
+        installedAt: 2000-01-23 04:56:07+00:00
+        name: name
+        namespace: namespace
+        description: description
+        source: '{}'
+        tags:
+        - tags
+        - tags
+        updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        skillId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        source:
+          type: object
+        triggerCondition:
+          type: string
+        namespace:
+          type: string
+        installedAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      type: object
+    importSkill_201_response:
+      example:
+        skill: '{}'
+        message: message
+      properties:
+        skill:
+          type: object
+        message:
+          type: string
+      type: object
+    importSkill_request_source:
+      properties:
+        type:
+          enum:
+          - skills.sh
+          - github
+          type: string
+        url:
+          type: string
+        repo:
+          type: string
+        path:
+          type: string
+        version:
+          type: string
+      required:
+      - type
+      type: object
+    createSkill_201_response:
+      example:
+        success: true
+        skill: '{}'
+        message: Skill created successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        skill:
+          type: object
+        message:
+          example: Skill created successfully
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

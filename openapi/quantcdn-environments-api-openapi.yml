@@ -1,0 +1,1464 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Environments API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Application environment management and configuration
+  name: Environments
+paths:
+  /api/v3/organizations/{organisation}/applications/{application}/environments:
+    get:
+      operationId: listEnvironments
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/EnvironmentSummary'
+                type: array
+          description: List of environments with summary information including deployment status
+        '404':
+          description: The organisation or application not found
+      summary: Get all environments for an application
+      tags:
+      - Environments
+    post:
+      operationId: createEnvironment
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createEnvironment_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
+          description: The environment created
+        '400':
+          description: The environment data is invalid
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createEnvironment_403_response'
+          description: Environment limit reached - application has reached the maximum number of allowed environments
+      summary: Create a new environment
+      tags:
+      - Environments
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}:
+    delete:
+      operationId: deleteEnvironment
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The environment deleted
+        '404':
+          description: The environment not found
+      summary: Delete an environment
+      tags:
+      - Environments
+    get:
+      operationId: getEnvironment
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnvironmentResponse'
+          description: The environment with runtime details
+        '404':
+          description: The environment not found
+      summary: Get a single environment
+      tags:
+      - Environments
+    put:
+      description: Replaces the entire task definition for the environment based on the provided multi-container compose definition. This will create a new task definition revision and update the ECS service, triggering a redeployment. Optionally accepts minCapacity and maxCapacity at the root level for convenience.
+      operationId: updateEnvironment
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateEnvironment_request'
+        required: true
+      responses:
+        '202':
+          description: Request accepted, compose definition update is processing.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/patchEnvironmentCompose_400_response'
+          description: Invalid compose definition or validation failed.
+        '404':
+          description: Application or environment not found
+      summary: Update Environment Compose Definition
+      tags:
+      - Environments
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/state:
+    put:
+      operationId: updateEnvironmentState
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateEnvironmentState_request'
+        required: true
+      responses:
+        '204':
+          description: The environment state updated
+        '400':
+          description: The environment data is invalid
+      summary: Update the state of an environment
+      tags:
+      - Environments
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/logs:
+    get:
+      description: Retrieves logs from CloudWatch for the specified environment with optional filtering by time range, container, and pattern matching. Supports pagination via nextToken.
+      operationId: getEnvironmentLogs
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Start time for log retrieval (ISO 8601 format or Unix timestamp)
+        explode: true
+        in: query
+        name: startTime
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: End time for log retrieval (ISO 8601 format or Unix timestamp)
+        explode: true
+        in: query
+        name: endTime
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter logs by specific container name
+        explode: true
+        in: query
+        name: containerName
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: CloudWatch Logs filter pattern for searching log content
+        explode: true
+        in: query
+        name: filterPattern
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Maximum number of log entries to return per page
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          maximum: 10000
+          minimum: 1
+          type: integer
+        style: form
+      - description: Pagination token from previous response for retrieving next page of results
+        explode: true
+        in: query
+        name: nextToken
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getEnvironmentLogs_200_response'
+          description: The logs
+        '404':
+          description: The environment not found
+        '422':
+          description: Validation error
+      summary: Get the logs for an environment
+      tags:
+      - Environments
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/metrics:
+    get:
+      description: Retrieves CloudWatch metrics for the specified environment with optional filtering by time range, container, and metric configuration.
+      operationId: getEnvironmentMetrics
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Start time for metrics retrieval (Unix timestamp in milliseconds)
+        explode: true
+        in: query
+        name: startTime
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: End time for metrics retrieval (Unix timestamp in milliseconds)
+        explode: true
+        in: query
+        name: endTime
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Period in seconds for metric aggregation (e.g., 60 for 1 minute, 300 for 5 minutes)
+        explode: true
+        in: query
+        name: period
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Comma-separated list of CloudWatch statistics (e.g., Average, Maximum, Minimum, Sum, SampleCount)
+        explode: true
+        in: query
+        name: statistics
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter metrics by specific container name
+        explode: true
+        in: query
+        name: containerName
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                description: CloudWatch metrics data
+                type: object
+          description: The metrics
+        '404':
+          description: The environment not found
+        '422':
+          description: Validation error
+      summary: Get the metrics for an environment
+      tags:
+      - Environments
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/sync/{type}:
+    get:
+      operationId: listSyncOperations
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The sync type
+        explode: false
+        in: path
+        name: type
+        required: true
+        schema:
+          enum:
+          - database
+          - filesystem
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/SyncOperation'
+                type: array
+          description: The sync operations
+      summary: List the sync operations for an environment
+      tags:
+      - Environments
+    post:
+      operationId: syncToEnvironment
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The sync type
+        explode: false
+        in: path
+        name: type
+        required: true
+        schema:
+          enum:
+          - database
+          - filesystem
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/syncToEnvironment_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SyncOperation'
+          description: The sync operation details
+      summary: Perform a sync operation from a source environment to the current environment
+      tags:
+      - Environments
+components:
+  schemas:
+    Container_environment_inner:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          description: Environment variable name
+          type: string
+        value:
+          description: Environment variable value
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    Container_healthCheck:
+      description: Container health check configuration
+      example:
+        retries: 7
+        startPeriod: 279
+        interval: 171
+        command:
+        - command
+        - command
+        timeout: 15
+      nullable: true
+      properties:
+        command:
+          description: The command to run to determine if the container is healthy
+          items:
+            type: string
+          type: array
+        interval:
+          default: 30
+          description: Time period (seconds) between health checks
+          maximum: 300
+          minimum: 5
+          type: integer
+        timeout:
+          default: 5
+          description: Time period (seconds) to wait for a health check to return
+          maximum: 60
+          minimum: 2
+          type: integer
+        retries:
+          default: 3
+          description: Number of times to retry a failed health check
+          maximum: 10
+          minimum: 1
+          type: integer
+        startPeriod:
+          description: Grace period (seconds) to ignore unhealthy checks after container starts
+          maximum: 300
+          minimum: 0
+          nullable: true
+          type: integer
+      type: object
+    EnvironmentSummary:
+      description: Environment summary returned in list responses
+      example:
+        deploymentStatus: COMPLETED
+        envName: production
+        desiredCount: 2
+        runningCount: 2
+        maxCapacity: 5
+        minCapacity: 1
+        status: ACTIVE
+      properties:
+        envName:
+          description: Environment name
+          example: production
+          type: string
+        status:
+          description: Environment status
+          example: ACTIVE
+          type: string
+        deploymentStatus:
+          description: Current deployment status
+          enum:
+          - COMPLETED
+          - IN_PROGRESS
+          - FAILED
+          example: COMPLETED
+          type: string
+        runningCount:
+          description: Number of running tasks
+          example: 2
+          type: integer
+        desiredCount:
+          description: Desired number of tasks
+          example: 2
+          type: integer
+        minCapacity:
+          description: Minimum capacity for autoscaling
+          example: 1
+          type: integer
+        maxCapacity:
+          description: Maximum capacity for autoscaling
+          example: 5
+          type: integer
+      type: object
+    Container_imageReference:
+      example:
+        identifier: identifier
+        type: internal
+      properties:
+        type:
+          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
+          enum:
+          - internal
+          - external
+          type: string
+        identifier:
+          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
+          type: string
+      required:
+      - identifier
+      - type
+      type: object
+    Container_mountPoints_inner:
+      example:
+        readOnly: false
+        containerPath: containerPath
+        sourceVolume: sourceVolume
+      properties:
+        sourceVolume:
+          description: The name of the logical volume
+          type: string
+        containerPath:
+          description: The path inside the container where the volume is mounted
+          type: string
+        readOnly:
+          default: false
+          type: boolean
+      required:
+      - containerPath
+      - sourceVolume
+      type: object
+    getEnvironmentLogs_200_response_logEvents_inner:
+      example:
+        message: message
+        timestamp: 0
+      properties:
+        timestamp:
+          description: Unix timestamp in milliseconds
+          type: integer
+        message:
+          description: Log message content
+          type: string
+      type: object
+    EnvironmentResponse:
+      description: Environment response schema with runtime details
+      example:
+        cron:
+        - targetContainerName: targetContainerName
+          scheduleExpression: scheduleExpression
+          isEnabled: true
+          name: name
+          description: description
+          command:
+          - command
+          - command
+        - targetContainerName: targetContainerName
+          scheduleExpression: scheduleExpression
+          isEnabled: true
+          name: name
+          description: description
+          command:
+          - command
+          - command
+        deploymentFailureReason: deploymentFailureReason
+        subnet: '{}'
+        publicIpAddress: 54.123.45.67
+        desiredCount: 2
+        vpc: '{}'
+        volumes:
+        - createdAt: createdAt
+          accessPointArn: accessPointArn
+          volumeName: volumeName
+          accessPointId: accessPointId
+          volumeId: volumeId
+          description: description
+          rootDirectory: rootDirectory
+          environmentEfsId: environmentEfsId
+        - createdAt: createdAt
+          accessPointArn: accessPointArn
+          volumeName: volumeName
+          accessPointId: accessPointId
+          volumeId: volumeId
+          description: description
+          rootDirectory: rootDirectory
+          environmentEfsId: environmentEfsId
+        maxCapacity: 5
+        securityGroup: '{}'
+        containerNames:
+        - containerNames
+        - containerNames
+        createdAt: 2000-01-23 04:56:07+00:00
+        deploymentStatus: COMPLETED
+        envName: production
+        service: '{}'
+        loadBalancer: '{}'
+        runningCount: 2
+        deploymentFailureType: deploymentFailureType
+        minCapacity: 1
+        albRouting: '{}'
+        taskDefinition: '{}'
+        status: ACTIVE
+        updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        envName:
+          description: Environment name
+          example: production
+          type: string
+        status:
+          description: Environment status
+          example: ACTIVE
+          readOnly: true
+          type: string
+        runningCount:
+          description: Number of running tasks
+          example: 2
+          readOnly: true
+          type: integer
+        desiredCount:
+          description: Desired number of tasks
+          example: 2
+          readOnly: true
+          type: integer
+        minCapacity:
+          description: Minimum capacity for autoscaling
+          example: 1
+          type: integer
+        maxCapacity:
+          description: Maximum capacity for autoscaling
+          example: 5
+          type: integer
+        publicIpAddress:
+          description: Public IP address for SSH access
+          example: 54.123.45.67
+          nullable: true
+          readOnly: true
+          type: string
+        deploymentStatus:
+          description: Current deployment status
+          enum:
+          - COMPLETED
+          - IN_PROGRESS
+          - FAILED
+          example: COMPLETED
+          readOnly: true
+          type: string
+        deploymentFailureType:
+          description: Type of deployment failure
+          nullable: true
+          readOnly: true
+          type: string
+        deploymentFailureReason:
+          description: Reason for deployment failure
+          nullable: true
+          readOnly: true
+          type: string
+        taskDefinition:
+          description: ECS task definition details
+          readOnly: true
+          type: object
+        service:
+          description: ECS service details
+          readOnly: true
+          type: object
+        loadBalancer:
+          description: Load balancer configuration
+          readOnly: true
+          type: object
+        securityGroup:
+          description: Security group configuration
+          readOnly: true
+          type: object
+        subnet:
+          description: Subnet configuration
+          readOnly: true
+          type: object
+        vpc:
+          description: VPC configuration
+          readOnly: true
+          type: object
+        containerNames:
+          description: Container name list
+          items:
+            type: string
+          readOnly: true
+          type: array
+        volumes:
+          description: Persistent storage volumes
+          items:
+            $ref: '#/components/schemas/Volume'
+          readOnly: true
+          type: array
+        cron:
+          description: Scheduled cron jobs
+          items:
+            $ref: '#/components/schemas/Cron'
+          readOnly: true
+          type: array
+        albRouting:
+          description: ALB routing configuration
+          readOnly: true
+          type: object
+        createdAt:
+          description: Creation timestamp
+          format: date-time
+          readOnly: true
+          type: string
+        updatedAt:
+          description: Last update timestamp
+          format: date-time
+          readOnly: true
+          type: string
+      required:
+      - envName
+      type: object
+    patchEnvironmentCompose_400_response:
+      example:
+        message: message
+        errors: '{}'
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+      type: object
+    Cron:
+      example:
+        targetContainerName: targetContainerName
+        scheduleExpression: scheduleExpression
+        isEnabled: true
+        name: name
+        description: description
+        command:
+        - command
+        - command
+      properties:
+        name:
+          type: string
+        description:
+          nullable: true
+          type: string
+        scheduleExpression:
+          type: string
+        command:
+          items:
+            type: string
+          type: array
+        targetContainerName:
+          nullable: true
+          type: string
+        isEnabled:
+          type: boolean
+      type: object
+    createEnvironment_request_environment_inner:
+      properties:
+        name:
+          description: Variable name
+          type: string
+        value:
+          description: Variable value
+          type: string
+      type: object
+    Compose:
+      example:
+        spotConfiguration:
+          strategy: spot-only
+        taskMemory: 2
+        maxCapacity: 7
+        containers:
+        - originProtectionConfig:
+            ipAllow:
+            - ipAllow
+            - ipAllow
+            enabled: true
+          memory: 6
+          dependsOn:
+          - condition: START
+            containerName: containerName
+          - condition: START
+            containerName: containerName
+          workingDirectory: workingDirectory
+          exposedPorts:
+          - 5
+          - 5
+          cpu: 0
+          imageReference:
+            identifier: identifier
+            type: internal
+          secrets:
+          - name: name
+            valueFrom: valueFrom
+          - name: name
+            valueFrom: valueFrom
+          memoryReservation: 1
+          command:
+          - command
+          - command
+          environment:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          readonlyRootFilesystem: false
+          originProtection: false
+          healthCheck:
+            retries: 7
+            startPeriod: 279
+            interval: 171
+            command:
+            - command
+            - command
+            timeout: 15
+          name: name
+          mountPoints:
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          entryPoint:
+          - entryPoint
+          - entryPoint
+          user: user
+          essential: true
+        - originProtectionConfig:
+            ipAllow:
+            - ipAllow
+            - ipAllow
+            enabled: true
+          memory: 6
+          dependsOn:
+          - condition: START
+            containerName: containerName
+          - condition: START
+            containerName: containerName
+          workingDirectory: workingDirectory
+          exposedPorts:
+          - 5
+          - 5
+          cpu: 0
+          imageReference:
+            identifier: identifier
+            type: internal
+          secrets:
+          - name: name
+            valueFrom: valueFrom
+          - name: name
+            valueFrom: valueFrom
+          memoryReservation: 1
+          command:
+          - command
+          - command
+          environment:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          readonlyRootFilesystem: false
+          originProtection: false
+          healthCheck:
+            retries: 7
+            startPeriod: 279
+            interval: 171
+            command:
+            - command
+            - command
+            timeout: 15
+          name: name
+          mountPoints:
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          entryPoint:
+          - entryPoint
+          - entryPoint
+          user: user
+          essential: true
+        minCapacity: 4
+        taskCpu: 3
+        enableCrossAppNetworking: false
+        architecture: architecture
+        enableCrossEnvNetworking: false
+      properties:
+        containers:
+          items:
+            $ref: '#/components/schemas/Container'
+          type: array
+        architecture:
+          description: CPU architecture (X86_64 or ARM64)
+          nullable: false
+          type: string
+        taskCpu:
+          description: Task-level CPU units (e.g., 256, 512, 1024)
+          nullable: false
+          type: integer
+        taskMemory:
+          description: Task-level memory in MB
+          nullable: false
+          type: integer
+        minCapacity:
+          description: Minimum number of instances
+          nullable: false
+          type: integer
+        maxCapacity:
+          description: Maximum number of instances
+          nullable: false
+          type: integer
+        spotConfiguration:
+          $ref: '#/components/schemas/SpotConfiguration'
+        enableCrossEnvNetworking:
+          default: false
+          description: 'Optional. Enable cross-environment networking within the same application. When false (default): Uses shared security group for complete isolation (most secure). When true: Uses app-specific security group to enable communication between environments of the same application (e.g., staging can connect to production database). Note: If enableCrossAppNetworking is true, this setting is overridden.'
+          nullable: true
+          type: boolean
+        enableCrossAppNetworking:
+          default: false
+          description: 'Optional. Enable cross-application networking within the same organization. When false (default): Uses shared/app-specific security group based on enableCrossEnvNetworking. When true: Uses org-specific security group to enable container-to-container communication with ALL applications in the same organization via service discovery (microservices architecture). This setting takes priority over enableCrossEnvNetworking.'
+          nullable: true
+          type: boolean
+      type: object
+    Volume:
+      example:
+        createdAt: createdAt
+        accessPointArn: accessPointArn
+        volumeName: volumeName
+        accessPointId: accessPointId
+        volumeId: volumeId
+        description: description
+        rootDirectory: rootDirectory
+        environmentEfsId: environmentEfsId
+      properties:
+        volumeId:
+          type: string
+        volumeName:
+          type: string
+        description:
+          type: string
+        environmentEfsId:
+          type: string
+        createdAt:
+          type: string
+        rootDirectory:
+          type: string
+        accessPointId:
+          type: string
+        accessPointArn:
+          type: string
+      type: object
+    createEnvironment_403_response:
+      example:
+        message: Environment limit reached
+        error: Application my-app has reached the maximum number of allowed environments (5/5). Please contact support to increase your limit.
+      properties:
+        message:
+          example: Environment limit reached
+          type: string
+        error:
+          example: Application my-app has reached the maximum number of allowed environments (5/5). Please contact support to increase your limit.
+          type: string
+      type: object
+    updateEnvironment_request:
+      properties:
+        composeDefinition:
+          $ref: '#/components/schemas/Compose'
+        minCapacity:
+          description: Optional. Minimum number of tasks for auto-scaling. If provided at root level, will be merged into composeDefinition.
+          minimum: 0
+          nullable: true
+          type: integer
+        maxCapacity:
+          description: Optional. Maximum number of tasks for auto-scaling. If provided at root level, will be merged into composeDefinition.
+          minimum: 1
+          nullable: true
+          type: integer
+      required:
+      - composeDefinition
+      type: object
+    Container_originProtectionConfig:
+      description: Extended origin protection configuration with IP allow list support
+      example:
+        ipAllow:
+        - ipAllow
+        - ipAllow
+        enabled: true
+      nullable: true
+      properties:
+        enabled:
+          default: true
+          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
+          type: boolean
+        ipAllow:
+          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    Container_dependsOn_inner:
+      example:
+        condition: START
+        containerName: containerName
+      properties:
+        containerName:
+          description: The name of the container this container depends on
+          type: string
+        condition:
+          description: The condition to wait for on the dependency
+          enum:
+          - START
+          - HEALTHY
+          - COMPLETE
+          - SUCCESS
+          type: string
+      required:
+      - containerName
+      type: object
+    createEnvironment_request:
+      properties:
+        envName:
+          description: Environment name (e.g., 'staging', 'development')
+          type: string
+        minCapacity:
+          description: Minimum number of instances
+          type: integer
+        maxCapacity:
+          description: Maximum number of instances
+          type: integer
+        cloneConfigurationFrom:
+          description: Clone configuration from an existing environment
+          type: string
+        composeDefinition:
+          $ref: '#/components/schemas/Compose'
+        imageSuffix:
+          description: Optional image tag suffix for cloning
+          pattern: ^[a-z0-9]([a-z0-9-]*[a-z0-9])?$
+          type: string
+        spotConfiguration:
+          $ref: '#/components/schemas/SpotConfiguration'
+        environment:
+          description: Environment variables to inject
+          items:
+            $ref: '#/components/schemas/createEnvironment_request_environment_inner'
+          type: array
+        mergeEnvironment:
+          description: 'Whether to merge environment variables with cloned ones (true) or replace them (false). Default: false'
+          type: boolean
+      required:
+      - envName
+      type: object
+    syncToEnvironment_request:
+      properties:
+        sourceEnvironment:
+          type: string
+      type: object
+    Container:
+      example:
+        originProtectionConfig:
+          ipAllow:
+          - ipAllow
+          - ipAllow
+          enabled: true
+        memory: 6
+        dependsOn:
+        - condition: START
+          containerName: containerName
+        - condition: START
+          containerName: containerName
+        workingDirectory: workingDirectory
+        exposedPorts:
+        - 5
+        - 5
+        cpu: 0
+        imageReference:
+          identifier: identifier
+          type: internal
+        secrets:
+        - name: name
+          valueFrom: valueFrom
+        - name: name
+          valueFrom: valueFrom
+        memoryReservation: 1
+        command:
+        - command
+        - command
+        environment:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        readonlyRootFilesystem: false
+        originProtection: false
+        healthCheck:
+          retries: 7
+          startPeriod: 279
+          interval: 171
+          command:
+          - command
+          - command
+          timeout: 15
+        name: name
+        mountPoints:
+        - readOnly: false
+          containerPath: containerPath
+          sourceVolume: sourceVolume
+        - readOnly: false
+          containerPath: containerPath
+          sourceVolume: sourceVolume
+        entryPoint:
+        - entryPoint
+        - entryPoint
+        user: user
+        essential: true
+      properties:
+        name:
+          description: Name of the container
+          pattern: ^[a-zA-Z0-9_-]+$
+          type: string
+        imageReference:
+          $ref: '#/components/schemas/Container_imageReference'
+        cpu:
+          description: Container-level CPU units
+          nullable: true
+          type: integer
+        memory:
+          description: Container-level memory hard limit (MiB)
+          nullable: true
+          type: integer
+        memoryReservation:
+          description: Container-level memory soft limit (MiB)
+          nullable: true
+          type: integer
+        exposedPorts:
+          description: List of container ports to expose
+          items:
+            type: integer
+          nullable: true
+          type: array
+        mountPoints:
+          items:
+            $ref: '#/components/schemas/Container_mountPoints_inner'
+          nullable: true
+          type: array
+        environment:
+          description: Environment variables specific to this container
+          items:
+            $ref: '#/components/schemas/Container_environment_inner'
+          nullable: true
+          type: array
+        secrets:
+          description: Secrets mapped to environment variables
+          items:
+            $ref: '#/components/schemas/Container_secrets_inner'
+          nullable: true
+          type: array
+        healthCheck:
+          $ref: '#/components/schemas/Container_healthCheck'
+        dependsOn:
+          description: Container startup dependencies
+          items:
+            $ref: '#/components/schemas/Container_dependsOn_inner'
+          nullable: true
+          type: array
+        command:
+          items:
+            type: string
+          nullable: true
+          type: array
+        entryPoint:
+          items:
+            type: string
+          nullable: true
+          type: array
+        workingDirectory:
+          nullable: true
+          type: string
+        essential:
+          default: true
+          nullable: true
+          type: boolean
+        readonlyRootFilesystem:
+          default: false
+          nullable: true
+          type: boolean
+        user:
+          nullable: true
+          type: string
+        originProtection:
+          default: false
+          description: Enable origin protection for all exposed ports on this container. Use originProtectionConfig for advanced options like IP allow lists.
+          nullable: true
+          type: boolean
+        originProtectionConfig:
+          $ref: '#/components/schemas/Container_originProtectionConfig'
+      required:
+      - imageReference
+      - name
+      type: object
+    getEnvironmentLogs_200_response:
+      example:
+        logEvents:
+        - message: message
+          timestamp: 0
+        - message: message
+          timestamp: 0
+        nextToken: nextToken
+      properties:
+        logEvents:
+          description: Array of log events
+          items:
+            $ref: '#/components/schemas/getEnvironmentLogs_200_response_logEvents_inner'
+          type: array
+        nextToken:
+          description: Token for fetching next page of results (null if no more pages)
+          nullable: true
+          type: string
+      type: object
+    Container_secrets_inner:
+      example:
+        name: name
+        valueFrom: valueFrom
+      properties:
+        name:
+          description: The environment variable name to be set in the container
+          type: string
+        valueFrom:
+          description: The key of the secret in the environment's 'app-secrets' store
+          type: string
+      required:
+      - name
+      - valueFrom
+      type: object
+    SpotConfiguration:
+      description: Spot instance strategy configuration for controlling cost vs reliability. Spot instances provide significant cost savings (~70%) but may be interrupted by AWS. Available for non-production environments.
+      example:
+        strategy: spot-only
+      properties:
+        strategy:
+          default: spot-only
+          description: Spot instance strategy. 'off' = On-Demand only (highest reliability, no savings). 'spot-only' = 100% Spot instances (~70% savings, default for non-prod). 'mixed-safe' = 50% Spot instances (~35% savings, requires multiple instances). 'mixed-aggressive' = 80% Spot instances (~56% savings, requires multiple instances).
+          enum:
+          - 'off'
+          - spot-only
+          - mixed-safe
+          - mixed-aggressive
+          example: spot-only
+          type: string
+      required:
+      - strategy
+      type: object
+    SyncOperation:
+      example:
+        createdAt: createdAt
+        completedAt: completedAt
+        targetEnvironment: targetEnvironment
+        syncType: syncType
+        sourceEnvironment: sourceEnvironment
+        syncId: syncId
+        status: status
+      properties:
+        syncId:
+          type: string
+        syncType:
+          type: string
+        sourceEnvironment:
+          type: string
+        targetEnvironment:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+        completedAt:
+          type: string
+      type: object
+    updateEnvironmentState_request:
+      properties:
+        action:
+          type: string
+        imageTag:
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

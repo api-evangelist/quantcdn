@@ -1,0 +1,4954 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Rules API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Edge rules (redirects, authentication, proxies, etc.)
+  name: Rules
+paths:
+  /api/v2/organizations/{organization}/projects/{project}/rules/auth:
+    get:
+      operationId: RulesAuth_list
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleAuth'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List authentication rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesAuth_create
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleAuthRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleAuth'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create an authentication rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/auth/{rule}:
+    delete:
+      operationId: RulesAuth_delete
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete an authentication rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesAuth_read
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleAuth'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of an authentication rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesAuth_update
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleAuthRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleAuth'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update an authentication rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/bot-challenge:
+    get:
+      operationId: RulesBotChallenge_list
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleBotChallenge'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List bot challenge rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesBotChallenge_create
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleBotChallengeRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleBotChallenge'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a bot challenge rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/bot-challenge/{rule}:
+    delete:
+      operationId: RulesBotChallenge_delete
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a bot challenge rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesBotChallenge_read
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleBotChallenge'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a bot challenge rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesBotChallenge_update
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleBotChallengeRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleBotChallenge'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a bot challenge rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/content-filter:
+    get:
+      operationId: RulesContentFilter_list
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleContentFilter'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List content filter rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesContentFilter_create
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleContentFilterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleContentFilter'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a content filter rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/content-filter/{rule}:
+    delete:
+      operationId: RulesContentFilter_delete
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a content filter rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesContentFilter_read
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleContentFilter'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a content filter rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesContentFilter_update
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleContentFilterRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleContentFilter'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a content filter rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/custom-response:
+    get:
+      operationId: RulesCustomResponse_list
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleCustomResponse'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List custom response rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesCustomResponse_create
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleCustomResponseRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleCustomResponse'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a custom response rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/custom-response/{rule}:
+    delete:
+      operationId: RulesCustomResponse_delete
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a custom response rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesCustomResponse_read
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleCustomResponse'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a custom response rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesCustomResponse_update
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleCustomResponseRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleCustomResponse'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a custom response rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/function:
+    get:
+      operationId: RulesFunction_list
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleFunction'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List edge function rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesFunction_create
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleFunctionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleFunction'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create an edge function rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/function/{rule}:
+    delete:
+      operationId: RulesFunction_delete
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete an edge function rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesFunction_read
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleFunction'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of an edge function rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesFunction_update
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleFunctionRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleFunction'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update an edge function rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/headers:
+    get:
+      operationId: RulesHeaders_list
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleHeader'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List header rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesHeaders_create
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleHeaderRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleHeader'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a header rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/headers/{rule}:
+    delete:
+      operationId: RulesHeaders_delete
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a header rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesHeaders_read
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleHeader'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a header rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesHeaders_update
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleHeaderRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleHeader'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a header rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/proxy:
+    get:
+      operationId: RulesProxy_list
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleProxy'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List proxy rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesProxy_create
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleProxyRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleProxy'
+          description: The request has succeeded and a new resource has been created as a result.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a proxy rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/proxy/{rule}:
+    delete:
+      operationId: RulesProxy_delete
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a proxy rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesProxy_read
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleProxy'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a proxy rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesProxy_update
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleProxyRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleProxy'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a proxy rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/redirect:
+    get:
+      operationId: RulesRedirect_list
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleRedirect'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List redirect rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesRedirect_create
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleRedirectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleRedirect'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a redirect rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/redirect/{rule}:
+    delete:
+      operationId: RulesRedirect_delete
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a redirect rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesRedirect_read
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleRedirect'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a redirect rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesRedirect_update
+      parameters:
+      - explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleRedirectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleRedirect'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a redirect rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/serve-static:
+    get:
+      operationId: RulesServeStatic_list
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2RuleServeStatic'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List serve static rules
+      tags:
+      - Rules
+    post:
+      operationId: RulesServeStatic_create
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleServeStaticRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleServeStatic'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a serve static rule
+      tags:
+      - Rules
+  /api/v2/organizations/{organization}/projects/{project}/rules/serve-static/{rule}:
+    delete:
+      operationId: RulesServeStatic_delete
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a serve static rule
+      tags:
+      - Rules
+    get:
+      operationId: RulesServeStatic_read
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleServeStatic'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a serve static rule
+      tags:
+      - Rules
+    patch:
+      operationId: RulesServeStatic_update
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Rule identifier
+        explode: false
+        in: path
+        name: rule
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2RuleServeStaticRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2RuleServeStatic'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a serve static rule
+      tags:
+      - Rules
+components:
+  schemas:
+    V2RuleBotChallengeAction:
+      example:
+        robot_challenge_type: invisible
+        robot_challenge_verification_ttl: 10800
+        robot_challenge_challenge_ttl: 30
+      properties:
+        robot_challenge_type:
+          description: Challenge type (invisible or checkbox)
+          example: invisible
+          type: string
+        robot_challenge_verification_ttl:
+          default: 10800
+          description: Verification TTL in seconds
+          example: 10800
+          type: integer
+        robot_challenge_challenge_ttl:
+          default: 30
+          description: Challenge TTL in seconds
+          example: 30
+          type: integer
+      required:
+      - robot_challenge_type
+      type: object
+    V2RuleHeaderRequest:
+      allOf:
+      - $ref: '#/components/schemas/V2RuleRequest'
+      - properties:
+          headers:
+            additionalProperties:
+              type: string
+            description: Headers to set
+            example:
+              X-Custom-Header: value
+              Cache-Control: max-age=3600
+            type: object
+        required:
+        - headers
+        type: object
+      example:
+        country: country_is
+        headers:
+          X-Custom-Header: value
+          Cache-Control: max-age=3600
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      type: object
+    V2RuleContentFilter:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleContentFilterAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+      type: object
+    V2RuleFunction:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleFunctionAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+      type: object
+    V2RuleRedirectRequest:
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        redirect_code: '301'
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        redirect_to: https://test-domain.com/new-path
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      properties:
+        domain:
+          description: 'Domain patterns (default: any)'
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        name:
+          description: Rule name
+          example: Test redirect rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        url:
+          description: URL patterns
+          example:
+          - /old-path/*
+          - /legacy/*
+          items:
+            type: string
+          type: array
+        country:
+          description: Country filter type (country_is, country_is_not, any)
+          example: country_is
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        method:
+          description: Method filter type (method_is, method_is_not, any)
+          example: method_is
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP filter type (ip_is, ip_is_not, any)
+          example: ip_is
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+        redirect_to:
+          description: Redirect destination URL
+          example: https://test-domain.com/new-path
+          type: string
+        redirect_code:
+          default: '301'
+          description: HTTP status code for redirect
+          example: '301'
+          type: string
+      required:
+      - domain
+      - redirect_to
+      - url
+      type: object
+    V2RuleCustomResponse:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleCustomResponseAction'
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          custom_response_status_code: 503
+          custom_response_body: <html><body>Custom maintenance page</body></html>
+      type: object
+    WafConfig_block_lists:
+      description: Enable predefined block lists
+      example:
+        referer: false
+        ip: false
+        ai: false
+        user_agent: false
+      properties:
+        user_agent:
+          default: false
+          description: Block known bad user agents
+          type: boolean
+        referer:
+          default: false
+          description: Block known bad referers
+          type: boolean
+        ip:
+          default: false
+          description: Block known bad IPs
+          type: boolean
+        ai:
+          default: false
+          description: Block AI crawlers
+          type: boolean
+      type: object
+    V2RuleServeStaticRequest:
+      allOf:
+      - $ref: '#/components/schemas/V2RuleRequest'
+      - properties:
+          static_file_path:
+            description: Path to the static file to serve
+            example: /index.html
+            type: string
+        required:
+        - static_file_path
+        type: object
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        static_file_path: /index.html
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      type: object
+    V2RuleProxy:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          rule_id:
+            description: Rule ID
+            type: string
+          action_config:
+            $ref: '#/components/schemas/V2RuleProxyAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule_id
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          cache_lifetime: '3600'
+          proxy_strip_request_headers:
+          - Cookie
+          - Authorization
+          application_proxy: false
+          quant_cloud_selection:
+            app: my-app
+            container: web
+            port: 80
+            env: production
+          application_container: web
+          static_error_page: <html><body>Service temporarily unavailable</body></html>
+          proxy_strip_headers:
+          - Set-Cookie
+          - Server
+          notify_config:
+            webhook_url: https://hooks.slack.com/services/XXXXXX
+          notify: slack
+          application_name: my-app
+          auth_user: admin
+          host: backend.test-domain.com
+          waf_enabled: false
+          proxy_inline_fn_enabled: false
+          auth_pass: secure_password
+          application_port: 80
+          static_error_page_status_codes:
+          - '500'
+          - '502'
+          - '503'
+          - '504'
+          failover_mode: true
+          application_environment: production
+          origin_timeout: '30'
+          failover_origin_ttfb: '2000'
+          only_proxy_404: false
+          inject_headers:
+            X-Custom-Header: value
+            Authorization: Bearer token
+          to: https://backend.test-domain.com
+          disable_ssl_verify: false
+          failover_lifetime: '300'
+          waf_config:
+            block_lists:
+              referer: false
+              ip: false
+              ai: false
+              user_agent: false
+            allow_rules:
+            - allow_rules
+            - allow_rules
+            httpbl:
+              block_harvester: false
+              httpbl_enabled: false
+              block_spam: false
+              httpbl_key: httpbl_key
+              block_search_engine: false
+              block_suspicious: false
+            notify_slack_hits_rpm: 100
+            allow_ip:
+            - allow_ip
+            - allow_ip
+            block_asn:
+            - block_asn
+            - block_asn
+            mode: report
+            thresholds:
+            - hits: 10
+              mode: disabled
+              rps: 10
+              minutes: 5
+              cooldown: 30
+              type: ip
+              value: value
+              notify_slack: notify_slack
+            - hits: 10
+              mode: disabled
+              rps: 10
+              minutes: 5
+              cooldown: 30
+              type: ip
+              value: value
+              notify_slack: notify_slack
+            notify_email:
+            - notify_email
+            - notify_email
+            block_ip:
+            - block_ip
+            - block_ip
+            block_referer:
+            - block_referer
+            - block_referer
+            block_ua:
+            - block_ua
+            - block_ua
+            notify_slack: https://hooks.slack.com/services/XXX
+            paranoia_level: 1
+          failover_origin_status_codes:
+          - '200'
+          - '404'
+          - '301'
+          - '302'
+          - '304'
+          proxy_alert_enabled: false
+      type: object
+    WafConfig:
+      description: Web Application Firewall configuration
+      example:
+        block_lists:
+          referer: false
+          ip: false
+          ai: false
+          user_agent: false
+        allow_rules:
+        - allow_rules
+        - allow_rules
+        httpbl:
+          block_harvester: false
+          httpbl_enabled: false
+          block_spam: false
+          httpbl_key: httpbl_key
+          block_search_engine: false
+          block_suspicious: false
+        notify_slack_hits_rpm: 100
+        allow_ip:
+        - allow_ip
+        - allow_ip
+        block_asn:
+        - block_asn
+        - block_asn
+        mode: report
+        thresholds:
+        - hits: 10
+          mode: disabled
+          rps: 10
+          minutes: 5
+          cooldown: 30
+          type: ip
+          value: value
+          notify_slack: notify_slack
+        - hits: 10
+          mode: disabled
+          rps: 10
+          minutes: 5
+          cooldown: 30
+          type: ip
+          value: value
+          notify_slack: notify_slack
+        notify_email:
+        - notify_email
+        - notify_email
+        block_ip:
+        - block_ip
+        - block_ip
+        block_referer:
+        - block_referer
+        - block_referer
+        block_ua:
+        - block_ua
+        - block_ua
+        notify_slack: https://hooks.slack.com/services/XXX
+        paranoia_level: 1
+      properties:
+        mode:
+          default: report
+          description: WAF operation mode
+          enum:
+          - report
+          - block
+          type: string
+        paranoia_level:
+          default: 1
+          description: OWASP paranoia level
+          maximum: 4
+          minimum: 1
+          type: integer
+        allow_rules:
+          description: WAF rule IDs to allow/whitelist
+          items:
+            type: string
+          type: array
+        allow_ip:
+          description: IP addresses to allow
+          items:
+            type: string
+          type: array
+        block_ip:
+          description: IP addresses to block
+          items:
+            type: string
+          type: array
+        block_asn:
+          description: ASN numbers to block
+          items:
+            type: string
+          type: array
+        block_ua:
+          description: User agent patterns to block
+          items:
+            type: string
+          type: array
+        block_referer:
+          description: Referer patterns to block
+          items:
+            type: string
+          type: array
+        notify_slack:
+          description: Slack webhook URL for notifications
+          example: https://hooks.slack.com/services/XXX
+          type: string
+        notify_slack_hits_rpm:
+          description: Minimum hits per minute to trigger Slack notification
+          example: 100
+          type: integer
+        notify_email:
+          description: Email addresses for notifications
+          items:
+            type: string
+          type: array
+        httpbl:
+          $ref: '#/components/schemas/WafConfig_httpbl'
+        block_lists:
+          $ref: '#/components/schemas/WafConfig_block_lists'
+        thresholds:
+          description: Rate limiting thresholds
+          items:
+            $ref: '#/components/schemas/WafConfig_thresholds_inner'
+          type: array
+      type: object
+    V2RuleBotChallengeRequest:
+      allOf:
+      - $ref: '#/components/schemas/V2RuleRequest'
+      - properties:
+          robot_challenge_type:
+            description: Challenge type (invisible or checkbox)
+            example: invisible
+            type: string
+          robot_challenge_verification_ttl:
+            default: 10800
+            description: Verification TTL in seconds
+            example: 10800
+            type: integer
+          robot_challenge_challenge_ttl:
+            default: 30
+            description: Challenge TTL in seconds
+            example: 30
+            type: integer
+        required:
+        - robot_challenge_type
+        type: object
+      example:
+        country: country_is
+        robot_challenge_type: invisible
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        robot_challenge_verification_ttl: 10800
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        robot_challenge_challenge_ttl: 30
+        disabled: false
+        asn: any
+      type: object
+    V2RuleAuth:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleAuthAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          auth_user: admin
+          auth_pass: secure_password123
+      type: object
+    V2RuleProxyAction_notify_config:
+      description: Notification configuration (required when notify is slack)
+      example:
+        webhook_url: https://hooks.slack.com/services/XXXXXX
+      nullable: true
+      properties:
+        webhook_url:
+          description: Slack webhook URL
+          example: https://hooks.slack.com/services/XXXXXX
+          type: string
+      type: object
+    V2RuleBotChallenge:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleBotChallengeAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          robot_challenge_type: invisible
+          robot_challenge_verification_ttl: 10800
+          robot_challenge_challenge_ttl: 30
+      type: object
+    WafConfig_thresholds_inner:
+      example:
+        hits: 10
+        mode: disabled
+        rps: 10
+        minutes: 5
+        cooldown: 30
+        type: ip
+        value: value
+        notify_slack: notify_slack
+      properties:
+        type:
+          description: Threshold type
+          enum:
+          - ip
+          - header
+          - waf_hit_by_ip
+          type: string
+        rps:
+          description: Requests per second limit (for ip/header)
+          example: 10
+          type: integer
+        hits:
+          description: Hit count limit (for waf_hit_by_ip)
+          example: 10
+          type: integer
+        minutes:
+          description: Time window in minutes (for waf_hit_by_ip)
+          example: 5
+          type: integer
+        cooldown:
+          description: Cooldown period in seconds
+          example: 30
+          type: integer
+        mode:
+          default: disabled
+          description: Threshold enforcement mode
+          enum:
+          - disabled
+          - report
+          - block
+          type: string
+        value:
+          description: Header name (for header type)
+          nullable: true
+          type: string
+        notify_slack:
+          description: Slack webhook for this threshold
+          nullable: true
+          type: string
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    V2RuleCustomResponseRequest:
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        status_code: 503
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        custom_response_status_code: 503
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        custom_response_body: <html><body>Custom maintenance page</body></html>
+        body: <html><body>Maintenance</body></html>
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /maintenance
+        - /down
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test custom response rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      properties:
+        domain:
+          description: 'Domain patterns (default: any)'
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        name:
+          description: Rule name
+          example: Test custom response rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        url:
+          description: URL patterns
+          example:
+          - /maintenance
+          - /down
+          items:
+            type: string
+          type: array
+        country:
+          description: Country filter type (country_is, country_is_not, any)
+          example: country_is
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        method:
+          description: Method filter type (method_is, method_is_not, any)
+          example: method_is
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP filter type (ip_is, ip_is_not, any)
+          example: ip_is
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+        custom_response_body:
+          description: Custom response body content
+          example: <html><body>Custom maintenance page</body></html>
+          type: string
+        custom_response_status_code:
+          default: 200
+          description: HTTP status code for custom response
+          example: 503
+          type: integer
+        status_code:
+          description: Legacy field for status code (deprecated)
+          example: 503
+          type: integer
+        body:
+          description: Legacy field for response body (deprecated)
+          example: <html><body>Maintenance</body></html>
+          type: string
+      required:
+      - custom_response_body
+      - domain
+      - url
+      type: object
+    V2RuleAuthRequest:
+      allOf:
+      - $ref: '#/components/schemas/V2RuleRequest'
+      - properties:
+          auth_user:
+            description: Authentication username
+            example: admin
+            type: string
+          auth_pass:
+            description: Authentication password
+            example: secure_password123
+            type: string
+        required:
+        - auth_pass
+        - auth_user
+        type: object
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        auth_user: admin
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        auth_pass: secure_password123
+        disabled: false
+        asn: any
+      type: object
+    V2RuleProxyAction_quant_cloud_selection:
+      description: Quant Cloud application proxy selection (populated automatically when application_proxy is enabled)
+      example:
+        app: my-app
+        container: web
+        port: 80
+        env: production
+      nullable: true
+      properties:
+        app:
+          description: Application name
+          example: my-app
+          type: string
+        env:
+          description: Environment name
+          example: production
+          type: string
+        container:
+          description: Container name
+          example: web
+          type: string
+        port:
+          description: Container port
+          example: 80
+          type: integer
+      type: object
+    V2RuleRedirectAction:
+      example:
+        status_code: '301'
+        to: https://test-domain.com/new-path
+      properties:
+        to:
+          description: Redirect destination URL
+          example: https://test-domain.com/new-path
+          type: string
+        status_code:
+          default: '301'
+          description: HTTP status code for redirect
+          example: '301'
+          type: string
+      required:
+      - to
+      type: object
+    V2RuleCustomResponseAction:
+      example:
+        custom_response_status_code: 503
+        custom_response_body: <html><body>Custom maintenance page</body></html>
+      properties:
+        custom_response_body:
+          description: Custom response body content
+          example: <html><body>Custom maintenance page</body></html>
+          type: string
+        custom_response_status_code:
+          default: 200
+          description: HTTP status code for custom response
+          example: 503
+          type: integer
+      required:
+      - custom_response_body
+      type: object
+    V2RuleFunctionRequest:
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test function rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      properties:
+        domain:
+          description: 'Domain patterns (default: any)'
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        name:
+          description: Rule name
+          example: Test function rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        url:
+          description: URL patterns
+          example:
+          - /*
+          items:
+            type: string
+          type: array
+        country:
+          description: Country filter type (country_is, country_is_not, any)
+          example: country_is
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        method:
+          description: Method filter type (method_is, method_is_not, any)
+          example: method_is
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP filter type (ip_is, ip_is_not, any)
+          example: ip_is
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+        fn_uuid:
+          description: Function UUID
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+          type: string
+      required:
+      - domain
+      - fn_uuid
+      - url
+      type: object
+    V2RuleServeStatic:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleServeStaticAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          static_file_path: /index.html
+      type: object
+    WafConfig_httpbl:
+      description: Project Honey Pot HTTP:BL configuration
+      example:
+        block_harvester: false
+        httpbl_enabled: false
+        block_spam: false
+        httpbl_key: httpbl_key
+        block_search_engine: false
+        block_suspicious: false
+      properties:
+        httpbl_enabled:
+          default: false
+          description: Enable HTTP:BL
+          type: boolean
+        block_suspicious:
+          default: false
+          description: Block suspicious IPs
+          type: boolean
+        block_harvester:
+          default: false
+          description: Block email harvesters
+          type: boolean
+        block_spam:
+          default: false
+          description: Block spam sources
+          type: boolean
+        block_search_engine:
+          default: false
+          description: Block search engines
+          type: boolean
+        httpbl_key:
+          description: HTTP:BL API key
+          type: string
+      type: object
+    V2RuleProxyAction:
+      example:
+        cache_lifetime: '3600'
+        proxy_strip_request_headers:
+        - Cookie
+        - Authorization
+        application_proxy: false
+        quant_cloud_selection:
+          app: my-app
+          container: web
+          port: 80
+          env: production
+        application_container: web
+        static_error_page: <html><body>Service temporarily unavailable</body></html>
+        proxy_strip_headers:
+        - Set-Cookie
+        - Server
+        notify_config:
+          webhook_url: https://hooks.slack.com/services/XXXXXX
+        notify: slack
+        application_name: my-app
+        auth_user: admin
+        host: backend.test-domain.com
+        waf_enabled: false
+        proxy_inline_fn_enabled: false
+        auth_pass: secure_password
+        application_port: 80
+        static_error_page_status_codes:
+        - '500'
+        - '502'
+        - '503'
+        - '504'
+        failover_mode: true
+        application_environment: production
+        origin_timeout: '30'
+        failover_origin_ttfb: '2000'
+        only_proxy_404: false
+        inject_headers:
+          X-Custom-Header: value
+          Authorization: Bearer token
+        to: https://backend.test-domain.com
+        disable_ssl_verify: false
+        failover_lifetime: '300'
+        waf_config:
+          block_lists:
+            referer: false
+            ip: false
+            ai: false
+            user_agent: false
+          allow_rules:
+          - allow_rules
+          - allow_rules
+          httpbl:
+            block_harvester: false
+            httpbl_enabled: false
+            block_spam: false
+            httpbl_key: httpbl_key
+            block_search_engine: false
+            block_suspicious: false
+          notify_slack_hits_rpm: 100
+          allow_ip:
+          - allow_ip
+          - allow_ip
+          block_asn:
+          - block_asn
+          - block_asn
+          mode: report
+          thresholds:
+          - hits: 10
+            mode: disabled
+            rps: 10
+            minutes: 5
+            cooldown: 30
+            type: ip
+            value: value
+            notify_slack: notify_slack
+          - hits: 10
+            mode: disabled
+            rps: 10
+            minutes: 5
+            cooldown: 30
+            type: ip
+            value: value
+            notify_slack: notify_slack
+          notify_email:
+          - notify_email
+          - notify_email
+          block_ip:
+          - block_ip
+          - block_ip
+          block_referer:
+          - block_referer
+          - block_referer
+          block_ua:
+          - block_ua
+          - block_ua
+          notify_slack: https://hooks.slack.com/services/XXX
+          paranoia_level: 1
+        failover_origin_status_codes:
+        - '200'
+        - '404'
+        - '301'
+        - '302'
+        - '304'
+        proxy_alert_enabled: false
+      properties:
+        to:
+          description: Target URL to proxy to
+          example: https://backend.test-domain.com
+          type: string
+        host:
+          description: Host header override
+          example: backend.test-domain.com
+          type: string
+        auth_user:
+          description: Basic auth username
+          example: admin
+          type: string
+        auth_pass:
+          description: Basic auth password
+          example: secure_password
+          type: string
+        disable_ssl_verify:
+          default: false
+          description: Disable SSL verification
+          example: false
+          type: boolean
+        cache_lifetime:
+          description: Cache lifetime
+          example: '3600'
+          nullable: true
+          type: string
+        only_proxy_404:
+          default: false
+          description: Only proxy 404 responses
+          example: false
+          type: boolean
+        inject_headers:
+          additionalProperties:
+            type: string
+          description: Headers to inject
+          example:
+            X-Custom-Header: value
+            Authorization: Bearer token
+          nullable: true
+          type: object
+        proxy_strip_headers:
+          description: Headers to strip from response
+          example:
+          - Set-Cookie
+          - Server
+          items:
+            type: string
+          type: array
+        proxy_strip_request_headers:
+          description: Headers to strip from request
+          example:
+          - Cookie
+          - Authorization
+          items:
+            type: string
+          type: array
+        origin_timeout:
+          description: Origin timeout
+          example: '30'
+          type: string
+        failover_mode:
+          default: false
+          description: Enable failover mode
+          example: true
+          type: boolean
+        failover_origin_ttfb:
+          default: '2000'
+          description: Failover TTFB threshold
+          example: '2000'
+          type: string
+        failover_origin_status_codes:
+          description: 'Status codes for failover (default: 200,404,301,302,304)'
+          example:
+          - '200'
+          - '404'
+          - '301'
+          - '302'
+          - '304'
+          items:
+            type: string
+          type: array
+        failover_lifetime:
+          default: '300'
+          description: Failover cache lifetime
+          example: '300'
+          type: string
+        notify:
+          default: none
+          description: Notification type (none, slack)
+          enum:
+          - none
+          - slack
+          example: slack
+          type: string
+        notify_config:
+          $ref: '#/components/schemas/V2RuleProxyAction_notify_config'
+        waf_enabled:
+          default: false
+          description: WAF enabled
+          example: false
+          type: boolean
+        waf_config:
+          $ref: '#/components/schemas/WafConfig'
+        proxy_alert_enabled:
+          description: Proxy alert enabled
+          example: false
+          type: boolean
+        proxy_inline_fn_enabled:
+          default: false
+          description: Proxy inline function enabled
+          example: false
+          type: boolean
+        application_proxy:
+          default: false
+          description: Enable Quant Cloud application proxy mode
+          example: false
+          type: boolean
+        application_name:
+          description: Quant Cloud application name (required when application_proxy is true)
+          example: my-app
+          type: string
+        application_environment:
+          description: Quant Cloud application environment (required when application_proxy is true)
+          example: production
+          type: string
+        application_container:
+          description: Quant Cloud application container (required when application_proxy is true)
+          example: web
+          type: string
+        application_port:
+          description: Quant Cloud application port (required when application_proxy is true)
+          example: 80
+          type: integer
+        quant_cloud_selection:
+          $ref: '#/components/schemas/V2RuleProxyAction_quant_cloud_selection'
+        static_error_page:
+          description: Static error page content (HTML) to serve on origin errors
+          example: <html><body>Service temporarily unavailable</body></html>
+          nullable: true
+          type: string
+        static_error_page_status_codes:
+          description: Origin status codes that trigger static error page
+          example:
+          - '500'
+          - '502'
+          - '503'
+          - '504'
+          items:
+            type: string
+          type: array
+      required:
+      - to
+      type: object
+    V2RuleContentFilterRequest:
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test content filter rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      properties:
+        domain:
+          description: 'Domain patterns (default: any)'
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        name:
+          description: Rule name
+          example: Test content filter rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        url:
+          description: URL patterns
+          example:
+          - /*
+          items:
+            type: string
+          type: array
+        country:
+          description: Country filter type (country_is, country_is_not, any)
+          example: country_is
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        method:
+          description: Method filter type (method_is, method_is_not, any)
+          example: method_is
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP filter type (ip_is, ip_is_not, any)
+          example: ip_is
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+        fn_uuid:
+          description: Function UUID
+          example: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+          type: string
+      required:
+      - domain
+      - fn_uuid
+      - url
+      type: object
+    V2RuleAuthAction:
+      example:
+        auth_user: admin
+        auth_pass: secure_password123
+      properties:
+        auth_user:
+          description: Authentication username
+          example: admin
+          type: string
+        auth_pass:
+          description: Authentication password
+          example: secure_password123
+          type: string
+      required:
+      - auth_pass
+      - auth_user
+      type: object
+    V2RuleProxyRequest:
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        cache_lifetime: '3600'
+        proxy_strip_request_headers:
+        - Cookie
+        - Authorization
+        application_proxy: false
+        method_is:
+        - GET
+        - POST
+        application_container: web
+        method_is_not:
+        - DELETE
+        - PUT
+        static_error_page: <html><body>Service temporarily unavailable</body></html>
+        proxy_strip_headers:
+        - Set-Cookie
+        - Server
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        application_name: my-app
+        auth_user: admin
+        host: backend.test-domain.com
+        waf_enabled: false
+        auth_pass: secure_pass
+        disabled: false
+        application_port: 80
+        static_error_page_status_codes:
+        - '500'
+        - '502'
+        - '503'
+        - '504'
+        failover_mode: true
+        application_environment: production
+        origin_timeout: '30'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        failover_origin_ttfb: '2000'
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        url:
+        - /api/*
+        - /backend/*
+        only_proxy_404: false
+        inject_headers:
+          X-Custom: value
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test proxy rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        to: https://backend.test-domain.com
+        disable_ssl_verify: false
+        failover_lifetime: '300'
+        waf_config:
+          block_lists:
+            referer: false
+            ip: false
+            ai: false
+            user_agent: false
+          allow_rules:
+          - allow_rules
+          - allow_rules
+          httpbl:
+            block_harvester: false
+            httpbl_enabled: false
+            block_spam: false
+            httpbl_key: httpbl_key
+            block_search_engine: false
+            block_suspicious: false
+          notify_slack_hits_rpm: 100
+          allow_ip:
+          - allow_ip
+          - allow_ip
+          block_asn:
+          - block_asn
+          - block_asn
+          mode: report
+          thresholds:
+          - hits: 10
+            mode: disabled
+            rps: 10
+            minutes: 5
+            cooldown: 30
+            type: ip
+            value: value
+            notify_slack: notify_slack
+          - hits: 10
+            mode: disabled
+            rps: 10
+            minutes: 5
+            cooldown: 30
+            type: ip
+            value: value
+            notify_slack: notify_slack
+          notify_email:
+          - notify_email
+          - notify_email
+          block_ip:
+          - block_ip
+          - block_ip
+          block_referer:
+          - block_referer
+          - block_referer
+          block_ua:
+          - block_ua
+          - block_ua
+          notify_slack: https://hooks.slack.com/services/XXX
+          paranoia_level: 1
+        asn: any
+        failover_origin_status_codes:
+        - '502'
+        - '503'
+        - '504'
+        proxy_alert_enabled: false
+      properties:
+        domain:
+          description: 'Domain patterns (default: any)'
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        name:
+          description: Rule name
+          example: Test proxy rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        url:
+          description: URL patterns
+          example:
+          - /api/*
+          - /backend/*
+          items:
+            type: string
+          type: array
+        country:
+          description: Country filter type (country_is, country_is_not, any)
+          example: country_is
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        method:
+          description: Method filter type (method_is, method_is_not, any)
+          example: method_is
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP filter type (ip_is, ip_is_not, any)
+          example: ip_is
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+        to:
+          description: Target URL to proxy to
+          example: https://backend.test-domain.com
+          type: string
+        host:
+          description: Host header override
+          example: backend.test-domain.com
+          type: string
+        auth_user:
+          default: ''
+          description: Basic auth username
+          example: admin
+          type: string
+        auth_pass:
+          default: ''
+          description: Basic auth password
+          example: secure_pass
+          type: string
+        disable_ssl_verify:
+          default: false
+          description: Disable SSL verification
+          example: false
+          type: boolean
+        cache_lifetime:
+          description: Cache lifetime
+          example: '3600'
+          nullable: true
+          type: string
+        only_proxy_404:
+          default: false
+          description: Only proxy 404 responses
+          example: false
+          type: boolean
+        inject_headers:
+          additionalProperties:
+            type: string
+          description: Headers to inject
+          example:
+            X-Custom: value
+          nullable: true
+          type: object
+        proxy_strip_headers:
+          description: Headers to strip from response
+          example:
+          - Set-Cookie
+          - Server
+          items:
+            type: string
+          type: array
+        proxy_strip_request_headers:
+          description: Headers to strip from request
+          example:
+          - Cookie
+          - Authorization
+          items:
+            type: string
+          type: array
+        origin_timeout:
+          description: Origin timeout
+          example: '30'
+          type: string
+        failover_mode:
+          default: false
+          description: Enable failover mode
+          example: true
+          type: boolean
+        failover_origin_ttfb:
+          default: '2000'
+          description: Failover TTFB threshold in milliseconds
+          example: '2000'
+          type: string
+        failover_origin_status_codes:
+          description: Origin status codes that trigger failover
+          example:
+          - '502'
+          - '503'
+          - '504'
+          items:
+            type: string
+          type: array
+        failover_lifetime:
+          default: '300'
+          description: Failover cache lifetime in seconds
+          example: '300'
+          type: string
+        proxy_alert_enabled:
+          default: false
+          description: Proxy alert enabled
+          example: false
+          type: boolean
+        waf_enabled:
+          default: false
+          description: WAF enabled
+          example: false
+          type: boolean
+        waf_config:
+          $ref: '#/components/schemas/WafConfig'
+        application_proxy:
+          default: false
+          description: Enable Quant Cloud application proxy mode
+          example: false
+          type: boolean
+        application_name:
+          description: Quant Cloud application name (required when application_proxy is true)
+          example: my-app
+          type: string
+        application_environment:
+          description: Quant Cloud application environment (required when application_proxy is true)
+          example: production
+          type: string
+        application_container:
+          description: Quant Cloud application container (required when application_proxy is true)
+          example: web
+          type: string
+        application_port:
+          description: Quant Cloud application port (required when application_proxy is true)
+          example: 80
+          type: integer
+        static_error_page:
+          description: Static error page content (HTML) to serve on origin errors
+          example: <html><body>Service temporarily unavailable</body></html>
+          nullable: true
+          type: string
+        static_error_page_status_codes:
+          description: Origin status codes that trigger static error page
+          example:
+          - '500'
+          - '502'
+          - '503'
+          - '504'
+          items:
+            type: string
+          type: array
+      required:
+      - domain
+      - to
+      - url
+      type: object
+    V2Rule:
+      properties:
+        name:
+          description: Rule name
+          example: Test redirect rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        rule_id:
+          description: Rule ID
+          example: rule-001
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        url:
+          description: URL patterns
+          example:
+          - /old-path/*
+          - /legacy/*
+          items:
+            type: string
+          type: array
+        domain:
+          description: Domain patterns
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        only_with_cookie:
+          description: Only apply with cookie
+          example: session_id
+          type: string
+        method:
+          description: HTTP method
+          example: GET
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP address
+          example: 192.168.1.1
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+        country:
+          description: Country code
+          example: US
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        action:
+          description: Rule action
+          example: redirect
+          type: string
+      required:
+      - action
+      - disabled
+      - uuid
+      type: object
+    V2RuleRedirect:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleRedirectAction'
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          status_code: '301'
+          to: https://test-domain.com/new-path
+      type: object
+    V2RuleFunctionAction:
+      example:
+        fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+      properties:
+        fn_uuid:
+          description: Function UUID
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+          type: string
+      required:
+      - fn_uuid
+      type: object
+    V2RuleContentFilterAction:
+      example:
+        fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+      properties:
+        fn_uuid:
+          description: Function UUID
+          example: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+          type: string
+      required:
+      - fn_uuid
+      type: object
+    V2RuleServeStaticAction:
+      example:
+        static_file_path: /index.html
+      properties:
+        static_file_path:
+          description: Path to the static file to serve
+          example: /index.html
+          type: string
+      required:
+      - static_file_path
+      type: object
+    V2RuleHeader:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleHeaderAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          headers:
+            X-Custom-Header: value
+            Cache-Control: max-age=3600
+      type: object
+    V2RuleHeaderAction:
+      example:
+        headers:
+          X-Custom-Header: value
+          Cache-Control: max-age=3600
+      properties:
+        headers:
+          additionalProperties:
+            type: string
+          description: Headers to set
+          example:
+            X-Custom-Header: value
+            Cache-Control: max-age=3600
+          type: object
+      required:
+      - headers
+      type: object
+    V2RuleRequest:
+      properties:
+        domain:
+          description: 'Domain patterns (default: any)'
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        name:
+          description: Rule name
+          example: Test redirect rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        url:
+          description: URL patterns
+          example:
+          - /old-path/*
+          - /legacy/*
+          items:
+            type: string
+          type: array
+        country:
+          description: Country filter type (country_is, country_is_not, any)
+          example: country_is
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        method:
+          description: Method filter type (method_is, method_is_not, any)
+          example: method_is
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP filter type (ip_is, ip_is_not, any)
+          example: ip_is
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+      required:
+      - domain
+      - url
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

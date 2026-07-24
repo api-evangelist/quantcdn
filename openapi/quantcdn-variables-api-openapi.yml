@@ -1,0 +1,223 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Variables API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Environment variable management
+  name: Variables
+paths:
+  /api/v3/organizations/{api_organisation}/applications/{api_application}/environments/{api_environment}/variables:
+    get:
+      operationId: listEnvironmentVariables
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: api_organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: api_application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: api_environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          description: A list of variables
+      summary: Get all variables for an environment
+      tags:
+      - Variables
+    put:
+      operationId: bulkSetEnvironmentVariables
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: api_organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: api_application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: api_environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bulkSetEnvironmentVariables_request'
+        required: true
+      responses:
+        '200':
+          description: Environment variables set/replaced successfully
+      summary: Bulk set/replace environment variables
+      tags:
+      - Variables
+  ? /api/v3/organizations/{api_organisation}/applications/{api_application}/environments/{api_environment}/variables/{api_variable}
+  : delete:
+      operationId: deleteEnvironmentVariable
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: api_organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        explode: false
+        in: path
+        name: api_application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        explode: false
+        in: path
+        name: api_environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The variable key
+        explode: false
+        in: path
+        name: api_variable
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The variable deleted
+        '404':
+          description: The variable not found
+      summary: Delete a variable
+      tags:
+      - Variables
+    put:
+      operationId: updateEnvironmentVariable
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: api_organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: api_application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: api_environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The variable key
+        explode: false
+        in: path
+        name: api_variable
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateEnvironmentVariable_request'
+        required: true
+      responses:
+        '200':
+          description: The variable updated
+        '404':
+          description: The variable not found
+      summary: Update a variable
+      tags:
+      - Variables
+components:
+  schemas:
+    bulkSetEnvironmentVariables_request:
+      properties:
+        environment:
+          items:
+            $ref: '#/components/schemas/bulkSetEnvironmentVariables_request_environment_inner'
+          type: array
+      required:
+      - environment
+      type: object
+    updateEnvironmentVariable_request:
+      properties:
+        value:
+          type: string
+      type: object
+    bulkSetEnvironmentVariables_request_environment_inner:
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+      required:
+      - name
+      - value
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

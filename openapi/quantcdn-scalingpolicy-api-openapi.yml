@@ -1,0 +1,168 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents ScalingPolicy API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Auto-scaling policies and configuration
+  name: ScalingPolicy
+paths:
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/scaling-policies:
+    get:
+      operationId: getScalingPolicies
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          description: The scaling policy for the environment
+      summary: Get the scaling policies for an environment
+      tags:
+      - ScalingPolicy
+    put:
+      operationId: updateScalingPolicy
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScalingPolicy'
+        required: true
+      responses:
+        '200':
+          description: The scaling policy for the environment
+      summary: Update the scaling policy for an environment
+      tags:
+      - ScalingPolicy
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/scaling-policies/{policyName}:
+    delete:
+      operationId: deleteScalingPolicy
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The policy name
+        explode: false
+        in: path
+        name: policyName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The scaling policy for the environment
+      summary: Delete the scaling policy for an environment
+      tags:
+      - ScalingPolicy
+components:
+  schemas:
+    ScalingPolicy:
+      example:
+        scaleOutCooldownSeconds: 1
+        scaleInCooldownSeconds: 6
+        metric: CPUUtilization
+        targetValue: 0.8008281904610115
+      properties:
+        metric:
+          enum:
+          - CPUUtilization
+          - MemoryUtilization
+          - RPS
+          type: string
+        targetValue:
+          type: number
+        scaleInCooldownSeconds:
+          type: integer
+        scaleOutCooldownSeconds:
+          type: integer
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

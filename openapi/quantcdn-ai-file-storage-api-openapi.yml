@@ -1,0 +1,367 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI File Storage API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: S3-backed file storage for AI workloads
+  name: AI File Storage
+paths:
+  /api/v3/organizations/{organisation}/ai/files:
+    get:
+      description: Lists files stored in S3 for this organization with optional metadata filtering and pagination.
+      operationId: listFiles
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: JSON-encoded metadata filter. Supports exact match and array contains filters.
+        explode: true
+        in: query
+        name: filter
+        required: false
+        schema:
+          example: '{}'
+          type: string
+        style: form
+      - description: Maximum files to return
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 200
+          type: integer
+        style: form
+      - description: Pagination cursor from previous response
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listFiles_200_response'
+          description: List of files
+        '400':
+          description: Invalid filter parameter
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to list files
+      summary: List Files
+      tags:
+      - AI File Storage
+    post:
+      description: "Uploads a file to S3 storage for later retrieval.\n     *\n     * **Two Upload Modes:**\n     *\n     * 1. **Direct Upload (≤7MB):** Send base64-encoded content in request body.\n     *\n     * 2. **Presigned URL Upload (any size):** Set `requestUploadUrl: true` to get a presigned S3 PUT URL, then upload directly to S3.\n     *\n     * **Supported Content Types:**\n     * - Images: image/png, image/jpeg, image/gif, image/webp, image/svg+xml\n     * - Documents: application/pdf, text/plain, text/markdown, text/html\n     * - Code: text/javascript, application/json, text/css, text/yaml\n     * - Archives: application/zip, application/gzip\n     * - Video: video/mp4, video/webm (use presigned URL for large files)\n     *\n     * **Metadata:**\n     * Attach any custom metadata for filtering. `artifactType` is auto-populated from contentType if not provided."
+      operationId: uploadFile
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/uploadFile_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/uploadFile_201_response'
+          description: File uploaded or presigned URL generated
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '413':
+          description: File too large (use requestUploadUrl for large files)
+        '500':
+          description: Failed to upload file
+      summary: Upload File to S3
+      tags:
+      - AI File Storage
+  /api/v3/organizations/{organisation}/ai/files/{fileId}:
+    delete:
+      description: Deletes a file from S3 storage.
+      operationId: deleteFile
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The file ID
+        explode: false
+        in: path
+        name: fileId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteFile_200_response'
+          description: File deleted successfully
+        '403':
+          description: Access denied
+        '404':
+          description: File not found
+        '500':
+          description: Failed to delete file
+      summary: Delete File
+      tags:
+      - AI File Storage
+    get:
+      description: Retrieves file metadata and a presigned download URL (valid for 1 hour).
+      operationId: getFile
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The file ID
+        explode: false
+        in: path
+        name: fileId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getFile_200_response'
+          description: File metadata and download URL
+        '403':
+          description: Access denied
+        '404':
+          description: File not found
+        '500':
+          description: Failed to get file
+      summary: Get File
+      tags:
+      - AI File Storage
+components:
+  schemas:
+    deleteFile_200_response:
+      example:
+        message: File deleted
+        fileId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        message:
+          example: File deleted
+          type: string
+        fileId:
+          format: uuid
+          type: string
+      type: object
+    uploadFile_request:
+      properties:
+        content:
+          description: Base64-encoded file content (for direct upload). Required unless using requestUploadUrl.
+          type: string
+        requestUploadUrl:
+          default: false
+          description: Set to true to get a presigned S3 upload URL instead of uploading directly.
+          type: boolean
+        size:
+          description: File size in bytes. Optional but recommended for presigned uploads.
+          type: integer
+        filename:
+          description: Original filename
+          example: diagram.png
+          type: string
+        contentType:
+          description: MIME type of the file
+          example: image/png
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Custom metadata for filtering. Any fields allowed.
+          example:
+            collectionId: col-123
+            tags:
+            - architecture
+            - generated
+          type: object
+      required:
+      - contentType
+      type: object
+    getFile_200_response:
+      example:
+        s3Uri: s3Uri
+        createdAt: 2000-01-23 04:56:07+00:00
+        metadata: '{}'
+        filename: filename
+        size: 0
+        contentType: contentType
+        url: https://openapi-generator.tech
+        fileId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        fileId:
+          format: uuid
+          type: string
+        s3Uri:
+          type: string
+        url:
+          description: Presigned download URL (1 hour)
+          format: uri
+          type: string
+        filename:
+          type: string
+        contentType:
+          type: string
+        size:
+          type: integer
+        metadata:
+          type: object
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    uploadFile_201_response:
+      example:
+        expiresIn: 0
+        s3Uri: s3Uri
+        createdAt: 2000-01-23 04:56:07+00:00
+        metadata: '{}'
+        s3Key: s3Key
+        filename: filename
+        uploadUrl: https://openapi-generator.tech
+        size: 6
+        contentType: contentType
+        url: https://openapi-generator.tech
+        fileId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        fileId:
+          format: uuid
+          type: string
+        s3Uri:
+          description: S3 URI (direct upload only)
+          type: string
+        url:
+          description: Presigned download URL (direct upload only)
+          format: uri
+          type: string
+        uploadUrl:
+          description: Presigned PUT URL (presigned upload only)
+          format: uri
+          type: string
+        s3Key:
+          description: S3 object key (presigned upload only)
+          type: string
+        expiresIn:
+          description: URL expiry in seconds (presigned upload only)
+          type: integer
+        filename:
+          type: string
+        contentType:
+          type: string
+        size:
+          type: integer
+        metadata:
+          type: object
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    listFiles_200_response:
+      example:
+        nextCursor: nextCursor
+        hasMore: true
+        files:
+        - createdAt: 2000-01-23 04:56:07+00:00
+          metadata: '{}'
+          filename: filename
+          size: 0
+          contentType: contentType
+          fileId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - createdAt: 2000-01-23 04:56:07+00:00
+          metadata: '{}'
+          filename: filename
+          size: 0
+          contentType: contentType
+          fileId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        files:
+          items:
+            $ref: '#/components/schemas/listFiles_200_response_files_inner'
+          type: array
+        nextCursor:
+          description: Cursor for next page
+          nullable: true
+          type: string
+        hasMore:
+          description: True if more results available
+          type: boolean
+      type: object
+    listFiles_200_response_files_inner:
+      example:
+        createdAt: 2000-01-23 04:56:07+00:00
+        metadata: '{}'
+        filename: filename
+        size: 0
+        contentType: contentType
+        fileId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        fileId:
+          format: uuid
+          type: string
+        filename:
+          type: string
+        contentType:
+          type: string
+        size:
+          type: integer
+        metadata:
+          type: object
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

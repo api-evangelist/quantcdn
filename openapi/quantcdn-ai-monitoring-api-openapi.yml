@@ -1,0 +1,99 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Monitoring API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Usage statistics and monitoring for AI services
+  name: AI Monitoring
+paths:
+  /api/v3/organizations/{organisation}/ai/usage:
+    get:
+      operationId: getAIUsageStats
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Month to retrieve statistics for (YYYY-MM format)
+        explode: true
+        in: query
+        name: month
+        required: false
+        schema:
+          example: 2025-10
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAIUsageStats_200_response'
+          description: Usage statistics
+        '500':
+          description: Failed to fetch usage statistics
+      summary: Get AI usage statistics
+      tags:
+      - AI Monitoring
+components:
+  schemas:
+    getAIUsageStats_200_response_by_model_value:
+      properties:
+        requests:
+          description: Number of requests for this model
+          type: integer
+        tokens:
+          description: Total tokens for this model
+          type: integer
+      type: object
+    getAIUsageStats_200_response:
+      example:
+        by_model:
+          amazon.nova-lite-v1:0:
+            requests: 100
+            tokens: 25000
+          amazon.nova-pro-v1:0:
+            requests: 50
+            tokens: 20000
+        total_tokens: 45000
+        total_requests: 150
+      properties:
+        total_requests:
+          description: Total number of API requests
+          example: 150
+          type: integer
+        total_tokens:
+          description: Total tokens consumed across all requests
+          example: 45000
+          type: integer
+        by_model:
+          additionalProperties:
+            $ref: '#/components/schemas/getAIUsageStats_200_response_by_model_value'
+          description: Usage breakdown by model ID
+          example:
+            amazon.nova-lite-v1:0:
+              requests: 100
+              tokens: 25000
+            amazon.nova-pro-v1:0:
+              requests: 50
+              tokens: 20000
+          type: object
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

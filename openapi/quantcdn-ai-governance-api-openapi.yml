@@ -1,0 +1,311 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Governance API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: AI Governance
+  name: AI Governance
+paths:
+  /api/v3/organizations/{organisation}/ai/governance:
+    get:
+      operationId: getGovernanceConfig
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getGovernanceConfig_200_response'
+          description: AI governance configuration
+        '500':
+          description: Failed to retrieve governance configuration
+      summary: Get AI governance configuration for an organisation
+      tags:
+      - AI Governance
+    put:
+      operationId: updateGovernanceConfig
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateGovernanceConfig_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateGovernanceConfig_200_response'
+          description: Governance configuration updated successfully
+        '422':
+          description: Validation error
+        '500':
+          description: Failed to update governance configuration
+      summary: Update AI governance configuration for an organisation
+      tags:
+      - AI Governance
+  /api/v3/organizations/{organisation}/ai/governance/spend:
+    get:
+      operationId: getGovernanceSpend
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getGovernanceSpend_200_response'
+          description: AI spend summary
+        '500':
+          description: Failed to retrieve spend summary
+      summary: Get AI spend summary for an organisation
+      tags:
+      - AI Governance
+components:
+  schemas:
+    updateGovernanceConfig_200_response:
+      example:
+        success: true
+        config: '{}'
+      properties:
+        success:
+          example: true
+          type: boolean
+        config:
+          type: object
+      type: object
+    getGovernanceSpend_200_response_dailyBudget:
+      example:
+        usedPercent: 3.6160767
+        remainingCents: 2
+        dailyBudgetCents: 9
+      nullable: true
+      properties:
+        dailyBudgetCents:
+          type: integer
+        usedPercent:
+          format: float
+          type: number
+        remainingCents:
+          type: integer
+      type: object
+    getGovernanceSpend_200_response_orgTotal:
+      example:
+        requestCount: 6
+        spendCents: 0
+      properties:
+        spendCents:
+          description: Total org spend in US cents
+          type: integer
+        requestCount:
+          type: integer
+      type: object
+    getGovernanceSpend_200_response:
+      example:
+        todayTotal:
+          requestCount: 5
+          spendCents: 1
+        dailyBudget:
+          usedPercent: 3.6160767
+          remainingCents: 2
+          dailyBudgetCents: 9
+        userTotal:
+          dailySpendCents: 7
+          monthlySpendCents: 4
+        orgTotal:
+          requestCount: 6
+          spendCents: 0
+        budget:
+          monthlyBudgetCents: 5
+          usedPercent: 2.302136
+          remainingCents: 7
+      properties:
+        orgTotal:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_orgTotal'
+        todayTotal:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_todayTotal'
+        budget:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_budget'
+        dailyBudget:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_dailyBudget'
+        userTotal:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_userTotal'
+      type: object
+    getGovernanceSpend_200_response_userTotal:
+      example:
+        dailySpendCents: 7
+        monthlySpendCents: 4
+      nullable: true
+      properties:
+        monthlySpendCents:
+          type: integer
+        dailySpendCents:
+          type: integer
+      type: object
+    getGovernanceConfig_200_response_spendLimits:
+      example:
+        monthlyBudgetCents: 0
+        perUserDailyBudgetCents: 5
+        warningThresholdPercent: 5
+        perUserMonthlyBudgetCents: 1
+        dailyBudgetCents: 6
+      properties:
+        monthlyBudgetCents:
+          nullable: true
+          type: integer
+        dailyBudgetCents:
+          nullable: true
+          type: integer
+        perUserMonthlyBudgetCents:
+          nullable: true
+          type: integer
+        perUserDailyBudgetCents:
+          nullable: true
+          type: integer
+        warningThresholdPercent:
+          nullable: true
+          type: integer
+      type: object
+    getGovernanceSpend_200_response_todayTotal:
+      example:
+        requestCount: 5
+        spendCents: 1
+      properties:
+        spendCents:
+          description: Org spend today in US cents
+          type: integer
+        requestCount:
+          type: integer
+      type: object
+    updateGovernanceConfig_request:
+      properties:
+        aiEnabled:
+          type: boolean
+        modelPolicy:
+          enum:
+          - unrestricted
+          - allowlist
+          - blocklist
+          type: string
+        modelList:
+          items:
+            type: string
+          type: array
+        mandatoryGuardrailPreset:
+          enum:
+          - official
+          - official-sensitive
+          - protected
+          nullable: true
+          type: string
+        mandatoryFilterPolicies:
+          items:
+            type: string
+          type: array
+        spendLimits:
+          $ref: '#/components/schemas/getGovernanceConfig_200_response_spendLimits'
+        version:
+          type: integer
+      required:
+      - aiEnabled
+      - modelPolicy
+      type: object
+    getGovernanceConfig_200_response:
+      example:
+        mandatoryFilterPolicies:
+        - mandatoryFilterPolicies
+        - mandatoryFilterPolicies
+        modelList:
+        - modelList
+        - modelList
+        modelPolicy: unrestricted
+        aiEnabled: true
+        mandatoryGuardrailPreset: mandatoryGuardrailPreset
+        version: 2
+        orgId: orgId
+        spendLimits:
+          monthlyBudgetCents: 0
+          perUserDailyBudgetCents: 5
+          warningThresholdPercent: 5
+          perUserMonthlyBudgetCents: 1
+          dailyBudgetCents: 6
+      properties:
+        orgId:
+          type: string
+        aiEnabled:
+          type: boolean
+        modelPolicy:
+          enum:
+          - unrestricted
+          - allowlist
+          - blocklist
+          type: string
+        modelList:
+          items:
+            type: string
+          type: array
+        mandatoryGuardrailPreset:
+          nullable: true
+          type: string
+        mandatoryFilterPolicies:
+          items:
+            type: string
+          type: array
+        spendLimits:
+          $ref: '#/components/schemas/getGovernanceConfig_200_response_spendLimits'
+        version:
+          type: integer
+      type: object
+    getGovernanceSpend_200_response_budget:
+      example:
+        monthlyBudgetCents: 5
+        usedPercent: 2.302136
+        remainingCents: 7
+      nullable: true
+      properties:
+        monthlyBudgetCents:
+          type: integer
+        usedPercent:
+          format: float
+          type: number
+        remainingCents:
+          type: integer
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

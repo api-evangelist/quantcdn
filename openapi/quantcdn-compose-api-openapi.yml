@@ -1,0 +1,801 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Compose API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Docker compose configuration management
+  name: Compose
+paths:
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/compose:
+    get:
+      operationId: getEnvironmentCompose
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Compose'
+          description: The compose file
+        '404':
+          description: The compose file not found
+      summary: Get the compose file for an environment
+      tags:
+      - Compose
+    patch:
+      description: Partially updates top-level fields of the environment's compose definition, such as architecture, task-level CPU/Memory, or min/max scaling capacity. Only fields included in the request body are modified. The 'containers' array, if provided, REPLACES the existing containers array; if omitted, the existing containers are NOT modified by this PATCH operation. (For modifying individual containers, use PATCH /containers/{containerName}). This triggers a validation, registers a new task definition, and updates the service.
+      operationId: patchEnvironmentCompose
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/patchEnvironmentCompose_request'
+        description: Partial compose definition updates. All fields are optional.
+        required: true
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/patchEnvironmentCompose_202_response'
+          description: Request accepted, compose definition partial update is processing. Returns the full updated compose definition.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/patchEnvironmentCompose_400_response'
+          description: Invalid compose definition or validation failed.
+        '404':
+          description: Application or environment not found
+      summary: Partially Update Environment Compose Definition
+      tags:
+      - Compose
+  /api/v3/organizations/{organisation}/compose/validate:
+    post:
+      description: 'Accepts a docker-compose.yml file content, translates it into the internal compose definition format, and validates it. Quant Cloud provides comprehensive support for standard Docker Compose features including commands, entrypoints, health checks, dependencies, volume mounts, resource limits, and more. For detailed documentation on supported features and examples, see: https://docs.quantcdn.io/introduction-to-quant-cloud/importing-docker-compose/. Supports image tag suffixing via the imageSuffix query parameter or by sending a JSON wrapper with yamlContent and imageSuffix fields. When provided, internal image tags are transformed to {containerName}-{suffix} format (e.g., ''nginx-feature-xyz'').'
+      operationId: validateCompose
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Optional. Image tag suffix to apply during translation. Transforms internal image tags to consistent '{containerName}-{suffix}' format (e.g., 'nginx-pr-456'). External images are left unchanged. Useful for feature branch deployments.
+        example: pr-456
+        explode: true
+        in: query
+        name: imageSuffix
+        required: false
+        schema:
+          pattern: ^[a-z0-9]([a-z0-9-]*[a-z0-9])?$
+          type: string
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/validateCompose_request'
+        description: The docker-compose.yml file content. Can be sent as raw YAML string or as a JSON wrapper containing both yamlContent (string) and imageSuffix (string) fields. Query parameter imageSuffix takes precedence if both are provided.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/validateCompose_200_response'
+          description: Validation successful. Body contains the translated compose definition and any warnings.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/validateCompose_422_response'
+          description: Invalid YAML input or validation failed
+      summary: Validate a compose file
+      tags:
+      - Compose
+components:
+  schemas:
+    validateCompose_422_response:
+      example:
+        error: Invalid YAML
+      properties:
+        error:
+          example: Invalid YAML
+          type: string
+      type: object
+    patchEnvironmentCompose_request:
+      properties:
+        architecture:
+          nullable: true
+          type: string
+        taskCpu:
+          nullable: true
+          type: string
+        taskMemory:
+          nullable: true
+          type: string
+        minCapacity:
+          minimum: 0
+          nullable: true
+          type: integer
+        maxCapacity:
+          minimum: 1
+          nullable: true
+          type: integer
+        containers:
+          items:
+            type: object
+          nullable: true
+          type: array
+        spotConfiguration:
+          $ref: '#/components/schemas/patchEnvironmentCompose_request_spotConfiguration'
+        enableCrossEnvNetworking:
+          nullable: true
+          type: boolean
+        enableCrossAppNetworking:
+          nullable: true
+          type: boolean
+      type: object
+    Container_secrets_inner:
+      example:
+        name: name
+        valueFrom: valueFrom
+      properties:
+        name:
+          description: The environment variable name to be set in the container
+          type: string
+        valueFrom:
+          description: The key of the secret in the environment's 'app-secrets' store
+          type: string
+      required:
+      - name
+      - valueFrom
+      type: object
+    Container_environment_inner:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          description: Environment variable name
+          type: string
+        value:
+          description: Environment variable value
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    Container_healthCheck:
+      description: Container health check configuration
+      example:
+        retries: 7
+        startPeriod: 279
+        interval: 171
+        command:
+        - command
+        - command
+        timeout: 15
+      nullable: true
+      properties:
+        command:
+          description: The command to run to determine if the container is healthy
+          items:
+            type: string
+          type: array
+        interval:
+          default: 30
+          description: Time period (seconds) between health checks
+          maximum: 300
+          minimum: 5
+          type: integer
+        timeout:
+          default: 5
+          description: Time period (seconds) to wait for a health check to return
+          maximum: 60
+          minimum: 2
+          type: integer
+        retries:
+          default: 3
+          description: Number of times to retry a failed health check
+          maximum: 10
+          minimum: 1
+          type: integer
+        startPeriod:
+          description: Grace period (seconds) to ignore unhealthy checks after container starts
+          maximum: 300
+          minimum: 0
+          nullable: true
+          type: integer
+      type: object
+    patchEnvironmentCompose_400_response:
+      example:
+        message: message
+        errors: '{}'
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+      type: object
+    validateCompose_request:
+      properties:
+        compose:
+          description: The docker-compose.yml file content as a string
+          type: string
+        imageSuffix:
+          description: Optional image tag suffix (query parameter takes precedence)
+          pattern: ^[a-z0-9]([a-z0-9-]*[a-z0-9])?$
+          type: string
+        application:
+          description: Optional application name for context
+          type: string
+      required:
+      - compose
+      type: object
+    Container_imageReference:
+      example:
+        identifier: identifier
+        type: internal
+      properties:
+        type:
+          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
+          enum:
+          - internal
+          - external
+          type: string
+        identifier:
+          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
+          type: string
+      required:
+      - identifier
+      - type
+      type: object
+    SpotConfiguration:
+      description: Spot instance strategy configuration for controlling cost vs reliability. Spot instances provide significant cost savings (~70%) but may be interrupted by AWS. Available for non-production environments.
+      example:
+        strategy: spot-only
+      properties:
+        strategy:
+          default: spot-only
+          description: Spot instance strategy. 'off' = On-Demand only (highest reliability, no savings). 'spot-only' = 100% Spot instances (~70% savings, default for non-prod). 'mixed-safe' = 50% Spot instances (~35% savings, requires multiple instances). 'mixed-aggressive' = 80% Spot instances (~56% savings, requires multiple instances).
+          enum:
+          - 'off'
+          - spot-only
+          - mixed-safe
+          - mixed-aggressive
+          example: spot-only
+          type: string
+      required:
+      - strategy
+      type: object
+    Container_originProtectionConfig:
+      description: Extended origin protection configuration with IP allow list support
+      example:
+        ipAllow:
+        - ipAllow
+        - ipAllow
+        enabled: true
+      nullable: true
+      properties:
+        enabled:
+          default: true
+          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
+          type: boolean
+        ipAllow:
+          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    patchEnvironmentCompose_202_response:
+      example:
+        spotConfiguration:
+          tolerateDowntime: true
+          strategy: 'off'
+        taskMemory: '2048'
+        maxCapacity: 1
+        minCapacity: 1
+        containers:
+        - '{}'
+        - '{}'
+        taskCpu: '512'
+        enableCrossAppNetworking: true
+        architecture: ARM64
+        enableCrossEnvNetworking: true
+      properties:
+        architecture:
+          example: ARM64
+          type: string
+        taskCpu:
+          example: '512'
+          type: string
+        taskMemory:
+          example: '2048'
+          type: string
+        minCapacity:
+          example: 1
+          type: integer
+        maxCapacity:
+          example: 1
+          type: integer
+        containers:
+          items:
+            type: object
+          type: array
+        spotConfiguration:
+          $ref: '#/components/schemas/patchEnvironmentCompose_202_response_spotConfiguration'
+        enableCrossEnvNetworking:
+          example: true
+          type: boolean
+        enableCrossAppNetworking:
+          example: true
+          type: boolean
+      type: object
+    patchEnvironmentCompose_202_response_spotConfiguration:
+      example:
+        tolerateDowntime: true
+        strategy: 'off'
+      properties:
+        strategy:
+          example: 'off'
+          type: string
+        tolerateDowntime:
+          example: true
+          type: boolean
+      type: object
+    validateCompose_200_response:
+      example:
+        translatedComposeDefinition: '{}'
+        translationWarnings:
+        - Service 'db' uses 'build' directive, image will be internal with a generated tag.
+        - Volume 'cache' uses a relative path source, interpreted as logical volume name.
+        message: Docker-compose YAML translated and validated successfully.
+      properties:
+        message:
+          example: Docker-compose YAML translated and validated successfully.
+          type: string
+        translatedComposeDefinition:
+          description: The translated internal compose definition format
+          type: object
+        translationWarnings:
+          description: Optional warnings encountered during translation
+          example:
+          - Service 'db' uses 'build' directive, image will be internal with a generated tag.
+          - Volume 'cache' uses a relative path source, interpreted as logical volume name.
+          items:
+            type: string
+          nullable: true
+          type: array
+      required:
+      - message
+      - translatedComposeDefinition
+      type: object
+    Container_dependsOn_inner:
+      example:
+        condition: START
+        containerName: containerName
+      properties:
+        containerName:
+          description: The name of the container this container depends on
+          type: string
+        condition:
+          description: The condition to wait for on the dependency
+          enum:
+          - START
+          - HEALTHY
+          - COMPLETE
+          - SUCCESS
+          type: string
+      required:
+      - containerName
+      type: object
+    Container_mountPoints_inner:
+      example:
+        readOnly: false
+        containerPath: containerPath
+        sourceVolume: sourceVolume
+      properties:
+        sourceVolume:
+          description: The name of the logical volume
+          type: string
+        containerPath:
+          description: The path inside the container where the volume is mounted
+          type: string
+        readOnly:
+          default: false
+          type: boolean
+      required:
+      - containerPath
+      - sourceVolume
+      type: object
+    patchEnvironmentCompose_request_spotConfiguration:
+      nullable: true
+      properties:
+        strategy:
+          enum:
+          - 'off'
+          - spot-only
+          - mixed-safe
+          - mixed-aggressive
+          type: string
+      type: object
+    Container:
+      example:
+        originProtectionConfig:
+          ipAllow:
+          - ipAllow
+          - ipAllow
+          enabled: true
+        memory: 6
+        dependsOn:
+        - condition: START
+          containerName: containerName
+        - condition: START
+          containerName: containerName
+        workingDirectory: workingDirectory
+        exposedPorts:
+        - 5
+        - 5
+        cpu: 0
+        imageReference:
+          identifier: identifier
+          type: internal
+        secrets:
+        - name: name
+          valueFrom: valueFrom
+        - name: name
+          valueFrom: valueFrom
+        memoryReservation: 1
+        command:
+        - command
+        - command
+        environment:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        readonlyRootFilesystem: false
+        originProtection: false
+        healthCheck:
+          retries: 7
+          startPeriod: 279
+          interval: 171
+          command:
+          - command
+          - command
+          timeout: 15
+        name: name
+        mountPoints:
+        - readOnly: false
+          containerPath: containerPath
+          sourceVolume: sourceVolume
+        - readOnly: false
+          containerPath: containerPath
+          sourceVolume: sourceVolume
+        entryPoint:
+        - entryPoint
+        - entryPoint
+        user: user
+        essential: true
+      properties:
+        name:
+          description: Name of the container
+          pattern: ^[a-zA-Z0-9_-]+$
+          type: string
+        imageReference:
+          $ref: '#/components/schemas/Container_imageReference'
+        cpu:
+          description: Container-level CPU units
+          nullable: true
+          type: integer
+        memory:
+          description: Container-level memory hard limit (MiB)
+          nullable: true
+          type: integer
+        memoryReservation:
+          description: Container-level memory soft limit (MiB)
+          nullable: true
+          type: integer
+        exposedPorts:
+          description: List of container ports to expose
+          items:
+            type: integer
+          nullable: true
+          type: array
+        mountPoints:
+          items:
+            $ref: '#/components/schemas/Container_mountPoints_inner'
+          nullable: true
+          type: array
+        environment:
+          description: Environment variables specific to this container
+          items:
+            $ref: '#/components/schemas/Container_environment_inner'
+          nullable: true
+          type: array
+        secrets:
+          description: Secrets mapped to environment variables
+          items:
+            $ref: '#/components/schemas/Container_secrets_inner'
+          nullable: true
+          type: array
+        healthCheck:
+          $ref: '#/components/schemas/Container_healthCheck'
+        dependsOn:
+          description: Container startup dependencies
+          items:
+            $ref: '#/components/schemas/Container_dependsOn_inner'
+          nullable: true
+          type: array
+        command:
+          items:
+            type: string
+          nullable: true
+          type: array
+        entryPoint:
+          items:
+            type: string
+          nullable: true
+          type: array
+        workingDirectory:
+          nullable: true
+          type: string
+        essential:
+          default: true
+          nullable: true
+          type: boolean
+        readonlyRootFilesystem:
+          default: false
+          nullable: true
+          type: boolean
+        user:
+          nullable: true
+          type: string
+        originProtection:
+          default: false
+          description: Enable origin protection for all exposed ports on this container. Use originProtectionConfig for advanced options like IP allow lists.
+          nullable: true
+          type: boolean
+        originProtectionConfig:
+          $ref: '#/components/schemas/Container_originProtectionConfig'
+      required:
+      - imageReference
+      - name
+      type: object
+    Compose:
+      example:
+        spotConfiguration:
+          strategy: spot-only
+        taskMemory: 2
+        maxCapacity: 7
+        containers:
+        - originProtectionConfig:
+            ipAllow:
+            - ipAllow
+            - ipAllow
+            enabled: true
+          memory: 6
+          dependsOn:
+          - condition: START
+            containerName: containerName
+          - condition: START
+            containerName: containerName
+          workingDirectory: workingDirectory
+          exposedPorts:
+          - 5
+          - 5
+          cpu: 0
+          imageReference:
+            identifier: identifier
+            type: internal
+          secrets:
+          - name: name
+            valueFrom: valueFrom
+          - name: name
+            valueFrom: valueFrom
+          memoryReservation: 1
+          command:
+          - command
+          - command
+          environment:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          readonlyRootFilesystem: false
+          originProtection: false
+          healthCheck:
+            retries: 7
+            startPeriod: 279
+            interval: 171
+            command:
+            - command
+            - command
+            timeout: 15
+          name: name
+          mountPoints:
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          entryPoint:
+          - entryPoint
+          - entryPoint
+          user: user
+          essential: true
+        - originProtectionConfig:
+            ipAllow:
+            - ipAllow
+            - ipAllow
+            enabled: true
+          memory: 6
+          dependsOn:
+          - condition: START
+            containerName: containerName
+          - condition: START
+            containerName: containerName
+          workingDirectory: workingDirectory
+          exposedPorts:
+          - 5
+          - 5
+          cpu: 0
+          imageReference:
+            identifier: identifier
+            type: internal
+          secrets:
+          - name: name
+            valueFrom: valueFrom
+          - name: name
+            valueFrom: valueFrom
+          memoryReservation: 1
+          command:
+          - command
+          - command
+          environment:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          readonlyRootFilesystem: false
+          originProtection: false
+          healthCheck:
+            retries: 7
+            startPeriod: 279
+            interval: 171
+            command:
+            - command
+            - command
+            timeout: 15
+          name: name
+          mountPoints:
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          entryPoint:
+          - entryPoint
+          - entryPoint
+          user: user
+          essential: true
+        minCapacity: 4
+        taskCpu: 3
+        enableCrossAppNetworking: false
+        architecture: architecture
+        enableCrossEnvNetworking: false
+      properties:
+        containers:
+          items:
+            $ref: '#/components/schemas/Container'
+          type: array
+        architecture:
+          description: CPU architecture (X86_64 or ARM64)
+          nullable: false
+          type: string
+        taskCpu:
+          description: Task-level CPU units (e.g., 256, 512, 1024)
+          nullable: false
+          type: integer
+        taskMemory:
+          description: Task-level memory in MB
+          nullable: false
+          type: integer
+        minCapacity:
+          description: Minimum number of instances
+          nullable: false
+          type: integer
+        maxCapacity:
+          description: Maximum number of instances
+          nullable: false
+          type: integer
+        spotConfiguration:
+          $ref: '#/components/schemas/SpotConfiguration'
+        enableCrossEnvNetworking:
+          default: false
+          description: 'Optional. Enable cross-environment networking within the same application. When false (default): Uses shared security group for complete isolation (most secure). When true: Uses app-specific security group to enable communication between environments of the same application (e.g., staging can connect to production database). Note: If enableCrossAppNetworking is true, this setting is overridden.'
+          nullable: true
+          type: boolean
+        enableCrossAppNetworking:
+          default: false
+          description: 'Optional. Enable cross-application networking within the same organization. When false (default): Uses shared/app-specific security group based on enableCrossEnvNetworking. When true: Uses org-specific security group to enable container-to-container communication with ALL applications in the same organization via service discovery (microservices architecture). This setting takes priority over enableCrossEnvNetworking.'
+          nullable: true
+          type: boolean
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

@@ -1,0 +1,369 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Custom Tools API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Custom tool definitions for AI function calling
+  name: AI Custom Tools
+paths:
+  /api/v3/organizations/{organisation}/ai/custom-tools:
+    get:
+      description: Lists all registered custom edge function tools for an organization.
+      operationId: listCustomTools
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listCustomTools_200_response'
+          description: Custom tools retrieved successfully
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to retrieve custom tools
+      summary: List Custom Tools
+      tags:
+      - AI Custom Tools
+    post:
+      description: "Registers a custom edge function as a tool that AI models can invoke. Provide `edgeFunctionCode` (JavaScript) and the API will deploy it to the CDN, compute the edge function URL, and register the tool.\n     *\n     * **Edge Function Contract:**\n     * - Edge functions must accept POST requests with JSON payload\n     * - Expected request format: `{ 'toolName': '...', 'input': {...}, 'orgId': '...' }`\n     * - Must return JSON response with either `result` or `error` field\n     *\n     * **Idempotent Updates:**\n     * POSTing with the same `name` will update the existing tool — the edge function code is redeployed to the same UUID and the tool registration is updated.\n     *\n     * **Async Tools:**\n     * Set `isAsync: true` for operations >5 seconds. The edge function should return `{ executionId: '...' }` and the AI will poll for completion."
+      operationId: createCustomTool
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCustomTool_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createCustomTool_201_response'
+          description: Custom tool registered successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to register custom tool
+      summary: Register Custom Edge Function Tool
+      tags:
+      - AI Custom Tools
+  /api/v3/organizations/{organisation}/ai/custom-tools/{toolName}:
+    delete:
+      description: Deletes a custom tool registration and its deployed edge function.
+      operationId: deleteCustomTool
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The tool name to delete
+        explode: false
+        in: path
+        name: toolName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteCustomTool_200_response'
+          description: Custom tool deleted successfully
+        '403':
+          description: Access denied
+        '404':
+          description: Tool not found
+        '500':
+          description: Failed to delete custom tool
+      summary: Delete Custom Tool
+      tags:
+      - AI Custom Tools
+    get:
+      description: Retrieves a single registered custom tool by name.
+      operationId: getCustomTool
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The tool name to retrieve
+        explode: false
+        in: path
+        name: toolName
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getCustomTool_200_response'
+          description: Custom tool retrieved successfully
+        '403':
+          description: Access denied
+        '404':
+          description: Tool not found
+        '500':
+          description: Failed to retrieve custom tools
+      summary: Get Custom Tool
+      tags:
+      - AI Custom Tools
+components:
+  schemas:
+    getCustomTool_200_response:
+      example:
+        tool:
+          responseMode: llm
+          createdAt: 2000-01-23 04:56:07+00:00
+          outputSchema: '{}'
+          outputSchemaDescription: outputSchemaDescription
+          inputSchema: '{}'
+          isAsync: false
+          name: check_inventory
+          description: Check product inventory levels
+          edgeFunctionUrl: https://preview.quantcdn.io/_quant/ai-exec/org/project/uuid
+          category: category
+          edgeFunctionCode: edgeFunctionCode
+      properties:
+        tool:
+          $ref: '#/components/schemas/getCustomTool_200_response_tool'
+      type: object
+    createCustomTool_request:
+      properties:
+        name:
+          description: Unique tool name (alphanumeric and underscores only)
+          example: check_inventory
+          type: string
+        description:
+          description: Human-readable description of what the tool does
+          example: Check product inventory levels in warehouse
+          type: string
+        edgeFunctionCode:
+          description: JavaScript source code for the edge function
+          type: string
+        inputSchema:
+          description: JSON Schema defining the tool's input parameters
+          type: object
+        isAsync:
+          default: false
+          description: Whether this tool runs asynchronously (>5 seconds)
+          type: boolean
+        timeoutSeconds:
+          default: 30
+          description: Tool execution timeout
+          maximum: 300
+          minimum: 5
+          type: integer
+        outputSchema:
+          description: JSON Schema defining the tool's output structure
+          nullable: true
+          type: object
+        outputSchemaDescription:
+          description: Human-readable description of the tool's output
+          nullable: true
+          type: string
+        category:
+          description: Category to group related tools
+          maxLength: 100
+          nullable: true
+          type: string
+        responseMode:
+          description: 'How the tool response is handled: llm (passed back to model) or direct (returned to user)'
+          enum:
+          - llm
+          - direct
+          nullable: true
+          type: string
+      required:
+      - description
+      - edgeFunctionCode
+      - inputSchema
+      - name
+      type: object
+    deleteCustomTool_200_response:
+      example:
+        success: true
+        message: Custom tool deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Custom tool deleted successfully
+          type: string
+      type: object
+    getCustomTool_200_response_tool:
+      example:
+        responseMode: llm
+        createdAt: 2000-01-23 04:56:07+00:00
+        outputSchema: '{}'
+        outputSchemaDescription: outputSchemaDescription
+        inputSchema: '{}'
+        isAsync: false
+        name: check_inventory
+        description: Check product inventory levels
+        edgeFunctionUrl: https://preview.quantcdn.io/_quant/ai-exec/org/project/uuid
+        category: category
+        edgeFunctionCode: edgeFunctionCode
+      properties:
+        name:
+          example: check_inventory
+          type: string
+        description:
+          example: Check product inventory levels
+          type: string
+        edgeFunctionUrl:
+          example: https://preview.quantcdn.io/_quant/ai-exec/org/project/uuid
+          type: string
+        edgeFunctionCode:
+          description: The deployed edge function source code
+          type: string
+        isAsync:
+          example: false
+          type: boolean
+        inputSchema:
+          type: object
+        outputSchema:
+          nullable: true
+          type: object
+        outputSchemaDescription:
+          nullable: true
+          type: string
+        category:
+          nullable: true
+          type: string
+        responseMode:
+          enum:
+          - llm
+          - direct
+          nullable: true
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    createCustomTool_201_response:
+      example:
+        success: true
+        edgeFunctionUrl: https://preview.quantcdn.io/_quant/ai-exec/org/project/uuid
+        message: Custom tool deployed successfully
+        tool: '{}'
+        edgeFunctionCode: edgeFunctionCode
+        isUpdate: true
+      properties:
+        success:
+          example: true
+          type: boolean
+        tool:
+          type: object
+        edgeFunctionUrl:
+          description: Computed edge function URL (read-only)
+          example: https://preview.quantcdn.io/_quant/ai-exec/org/project/uuid
+          type: string
+        edgeFunctionCode:
+          description: The deployed edge function code
+          type: string
+        isUpdate:
+          description: Whether this was an update to an existing tool
+          type: boolean
+        message:
+          example: Custom tool deployed successfully
+          type: string
+      type: object
+    listCustomTools_200_response_tools_inner:
+      example:
+        createdAt: 2000-01-23 04:56:07+00:00
+        inputSchema: '{}'
+        isAsync: false
+        name: check_inventory
+        description: Check product inventory levels
+        edgeFunctionUrl: https://my-edge-function.quant.cloud
+      properties:
+        name:
+          example: check_inventory
+          type: string
+        description:
+          example: Check product inventory levels
+          type: string
+        edgeFunctionUrl:
+          example: https://my-edge-function.quant.cloud
+          type: string
+        isAsync:
+          example: false
+          type: boolean
+        inputSchema:
+          type: object
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    listCustomTools_200_response:
+      example:
+        count: 0
+        tools:
+        - createdAt: 2000-01-23 04:56:07+00:00
+          inputSchema: '{}'
+          isAsync: false
+          name: check_inventory
+          description: Check product inventory levels
+          edgeFunctionUrl: https://my-edge-function.quant.cloud
+        - createdAt: 2000-01-23 04:56:07+00:00
+          inputSchema: '{}'
+          isAsync: false
+          name: check_inventory
+          description: Check product inventory levels
+          edgeFunctionUrl: https://my-edge-function.quant.cloud
+      properties:
+        tools:
+          items:
+            $ref: '#/components/schemas/listCustomTools_200_response_tools_inner'
+          type: array
+        count:
+          type: integer
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

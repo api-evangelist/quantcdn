@@ -1,0 +1,1023 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Crawlers API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Website crawler configuration and management
+  name: Crawlers
+paths:
+  /api/v2/organizations/{organization}/projects/{project}/crawlers:
+    get:
+      operationId: Crawlers_list
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List crawlers for the project
+      tags:
+      - Crawlers
+    post:
+      operationId: Crawlers_create
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2CrawlerRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Crawler'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a new crawler
+      tags:
+      - Crawlers
+  /api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}:
+    delete:
+      operationId: Crawlers_delete
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the crawler
+        example: 00000000-0000-0000-0000-000000000000
+        explode: false
+        in: path
+        name: crawler
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a crawler
+      tags:
+      - Crawlers
+    get:
+      operationId: Crawlers_read
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the crawler
+        example: 00000000-0000-0000-0000-000000000000
+        explode: false
+        in: path
+        name: crawler
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Crawler'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a single crawler
+      tags:
+      - Crawlers
+    patch:
+      operationId: Crawlers_update
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The UUID of the crawler
+        example: 00000000-0000-0000-0000-000000000000
+        explode: false
+        in: path
+        name: crawler
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2CrawlerRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Crawler'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a crawler
+      tags:
+      - Crawlers
+  /api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/run:
+    post:
+      operationId: Crawlers_run
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Crawler identifier
+        example: 00000000-0000-0000-0000-000000000000
+        explode: false
+        in: path
+        name: crawler
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Crawlers_run_request'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Crawlers_run_200_response'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The resource was not found.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: An unexpected error occurred.
+      summary: Run a crawler
+      tags:
+      - Crawlers
+  /api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/runs:
+    get:
+      operationId: Crawlers_getRuns
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Crawler identifier
+        example: 00000000-0000-0000-0000-000000000000
+        explode: false
+        in: path
+        name: crawler
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2CrawlerRun'
+                type: array
+          description: The runs
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The resource was not found.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: An unexpected error occurred.
+      summary: Get all runs for a crawler
+      tags:
+      - Crawlers
+  /api/v2/organizations/{organization}/projects/{project}/crawlers/{crawler}/runs/{run_id}:
+    get:
+      operationId: Crawlers_getRunById
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Crawler identifier
+        example: 00000000-0000-0000-0000-000000000000
+        explode: false
+        in: path
+        name: crawler
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Run identifier
+        example: 1
+        explode: false
+        in: path
+        name: run_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2CrawlerRun'
+          description: The run
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The resource was not found.
+        '500':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: An unexpected error occurred.
+      summary: Get a run by ID
+      tags:
+      - Crawlers
+components:
+  schemas:
+    V2Crawler_assets_parser:
+      description: Parser configuration for asset extraction
+      properties:
+        enabled:
+          description: Enable parser
+          example: true
+          type: boolean
+      type: object
+    V2CrawlerRequest:
+      example:
+        headers:
+          Authorization: Bearer token123
+          X-Custom-Header: value
+        include:
+        - /blog/*
+        - /products/*
+        max_errors: 100
+        webhook_url: https://example.com/webhook
+        allowed_domains:
+        - example.com
+        - assets.example.com
+        browser_mode: false
+        max_html: 50
+        urls:
+        - /
+        - /about
+        - /contact
+        status_ok:
+        - 200
+        - 201
+        delay: 4
+        depth: -1
+        assets:
+          network_intercept:
+            enabled: true
+            timeout: 30
+            execute_js: false
+          parser:
+            enabled: true
+        max_hits: 0
+        domain: test-domain.com
+        name: Test Crawler
+        webhook_extra_vars: key1=value1&key2=value2
+        exclude:
+        - /admin/*
+        - /private/*
+        start_urls:
+        - /
+        - /blog
+        workers: 2
+        webhook_auth_header: Bearer token123
+        sitemap:
+        - url: /sitemap.xml
+          recursive: true
+        user_agent: Mozilla/5.0...
+      properties:
+        name:
+          description: Crawler name
+          example: Test Crawler
+          type: string
+        domain:
+          description: Domain to crawl
+          example: test-domain.com
+          type: string
+        browser_mode:
+          default: false
+          description: Enable browser mode
+          example: false
+          type: boolean
+        urls:
+          description: URLs to crawl
+          example:
+          - /
+          - /about
+          - /contact
+          items:
+            example: /
+            type: string
+          type: array
+        start_urls:
+          description: Starting URLs for crawl
+          example:
+          - /
+          - /blog
+          items:
+            type: string
+          type: array
+        headers:
+          additionalProperties:
+            type: string
+          description: Custom headers
+          example:
+            Authorization: Bearer token123
+            X-Custom-Header: value
+          type: object
+        exclude:
+          description: URL patterns to exclude (regex)
+          example:
+          - /admin/*
+          - /private/*
+          items:
+            type: string
+          type: array
+        include:
+          description: URL patterns to include (regex)
+          example:
+          - /blog/*
+          - /products/*
+          items:
+            type: string
+          type: array
+        webhook_url:
+          description: Webhook URL for notifications
+          example: https://example.com/webhook
+          type: string
+        webhook_auth_header:
+          description: Authorization header for webhook
+          example: Bearer token123
+          type: string
+        webhook_extra_vars:
+          description: Extra variables for webhook
+          example: key1=value1&key2=value2
+          type: string
+        workers:
+          description: 'Number of concurrent workers (default: 2, non-default requires verification)'
+          example: 2
+          maximum: 20
+          minimum: 1
+          type: integer
+        delay:
+          description: 'Delay between requests in seconds (default: 4, non-default requires verification)'
+          example: 4
+          format: float
+          maximum: 10
+          minimum: 0
+          type: number
+        depth:
+          description: Maximum crawl depth, -1 for unlimited
+          example: -1
+          minimum: -1
+          type: integer
+        max_hits:
+          description: 'Maximum total requests, 0 for unlimited (default: 0, non-default requires verification)'
+          example: 0
+          minimum: 0
+          type: integer
+        max_html:
+          description: 'Maximum HTML pages, 0 for unlimited (default: org limit, non-default requires verification)'
+          example: 50
+          minimum: 0
+          type: integer
+        status_ok:
+          description: HTTP status codes that will result in content being captured and pushed to Quant
+          example:
+          - 200
+          - 201
+          items:
+            type: integer
+          type: array
+        sitemap:
+          description: Sitemap configuration
+          example:
+          - url: /sitemap.xml
+            recursive: true
+          items:
+            $ref: '#/components/schemas/V2Crawler_sitemap_inner'
+          type: array
+        allowed_domains:
+          description: Allowed domains for multi-domain crawling, automatically enables merge_domains
+          example:
+          - example.com
+          - assets.example.com
+          items:
+            type: string
+          type: array
+        user_agent:
+          description: Custom user agent, only when browser_mode is false
+          example: Mozilla/5.0...
+          type: string
+        assets:
+          $ref: '#/components/schemas/V2Crawler_assets'
+        max_errors:
+          description: Maximum errors before stopping crawl
+          example: 100
+          minimum: 0
+          type: integer
+      required:
+      - domain
+      type: object
+    V2Crawler_sitemap_inner:
+      properties:
+        url:
+          description: Sitemap URL
+          example: /sitemap.xml
+          type: string
+        recursive:
+          description: Recursively follow sitemap links
+          example: true
+          type: boolean
+      type: object
+    V2Crawler_assets:
+      description: Asset harvesting configuration
+      example:
+        network_intercept:
+          enabled: true
+          timeout: 30
+          execute_js: false
+        parser:
+          enabled: true
+      properties:
+        network_intercept:
+          $ref: '#/components/schemas/V2Crawler_assets_network_intercept'
+        parser:
+          $ref: '#/components/schemas/V2Crawler_assets_parser'
+      type: object
+    Crawlers_run_200_response:
+      example:
+        run_id: '12345'
+      properties:
+        run_id:
+          description: The crawler run ID
+          example: '12345'
+          type: string
+      type: object
+    Crawlers_run_request:
+      properties:
+        urls:
+          description: Optional URLs to crawl (overrides crawler's default URL configuration). If not provided, the crawler will use its configured URLs or perform a full crawl.
+          example:
+          - /
+          - /about
+          - /contact
+          items:
+            example: /
+            type: string
+          type: array
+      type: object
+    V2CrawlerRun:
+      example:
+        completed_at: 1705749600
+        updated_at: 2024-01-20 09:15:00+00:00
+        project_id: 12345
+        last_status: completed
+        crawler_config_id: 12345
+        started_at: 1705749300
+        created_at: 2024-01-20 09:15:00+00:00
+        task_id: task-12345
+        id: 12345
+      properties:
+        id:
+          description: Run ID
+          example: 12345
+          type: integer
+        crawler_config_id:
+          description: Crawler config ID
+          example: 12345
+          type: integer
+        project_id:
+          description: Project ID
+          example: 12345
+          type: integer
+        last_status:
+          description: Run status
+          example: completed
+          type: string
+        task_id:
+          description: Task ID
+          example: task-12345
+          type: string
+        started_at:
+          description: Start time (Unix timestamp)
+          example: 1705749300
+          nullable: true
+          type: integer
+        completed_at:
+          description: Completion time (Unix timestamp)
+          example: 1705749600
+          nullable: true
+          type: integer
+        created_at:
+          description: Creation timestamp
+          example: 2024-01-20 09:15:00+00:00
+          format: date-time
+          type: string
+        updated_at:
+          description: Last update timestamp
+          example: 2024-01-20 09:15:00+00:00
+          format: date-time
+          type: string
+      required:
+      - crawler_config_id
+      - id
+      - last_status
+      - project_id
+      - task_id
+      type: object
+    V2Crawler_assets_network_intercept:
+      description: Network intercept configuration for asset collection
+      properties:
+        enabled:
+          description: Enable network intercept
+          example: true
+          type: boolean
+        timeout:
+          description: Request timeout in seconds
+          example: 30
+          type: integer
+        execute_js:
+          description: Execute JavaScript during asset collection
+          example: false
+          type: boolean
+      type: object
+    V2Crawler:
+      example:
+        urls_list: single_url:\n  - /\n  - /about\n  - /contact
+        allowed_domains:
+        - example.com
+        created_at: 2024-01-20 09:15:00+00:00
+        uuid: 550e8400-e29b-41d4-a716-446655440000
+        status_ok:
+        - 200
+        urls:
+        - /
+        - /about
+        assets:
+          network_intercept:
+            enabled: true
+            timeout: 30
+            execute_js: false
+          parser:
+            enabled: true
+        updated_at: 2024-10-11 16:45:00+00:00
+        project_id: 789
+        exclude:
+        - /admin/*
+        id: 456
+        workers: 2
+        start_urls:
+        - /
+        - /blog
+        webhook_auth_header: Bearer token123
+        user_agent: Mozilla/5.0...
+        sitemap:
+        - url: /sitemap.xml
+          recursive: true
+        headers:
+          Authorization: Bearer token
+        include:
+        - /blog/*
+        max_errors: 100
+        webhook_url: https://example.com/webhook
+        browser_mode: false
+        max_html: 50
+        deleted_at: 2000-01-23 04:56:07+00:00
+        delay: 4
+        depth: -1
+        max_hits: 0
+        domain: test-domain.com
+        name: Test Crawler
+        webhook_extra_vars: key1=value1&key2=value2
+        domain_verified: 1
+        config: 'domain: test-domain.com\nconfig:\n  max_html: 100\n  browser_mode: false'
+      properties:
+        id:
+          description: Crawler ID
+          example: 456
+          type: integer
+        name:
+          description: Crawler name
+          example: Test Crawler
+          type: string
+        project_id:
+          description: Project ID
+          example: 789
+          type: integer
+        uuid:
+          description: Crawler UUID
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
+        config:
+          description: Crawler configuration (YAML)
+          example: 'domain: test-domain.com\nconfig:\n  max_html: 100\n  browser_mode: false'
+          type: string
+        domain:
+          description: Crawler domain
+          example: test-domain.com
+          type: string
+        domain_verified:
+          default: 0
+          description: Domain verification status
+          example: 1
+          type: integer
+        urls_list:
+          description: URLs list (YAML)
+          example: single_url:\n  - /\n  - /about\n  - /contact
+          type: string
+        webhook_url:
+          description: Webhook URL for notifications
+          example: https://example.com/webhook
+          type: string
+        webhook_auth_header:
+          description: Authorization header for webhook
+          example: Bearer token123
+          type: string
+        webhook_extra_vars:
+          description: Extra variables for webhook
+          example: key1=value1&key2=value2
+          type: string
+        browser_mode:
+          description: Browser mode enabled
+          example: false
+          type: boolean
+        workers:
+          description: Number of concurrent workers
+          example: 2
+          type: integer
+        delay:
+          description: Delay between requests in seconds
+          example: 4
+          format: float
+          type: number
+        depth:
+          description: Maximum crawl depth
+          example: -1
+          type: integer
+        max_hits:
+          description: Maximum total requests
+          example: 0
+          type: integer
+        max_html:
+          description: Maximum HTML pages
+          example: 50
+          type: integer
+        status_ok:
+          description: HTTP status codes for content capture
+          example:
+          - 200
+          items:
+            type: integer
+          type: array
+        user_agent:
+          description: Custom user agent
+          example: Mozilla/5.0...
+          type: string
+        max_errors:
+          description: Maximum errors before stopping
+          example: 100
+          type: integer
+        start_urls:
+          description: Starting URLs
+          example:
+          - /
+          - /blog
+          items:
+            type: string
+          type: array
+        urls:
+          description: URLs list
+          example:
+          - /
+          - /about
+          items:
+            type: string
+          type: array
+        headers:
+          additionalProperties:
+            type: string
+          description: Custom headers
+          example:
+            Authorization: Bearer token
+          type: object
+        exclude:
+          description: URL patterns to exclude
+          example:
+          - /admin/*
+          items:
+            type: string
+          type: array
+        include:
+          description: URL patterns to include
+          example:
+          - /blog/*
+          items:
+            type: string
+          type: array
+        sitemap:
+          description: Sitemap configuration
+          example:
+          - url: /sitemap.xml
+            recursive: true
+          items:
+            $ref: '#/components/schemas/V2Crawler_sitemap_inner'
+          type: array
+        allowed_domains:
+          description: Allowed domains
+          example:
+          - example.com
+          items:
+            type: string
+          type: array
+        assets:
+          $ref: '#/components/schemas/V2Crawler_assets'
+        created_at:
+          description: Creation timestamp
+          example: 2024-01-20 09:15:00+00:00
+          format: date-time
+          type: string
+        updated_at:
+          description: Last update timestamp
+          example: 2024-10-11 16:45:00+00:00
+          format: date-time
+          type: string
+        deleted_at:
+          description: Deletion timestamp
+          format: date-time
+          nullable: true
+          type: string
+      required:
+      - config
+      - domain
+      - id
+      - project_id
+      - uuid
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

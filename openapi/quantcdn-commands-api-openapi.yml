@@ -1,0 +1,177 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Commands API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Execute commands in application containers
+  name: Commands
+paths:
+  /api/v3/organizations/{organisation}/environments/{environment}/commands:
+    get:
+      operationId: listCommands
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Command'
+          description: The commands
+      summary: Get all commands for an environment
+      tags:
+      - Commands
+    post:
+      operationId: createCommand
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createCommand_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Command'
+          description: The command
+      summary: Create a command for an environment
+      tags:
+      - Commands
+  /api/v3/organizations/{organisation}/environments/{environment}/commands/{command}:
+    get:
+      operationId: getCommand
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The command ID
+        example: test-cmd
+        explode: false
+        in: path
+        name: command
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Command'
+          description: The command
+      summary: Get a command
+      tags:
+      - Commands
+components:
+  schemas:
+    createCommand_request:
+      properties:
+        command:
+          type: string
+      type: object
+    Command:
+      example:
+        output:
+        - output
+        - output
+        scheduleName: scheduleName
+        targetContainerName: targetContainerName
+        runType: runType
+        exitCode: 0
+        startTime: startTime
+        runId: runId
+        endTime: endTime
+        command: command
+        status: status
+      properties:
+        runId:
+          type: string
+        runType:
+          type: string
+        command:
+          type: string
+        status:
+          type: string
+        startTime:
+          type: string
+        endTime:
+          type: string
+        exitCode:
+          type: integer
+        output:
+          items:
+            type: string
+          type: array
+        scheduleName:
+          type: string
+        targetContainerName:
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

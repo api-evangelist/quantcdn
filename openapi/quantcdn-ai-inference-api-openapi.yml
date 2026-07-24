@@ -1,0 +1,1428 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Inference API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Chat inference, embeddings, and image generation services
+  name: AI Inference
+paths:
+  /api/v3/organizations/{organisation}/ai/chat:
+    post:
+      description: "Sends requests to the AI API Gateway endpoint which buffers responses. Supports text, images, videos, and documents via base64 encoding.\n     *\n     * **Execution Modes:**\n     * - **Sync Mode** (default): Standard JSON response, waits for completion (200 response)\n     * - **Async Mode**: Set `async: true` for long-running tasks with polling (202 response)\n     *\n     * **Async/Durable Mode (`async: true`):**\n     * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)\n     * - Uses AWS Lambda Durable Functions for long-running inference\n     * - Supports client-executed tools via `waiting_callback` state\n     * - Poll `/ai/chat/executions/{requestId}` for status\n     * - Submit client tool results via `/ai/chat/callback`\n     * - Ideal for complex prompts, large contexts, or client-side tools\n     *\n     * **Multimodal Support:**\n     * - **Text**: Simple string content\n     * - **Images**: Base64-encoded PNG, JPEG, GIF, WebP (up to 25MB)\n     * - **Videos**: Base64-encoded MP4, MOV, WebM, etc. (up to 25MB)\n     * - **Documents**: Base64-encoded PDF, DOCX, CSV, etc. (up to 25MB)\n     *\n     * **Supported Models (Multimodal):**\n     * - **Claude 4.5 Series**: Sonnet 4.5, Haiku 4.5, Opus 4.5 (images, up to 20 per request)\n     * - **Claude 3.5 Series**: Sonnet v1/v2 (images, up to 20 per request)\n     * - **Amazon Nova**: Lite, Pro, Micro (images, videos, documents)\n     *\n     * **Usage Tips:**\n     * - Use base64 encoding for images/videos < 5-10MB\n     * - Place media before text prompts for best results\n     * - Label multiple media files (e.g., 'Image 1:', 'Image 2:')\n     * - Maximum 25MB total payload size\n     *\n     * **Response Patterns:**\n     * - **Text-only**: Returns simple text response when no tools requested\n     * - **Single tool**: Returns `toolUse` object when AI requests one tool\n     * - **Multiple tools**: Returns `toolUse` array when AI requests multiple tools\n     * - **Auto-execute sync**: Automatically executes tool and returns final text response\n     * - **Auto-execute async**: Returns toolUse with `executionId` and `status` for polling"
+      operationId: chatInference
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/chatInference_request'
+        description: Chat request with optional multimodal content blocks
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                response:
+                  role: assistant
+                  content: The capital of Australia is Canberra.
+                model: amazon.nova-lite-v1:0
+                requestId: req-abc123
+                finishReason: stop
+                usage:
+                  inputTokens: 12
+                  outputTokens: 8
+                  totalTokens: 20
+                  costCents: 0.18
+              schema:
+                $ref: '#/components/schemas/chatInference_200_response'
+          description: Chat inference completed (buffered response, sync mode)
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/chatInference_202_response'
+          description: 'Async execution started (when `async: true` in request)'
+        '500':
+          description: Failed to perform chat inference
+      summary: Chat inference via API Gateway (buffered responses) with multimodal support
+      tags:
+      - AI Inference
+  /api/v3/organizations/{organisation}/ai/chat/stream:
+    post:
+      description: "Streams responses from the AI streaming subdomain using Server-Sent Events (SSE). Tokens are streamed in real-time as they are generated.\n     *\n     * **Execution Modes:**\n     * - **Streaming Mode** (default): Real-time SSE token-by-token responses\n     * - **Async Mode**: Set `async: true` for long-running tasks with polling (202 response)\n     *\n     * **Async/Durable Mode (`async: true`):**\n     * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)\n     * - Uses AWS Lambda Durable Functions for long-running inference\n     * - Supports client-executed tools via `waiting_callback` state\n     * - Poll `/ai/chat/executions/{requestId}` for status\n     * - Submit client tool results via `/ai/chat/callback`\n     *\n     * **Multimodal Support:**\n     * - **Text**: Simple string content\n     * - **Images**: Base64-encoded PNG, JPEG, GIF, WebP (up to 25MB)\n     * - **Videos**: Base64-encoded MP4, MOV, WebM, etc. (up to 25MB)\n     * - **Documents**: Base64-encoded PDF, DOCX, CSV, etc. (up to 25MB)\n     *\n     * **Supported Models (Multimodal):**\n     * - **Claude 4.5 Series**: Sonnet 4.5, Haiku 4.5, Opus 4.5 (images, up to 20 per request)\n     * - **Claude 3.5 Series**: Sonnet v1/v2 (images, up to 20 per request)\n     * - **Amazon Nova**: Lite, Pro, Micro (images, videos, documents)\n     *\n     * **Usage Tips:**\n     * - Use base64 encoding for images/videos < 5-10MB\n     * - Place media before text prompts for best results\n     * - Label multiple media files (e.g., 'Image 1:', 'Image 2:')\n     * - Maximum 25MB total payload size\n     * - Streaming works with all content types (text, image, video, document)"
+      operationId: chatInferenceStream
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/chatInferenceStream_request'
+        description: Chat request with optional multimodal content blocks
+        required: true
+      responses:
+        '200':
+          content:
+            text/event-stream:
+              example: 'id: chunk-0
+
+                event: start
+
+                data: {"requestId":"abc123","model":"amazon.nova-lite-v1:0","streaming":true}
+
+
+                id: chunk-1
+
+                event: content
+
+                data: {"delta":"Hello","complete":false}
+
+
+                id: chunk-2
+
+                event: content
+
+                data: {"delta":" there!","complete":false}
+
+
+                id: chunk-3
+
+                event: done
+
+                data: {"complete":true,"usage":{"inputTokens":8,"outputTokens":15,"totalTokens":23}}'
+              schema:
+                description: 'Server-Sent Events stream with chunks of generated text. Format: id, event, data lines separated by newlines.'
+                type: string
+          description: Streaming response (text/event-stream, sync mode)
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/chatInference_202_response'
+          description: 'Async execution started (when `async: true` in request)'
+        '500':
+          description: Failed to perform streaming inference
+      summary: Chat inference via streaming endpoint (true HTTP streaming) with multimodal support
+      tags:
+      - AI Inference
+  /api/v3/organizations/{organisation}/ai/embeddings:
+    post:
+      description: "Generates vector embeddings for text content using embedding models. Used for semantic search, document similarity, and RAG applications.\n     *\n     * **Features:**\n     * - Single text or batch processing (up to 100 texts)\n     * - Configurable dimensions (256, 512, 1024, 8192 for Titan v2)\n     * - Optional normalization to unit length\n     * - Usage tracking for billing\n     *\n     * **Use Cases:**\n     * - Semantic search across documents\n     * - Similarity matching for content recommendations\n     * - RAG (Retrieval-Augmented Generation) pipelines\n     * - Clustering and classification\n     *\n     * **Available Embedding Models:**\n     * - amazon.titan-embed-text-v2:0 (default, supports 256-8192 dimensions)\n     * - amazon.titan-embed-text-v1:0 (1536 dimensions fixed)"
+      operationId: embeddings
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              input: The Australian government announced new climate policy
+              modelId: amazon.titan-embed-text-v2:0
+              dimensions: 1024
+              normalize: true
+            schema:
+              $ref: '#/components/schemas/embeddings_request'
+        description: Embedding request with single or multiple texts
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              example:
+                embeddings:
+                - 0.0215
+                - 0.0008
+                - 0.0312
+                - -0.0087
+                - 0.0273
+                model: amazon.titan-embed-text-v2:0
+                dimension: 1024
+                usage:
+                  inputTokens: 8
+                  totalTokens: 8
+              schema:
+                $ref: '#/components/schemas/embeddings_200_response'
+          description: Embeddings generated successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to generate embeddings
+      summary: Generate text embeddings for semantic search and RAG applications
+      tags:
+      - AI Inference
+  /api/v3/organizations/{organisation}/ai/image-generation:
+    post:
+      description: "Generates images using Amazon Nova Canvas image generation model.\n     *\n     * **Region Restriction:** Nova Canvas is ONLY available in:\n     * - `us-east-1` (US East, N. Virginia)\n     * - `ap-northeast-1` (Asia Pacific, Tokyo)\n     * - `eu-west-1` (Europe, Ireland)\n     * ❌ NOT available in `ap-southeast-2` (Sydney)\n     *\n     * **Supported Task Types:**\n     * - **TEXT_IMAGE**: Basic text-to-image generation\n     * - **TEXT_IMAGE with Conditioning**: Layout-guided generation using edge detection or segmentation\n     * - **COLOR_GUIDED_GENERATION**: Generate images with specific color palettes\n     * - **IMAGE_VARIATION**: Create variations of existing images\n     * - **INPAINTING**: Fill masked areas in images\n     * - **OUTPAINTING**: Extend images beyond their borders\n     * - **BACKGROUND_REMOVAL**: Remove backgrounds from images\n     * - **VIRTUAL_TRY_ON**: Try on garments/objects on people\n     *\n     * **Quality Options:**\n     * - **standard**: Faster generation, lower cost\n     * - **premium**: Higher quality, slower generation\n     *\n     * **Timeout:** Image generation can take up to 5 minutes"
+      operationId: imageGeneration
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            example:
+              taskType: TEXT_IMAGE
+              textToImageParams:
+                text: A serene mountain landscape at sunset with snow-capped peaks
+                negativeText: blurry, low quality, distorted
+                style: PHOTOREALISM
+              imageGenerationConfig:
+                width: 1024
+                height: 1024
+                quality: premium
+                numberOfImages: 1
+                cfgScale: 7
+              region: us-east-1
+            schema:
+              $ref: '#/components/schemas/imageGeneration_request'
+        description: Image generation request
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/imageGeneration_200_response'
+          description: Image(s) generated successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to generate images
+      summary: Generate images with Amazon Nova Canvas
+      tags:
+      - AI Inference
+  /api/v3/organizations/{organisation}/ai/chat/executions/{identifier}:
+    get:
+      description: "Poll the status of an async/durable chat execution.\n     *\n     * **When to use:** After starting chat inference with `async: true`, poll this endpoint\n     * to check execution status and retrieve results when complete.\n     *\n     * **Identifier:** Accepts either:\n     * - `requestId` (recommended): The short ID returned from the async request\n     * - `executionArn`: The full AWS Lambda durable execution ARN (must be URL-encoded)\n     *\n     * **Statuses:**\n     * - `pending`: Execution is starting (retry shortly)\n     * - `running`: Execution is in progress\n     * - `waiting_callback`: Execution paused, waiting for client tool results\n     * - `complete`: Execution finished successfully\n     * - `failed`: Execution failed with error\n     *\n     * **Client Tool Callback:**\n     * When status is `waiting_callback`, submit tool results via `POST /ai/chat/callback`.\n     *\n     * **Polling Recommendations:**\n     * - Start with 1 second delay, exponential backoff up to 30 seconds\n     * - Stop polling after 15 minutes (consider failed)"
+      operationId: getDurableExecutionStatus
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Either the requestId from async response, or full executionArn (URL-encoded)
+        example: XkdVWiEfSwMEPrw=
+        explode: false
+        in: path
+        name: identifier
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getDurableExecutionStatus_200_response'
+          description: Execution status retrieved
+        '404':
+          description: Execution not found
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to retrieve execution status
+      summary: Get Durable Execution Status
+      tags:
+      - AI Inference
+  /api/v3/organizations/{organisation}/ai/chat/callback:
+    post:
+      description: "Submit tool execution results to resume a suspended durable execution.\n     *\n     * **When to use:** When polling the execution status returns `waiting_callback`, use this endpoint\n     * to submit the results of client-executed tools. The execution will then resume.\n     *\n     * **Flow:**\n     * 1. Start async chat with client-executed tools (`autoExecute: []` or tools not in autoExecute list)\n     * 2. Poll status until `waiting_callback`\n     * 3. Execute tools locally using `pendingTools` from status response\n     * 4. Submit results here with the `callbackId`\n     * 5. Poll status until `complete`\n     *\n     * **Important:** Each `callbackId` can only be used once. After submission, poll the execution\n     * status to see the updated state."
+      operationId: submitToolCallback
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/submitToolCallback_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/submitToolCallback_200_response'
+          description: Callback submitted successfully, execution will resume
+        '400':
+          description: Invalid request (missing callbackId or toolResults)
+        '404':
+          description: Callback not found or already processed
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to submit callback
+      summary: Submit Client Tool Results (Callback)
+      tags:
+      - AI Inference
+components:
+  schemas:
+    chatInference_request_toolConfig:
+      description: Function calling configuration (Claude 3+, Nova Pro)
+      properties:
+        tools:
+          items:
+            $ref: '#/components/schemas/chatInference_request_toolConfig_tools_inner'
+          type: array
+        autoExecute:
+          default: false
+          description: 'When true, backend automatically executes tools and feeds results back to AI. For async tools (e.g., image generation), returns executionId for polling. Security: Use allowedTools to whitelist which tools can auto-execute.'
+          type: boolean
+        allowedTools:
+          description: 'Whitelist of tool names that can be auto-executed. Required when autoExecute is true for security. Example: [''get_weather'', ''generate_image'']'
+          items:
+            type: string
+          type: array
+      type: object
+    imageGeneration_request_colorGuidedGenerationParams:
+      description: Parameters for COLOR_GUIDED_GENERATION task
+      properties:
+        colors:
+          items:
+            pattern: ^#[0-9A-Fa-f]{6}$
+            type: string
+          maxItems: 10
+          minItems: 1
+          type: array
+        referenceImage:
+          format: byte
+          type: string
+        text:
+          maxLength: 1024
+          minLength: 1
+          type: string
+        negativeText:
+          maxLength: 1024
+          minLength: 1
+          type: string
+      type: object
+    chatInference_200_response:
+      example:
+        response:
+          role: assistant
+          toolUse:
+            result:
+              s3Urls:
+              - s3Urls
+              - s3Urls
+              images:
+              - images
+              - images
+            input:
+              location: Sydney
+            executionId: exec_abc123def456
+            name: get_weather
+            toolUseId: abc123
+            status: pending
+          content: I'll help you with that.
+        requestId: req-abc123
+        usage:
+          costCents: 0.42
+          inputTokens: 25
+          outputTokens: 150
+          totalTokens: 175
+        finishReason: stop
+        model: amazon.nova-pro-v1:0
+      properties:
+        response:
+          $ref: '#/components/schemas/chatInference_200_response_response'
+        model:
+          description: Model used for generation
+          example: amazon.nova-pro-v1:0
+          type: string
+        requestId:
+          description: Unique request identifier
+          example: req-abc123
+          type: string
+        finishReason:
+          description: Why the model stopped generating
+          enum:
+          - stop
+          - length
+          - content_filter
+          - tool_use
+          type: string
+        usage:
+          $ref: '#/components/schemas/chatInference_200_response_usage'
+      type: object
+    getDurableExecutionStatus_200_response_error:
+      description: Present when status is failed
+      example:
+        ErrorType: ErrorType
+        ErrorMessage: ErrorMessage
+      properties:
+        ErrorMessage:
+          type: string
+        ErrorType:
+          type: string
+      type: object
+    embeddings_200_response_embeddings:
+      description: Vector embeddings for the input text(s). Single array for string input, array of arrays for batch input.
+      oneOf:
+      - description: Single embedding vector if input was a string
+        items:
+          format: float
+          type: number
+        type: array
+      - description: Array of embedding vectors if input was an array
+        items:
+          items:
+            format: float
+            type: number
+          type: array
+        type: array
+    imageGeneration_200_response:
+      example:
+        images:
+        - images
+        - images
+        error: error
+        maskImage: maskImage
+      properties:
+        images:
+          description: Array of base64-encoded generated images
+          items:
+            format: byte
+            type: string
+          type: array
+        maskImage:
+          description: Base64-encoded mask image (for virtual try-on)
+          format: byte
+          type: string
+        error:
+          description: Error message if any images were blocked by content moderation
+          type: string
+      required:
+      - images
+      type: object
+    imageGeneration_request_imageVariationParams:
+      description: Parameters for IMAGE_VARIATION task
+      properties:
+        images:
+          items:
+            format: byte
+            type: string
+          maxItems: 5
+          minItems: 1
+          type: array
+        similarityStrength:
+          format: float
+          maximum: 1
+          minimum: 0.2
+          type: number
+        text:
+          maxLength: 1024
+          minLength: 1
+          type: string
+        negativeText:
+          maxLength: 1024
+          minLength: 1
+          type: string
+      type: object
+    chatInferenceStream_request_messages_inner_content:
+      example: What is the capital of Australia?
+      oneOf:
+      - description: Simple text message
+        type: string
+      - description: Multimodal content blocks
+        items:
+          description: Text, image, video, or document block
+          type: object
+        type: array
+    chatInference_request_messages_inner:
+      properties:
+        role:
+          enum:
+          - user
+          - assistant
+          - system
+          type: string
+        content:
+          $ref: '#/components/schemas/chatInference_request_messages_inner_content'
+      required:
+      - content
+      - role
+      type: object
+    chatInference_request_messages_inner_content_oneOf_inner:
+      oneOf:
+      - $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf'
+      - $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_1'
+      - $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_2'
+      - $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_3'
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_2_video:
+      properties:
+        format:
+          enum:
+          - mp4
+          - mov
+          - mkv
+          - webm
+          type: string
+        source:
+          $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_2_video_source'
+      required:
+      - format
+      - source
+      type: object
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_3_document_source:
+      properties:
+        bytes:
+          description: Base64-encoded document data
+          format: byte
+          type: string
+      required:
+      - bytes
+      type: object
+    chatInference_request_toolConfig_tools_inner_toolSpec:
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        inputSchema:
+          $ref: '#/components/schemas/chatInference_request_toolConfig_tools_inner_toolSpec_inputSchema'
+      type: object
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_2_video_source:
+      properties:
+        bytes:
+          description: Base64-encoded video data
+          format: byte
+          type: string
+      required:
+      - bytes
+      type: object
+    getDurableExecutionStatus_200_response_result:
+      description: Present when status is complete
+      example:
+        response:
+          role: assistant
+          content: The weather in Sydney is sunny.
+        usage:
+          costCents: 5.962134
+          inputTokens: 0
+          outputTokens: 6
+          totalTokens: 1
+        toolExecutions:
+        - '{}'
+        - '{}'
+      properties:
+        response:
+          $ref: '#/components/schemas/getDurableExecutionStatus_200_response_result_response'
+        usage:
+          $ref: '#/components/schemas/getDurableExecutionStatus_200_response_result_usage'
+        toolExecutions:
+          items:
+            type: object
+          type: array
+      type: object
+    imageGeneration_request_textToImageParams:
+      description: Parameters for TEXT_IMAGE task
+      properties:
+        text:
+          description: Text prompt
+          maxLength: 1024
+          minLength: 1
+          type: string
+        negativeText:
+          description: What NOT to include
+          maxLength: 1024
+          minLength: 1
+          type: string
+        style:
+          enum:
+          - 3D_ANIMATED_FAMILY_FILM
+          - DESIGN_SKETCH
+          - FLAT_VECTOR_ILLUSTRATION
+          - GRAPHIC_NOVEL_ILLUSTRATION
+          - MAXIMALISM
+          - MIDCENTURY_RETRO
+          - PHOTOREALISM
+          - SOFT_DIGITAL_PAINTING
+          type: string
+        conditionImage:
+          description: Base64-encoded conditioning image
+          format: byte
+          type: string
+        controlMode:
+          default: CANNY_EDGE
+          enum:
+          - CANNY_EDGE
+          - SEGMENTATION
+          type: string
+        controlStrength:
+          default: 0.7
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+      type: object
+    imageGeneration_request:
+      properties:
+        modelId:
+          default: amazon.nova-canvas-v1:0
+          description: Model to use for image generation
+          type: string
+        taskType:
+          description: Type of image generation task
+          enum:
+          - TEXT_IMAGE
+          - COLOR_GUIDED_GENERATION
+          - IMAGE_VARIATION
+          - INPAINTING
+          - OUTPAINTING
+          - BACKGROUND_REMOVAL
+          - VIRTUAL_TRY_ON
+          type: string
+        textToImageParams:
+          $ref: '#/components/schemas/imageGeneration_request_textToImageParams'
+        colorGuidedGenerationParams:
+          $ref: '#/components/schemas/imageGeneration_request_colorGuidedGenerationParams'
+        imageVariationParams:
+          $ref: '#/components/schemas/imageGeneration_request_imageVariationParams'
+        inPaintingParams:
+          $ref: '#/components/schemas/imageGeneration_request_inPaintingParams'
+        outPaintingParams:
+          $ref: '#/components/schemas/imageGeneration_request_outPaintingParams'
+        backgroundRemovalParams:
+          $ref: '#/components/schemas/imageGeneration_request_backgroundRemovalParams'
+        virtualTryOnParams:
+          description: Parameters for VIRTUAL_TRY_ON task
+          type: object
+        imageGenerationConfig:
+          $ref: '#/components/schemas/imageGeneration_request_imageGenerationConfig'
+        region:
+          default: us-east-1
+          description: AWS region for Nova Canvas
+          enum:
+          - us-east-1
+          - ap-northeast-1
+          - eu-west-1
+          type: string
+      required:
+      - taskType
+      type: object
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_1_image:
+      properties:
+        format:
+          enum:
+          - png
+          - jpeg
+          - gif
+          - webp
+          type: string
+        source:
+          $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_1_image_source'
+      required:
+      - format
+      - source
+      type: object
+    getDurableExecutionStatus_200_response_result_usage:
+      description: Token usage and cost for the final synthesis turn
+      example:
+        costCents: 5.962134
+        inputTokens: 0
+        outputTokens: 6
+        totalTokens: 1
+      properties:
+        inputTokens:
+          type: integer
+        outputTokens:
+          type: integer
+        totalTokens:
+          type: integer
+        costCents:
+          description: Cost of the final synthesis turn in US cents
+          format: float
+          type: number
+      type: object
+    getDurableExecutionStatus_200_response:
+      example:
+        result:
+          response:
+            role: assistant
+            content: The weather in Sydney is sunny.
+          usage:
+            costCents: 5.962134
+            inputTokens: 0
+            outputTokens: 6
+            totalTokens: 1
+          toolExecutions:
+          - '{}'
+          - '{}'
+        callbackId: Ab9hZXi/YXJuOmF3czpsYW1iZGE...
+        requestId: XkdVWiEfSwMEPrw=
+        executionArn: arn:aws:lambda:ap-southeast-2:...
+        awsStatus: SUCCEEDED
+        pendingTools:
+        - input:
+            location: Sydney
+          name: get_weather
+          toolUseId: toolu_bdrk_012KTC8NCG...
+        - input:
+            location: Sydney
+          name: get_weather
+          toolUseId: toolu_bdrk_012KTC8NCG...
+        error:
+          ErrorType: ErrorType
+          ErrorMessage: ErrorMessage
+        status: complete
+      properties:
+        requestId:
+          example: XkdVWiEfSwMEPrw=
+          type: string
+        executionArn:
+          example: arn:aws:lambda:ap-southeast-2:...
+          type: string
+        status:
+          enum:
+          - pending
+          - running
+          - waiting_callback
+          - complete
+          - failed
+          example: complete
+          type: string
+        awsStatus:
+          description: Raw AWS Step Functions status
+          example: SUCCEEDED
+          type: string
+        callbackId:
+          description: Present when status is waiting_callback - use with /chat/callback
+          example: Ab9hZXi/YXJuOmF3czpsYW1iZGE...
+          type: string
+        pendingTools:
+          description: Present when status is waiting_callback - tools waiting for results
+          items:
+            $ref: '#/components/schemas/getDurableExecutionStatus_200_response_pendingTools_inner'
+          type: array
+        result:
+          $ref: '#/components/schemas/getDurableExecutionStatus_200_response_result'
+        error:
+          $ref: '#/components/schemas/getDurableExecutionStatus_200_response_error'
+      type: object
+    chatInference_request_messages_inner_content:
+      example: What is the capital of Australia?
+      oneOf:
+      - description: Simple text message
+        type: string
+      - description: Multimodal content blocks (text, image, video, document)
+        items:
+          $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner'
+        type: array
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_3:
+      properties:
+        document:
+          $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_3_document'
+      required:
+      - document
+      type: object
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf:
+      properties:
+        text:
+          example: What's in this image?
+          type: string
+      required:
+      - text
+      type: object
+    chatInferenceStream_request:
+      properties:
+        messages:
+          description: Array of chat messages. Content can be a simple string or an array of content blocks for multimodal input.
+          items:
+            $ref: '#/components/schemas/chatInferenceStream_request_messages_inner'
+          minItems: 1
+          type: array
+        modelId:
+          description: Model ID. Use Nova models for multimodal support.
+          example: amazon.nova-lite-v1:0
+          type: string
+        temperature:
+          default: 0.7
+          maximum: 2
+          minimum: 0
+          type: number
+        maxTokens:
+          default: 4096
+          description: Max tokens. Claude 4.5 supports up to 64k.
+          maximum: 65536
+          minimum: 1
+          type: integer
+        topP:
+          maximum: 1
+          minimum: 0
+          type: number
+        systemPrompt:
+          description: Optional custom system prompt. When tools are enabled, this is prepended with tool usage guidance.
+          type: string
+        stopSequences:
+          description: Custom stop sequences
+          items:
+            type: string
+          maxItems: 4
+          type: array
+        responseFormat:
+          $ref: '#/components/schemas/chatInference_request_responseFormat'
+        toolConfig:
+          $ref: '#/components/schemas/chatInference_request_toolConfig'
+        sessionId:
+          description: Optional session ID for conversation continuity. Omit to use stateless mode, include to continue an existing session.
+          format: uuid
+          type: string
+        async:
+          default: false
+          description: Enable async/durable execution mode. When true, returns 202 with pollUrl instead of streaming. Use for long-running inference, client-executed tools, or operations >30 seconds.
+          type: boolean
+        allowedTools:
+          description: Top-level convenience alias for toolConfig.allowedTools. Whitelists which tools can be auto-executed.
+          example:
+          - get_weather
+          - generate_image
+          items:
+            type: string
+          type: array
+        guardrails:
+          $ref: '#/components/schemas/chatInference_request_guardrails'
+        longContext:
+          default: false
+          description: Enable 1M context window support regardless of token estimation. Use when sending large payloads (>200K tokens).
+          type: boolean
+      required:
+      - messages
+      - modelId
+      type: object
+    imageGeneration_request_imageGenerationConfig:
+      description: General image generation configuration
+      properties:
+        width:
+          example: 1024
+          type: integer
+        height:
+          example: 1024
+          type: integer
+        quality:
+          default: standard
+          enum:
+          - standard
+          - premium
+          type: string
+        cfgScale:
+          default: 6.5
+          format: float
+          maximum: 10
+          minimum: 1.1
+          type: number
+        seed:
+          maximum: 2147483646
+          minimum: 0
+          type: integer
+        numberOfImages:
+          default: 1
+          maximum: 5
+          minimum: 1
+          type: integer
+      type: object
+    embeddings_200_response_usage:
+      example:
+        inputTokens: 6
+        totalTokens: 1
+      properties:
+        inputTokens:
+          description: Number of tokens in input text(s)
+          type: integer
+        totalTokens:
+          description: Total tokens (same as inputTokens for embeddings)
+          type: integer
+      required:
+      - inputTokens
+      - totalTokens
+      type: object
+    chatInference_request_guardrails:
+      description: AWS Bedrock guardrails configuration for content filtering and safety.
+      properties:
+        guardrailIdentifier:
+          description: Guardrail identifier from AWS Bedrock
+          type: string
+        guardrailVersion:
+          description: Guardrail version
+          type: string
+        trace:
+          description: Enable guardrail trace output
+          enum:
+          - enabled
+          - disabled
+          type: string
+      type: object
+    chatInference_request_toolConfig_tools_inner_toolSpec_inputSchema:
+      properties:
+        json:
+          description: JSON Schema for function parameters
+          type: object
+      type: object
+    embeddings_200_response:
+      example:
+        embeddings:
+        - 0.8008282
+        - 0.8008282
+        usage:
+          inputTokens: 6
+          totalTokens: 1
+        model: amazon.titan-embed-text-v2:0
+        dimension: 1024
+      properties:
+        embeddings:
+          $ref: '#/components/schemas/embeddings_200_response_embeddings'
+        model:
+          description: Model used to generate embeddings
+          example: amazon.titan-embed-text-v2:0
+          type: string
+        dimension:
+          description: Dimensionality of each embedding vector
+          example: 1024
+          type: integer
+        usage:
+          $ref: '#/components/schemas/embeddings_200_response_usage'
+      required:
+      - dimension
+      - embeddings
+      - model
+      - usage
+      type: object
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_1_image_source:
+      properties:
+        bytes:
+          description: Base64-encoded image data
+          format: byte
+          type: string
+      required:
+      - bytes
+      type: object
+    embeddings_request:
+      properties:
+        input:
+          $ref: '#/components/schemas/embeddings_request_input'
+        modelId:
+          default: amazon.titan-embed-text-v2:0
+          description: Embedding model to use
+          example: amazon.titan-embed-text-v2:0
+          type: string
+        dimensions:
+          default: 1024
+          description: 'Output embedding dimensions. Titan v2 supports: 256, 512, 1024, 8192'
+          enum:
+          - 256
+          - 512
+          - 1024
+          - 8192
+          example: 1024
+          type: integer
+        normalize:
+          default: true
+          description: Normalize embeddings to unit length (magnitude = 1.0)
+          example: true
+          type: boolean
+      required:
+      - input
+      type: object
+    chatInference_request:
+      properties:
+        messages:
+          description: Array of chat messages. Content can be a simple string or an array of content blocks for multimodal input.
+          items:
+            $ref: '#/components/schemas/chatInference_request_messages_inner'
+          minItems: 1
+          type: array
+        modelId:
+          description: Model ID. Use Nova models for multimodal support.
+          example: amazon.nova-lite-v1:0
+          type: string
+        temperature:
+          default: 0.7
+          maximum: 2
+          minimum: 0
+          type: number
+        maxTokens:
+          default: 4096
+          description: Max tokens. Claude 4.5 supports up to 64k.
+          maximum: 65536
+          minimum: 1
+          type: integer
+        topP:
+          maximum: 1
+          minimum: 0
+          type: number
+        stream:
+          description: Ignored in buffered mode, always returns complete response
+          type: boolean
+        systemPrompt:
+          description: Optional custom system prompt. When tools are enabled, this is prepended with tool usage guidance.
+          type: string
+        stopSequences:
+          description: Custom stop sequences
+          items:
+            type: string
+          maxItems: 4
+          type: array
+        responseFormat:
+          $ref: '#/components/schemas/chatInference_request_responseFormat'
+        toolConfig:
+          $ref: '#/components/schemas/chatInference_request_toolConfig'
+        sessionId:
+          description: Optional session ID for conversation continuity. Omit to use stateless mode, include to continue an existing session.
+          format: uuid
+          type: string
+        async:
+          default: false
+          description: Enable async/durable execution mode. When true, returns 202 with pollUrl instead of waiting for completion. Use for long-running inference, client-executed tools, or operations >30 seconds.
+          type: boolean
+        allowedTools:
+          description: Top-level convenience alias for toolConfig.allowedTools. Whitelists which tools can be auto-executed.
+          example:
+          - get_weather
+          - generate_image
+          items:
+            type: string
+          type: array
+        guardrails:
+          $ref: '#/components/schemas/chatInference_request_guardrails'
+        longContext:
+          default: false
+          description: Enable 1M context window support regardless of token estimation. Use when sending large payloads (>200K tokens).
+          type: boolean
+      required:
+      - messages
+      - modelId
+      type: object
+    chatInference_200_response_response_toolUse:
+      description: Tool use request(s). Can be a single object or array of objects. Only present when AI requests tools.
+      oneOf:
+      - $ref: '#/components/schemas/chatInference_200_response_response_toolUse_oneOf'
+      - description: Multiple tool requests
+        items:
+          $ref: '#/components/schemas/chatInference_200_response_response_toolUse_oneOf_1_inner'
+        type: array
+    chatInference_202_response:
+      example:
+        requestId: XkdVWiEfSwMEPrw=
+        pollUrl: /ai/chat/executions/XkdVWiEfSwMEPrw%3D
+        sessionId: session-1769056496430
+        message: Execution started. Poll the status endpoint for updates.
+        status: queued
+      properties:
+        requestId:
+          description: Unique request identifier for polling
+          example: XkdVWiEfSwMEPrw=
+          type: string
+        sessionId:
+          description: Session ID for conversation continuity
+          example: session-1769056496430
+          type: string
+        status:
+          description: Initial execution status
+          enum:
+          - queued
+          example: queued
+          type: string
+        message:
+          description: Human-readable status message
+          example: Execution started. Poll the status endpoint for updates.
+          type: string
+        pollUrl:
+          description: URL to poll for execution status
+          example: /ai/chat/executions/XkdVWiEfSwMEPrw%3D
+          type: string
+      required:
+      - pollUrl
+      - requestId
+      - status
+      type: object
+    submitToolCallback_request:
+      properties:
+        callbackId:
+          description: The callbackId from the waiting_callback status response
+          example: Ab9hZXi/YXJuOmF3czpsYW1iZGE...
+          type: string
+        toolResults:
+          description: Results of client-executed tools
+          items:
+            $ref: '#/components/schemas/submitToolCallback_request_toolResults_inner'
+          type: array
+      required:
+      - callbackId
+      - toolResults
+      type: object
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_3_document:
+      properties:
+        format:
+          enum:
+          - pdf
+          - csv
+          - docx
+          - xlsx
+          type: string
+        name:
+          example: report.pdf
+          type: string
+        source:
+          $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_3_document_source'
+      required:
+      - format
+      - name
+      - source
+      type: object
+    chatInference_200_response_response_toolUse_oneOf:
+      description: Single tool request
+      example:
+        result:
+          s3Urls:
+          - s3Urls
+          - s3Urls
+          images:
+          - images
+          - images
+        input:
+          location: Sydney
+        executionId: exec_abc123def456
+        name: get_weather
+        toolUseId: abc123
+        status: pending
+      properties:
+        toolUseId:
+          example: abc123
+          type: string
+        name:
+          example: get_weather
+          type: string
+        input:
+          example:
+            location: Sydney
+          type: object
+        executionId:
+          description: Present for async tools with autoExecute
+          example: exec_abc123def456
+          type: string
+        status:
+          description: Execution status (pending/running/complete/failed) - present for async tools with autoExecute
+          example: pending
+          type: string
+        result:
+          $ref: '#/components/schemas/chatInference_200_response_response_toolUse_oneOf_result'
+      type: object
+    chatInference_200_response_response_toolUse_oneOf_1_inner:
+      properties:
+        toolUseId:
+          type: string
+        name:
+          type: string
+        input:
+          type: object
+        executionId:
+          description: Present for async tools with autoExecute
+          type: string
+        status:
+          description: Present for async tools with autoExecute
+          type: string
+        result:
+          description: Present when status='complete' for sync tools
+          type: object
+      type: object
+    chatInference_request_responseFormat:
+      description: Structured JSON output (Claude 3.5 Sonnet v1/v2, Nova Pro)
+      properties:
+        type:
+          enum:
+          - json
+          type: string
+        jsonSchema:
+          description: JSON Schema defining expected structure
+          type: object
+      type: object
+    imageGeneration_request_inPaintingParams:
+      description: Parameters for INPAINTING task
+      properties:
+        image:
+          format: byte
+          type: string
+        maskImage:
+          format: byte
+          type: string
+        maskPrompt:
+          type: string
+        text:
+          maxLength: 1024
+          minLength: 1
+          type: string
+        negativeText:
+          type: string
+      type: object
+    chatInference_200_response_usage:
+      description: Token usage and cost for this inference call
+      example:
+        costCents: 0.42
+        inputTokens: 25
+        outputTokens: 150
+        totalTokens: 175
+      properties:
+        inputTokens:
+          description: Number of input tokens
+          example: 25
+          type: integer
+        outputTokens:
+          description: Number of output tokens
+          example: 150
+          type: integer
+        totalTokens:
+          description: Total tokens consumed
+          example: 175
+          type: integer
+        costCents:
+          description: Cost of this inference call in US cents
+          example: 0.42
+          format: float
+          type: number
+      type: object
+    chatInference_request_toolConfig_tools_inner:
+      properties:
+        toolSpec:
+          $ref: '#/components/schemas/chatInference_request_toolConfig_tools_inner_toolSpec'
+      type: object
+    getDurableExecutionStatus_200_response_result_response:
+      example:
+        role: assistant
+        content: The weather in Sydney is sunny.
+      properties:
+        role:
+          example: assistant
+          type: string
+        content:
+          example: The weather in Sydney is sunny.
+          type: string
+      type: object
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_1:
+      properties:
+        image:
+          $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_1_image'
+      required:
+      - image
+      type: object
+    imageGeneration_request_backgroundRemovalParams:
+      description: Parameters for BACKGROUND_REMOVAL task
+      properties:
+        image:
+          format: byte
+          type: string
+      type: object
+    imageGeneration_request_outPaintingParams:
+      description: Parameters for OUTPAINTING task
+      properties:
+        image:
+          format: byte
+          type: string
+        maskImage:
+          format: byte
+          type: string
+        maskPrompt:
+          type: string
+        outPaintingMode:
+          default: DEFAULT
+          enum:
+          - PRECISE
+          - DEFAULT
+          type: string
+        text:
+          type: string
+        negativeText:
+          type: string
+      type: object
+    chatInference_200_response_response:
+      description: Assistant's response message. May contain text content and/or tool use requests.
+      example:
+        role: assistant
+        toolUse:
+          result:
+            s3Urls:
+            - s3Urls
+            - s3Urls
+            images:
+            - images
+            - images
+          input:
+            location: Sydney
+          executionId: exec_abc123def456
+          name: get_weather
+          toolUseId: abc123
+          status: pending
+        content: I'll help you with that.
+      properties:
+        role:
+          enum:
+          - assistant
+          example: assistant
+          type: string
+        content:
+          description: Text response content
+          example: I'll help you with that.
+          type: string
+        toolUse:
+          $ref: '#/components/schemas/chatInference_200_response_response_toolUse'
+      type: object
+    chatInferenceStream_request_messages_inner:
+      properties:
+        role:
+          enum:
+          - user
+          - assistant
+          - system
+          type: string
+        content:
+          $ref: '#/components/schemas/chatInferenceStream_request_messages_inner_content'
+      required:
+      - content
+      - role
+      type: object
+    submitToolCallback_request_toolResults_inner:
+      properties:
+        toolUseId:
+          description: The toolUseId from pendingTools
+          example: toolu_bdrk_012KTC8NCG...
+          type: string
+        result:
+          description: The result of executing the tool
+          example:
+            temperature: 24C
+            conditions: Sunny
+          type: object
+      required:
+      - result
+      - toolUseId
+      type: object
+    embeddings_request_input:
+      description: Single text string or array of text strings to embed
+      oneOf:
+      - example: The Australian government announced new climate policy
+        type: string
+      - example:
+        - Climate change policy
+        - Healthcare reform
+        - Education funding
+        items:
+          type: string
+        type: array
+    chatInference_request_messages_inner_content_oneOf_inner_oneOf_2:
+      properties:
+        video:
+          $ref: '#/components/schemas/chatInference_request_messages_inner_content_oneOf_inner_oneOf_2_video'
+      required:
+      - video
+      type: object
+    chatInference_200_response_response_toolUse_oneOf_result:
+      description: Tool execution result (only present when status='complete' for sync auto-executed tools). For async tools, poll /tools/executions/{executionId}
+      example:
+        s3Urls:
+        - s3Urls
+        - s3Urls
+        images:
+        - images
+        - images
+      properties:
+        images:
+          description: Base64 data URIs for images
+          items:
+            type: string
+          type: array
+        s3Urls:
+          description: Signed S3 URLs for downloads
+          items:
+            type: string
+          type: array
+      type: object
+    submitToolCallback_200_response:
+      example:
+        callbackId: callbackId
+        success: true
+        message: Callback submitted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Callback submitted successfully
+          type: string
+        callbackId:
+          description: Echo of the callbackId for confirmation
+          type: string
+      type: object
+    getDurableExecutionStatus_200_response_pendingTools_inner:
+      example:
+        input:
+          location: Sydney
+        name: get_weather
+        toolUseId: toolu_bdrk_012KTC8NCG...
+      properties:
+        name:
+          example: get_weather
+          type: string
+        toolUseId:
+          example: toolu_bdrk_012KTC8NCG...
+          type: string
+        input:
+          example:
+            location: Sydney
+          type: object
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

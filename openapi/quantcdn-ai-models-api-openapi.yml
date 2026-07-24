@@ -1,0 +1,293 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Models API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Foundation model listing and configuration
+  name: AI Models
+paths:
+  /api/v3/organizations/{organisation}/ai/models:
+    get:
+      operationId: listAIModels
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter models by supported feature
+        example: embeddings
+        explode: true
+        in: query
+        name: feature
+        required: false
+        schema:
+          default: all
+          enum:
+          - chat
+          - embeddings
+          - vision
+          - streaming
+          - all
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listAIModels_200_response'
+          description: List of available AI models
+        '500':
+          description: Failed to fetch models
+      summary: List available AI models for an organization
+      tags:
+      - AI Models
+  /api/v3/organizations/{organisation}/ai/models/{modelId}:
+    get:
+      description: "Retrieves detailed information about a specific Bedrock model from the catalog.\n     *\n     * **Features:**\n     * - Complete pricing breakdown (input/output per million tokens)\n     * - Context window and output token limits\n     * - Supported features (chat, vision, streaming, embeddings)\n     * - Model availability and deprecation status\n     * - Release date for version tracking\n     *\n     * **Example Model IDs:**\n     * - `amazon.nova-lite-v1:0` - Default multimodal model\n     * - `anthropic.claude-3-5-sonnet-20241022-v2:0` - Latest Claude\n     * - `amazon.titan-embed-text-v2:0` - Latest embeddings"
+      operationId: getAIModel
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The model identifier (e.g., amazon.nova-lite-v1:0)
+        example: amazon.nova-lite-v1:0
+        explode: false
+        in: path
+        name: modelId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAIModel_200_response'
+          description: Model details retrieved successfully
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAIModel_404_response'
+          description: Model not found in catalog
+        '500':
+          description: Failed to fetch model details
+      summary: Get AI Model Details
+      tags:
+      - AI Models
+components:
+  schemas:
+    getAIModel_200_response_pricing:
+      example:
+        outputPerMToken: 0.24
+        currency: USD
+        inputPerMToken: 0.06
+      properties:
+        inputPerMToken:
+          example: 0.06
+          format: float
+          type: number
+        outputPerMToken:
+          example: 0.24
+          format: float
+          type: number
+        currency:
+          example: USD
+          type: string
+      type: object
+    getAIModel_200_response_capabilities:
+      example:
+        supportsStructuredOutput: false
+        supportsMultimodal: true
+        supportsVision: true
+        supportsStreaming: true
+        supportsTools: false
+      properties:
+        supportsTools:
+          example: false
+          type: boolean
+        supportsStructuredOutput:
+          example: false
+          type: boolean
+        supportsMultimodal:
+          example: true
+          type: boolean
+        supportsVision:
+          example: true
+          type: boolean
+        supportsStreaming:
+          example: true
+          type: boolean
+      type: object
+    listAIModels_200_response_models_inner_capabilities:
+      description: Model capabilities and features
+      example:
+        embeddings: true
+        streaming: true
+        toolUse: true
+        multimodal: true
+        text: true
+      properties:
+        text:
+          description: Supports text generation
+          type: boolean
+        multimodal:
+          description: Supports images/video
+          type: boolean
+        embeddings:
+          description: Supports embeddings
+          type: boolean
+        streaming:
+          description: Supports streaming responses
+          type: boolean
+        toolUse:
+          description: Supports function calling
+          type: boolean
+      type: object
+    getAIModel_200_response:
+      example:
+        contextWindow: 300000
+        capabilities:
+          supportsStructuredOutput: false
+          supportsMultimodal: true
+          supportsVision: true
+          supportsStreaming: true
+          supportsTools: false
+        provider: Amazon
+        releaseDate: 2024-12-03
+        deprecated: false
+        name: Amazon Nova Lite
+        available: true
+        description: Very low-cost multimodal model for processing text, image, and video inputs.
+        id: amazon.nova-lite-v1:0
+        maxOutputTokens: 5000
+        pricing:
+          outputPerMToken: 0.24
+          currency: USD
+          inputPerMToken: 0.06
+      properties:
+        id:
+          example: amazon.nova-lite-v1:0
+          type: string
+        name:
+          example: Amazon Nova Lite
+          type: string
+        provider:
+          example: Amazon
+          type: string
+        description:
+          example: Very low-cost multimodal model for processing text, image, and video inputs.
+          type: string
+        contextWindow:
+          example: 300000
+          type: integer
+        maxOutputTokens:
+          example: 5000
+          type: integer
+        capabilities:
+          $ref: '#/components/schemas/getAIModel_200_response_capabilities'
+        pricing:
+          $ref: '#/components/schemas/getAIModel_200_response_pricing'
+        releaseDate:
+          example: 2024-12-03
+          format: date
+          type: string
+        deprecated:
+          example: false
+          type: boolean
+        available:
+          example: true
+          type: boolean
+      type: object
+    listAIModels_200_response:
+      example:
+        models:
+        - capabilities:
+            embeddings: true
+            streaming: true
+            toolUse: true
+            multimodal: true
+            text: true
+          provider: Amazon
+          name: Amazon Nova Lite
+          id: amazon.nova-lite-v1:0
+        - capabilities:
+            embeddings: true
+            streaming: true
+            toolUse: true
+            multimodal: true
+            text: true
+          provider: Amazon
+          name: Amazon Nova Lite
+          id: amazon.nova-lite-v1:0
+        count: 10
+      properties:
+        count:
+          example: 10
+          type: integer
+        models:
+          items:
+            $ref: '#/components/schemas/listAIModels_200_response_models_inner'
+          type: array
+      type: object
+    getAIModel_404_response:
+      example:
+        code: MODEL_NOT_FOUND
+        message: Model not found
+      properties:
+        message:
+          example: Model not found
+          type: string
+        code:
+          example: MODEL_NOT_FOUND
+          type: string
+      type: object
+    listAIModels_200_response_models_inner:
+      example:
+        capabilities:
+          embeddings: true
+          streaming: true
+          toolUse: true
+          multimodal: true
+          text: true
+        provider: Amazon
+        name: Amazon Nova Lite
+        id: amazon.nova-lite-v1:0
+      properties:
+        id:
+          example: amazon.nova-lite-v1:0
+          type: string
+        name:
+          example: Amazon Nova Lite
+          type: string
+        provider:
+          example: Amazon
+          type: string
+        capabilities:
+          $ref: '#/components/schemas/listAIModels_200_response_models_inner_capabilities'
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

@@ -1,0 +1,481 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Backup Management API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Backup and restore operations for applications
+  name: Backup Management
+paths:
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/backups/{type}:
+    get:
+      description: Retrieves a list of backups (database or filesystem) for the environment with status, size, and metadata. Supports filtering and ordering via query parameters.
+      operationId: listBackups
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The backup type
+        explode: false
+        in: path
+        name: type
+        required: true
+        schema:
+          enum:
+          - database
+          - filesystem
+          type: string
+        style: simple
+      - description: Sort order for backups by creation date (asc = oldest first, desc = newest first)
+        explode: true
+        in: query
+        name: order
+        required: false
+        schema:
+          default: desc
+          enum:
+          - asc
+          - desc
+          type: string
+        style: form
+      - description: Maximum number of backups to return (max 100)
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: Only return backups created before this ISO 8601 timestamp (e.g., 2025-01-01T00:00:00Z)
+        explode: true
+        in: query
+        name: createdBefore
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Only return backups created after this ISO 8601 timestamp (e.g., 2024-12-01T00:00:00Z)
+        explode: true
+        in: query
+        name: createdAfter
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Filter backups by status
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - completed
+          - failed
+          - running
+          type: string
+        style: form
+      - description: Token for retrieving the next page of results
+        explode: true
+        in: query
+        name: nextToken
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listBackups_200_response'
+          description: List of backups
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listBackups_422_response'
+          description: Invalid backup type
+      summary: List backups for an environment
+      tags:
+      - Backup Management
+    post:
+      operationId: createBackup
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The backup type
+        explode: false
+        in: path
+        name: type
+        required: true
+        schema:
+          enum:
+          - database
+          - filesystem
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createBackup_request'
+        required: false
+      responses:
+        '202':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createBackup_202_response'
+          description: Backup operation initiated
+      summary: Create a backup for an environment
+      tags:
+      - Backup Management
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/backups/{type}/{backupId}:
+    delete:
+      operationId: deleteBackup
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The backup type
+        explode: false
+        in: path
+        name: type
+        required: true
+        schema:
+          enum:
+          - database
+          - filesystem
+          type: string
+        style: simple
+      - description: The backup ID
+        explode: false
+        in: path
+        name: backupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteBackup_200_response'
+          description: Backup deleted successfully
+      summary: Delete a backup
+      tags:
+      - Backup Management
+  ? /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/backups/{type}/{backupId}/download
+  : get:
+      operationId: downloadBackup
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The backup type
+        explode: false
+        in: path
+        name: type
+        required: true
+        schema:
+          enum:
+          - database
+          - filesystem
+          type: string
+        style: simple
+      - description: The backup ID
+        explode: false
+        in: path
+        name: backupId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/downloadBackup_200_response'
+          description: Download URL generated successfully
+      summary: Generate a download URL for a backup
+      tags:
+      - Backup Management
+components:
+  schemas:
+    createBackup_request:
+      properties:
+        description:
+          description: Optional backup description
+          type: string
+      type: object
+    deleteBackup_200_response:
+      example:
+        backupId: backupId
+        message: message
+      properties:
+        message:
+          type: string
+        backupId:
+          type: string
+      type: object
+    listBackups_200_response_backups_inner:
+      example:
+        bucketName: au-prd-manual-backups
+        backupId: quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z
+        taskArn: arn:aws:ecs:ap-southeast-4:056500205767:task/au-prd-quant-cloud-cluster/305a68f04bf641f887a87b74d67fa57e
+        sizeFormatted: 1.86 MB
+        description: Manual backup
+        fileExists: true
+        type: logical
+        createdAt: 2025-09-19 21:50:27.317000+00:00
+        s3Key: database-backups/quant-gov/dashboard/staging/quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z.sql.gz
+        size: 1945663
+        engine: mysql
+        status: completed
+        updatedAt: 2025-09-19 21:51:09+00:00
+      properties:
+        backupId:
+          example: quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z
+          type: string
+        status:
+          example: completed
+          type: string
+        type:
+          example: logical
+          type: string
+        engine:
+          example: mysql
+          type: string
+        description:
+          example: Manual backup
+          type: string
+        createdAt:
+          example: 2025-09-19 21:50:27.317000+00:00
+          format: date-time
+          type: string
+        updatedAt:
+          example: 2025-09-19 21:51:09+00:00
+          format: date-time
+          type: string
+        taskArn:
+          example: arn:aws:ecs:ap-southeast-4:056500205767:task/au-prd-quant-cloud-cluster/305a68f04bf641f887a87b74d67fa57e
+          type: string
+        s3Key:
+          example: database-backups/quant-gov/dashboard/staging/quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z.sql.gz
+          type: string
+        bucketName:
+          example: au-prd-manual-backups
+          type: string
+        size:
+          example: 1945663
+          type: integer
+        sizeFormatted:
+          example: 1.86 MB
+          type: string
+        fileExists:
+          example: true
+          type: boolean
+      type: object
+    createBackup_202_response:
+      example:
+        backupId: backupId
+        message: message
+        status: status
+      properties:
+        backupId:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+      type: object
+    listBackups_200_response:
+      example:
+        nextToken: nextToken
+        count: 1
+        message: Found 1 database backup(s)
+        backups:
+        - bucketName: au-prd-manual-backups
+          backupId: quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z
+          taskArn: arn:aws:ecs:ap-southeast-4:056500205767:task/au-prd-quant-cloud-cluster/305a68f04bf641f887a87b74d67fa57e
+          sizeFormatted: 1.86 MB
+          description: Manual backup
+          fileExists: true
+          type: logical
+          createdAt: 2025-09-19 21:50:27.317000+00:00
+          s3Key: database-backups/quant-gov/dashboard/staging/quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z.sql.gz
+          size: 1945663
+          engine: mysql
+          status: completed
+          updatedAt: 2025-09-19 21:51:09+00:00
+        - bucketName: au-prd-manual-backups
+          backupId: quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z
+          taskArn: arn:aws:ecs:ap-southeast-4:056500205767:task/au-prd-quant-cloud-cluster/305a68f04bf641f887a87b74d67fa57e
+          sizeFormatted: 1.86 MB
+          description: Manual backup
+          fileExists: true
+          type: logical
+          createdAt: 2025-09-19 21:50:27.317000+00:00
+          s3Key: database-backups/quant-gov/dashboard/staging/quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z.sql.gz
+          size: 1945663
+          engine: mysql
+          status: completed
+          updatedAt: 2025-09-19 21:51:09+00:00
+      properties:
+        backups:
+          items:
+            $ref: '#/components/schemas/listBackups_200_response_backups_inner'
+          type: array
+        count:
+          example: 1
+          type: integer
+        nextToken:
+          description: Token for retrieving the next page of results, if more data is available
+          nullable: true
+          type: string
+        message:
+          example: Found 1 database backup(s)
+          type: string
+      type: object
+    listBackups_422_response:
+      example:
+        error: The backup type must be either database or filesystem
+      properties:
+        error:
+          example: The backup type must be either database or filesystem
+          type: string
+      type: object
+    downloadBackup_200_response:
+      example:
+        filename: filename
+        downloadUrl: downloadUrl
+        expiresAt: 2000-01-23 04:56:07+00:00
+      properties:
+        downloadUrl:
+          description: Pre-signed S3 URL for download
+          type: string
+        expiresAt:
+          description: URL expiration time
+          format: date-time
+          type: string
+        filename:
+          description: Suggested filename for download
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

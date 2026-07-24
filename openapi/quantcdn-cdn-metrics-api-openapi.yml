@@ -1,0 +1,460 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents CDN Metrics API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: CDN traffic metrics and analytics
+  name: CDN Metrics
+paths:
+  /v2/organizations/{organization}/projects/{project}/metrics/hourly:
+    get:
+      description: Returns the last hour of minute-by-minute metrics data
+      operationId: getHourlyMetrics
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter by domain ID or domain name
+        explode: true
+        in: query
+        name: domain
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: 'Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category.'
+        explode: true
+        in: query
+        name: metrics[]
+        required: false
+        schema:
+          items:
+            enum:
+            - hits
+            - bytes
+            - edge_resp_header_bytes
+            - bereq_body_bytes
+            - bereq_header_bytes
+            - bandwidth
+            - edge_hit_ratio
+            - edge_hit_requests
+            - edge_miss_requests
+            - origin_fetches
+            - origin_fetch_resp_body_bytes
+            - origin_fetch_resp_header_bytes
+            - origin_offload
+            - status_1xx
+            - status_2xx
+            - status_3xx
+            - status_4xx
+            - status_5xx
+            - origin_status_1xx
+            - origin_status_2xx
+            - origin_status_3xx
+            - origin_status_4xx
+            - origin_status_5xx
+            type: string
+          type: array
+        style: form
+      - description: Timestamp format in response
+        explode: true
+        in: query
+        name: timestamp_format
+        required: false
+        schema:
+          default: iso8601
+          enum:
+          - iso8601
+          - unix
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2MetricsResponse'
+          description: Hourly metrics data
+        '400':
+          description: Invalid metric requested
+        '404':
+          description: No domains found or domain not found
+      security:
+      - bearerAuth: []
+      summary: Get hourly metrics
+      tags:
+      - CDN Metrics
+  /v2/organizations/{organization}/projects/{project}/metrics/daily:
+    get:
+      description: Returns the last 30 days of daily metrics data
+      operationId: getDailyMetrics
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter by domain ID or domain name
+        explode: true
+        in: query
+        name: domain
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: 'Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category.'
+        explode: true
+        in: query
+        name: metrics[]
+        required: false
+        schema:
+          items:
+            enum:
+            - hits
+            - bytes
+            - edge_resp_header_bytes
+            - bereq_body_bytes
+            - bereq_header_bytes
+            - bandwidth
+            - edge_hit_ratio
+            - edge_hit_requests
+            - edge_miss_requests
+            - origin_fetches
+            - origin_fetch_resp_body_bytes
+            - origin_fetch_resp_header_bytes
+            - origin_offload
+            - status_1xx
+            - status_2xx
+            - status_3xx
+            - status_4xx
+            - status_5xx
+            - origin_status_1xx
+            - origin_status_2xx
+            - origin_status_3xx
+            - origin_status_4xx
+            - origin_status_5xx
+            type: string
+          type: array
+        style: form
+      - description: Timestamp format in response
+        explode: true
+        in: query
+        name: timestamp_format
+        required: false
+        schema:
+          default: iso8601
+          enum:
+          - iso8601
+          - unix
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2MetricsResponse'
+          description: Daily metrics data
+        '400':
+          description: Invalid metric requested
+        '404':
+          description: No domains found or domain not found
+      security:
+      - bearerAuth: []
+      summary: Get daily metrics
+      tags:
+      - CDN Metrics
+  /v2/organizations/{organization}/projects/{project}/metrics/monthly:
+    get:
+      description: Returns the last 12 months of monthly metrics data
+      operationId: getMonthlyMetrics
+      parameters:
+      - description: Organization identifier
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter by domain ID or domain name
+        explode: true
+        in: query
+        name: domain
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: 'Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category.'
+        explode: true
+        in: query
+        name: metrics[]
+        required: false
+        schema:
+          items:
+            enum:
+            - hits
+            - bytes
+            - edge_resp_header_bytes
+            - bereq_body_bytes
+            - bereq_header_bytes
+            - bandwidth
+            - edge_hit_ratio
+            - edge_hit_requests
+            - edge_miss_requests
+            - origin_fetches
+            - origin_fetch_resp_body_bytes
+            - origin_fetch_resp_header_bytes
+            - origin_offload
+            - status_1xx
+            - status_2xx
+            - status_3xx
+            - status_4xx
+            - status_5xx
+            - origin_status_1xx
+            - origin_status_2xx
+            - origin_status_3xx
+            - origin_status_4xx
+            - origin_status_5xx
+            type: string
+          type: array
+        style: form
+      - description: Timestamp format in response
+        explode: true
+        in: query
+        name: timestamp_format
+        required: false
+        schema:
+          default: iso8601
+          enum:
+          - iso8601
+          - unix
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2MetricsResponse'
+          description: Monthly metrics data
+        '400':
+          description: Invalid metric requested
+        '404':
+          description: No domains found or domain not found
+      security:
+      - bearerAuth: []
+      summary: Get monthly metrics
+      tags:
+      - CDN Metrics
+components:
+  schemas:
+    V2MetricDataPoint_timestamp:
+      description: Timestamp for this data point (format depends on timestamp_format parameter)
+      example: 2026-01-29 12:00:00+00:00
+      oneOf:
+      - description: ISO8601 timestamp
+        format: date-time
+        type: string
+      - description: Unix timestamp
+        type: integer
+    V2MetricsResponse:
+      example:
+        data:
+          hits:
+            series:
+            - timestamp: 2026-01-29 12:00:00+00:00
+              value: 150
+            - timestamp: 2026-01-29 12:01:00+00:00
+              value: 142
+            period_total: 8523
+            all_time_total: 1284567
+            period_average: 142.05
+          bytes:
+            series:
+            - timestamp: 2026-01-29 12:00:00+00:00
+              value: 1520576
+            - timestamp: 2026-01-29 12:01:00+00:00
+              value: 1423456
+            period_total: 91234567
+            all_time_total: 12845670000
+            period_average: 1520576.12
+        meta:
+          start_time: 2026-01-29 12:00:00+00:00
+          period: hourly
+          granularity: minute
+          domain: domain
+          end_time: 2026-01-29 13:00:00+00:00
+          metrics:
+          - hits
+          - bytes
+      properties:
+        meta:
+          $ref: '#/components/schemas/V2MetricsMeta'
+        data:
+          additionalProperties:
+            $ref: '#/components/schemas/V2MetricData'
+          description: Metrics data keyed by metric name
+          example:
+            hits:
+              series:
+              - timestamp: 2026-01-29 12:00:00+00:00
+                value: 150
+              - timestamp: 2026-01-29 12:01:00+00:00
+                value: 142
+              period_total: 8523
+              all_time_total: 1284567
+              period_average: 142.05
+            bytes:
+              series:
+              - timestamp: 2026-01-29 12:00:00+00:00
+                value: 1520576
+              - timestamp: 2026-01-29 12:01:00+00:00
+                value: 1423456
+              period_total: 91234567
+              all_time_total: 12845670000
+              period_average: 1520576.12
+          type: object
+      required:
+      - data
+      - meta
+      type: object
+    V2MetricDataPoint:
+      properties:
+        timestamp:
+          $ref: '#/components/schemas/V2MetricDataPoint_timestamp'
+        value:
+          description: Metric value at this timestamp
+          example: 150
+          type: number
+      required:
+      - timestamp
+      - value
+      type: object
+    V2MetricData:
+      properties:
+        series:
+          description: Time series data points
+          items:
+            $ref: '#/components/schemas/V2MetricDataPoint'
+          type: array
+        period_total:
+          description: Total value for the period
+          example: 8523
+          type: number
+        all_time_total:
+          description: All-time total value
+          example: 1284567
+          type: number
+        period_average:
+          description: Average value per time unit in the period
+          example: 142.05
+          format: float
+          type: number
+      required:
+      - all_time_total
+      - period_average
+      - period_total
+      - series
+      type: object
+    V2MetricsMeta:
+      example:
+        start_time: 2026-01-29 12:00:00+00:00
+        period: hourly
+        granularity: minute
+        domain: domain
+        end_time: 2026-01-29 13:00:00+00:00
+        metrics:
+        - hits
+        - bytes
+      properties:
+        period:
+          description: The period type for this data
+          enum:
+          - hourly
+          - daily
+          - monthly
+          example: hourly
+          type: string
+        granularity:
+          description: The granularity of data points
+          enum:
+          - minute
+          - day
+          - month
+          example: minute
+          type: string
+        start_time:
+          description: Start time of the data range (ISO8601 or Unix timestamp based on timestamp_format parameter)
+          example: 2026-01-29 12:00:00+00:00
+          type: string
+        end_time:
+          description: End time of the data range (ISO8601 or Unix timestamp based on timestamp_format parameter)
+          example: 2026-01-29 13:00:00+00:00
+          type: string
+        metrics:
+          description: List of metrics included in the response
+          example:
+          - hits
+          - bytes
+          items:
+            type: string
+          type: array
+        domain:
+          description: Domain filter applied (if any)
+          nullable: true
+          type: string
+          example: null
+      required:
+      - end_time
+      - granularity
+      - metrics
+      - period
+      - start_time
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

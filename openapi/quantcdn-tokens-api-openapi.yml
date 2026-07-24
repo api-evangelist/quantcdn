@@ -1,0 +1,280 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Tokens API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: API token management
+  name: Tokens
+paths:
+  /api/v2/organizations/{organization}/tokens:
+    get:
+      operationId: Tokens_list
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Tokens_list_200_response_inner'
+                type: array
+          description: The request has succeeded.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      security:
+      - BearerAuth: []
+      summary: List API tokens scoped to this organization
+      tags:
+      - Tokens
+    post:
+      operationId: Tokens_create
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Tokens_create_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tokens_create_201_response'
+          description: Token created. The plain token is returned once and cannot be retrieved again.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Bad request.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Validation error.
+      security:
+      - BearerAuth: []
+      summary: Create a new API token scoped to this organization
+      tags:
+      - Tokens
+  /api/v2/organizations/{organization}/tokens/{token_id}:
+    delete:
+      operationId: Tokens_delete
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Token ID to revoke
+        example: 42
+        explode: false
+        in: path
+        name: token_id
+        required: true
+        schema:
+          type: integer
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tokens_delete_200_response'
+          description: Token revoked successfully.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Token not found.
+      security:
+      - BearerAuth: []
+      summary: Revoke an API token
+      tags:
+      - Tokens
+components:
+  schemas:
+    Tokens_create_request:
+      properties:
+        name:
+          description: Name for the token
+          example: My CI token
+          type: string
+        preset:
+          description: Preset scope bundle
+          example: content_management
+          nullable: true
+          type: string
+        scopes:
+          description: Individual scopes (mutually exclusive with preset)
+          example:
+          - projects:read
+          - content:write
+          items:
+            type: string
+          nullable: true
+          type: array
+        projects:
+          description: Project IDs to restrict this token to
+          items:
+            type: integer
+          nullable: true
+          type: array
+        expires_in:
+          description: Token expiration period
+          enum:
+          - 30d
+          - 90d
+          - 365d
+          - never
+          example: 90d
+          nullable: true
+          type: string
+      required:
+      - name
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    Tokens_create_201_response:
+      example:
+        projects:
+        - 6
+        - 6
+        expires_at: 2000-01-23 04:56:07+00:00
+        name: name
+        created_at: 2000-01-23 04:56:07+00:00
+        id: 0
+        scopes:
+        - scopes
+        - scopes
+        preset: preset
+        token: token
+      properties:
+        token:
+          description: The plain text token (shown once)
+          type: string
+        id:
+          description: Token ID
+          type: integer
+        name:
+          type: string
+        scopes:
+          items:
+            type: string
+          nullable: true
+          type: array
+        projects:
+          items:
+            type: integer
+          nullable: true
+          type: array
+        preset:
+          nullable: true
+          type: string
+        expires_at:
+          format: date-time
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          type: string
+      type: object
+    Tokens_list_200_response_inner:
+      example:
+        last_used: 2000-01-23 04:56:07+00:00
+        name: My deploy token
+        created_at: 2000-01-23 04:56:07+00:00
+        id: 42
+      properties:
+        id:
+          example: 42
+          type: integer
+        name:
+          example: My deploy token
+          type: string
+        last_used:
+          format: date-time
+          nullable: true
+          type: string
+        created_at:
+          format: date-time
+          type: string
+      type: object
+    Tokens_delete_200_response:
+      example:
+        message: Token revoked successfully
+      properties:
+        message:
+          example: Token revoked successfully
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

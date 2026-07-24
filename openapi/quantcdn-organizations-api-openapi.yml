@@ -1,0 +1,167 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Organizations API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Organization management and settings
+  name: Organizations
+paths:
+  /api/v2/organizations:
+    get:
+      operationId: Organizations_list
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Organizations_list_200_response_inner'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Retrieve all organizations
+      tags:
+      - Organizations
+  /api/v2/organizations/{organization}:
+    get:
+      operationId: Organizations_read
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Organization'
+          description: The request has succeeded.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Organization not found.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a single organization
+      tags:
+      - Organizations
+components:
+  schemas:
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    Organizations_list_200_response_inner:
+      example:
+        name: Test Organization
+        machine_name: test-org
+      properties:
+        name:
+          description: Organization name
+          example: Test Organization
+          type: string
+        machine_name:
+          description: Organization machine name
+          example: test-org
+          type: string
+      type: object
+    V2Organization:
+      example:
+        name: Test Organization
+        machine_name: test-org
+        type: business
+        region: au
+        subscription: professional
+        created_at: 2024-01-15 10:30:00+00:00
+        updated_at: 2024-10-10 14:20:00+00:00
+      properties:
+        name:
+          description: Organization name
+          example: Test Organization
+          type: string
+        machine_name:
+          description: Organization machine name
+          example: test-org
+          type: string
+        type:
+          description: Organization type
+          example: business
+          type: string
+        region:
+          description: Organization region
+          example: au
+          type: string
+        subscription:
+          description: Subscription type
+          example: professional
+          type: string
+        created_at:
+          description: Creation timestamp
+          example: 2024-01-15 10:30:00+00:00
+          format: date-time
+          type: string
+        updated_at:
+          description: Last update timestamp
+          example: 2024-10-10 14:20:00+00:00
+          format: date-time
+          type: string
+      required:
+      - machine_name
+      - name
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

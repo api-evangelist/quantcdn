@@ -1,0 +1,1198 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Applications API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Cloud application lifecycle management
+  name: Applications
+paths:
+  /api/v3/organizations/{organisation}/applications:
+    get:
+      operationId: listApplications
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Application'
+                type: array
+          description: A list of applications
+      summary: Get all applications for an organisation
+      tags:
+      - Applications
+    post:
+      operationId: createApplication
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateApplicationRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+          description: The created application
+        '400':
+          description: The request is invalid
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createApplication_403_response'
+          description: Application limit reached - organisation has reached the maximum number of allowed applications
+      summary: Create a new application
+      tags:
+      - Applications
+  /api/v3/organizations/{organisation}/applications/{application}:
+    delete:
+      operationId: deleteApplication
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The application deleted
+        '404':
+          description: The application not found
+      summary: Delete an application
+      tags:
+      - Applications
+    get:
+      operationId: getApplication
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+          description: The application
+        '404':
+          description: The application not found
+      summary: Get a single application
+      tags:
+      - Applications
+  /api/v3/organizations/{organisation}/applications/ecr-login:
+    get:
+      operationId: getEcrLoginCredentials
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getEcrLoginCredentials_200_response'
+          description: The ECR login credentials
+      summary: Get ECR login credentials
+      tags:
+      - Applications
+components:
+  schemas:
+    Container_environment_inner:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          description: Environment variable name
+          type: string
+        value:
+          description: Environment variable value
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    Container_healthCheck:
+      description: Container health check configuration
+      example:
+        retries: 7
+        startPeriod: 279
+        interval: 171
+        command:
+        - command
+        - command
+        timeout: 15
+      nullable: true
+      properties:
+        command:
+          description: The command to run to determine if the container is healthy
+          items:
+            type: string
+          type: array
+        interval:
+          default: 30
+          description: Time period (seconds) between health checks
+          maximum: 300
+          minimum: 5
+          type: integer
+        timeout:
+          default: 5
+          description: Time period (seconds) to wait for a health check to return
+          maximum: 60
+          minimum: 2
+          type: integer
+        retries:
+          default: 3
+          description: Number of times to retry a failed health check
+          maximum: 10
+          minimum: 1
+          type: integer
+        startPeriod:
+          description: Grace period (seconds) to ignore unhealthy checks after container starts
+          maximum: 300
+          minimum: 0
+          nullable: true
+          type: integer
+      type: object
+    Container_imageReference:
+      example:
+        identifier: identifier
+        type: internal
+      properties:
+        type:
+          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
+          enum:
+          - internal
+          - external
+          type: string
+        identifier:
+          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
+          type: string
+      required:
+      - identifier
+      - type
+      type: object
+    CreateApplicationRequest_environment_inner:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          description: Environment variable name
+          type: string
+        value:
+          description: Environment variable value
+          type: string
+      type: object
+    Container_mountPoints_inner:
+      example:
+        readOnly: false
+        containerPath: containerPath
+        sourceVolume: sourceVolume
+      properties:
+        sourceVolume:
+          description: The name of the logical volume
+          type: string
+        containerPath:
+          description: The path inside the container where the volume is mounted
+          type: string
+        readOnly:
+          default: false
+          type: boolean
+      required:
+      - containerPath
+      - sourceVolume
+      type: object
+    Application_imageReference:
+      description: Image reference information
+      example:
+        identifier: identifier
+        type: internal
+      nullable: true
+      properties:
+        type:
+          description: Image type
+          enum:
+          - internal
+          - external
+          type: string
+        identifier:
+          description: Image identifier
+          type: string
+      readOnly: true
+      type: object
+    CreateApplicationRequest_database:
+      description: Optional database configuration
+      example:
+        multiAz: false
+        engine: mysql
+        instanceClass: db.t4g.micro
+        storageGb: 20
+      nullable: true
+      properties:
+        engine:
+          default: mysql
+          description: Database engine type (MySQL 8.4, Postgres)
+          enum:
+          - mysql
+          - postgres
+          type: string
+        instanceClass:
+          default: db.t4g.micro
+          description: RDS instance class
+          example: db.t4g.micro
+          type: string
+        storageGb:
+          default: 20
+          description: Allocated storage in GiB
+          example: 20
+          type: integer
+        multiAz:
+          default: false
+          description: Enable Multi-AZ deployment (higher availability and cost)
+          type: boolean
+      type: object
+    Compose:
+      example:
+        spotConfiguration:
+          strategy: spot-only
+        taskMemory: 2
+        maxCapacity: 7
+        containers:
+        - originProtectionConfig:
+            ipAllow:
+            - ipAllow
+            - ipAllow
+            enabled: true
+          memory: 6
+          dependsOn:
+          - condition: START
+            containerName: containerName
+          - condition: START
+            containerName: containerName
+          workingDirectory: workingDirectory
+          exposedPorts:
+          - 5
+          - 5
+          cpu: 0
+          imageReference:
+            identifier: identifier
+            type: internal
+          secrets:
+          - name: name
+            valueFrom: valueFrom
+          - name: name
+            valueFrom: valueFrom
+          memoryReservation: 1
+          command:
+          - command
+          - command
+          environment:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          readonlyRootFilesystem: false
+          originProtection: false
+          healthCheck:
+            retries: 7
+            startPeriod: 279
+            interval: 171
+            command:
+            - command
+            - command
+            timeout: 15
+          name: name
+          mountPoints:
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          entryPoint:
+          - entryPoint
+          - entryPoint
+          user: user
+          essential: true
+        - originProtectionConfig:
+            ipAllow:
+            - ipAllow
+            - ipAllow
+            enabled: true
+          memory: 6
+          dependsOn:
+          - condition: START
+            containerName: containerName
+          - condition: START
+            containerName: containerName
+          workingDirectory: workingDirectory
+          exposedPorts:
+          - 5
+          - 5
+          cpu: 0
+          imageReference:
+            identifier: identifier
+            type: internal
+          secrets:
+          - name: name
+            valueFrom: valueFrom
+          - name: name
+            valueFrom: valueFrom
+          memoryReservation: 1
+          command:
+          - command
+          - command
+          environment:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          readonlyRootFilesystem: false
+          originProtection: false
+          healthCheck:
+            retries: 7
+            startPeriod: 279
+            interval: 171
+            command:
+            - command
+            - command
+            timeout: 15
+          name: name
+          mountPoints:
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          entryPoint:
+          - entryPoint
+          - entryPoint
+          user: user
+          essential: true
+        minCapacity: 4
+        taskCpu: 3
+        enableCrossAppNetworking: false
+        architecture: architecture
+        enableCrossEnvNetworking: false
+      properties:
+        containers:
+          items:
+            $ref: '#/components/schemas/Container'
+          type: array
+        architecture:
+          description: CPU architecture (X86_64 or ARM64)
+          nullable: false
+          type: string
+        taskCpu:
+          description: Task-level CPU units (e.g., 256, 512, 1024)
+          nullable: false
+          type: integer
+        taskMemory:
+          description: Task-level memory in MB
+          nullable: false
+          type: integer
+        minCapacity:
+          description: Minimum number of instances
+          nullable: false
+          type: integer
+        maxCapacity:
+          description: Maximum number of instances
+          nullable: false
+          type: integer
+        spotConfiguration:
+          $ref: '#/components/schemas/SpotConfiguration'
+        enableCrossEnvNetworking:
+          default: false
+          description: 'Optional. Enable cross-environment networking within the same application. When false (default): Uses shared security group for complete isolation (most secure). When true: Uses app-specific security group to enable communication between environments of the same application (e.g., staging can connect to production database). Note: If enableCrossAppNetworking is true, this setting is overridden.'
+          nullable: true
+          type: boolean
+        enableCrossAppNetworking:
+          default: false
+          description: 'Optional. Enable cross-application networking within the same organization. When false (default): Uses shared/app-specific security group based on enableCrossEnvNetworking. When true: Uses org-specific security group to enable container-to-container communication with ALL applications in the same organization via service discovery (microservices architecture). This setting takes priority over enableCrossEnvNetworking.'
+          nullable: true
+          type: boolean
+      type: object
+    CreateApplicationRequest:
+      example:
+        composeDefinition:
+          spotConfiguration:
+            strategy: spot-only
+          taskMemory: 2
+          maxCapacity: 7
+          containers:
+          - originProtectionConfig:
+              ipAllow:
+              - ipAllow
+              - ipAllow
+              enabled: true
+            memory: 6
+            dependsOn:
+            - condition: START
+              containerName: containerName
+            - condition: START
+              containerName: containerName
+            workingDirectory: workingDirectory
+            exposedPorts:
+            - 5
+            - 5
+            cpu: 0
+            imageReference:
+              identifier: identifier
+              type: internal
+            secrets:
+            - name: name
+              valueFrom: valueFrom
+            - name: name
+              valueFrom: valueFrom
+            memoryReservation: 1
+            command:
+            - command
+            - command
+            environment:
+            - name: name
+              value: value
+            - name: name
+              value: value
+            readonlyRootFilesystem: false
+            originProtection: false
+            healthCheck:
+              retries: 7
+              startPeriod: 279
+              interval: 171
+              command:
+              - command
+              - command
+              timeout: 15
+            name: name
+            mountPoints:
+            - readOnly: false
+              containerPath: containerPath
+              sourceVolume: sourceVolume
+            - readOnly: false
+              containerPath: containerPath
+              sourceVolume: sourceVolume
+            entryPoint:
+            - entryPoint
+            - entryPoint
+            user: user
+            essential: true
+          - originProtectionConfig:
+              ipAllow:
+              - ipAllow
+              - ipAllow
+              enabled: true
+            memory: 6
+            dependsOn:
+            - condition: START
+              containerName: containerName
+            - condition: START
+              containerName: containerName
+            workingDirectory: workingDirectory
+            exposedPorts:
+            - 5
+            - 5
+            cpu: 0
+            imageReference:
+              identifier: identifier
+              type: internal
+            secrets:
+            - name: name
+              valueFrom: valueFrom
+            - name: name
+              valueFrom: valueFrom
+            memoryReservation: 1
+            command:
+            - command
+            - command
+            environment:
+            - name: name
+              value: value
+            - name: name
+              value: value
+            readonlyRootFilesystem: false
+            originProtection: false
+            healthCheck:
+              retries: 7
+              startPeriod: 279
+              interval: 171
+              command:
+              - command
+              - command
+              timeout: 15
+            name: name
+            mountPoints:
+            - readOnly: false
+              containerPath: containerPath
+              sourceVolume: sourceVolume
+            - readOnly: false
+              containerPath: containerPath
+              sourceVolume: sourceVolume
+            entryPoint:
+            - entryPoint
+            - entryPoint
+            user: user
+            essential: true
+          minCapacity: 4
+          taskCpu: 3
+          enableCrossAppNetworking: false
+          architecture: architecture
+          enableCrossEnvNetworking: false
+        database:
+          multiAz: false
+          engine: mysql
+          instanceClass: db.t4g.micro
+          storageGb: 20
+        environment:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        appName: my-app
+        maxCapacity: 6
+        minCapacity: 0
+        filesystem:
+          mountPath: /data/shared
+          required: true
+      properties:
+        appName:
+          description: Application name
+          example: my-app
+          type: string
+        composeDefinition:
+          $ref: '#/components/schemas/Compose'
+        minCapacity:
+          default: 1
+          description: Minimum task count for auto-scaling
+          nullable: true
+          type: integer
+        maxCapacity:
+          default: 1
+          description: Maximum task count for auto-scaling
+          nullable: true
+          type: integer
+        database:
+          $ref: '#/components/schemas/CreateApplicationRequest_database'
+        filesystem:
+          $ref: '#/components/schemas/CreateApplicationRequest_filesystem'
+        environment:
+          description: Optional. Initial environment variables for the production environment.
+          items:
+            $ref: '#/components/schemas/CreateApplicationRequest_environment_inner'
+          nullable: true
+          type: array
+      required:
+      - appName
+      - composeDefinition
+      type: object
+    Application_database:
+      description: Database configuration
+      example:
+        rdsInstanceEngine: mysql
+        rdsInstanceIdentifier: rdsInstanceIdentifier
+        rdsInstanceStatus: rdsInstanceStatus
+        rdsInstanceEndpoint: rdsInstanceEndpoint
+      nullable: true
+      properties:
+        rdsInstanceIdentifier:
+          description: RDS instance identifier
+          type: string
+        rdsInstanceEndpoint:
+          description: RDS instance endpoint address
+          type: string
+        rdsInstanceEngine:
+          description: Database engine
+          enum:
+          - mysql
+          - postgres
+          type: string
+        rdsInstanceStatus:
+          description: RDS instance status
+          type: string
+      type: object
+    Container_originProtectionConfig:
+      description: Extended origin protection configuration with IP allow list support
+      example:
+        ipAllow:
+        - ipAllow
+        - ipAllow
+        enabled: true
+      nullable: true
+      properties:
+        enabled:
+          default: true
+          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
+          type: boolean
+        ipAllow:
+          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
+          items:
+            type: string
+          nullable: true
+          type: array
+      type: object
+    CreateApplicationRequest_filesystem:
+      description: Optional filesystem configuration
+      example:
+        mountPath: /data/shared
+        required: true
+      nullable: true
+      properties:
+        required:
+          default: true
+          description: Whether to create a shared filesystem
+          type: boolean
+        mountPath:
+          default: /mnt/data
+          description: Mount path inside containers
+          example: /data/shared
+          type: string
+      type: object
+    Container_dependsOn_inner:
+      example:
+        condition: START
+        containerName: containerName
+      properties:
+        containerName:
+          description: The name of the container this container depends on
+          type: string
+        condition:
+          description: The condition to wait for on the dependency
+          enum:
+          - START
+          - HEALTHY
+          - COMPLETE
+          - SUCCESS
+          type: string
+      required:
+      - containerName
+      type: object
+    createApplication_403_response:
+      example:
+        message: Application limit reached
+        error: Organisation has reached the maximum number of allowed applications (10/10). Please contact support to increase your limit.
+      properties:
+        message:
+          example: Application limit reached
+          type: string
+        error:
+          example: Organisation has reached the maximum number of allowed applications (10/10). Please contact support to increase your limit.
+          type: string
+      type: object
+    Application:
+      example:
+        appName: appName
+        deploymentInformation:
+        - createdAt: 2000-01-23 04:56:07+00:00
+          taskDefinitionArn: taskDefinitionArn
+          deploymentId: deploymentId
+          imageTag: imageTag
+          status: status
+        - createdAt: 2000-01-23 04:56:07+00:00
+          taskDefinitionArn: taskDefinitionArn
+          deploymentId: deploymentId
+          imageTag: imageTag
+          status: status
+        environmentNames:
+        - environmentNames
+        - environmentNames
+        desiredCount: 1
+        organisation: organisation
+        maxCapacity: 1
+        imageReference:
+          identifier: identifier
+          type: internal
+        filesystem:
+          mountPath: mountPath
+          filesystemId: filesystemId
+        containerNames:
+        - containerNames
+        - containerNames
+        database:
+          rdsInstanceEngine: mysql
+          rdsInstanceIdentifier: rdsInstanceIdentifier
+          rdsInstanceStatus: rdsInstanceStatus
+          rdsInstanceEndpoint: rdsInstanceEndpoint
+        composeDefinition:
+          spotConfiguration:
+            strategy: spot-only
+          taskMemory: 2
+          maxCapacity: 7
+          containers:
+          - originProtectionConfig:
+              ipAllow:
+              - ipAllow
+              - ipAllow
+              enabled: true
+            memory: 6
+            dependsOn:
+            - condition: START
+              containerName: containerName
+            - condition: START
+              containerName: containerName
+            workingDirectory: workingDirectory
+            exposedPorts:
+            - 5
+            - 5
+            cpu: 0
+            imageReference:
+              identifier: identifier
+              type: internal
+            secrets:
+            - name: name
+              valueFrom: valueFrom
+            - name: name
+              valueFrom: valueFrom
+            memoryReservation: 1
+            command:
+            - command
+            - command
+            environment:
+            - name: name
+              value: value
+            - name: name
+              value: value
+            readonlyRootFilesystem: false
+            originProtection: false
+            healthCheck:
+              retries: 7
+              startPeriod: 279
+              interval: 171
+              command:
+              - command
+              - command
+              timeout: 15
+            name: name
+            mountPoints:
+            - readOnly: false
+              containerPath: containerPath
+              sourceVolume: sourceVolume
+            - readOnly: false
+              containerPath: containerPath
+              sourceVolume: sourceVolume
+            entryPoint:
+            - entryPoint
+            - entryPoint
+            user: user
+            essential: true
+          - originProtectionConfig:
+              ipAllow:
+              - ipAllow
+              - ipAllow
+              enabled: true
+            memory: 6
+            dependsOn:
+            - condition: START
+              containerName: containerName
+            - condition: START
+              containerName: containerName
+            workingDirectory: workingDirectory
+            exposedPorts:
+            - 5
+            - 5
+            cpu: 0
+            imageReference:
+              identifier: identifier
+              type: internal
+            secrets:
+            - name: name
+              valueFrom: valueFrom
+            - name: name
+              valueFrom: valueFrom
+            memoryReservation: 1
+            command:
+            - command
+            - command
+            environment:
+            - name: name
+              value: value
+            - name: name
+              value: value
+            readonlyRootFilesystem: false
+            originProtection: false
+            healthCheck:
+              retries: 7
+              startPeriod: 279
+              interval: 171
+              command:
+              - command
+              - command
+              timeout: 15
+            name: name
+            mountPoints:
+            - readOnly: false
+              containerPath: containerPath
+              sourceVolume: sourceVolume
+            - readOnly: false
+              containerPath: containerPath
+              sourceVolume: sourceVolume
+            entryPoint:
+            - entryPoint
+            - entryPoint
+            user: user
+            essential: true
+          minCapacity: 4
+          taskCpu: 3
+          enableCrossAppNetworking: false
+          architecture: architecture
+          enableCrossEnvNetworking: false
+        runningCount: 6
+        minCapacity: 1
+        status: status
+      properties:
+        appName:
+          description: Application name
+          type: string
+        organisation:
+          description: Organisation machine name
+          type: string
+        database:
+          $ref: '#/components/schemas/Application_database'
+        filesystem:
+          $ref: '#/components/schemas/Application_filesystem'
+        composeDefinition:
+          $ref: '#/components/schemas/Compose'
+        status:
+          description: Application status
+          nullable: true
+          readOnly: true
+          type: string
+        deploymentInformation:
+          description: Deployment history
+          items:
+            $ref: '#/components/schemas/Application_deploymentInformation_inner'
+          nullable: true
+          readOnly: true
+          type: array
+        imageReference:
+          $ref: '#/components/schemas/Application_imageReference'
+        containerNames:
+          description: List of container names
+          items:
+            type: string
+          nullable: true
+          readOnly: true
+          type: array
+        minCapacity:
+          description: Minimum task count for auto-scaling
+          nullable: true
+          type: integer
+        maxCapacity:
+          description: Maximum task count for auto-scaling
+          nullable: true
+          type: integer
+        desiredCount:
+          description: Desired task count
+          nullable: true
+          type: integer
+        runningCount:
+          description: Currently running task count
+          nullable: true
+          type: integer
+        environmentNames:
+          description: List of environment names (read-only)
+          items:
+            type: string
+          nullable: true
+          readOnly: true
+          type: array
+      required:
+      - appName
+      - organisation
+      type: object
+    getEcrLoginCredentials_200_response:
+      example:
+        password: password
+        endpoint: endpoint
+        expiresAt: expiresAt
+        username: username
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        expiresAt:
+          type: string
+        endpoint:
+          type: string
+      type: object
+    Container:
+      example:
+        originProtectionConfig:
+          ipAllow:
+          - ipAllow
+          - ipAllow
+          enabled: true
+        memory: 6
+        dependsOn:
+        - condition: START
+          containerName: containerName
+        - condition: START
+          containerName: containerName
+        workingDirectory: workingDirectory
+        exposedPorts:
+        - 5
+        - 5
+        cpu: 0
+        imageReference:
+          identifier: identifier
+          type: internal
+        secrets:
+        - name: name
+          valueFrom: valueFrom
+        - name: name
+          valueFrom: valueFrom
+        memoryReservation: 1
+        command:
+        - command
+        - command
+        environment:
+        - name: name
+          value: value
+        - name: name
+          value: value
+        readonlyRootFilesystem: false
+        originProtection: false
+        healthCheck:
+          retries: 7
+          startPeriod: 279
+          interval: 171
+          command:
+          - command
+          - command
+          timeout: 15
+        name: name
+        mountPoints:
+        - readOnly: false
+          containerPath: containerPath
+          sourceVolume: sourceVolume
+        - readOnly: false
+          containerPath: containerPath
+          sourceVolume: sourceVolume
+        entryPoint:
+        - entryPoint
+        - entryPoint
+        user: user
+        essential: true
+      properties:
+        name:
+          description: Name of the container
+          pattern: ^[a-zA-Z0-9_-]+$
+          type: string
+        imageReference:
+          $ref: '#/components/schemas/Container_imageReference'
+        cpu:
+          description: Container-level CPU units
+          nullable: true
+          type: integer
+        memory:
+          description: Container-level memory hard limit (MiB)
+          nullable: true
+          type: integer
+        memoryReservation:
+          description: Container-level memory soft limit (MiB)
+          nullable: true
+          type: integer
+        exposedPorts:
+          description: List of container ports to expose
+          items:
+            type: integer
+          nullable: true
+          type: array
+        mountPoints:
+          items:
+            $ref: '#/components/schemas/Container_mountPoints_inner'
+          nullable: true
+          type: array
+        environment:
+          description: Environment variables specific to this container
+          items:
+            $ref: '#/components/schemas/Container_environment_inner'
+          nullable: true
+          type: array
+        secrets:
+          description: Secrets mapped to environment variables
+          items:
+            $ref: '#/components/schemas/Container_secrets_inner'
+          nullable: true
+          type: array
+        healthCheck:
+          $ref: '#/components/schemas/Container_healthCheck'
+        dependsOn:
+          description: Container startup dependencies
+          items:
+            $ref: '#/components/schemas/Container_dependsOn_inner'
+          nullable: true
+          type: array
+        command:
+          items:
+            type: string
+          nullable: true
+          type: array
+        entryPoint:
+          items:
+            type: string
+          nullable: true
+          type: array
+        workingDirectory:
+          nullable: true
+          type: string
+        essential:
+          default: true
+          nullable: true
+          type: boolean
+        readonlyRootFilesystem:
+          default: false
+          nullable: true
+          type: boolean
+        user:
+          nullable: true
+          type: string
+        originProtection:
+          default: false
+          description: Enable origin protection for all exposed ports on this container. Use originProtectionConfig for advanced options like IP allow lists.
+          nullable: true
+          type: boolean
+        originProtectionConfig:
+          $ref: '#/components/schemas/Container_originProtectionConfig'
+      required:
+      - imageReference
+      - name
+      type: object
+    Application_filesystem:
+      description: Filesystem configuration
+      example:
+        mountPath: mountPath
+        filesystemId: filesystemId
+      nullable: true
+      properties:
+        filesystemId:
+          description: EFS filesystem ID
+          type: string
+        mountPath:
+          description: Default mount path in containers
+          type: string
+      type: object
+    Container_secrets_inner:
+      example:
+        name: name
+        valueFrom: valueFrom
+      properties:
+        name:
+          description: The environment variable name to be set in the container
+          type: string
+        valueFrom:
+          description: The key of the secret in the environment's 'app-secrets' store
+          type: string
+      required:
+      - name
+      - valueFrom
+      type: object
+    SpotConfiguration:
+      description: Spot instance strategy configuration for controlling cost vs reliability. Spot instances provide significant cost savings (~70%) but may be interrupted by AWS. Available for non-production environments.
+      example:
+        strategy: spot-only
+      properties:
+        strategy:
+          default: spot-only
+          description: Spot instance strategy. 'off' = On-Demand only (highest reliability, no savings). 'spot-only' = 100% Spot instances (~70% savings, default for non-prod). 'mixed-safe' = 50% Spot instances (~35% savings, requires multiple instances). 'mixed-aggressive' = 80% Spot instances (~56% savings, requires multiple instances).
+          enum:
+          - 'off'
+          - spot-only
+          - mixed-safe
+          - mixed-aggressive
+          example: spot-only
+          type: string
+      required:
+      - strategy
+      type: object
+    Application_deploymentInformation_inner:
+      example:
+        createdAt: 2000-01-23 04:56:07+00:00
+        taskDefinitionArn: taskDefinitionArn
+        deploymentId: deploymentId
+        imageTag: imageTag
+        status: status
+      properties:
+        deploymentId:
+          description: Deployment identifier
+          type: string
+        taskDefinitionArn:
+          description: Task definition ARN used
+          type: string
+        createdAt:
+          description: Deployment creation timestamp
+          format: date-time
+          type: string
+        status:
+          description: Deployment status
+          type: string
+        imageTag:
+          description: Image tag deployed
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

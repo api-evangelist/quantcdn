@@ -1,0 +1,829 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Vector Database API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Vector database collections for RAG and semantic search
+  name: AI Vector Database
+paths:
+  /api/v3/organizations/{organisation}/ai/vector-db/collections:
+    get:
+      description: Lists all vector database collections (knowledge bases) for an organization.
+      operationId: listVectorCollections
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listVectorCollections_200_response'
+          description: Collections retrieved successfully
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to retrieve collections
+      summary: List Vector Database Collections
+      tags:
+      - AI Vector Database
+    post:
+      description: "Creates a new vector database collection (knowledge base category) for semantic search. Collections store documents with embeddings for RAG (Retrieval Augmented Generation).\n     *\n     * **Use Cases:**\n     * - Product documentation ('docs')\n     * - Company policies ('policies')\n     * - Support knowledge base ('support')\n     * - Technical specifications ('specs')"
+      operationId: createVectorCollection
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createVectorCollection_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createVectorCollection_201_response'
+          description: Collection created successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '409':
+          description: Collection with this name already exists
+        '500':
+          description: Failed to create collection
+      summary: Create Vector Database Collection
+      tags:
+      - AI Vector Database
+  /api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionId}:
+    delete:
+      description: Deletes a vector database collection and all its documents. This action cannot be undone.
+      operationId: deleteVectorCollection
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The collection ID
+        explode: false
+        in: path
+        name: collectionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteSkillCollection_200_response'
+          description: Collection deleted successfully
+        '403':
+          description: Access denied
+        '404':
+          description: Collection not found
+        '500':
+          description: Failed to delete collection
+      summary: Delete Collection
+      tags:
+      - AI Vector Database
+    get:
+      description: Get detailed information about a specific vector database collection.
+      operationId: getVectorCollection
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The collection ID
+        explode: false
+        in: path
+        name: collectionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getVectorCollection_200_response'
+          description: Collection details retrieved successfully
+        '403':
+          description: Access denied
+        '404':
+          description: Collection not found
+        '500':
+          description: Failed to retrieve collection
+      summary: Get Collection Details
+      tags:
+      - AI Vector Database
+  /api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionId}/documents:
+    delete:
+      description: "Delete documents from a collection. Supports three deletion modes:\n     *\n     * 1. **Purge All** - Set `purgeAll: true` to delete ALL documents in the collection\n     *\n     * 2. **By Document IDs** - Provide `documentIds` array with specific document UUIDs\n     *\n     * 3. **By Metadata** - Provide `metadata` object with `field` and `values` to delete documents where the metadata field matches any of the values\n     *\n     * **Drupal Integration:**\n     * When using with Drupal AI Search, use metadata deletion with:\n     * - `field: 'drupal_entity_id'` to delete all chunks for specific entities\n     * - `field: 'drupal_long_id'` to delete specific chunks"
+      operationId: deleteVectorDocuments
+      parameters:
+      - description: Organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Collection UUID
+        explode: false
+        in: path
+        name: collectionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/deleteVectorDocuments_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteVectorDocuments_200_response'
+          description: Documents deleted successfully
+        '400':
+          description: Invalid request - must specify purgeAll, documentIds, or metadata
+        '403':
+          description: Access denied
+        '404':
+          description: Collection not found
+        '500':
+          description: Failed to delete documents
+      summary: Delete Documents from Collection
+      tags:
+      - AI Vector Database
+    get:
+      description: Lists documents in a collection with pagination. Supports filtering by document key.
+      operationId: listVectorDocuments
+      parameters:
+      - explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: collectionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Filter by document key
+        explode: true
+        in: query
+        name: key
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 100
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          default: 0
+          type: integer
+        style: form
+      responses:
+        '200':
+          description: Documents retrieved successfully
+        '403':
+          description: Access denied
+        '404':
+          description: Collection not found
+        '500':
+          description: Failed to list documents
+      summary: List Documents in Collection
+      tags:
+      - AI Vector Database
+    post:
+      description: "Uploads documents to a vector database collection with automatic embedding generation. Documents are chunked (if needed), embedded using the collection's embedding model, and stored.\n     *\n     * **Supported Content:**\n     * - Plain text content\n     * - URLs to fetch content from\n     * - Markdown documents\n     *\n     * **Metadata:**\n     * Each document can include metadata (title, source_url, section, tags) that is returned with search results."
+      operationId: uploadVectorDocuments
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The collection ID
+        explode: false
+        in: path
+        name: collectionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/uploadVectorDocuments_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/uploadVectorDocuments_200_response'
+          description: Documents uploaded successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '404':
+          description: Collection not found
+        '500':
+          description: Failed to upload documents
+      summary: Upload Documents to Collection
+      tags:
+      - AI Vector Database
+  /api/v3/organizations/{organisation}/ai/vector-db/collections/{collectionId}/query:
+    post:
+      description: "Performs semantic search on a collection using vector similarity. Returns the most relevant documents based on meaning, not keyword matching.\n     *\n     * **Three Search Modes:**\n     *\n     * 1. **Text Query** - Provide `query` string, server generates embedding\n     *    - Query text is embedded using the collection's embedding model\n     *    - Embeddings are cached for repeated queries\n     *\n     * 2. **Vector Query** - Provide pre-computed `vector` array\n     *    - Skip embedding generation (faster)\n     *    - Useful when you've already embedded the query elsewhere\n     *    - Vector dimension must match collection (e.g., 1024 for Titan v2)\n     *\n     * 3. **Metadata List** - Set `listByMetadata: true` with `filter`\n     *    - Skip semantic search entirely\n     *    - Return all documents matching the filter\n     *    - Supports cursor-based pagination for large datasets\n     *    - Results ordered by sortBy/sortOrder (default: created_at DESC)\n     *\n     * **Filtering:**\n     * - `filter.exact`: Exact match on metadata fields (AND logic)\n     * - `filter.contains`: Array contains filter for tags (ANY match)\n     * - Filters can be combined with semantic search or used alone with listByMetadata\n     *\n     * **Pagination (listByMetadata mode only):**\n     * - Use `cursor` from previous response's `nextCursor` to get next page\n     * - Uses keyset pagination for efficient traversal of large datasets\n     * - Control sort with `sortBy` and `sortOrder`\n     *\n     * **Use Cases:**\n     * - Find relevant documentation for user questions\n     * - Power RAG (Retrieval Augmented Generation) in AI assistants\n     * - Semantic search across knowledge bases\n     * - List all artifacts by building/worker/tag"
+      operationId: queryVectorCollection
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The collection ID
+        explode: false
+        in: path
+        name: collectionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/queryVectorCollection_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/queryVectorCollection_200_response'
+          description: Search completed successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '404':
+          description: Collection not found
+        '500':
+          description: Failed to perform search
+      summary: Semantic Search Query
+      tags:
+      - AI Vector Database
+components:
+  schemas:
+    deleteSkillCollection_200_response:
+      example:
+        success: true
+        message: Collection deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Collection deleted successfully
+          type: string
+      type: object
+    queryVectorCollection_200_response:
+      example:
+        filter: '{}'
+        nextCursor: nextCursor
+        pagination:
+          sortOrder: asc
+          limit: 5
+          sortBy: created_at
+        query: query
+        executionTimeMs: 5
+        searchMode: text
+        count: 1
+        hasMore: true
+        results:
+        - metadata:
+            key: ''
+          similarity: 0.08008282
+          documentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          embedding:
+          - 6.027456183070403
+          - 6.027456183070403
+          content: content
+        - metadata:
+            key: ''
+          similarity: 0.08008282
+          documentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          embedding:
+          - 6.027456183070403
+          - 6.027456183070403
+          content: content
+        collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/queryVectorCollection_200_response_results_inner'
+          type: array
+        query:
+          description: Original query text (null if vector or metadata search was used)
+          nullable: true
+          type: string
+        searchMode:
+          description: 'Search mode used: text (query provided), vector (pre-computed), metadata (listByMetadata)'
+          enum:
+          - text
+          - vector
+          - metadata
+          type: string
+        filter:
+          description: Filter that was applied (if any)
+          nullable: true
+          type: object
+        count:
+          description: Number of results returned
+          type: integer
+        executionTimeMs:
+          description: Query execution time in milliseconds
+          type: integer
+        collectionId:
+          format: uuid
+          type: string
+        hasMore:
+          description: True if more results available (listByMetadata mode only)
+          type: boolean
+        nextCursor:
+          description: Cursor for next page. Pass as cursor param to continue. Null when no more results. Only in listByMetadata mode.
+          nullable: true
+          type: string
+        pagination:
+          $ref: '#/components/schemas/queryVectorCollection_200_response_pagination'
+      type: object
+    deleteVectorDocuments_200_response:
+      example:
+        deletedCount: 0
+        message: message
+        collectionId: collectionId
+      properties:
+        message:
+          type: string
+        collectionId:
+          type: string
+        deletedCount:
+          type: integer
+      type: object
+    queryVectorCollection_request_filter:
+      description: Filter results by metadata fields. Applied AFTER semantic search (or alone in listByMetadata mode). All conditions use AND logic.
+      properties:
+        exact:
+          additionalProperties: true
+          description: Exact match on metadata fields. Keys are metadata field names, values are expected values.
+          example:
+            buildingId: building-123
+            type: research-report
+          type: object
+        contains:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: Array contains filter for array metadata fields (like tags). Returns documents where the metadata array contains ANY of the specified values.
+          example:
+            tags:
+            - important
+            - reviewed
+          type: object
+      type: object
+    uploadVectorDocuments_200_response:
+      example:
+        chunksCreated: 0
+        success: true
+        message: message
+        documentIds:
+        - documentIds
+        - documentIds
+      properties:
+        success:
+          example: true
+          type: boolean
+        documentIds:
+          items:
+            type: string
+          type: array
+        chunksCreated:
+          type: integer
+        message:
+          type: string
+      type: object
+    deleteVectorDocuments_request:
+      properties:
+        purgeAll:
+          description: Delete ALL documents in collection
+          type: boolean
+        documentIds:
+          description: Delete specific documents by UUID
+          items:
+            format: uuid
+            type: string
+          type: array
+        keys:
+          description: Delete documents by key
+          items:
+            maxLength: 512
+            type: string
+          type: array
+        metadata:
+          $ref: '#/components/schemas/deleteVectorDocuments_request_metadata'
+      type: object
+    deleteVectorDocuments_request_metadata:
+      properties:
+        field:
+          description: Metadata field name (e.g., 'drupal_entity_id')
+          type: string
+        values:
+          description: Values to match (OR logic)
+          items:
+            type: string
+          type: array
+      type: object
+    listVectorCollections_200_response:
+      example:
+        collections:
+        - documentCount: 0
+          createdAt: 2000-01-23 04:56:07+00:00
+          name: product-docs
+          description: description
+          embeddingModel: amazon.titan-embed-text-v2:0
+          collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - documentCount: 0
+          createdAt: 2000-01-23 04:56:07+00:00
+          name: product-docs
+          description: description
+          embeddingModel: amazon.titan-embed-text-v2:0
+          collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        count: 6
+      properties:
+        collections:
+          items:
+            $ref: '#/components/schemas/listVectorCollections_200_response_collections_inner'
+          type: array
+        count:
+          type: integer
+      type: object
+    queryVectorCollection_request:
+      properties:
+        query:
+          description: Natural language search query (mutually exclusive with vector)
+          example: How do I authenticate with the API?
+          maxLength: 1000
+          minLength: 3
+          type: string
+        vector:
+          description: Pre-computed embedding vector (mutually exclusive with query). Array length must match collection dimension.
+          example:
+          - 0.0234
+          - -0.0891
+          - 0.0456
+          items:
+            format: float
+            type: number
+          type: array
+        limit:
+          default: 5
+          description: Maximum number of results to return
+          maximum: 20
+          minimum: 1
+          type: integer
+        threshold:
+          default: 0.7
+          description: Minimum similarity score (0-1, higher = more relevant)
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+        includeEmbeddings:
+          default: false
+          description: Include embedding vectors in response (for debugging)
+          type: boolean
+        filter:
+          $ref: '#/components/schemas/queryVectorCollection_request_filter'
+        listByMetadata:
+          default: false
+          description: If true, skip semantic search and return all documents matching the filter. Requires filter. Supports cursor pagination.
+          type: boolean
+        cursor:
+          description: Pagination cursor for listByMetadata mode. Use nextCursor from previous response. Opaque format - do not construct manually.
+          type: string
+        sortBy:
+          default: created_at
+          description: Field to sort by in listByMetadata mode
+          enum:
+          - created_at
+          - document_id
+          type: string
+        sortOrder:
+          default: desc
+          description: Sort direction in listByMetadata mode
+          enum:
+          - asc
+          - desc
+          type: string
+      type: object
+    queryVectorCollection_200_response_pagination:
+      description: Pagination info (listByMetadata mode only)
+      example:
+        sortOrder: asc
+        limit: 5
+        sortBy: created_at
+      nullable: true
+      properties:
+        sortBy:
+          enum:
+          - created_at
+          - document_id
+          type: string
+        sortOrder:
+          enum:
+          - asc
+          - desc
+          type: string
+        limit:
+          type: integer
+      type: object
+    listVectorCollections_200_response_collections_inner:
+      example:
+        documentCount: 0
+        createdAt: 2000-01-23 04:56:07+00:00
+        name: product-docs
+        description: description
+        embeddingModel: amazon.titan-embed-text-v2:0
+        collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        collectionId:
+          format: uuid
+          type: string
+        name:
+          example: product-docs
+          type: string
+        description:
+          type: string
+        documentCount:
+          type: integer
+        embeddingModel:
+          example: amazon.titan-embed-text-v2:0
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    queryVectorCollection_200_response_results_inner:
+      example:
+        metadata:
+          key: ''
+        similarity: 0.08008282
+        documentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        embedding:
+        - 6.027456183070403
+        - 6.027456183070403
+        content: content
+      properties:
+        documentId:
+          format: uuid
+          type: string
+        content:
+          description: Document text content
+          type: string
+        similarity:
+          description: Cosine similarity score (1.0 for metadata-only queries)
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+        metadata:
+          additionalProperties: true
+          type: object
+        embedding:
+          description: Vector embedding (only if includeEmbeddings=true)
+          items:
+            type: number
+          type: array
+      type: object
+    uploadVectorDocuments_request_documents_inner_metadata:
+      properties:
+        title:
+          type: string
+        source_url:
+          type: string
+        section:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+      type: object
+    getVectorCollection_200_response_collection:
+      example:
+        documentCount: 0
+        createdAt: 2000-01-23 04:56:07+00:00
+        name: name
+        description: description
+        embeddingModel: embeddingModel
+        collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        dimensions: 6
+        updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        collectionId:
+          format: uuid
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        documentCount:
+          type: integer
+        embeddingModel:
+          type: string
+        dimensions:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      type: object
+    uploadVectorDocuments_request_documents_inner:
+      properties:
+        content:
+          description: Document text content
+          type: string
+        key:
+          description: Stable document key for upsert
+          maxLength: 512
+          type: string
+        metadata:
+          $ref: '#/components/schemas/uploadVectorDocuments_request_documents_inner_metadata'
+      required:
+      - content
+      type: object
+    getVectorCollection_200_response:
+      example:
+        collection:
+          documentCount: 0
+          createdAt: 2000-01-23 04:56:07+00:00
+          name: name
+          description: description
+          embeddingModel: embeddingModel
+          collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          dimensions: 6
+          updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        collection:
+          $ref: '#/components/schemas/getVectorCollection_200_response_collection'
+      type: object
+    uploadVectorDocuments_request:
+      properties:
+        documents:
+          items:
+            $ref: '#/components/schemas/uploadVectorDocuments_request_documents_inner'
+          type: array
+      required:
+      - documents
+      type: object
+    createVectorCollection_201_response_collection:
+      example:
+        name: name
+        description: description
+        embeddingModel: embeddingModel
+        collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        dimensions: 0
+      properties:
+        collectionId:
+          format: uuid
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        embeddingModel:
+          type: string
+        dimensions:
+          type: integer
+      type: object
+    createVectorCollection_201_response:
+      example:
+        success: true
+        collection:
+          name: name
+          description: description
+          embeddingModel: embeddingModel
+          collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          dimensions: 0
+        message: Collection created successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        collection:
+          $ref: '#/components/schemas/createVectorCollection_201_response_collection'
+        message:
+          example: Collection created successfully
+          type: string
+      type: object
+    createVectorCollection_request:
+      properties:
+        name:
+          description: Collection name (used for reference)
+          example: product-documentation
+          type: string
+        description:
+          example: Product user guides and API documentation
+          type: string
+        embeddingModel:
+          description: 'Embedding model to use. Supported: amazon.titan-embed-text-v2:0, cohere.embed-english-v3, cohere.embed-multilingual-v3'
+          example: amazon.titan-embed-text-v2:0
+          type: string
+        dimensions:
+          description: 'Embedding dimensions (default: 1024)'
+          example: 1024
+          type: integer
+      required:
+      - embeddingModel
+      - name
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

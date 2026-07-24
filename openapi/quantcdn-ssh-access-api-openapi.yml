@@ -1,0 +1,127 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents SSH Access API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: SSH key management for container access
+  name: SSH Access
+paths:
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/ssh-access:
+    get:
+      operationId: getSshAccessCredentials
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getSshAccessCredentials_200_response'
+          description: SSH access credentials
+        '403':
+          description: Insufficient permissions
+        '404':
+          description: Environment not found
+        '500':
+          description: Failed to generate SSH access credentials
+      summary: Get SSH access credentials for an environment
+      tags:
+      - SSH Access
+components:
+  schemas:
+    getSshAccessCredentials_200_response:
+      example:
+        expiresIn: 0
+        credentials:
+          accessKeyId: accessKeyId
+          secretAccessKey: secretAccessKey
+          sessionToken: sessionToken
+          expiration: 2000-01-23 04:56:07+00:00
+        success: true
+        clusterName: clusterName
+        taskArn: taskArn
+        region: region
+        taskId: taskId
+        containerNames:
+        - containerNames
+        - containerNames
+        organizationScope: organizationScope
+      properties:
+        success:
+          type: boolean
+        credentials:
+          $ref: '#/components/schemas/getSshAccessCredentials_200_response_credentials'
+        clusterName:
+          type: string
+        taskArn:
+          type: string
+        taskId:
+          type: string
+        containerNames:
+          items:
+            type: string
+          type: array
+        region:
+          type: string
+        expiresIn:
+          type: integer
+        organizationScope:
+          type: string
+      type: object
+    getSshAccessCredentials_200_response_credentials:
+      example:
+        accessKeyId: accessKeyId
+        secretAccessKey: secretAccessKey
+        sessionToken: sessionToken
+        expiration: 2000-01-23 04:56:07+00:00
+      properties:
+        accessKeyId:
+          type: string
+        secretAccessKey:
+          type: string
+        sessionToken:
+          type: string
+        expiration:
+          format: date-time
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

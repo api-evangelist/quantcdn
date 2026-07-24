@@ -1,0 +1,107 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Usage API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: AI Usage
+  name: AI Usage
+paths:
+  /api/v3/organizations/{organisation}/ai/usage/me:
+    get:
+      operationId: getMyUsage
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getMyUsage_200_response'
+          description: User AI usage summary
+        '401':
+          description: Cannot determine caller identity
+        '500':
+          description: Failed to retrieve usage data
+      summary: Get AI usage summary for the authenticated user
+      tags:
+      - AI Usage
+components:
+  schemas:
+    getMyUsage_200_response_daily:
+      example:
+        spendCents: 1
+      properties:
+        spendCents:
+          type: integer
+      type: object
+    getMyUsage_200_response_monthly:
+      example:
+        requestCount: 6
+        spendCents: 0
+      properties:
+        spendCents:
+          type: integer
+        requestCount:
+          type: integer
+      type: object
+    getMyUsage_200_response_quota:
+      example:
+        dailyLimit: 5
+        monthlyLimit: 5
+      nullable: true
+      properties:
+        monthlyLimit:
+          description: Per-user monthly budget in US cents
+          nullable: true
+          type: integer
+        dailyLimit:
+          description: Per-user daily budget in US cents
+          nullable: true
+          type: integer
+      type: object
+    getMyUsage_200_response:
+      example:
+        daily:
+          spendCents: 1
+        quota:
+          dailyLimit: 5
+          monthlyLimit: 5
+        monthly:
+          requestCount: 6
+          spendCents: 0
+        currentMonth: 2026-03
+        userId: userId
+      properties:
+        userId:
+          type: string
+        currentMonth:
+          example: 2026-03
+          type: string
+        monthly:
+          $ref: '#/components/schemas/getMyUsage_200_response_monthly'
+        daily:
+          $ref: '#/components/schemas/getMyUsage_200_response_daily'
+        quota:
+          $ref: '#/components/schemas/getMyUsage_200_response_quota'
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

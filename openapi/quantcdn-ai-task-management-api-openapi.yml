@@ -1,0 +1,838 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Task Management API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Multi-agent task coordination and dependency management
+  name: AI Task Management
+paths:
+  /api/v3/organizations/{organisation}/ai/tasks:
+    get:
+      description: "Lists tasks for an organization with optional filtering. Filters can be combined for powerful queries.\n     *\n     * **Filter Examples:**\n     * - All tasks in a list: ?taskListId=world-1\n     * - Pending tasks in a list: ?taskListId=world-1&status=pending\n     * - Tasks assigned to an agent: ?assignedAgentId=agent-code-reviewer\n     * - Combined: ?taskListId=world-1&status=in_progress&assignedAgentId=agent-1\n     *\n     * **Reverse Dependency Lookup:**\n     * Use `dependsOn` to find tasks that depend on a specific task (waiting for it to complete):\n     * - ?dependsOn=task-123 - Returns task IDs only (lightweight)\n     * - ?dependsOn=task-123&includeDetails=true - Returns full task objects\n     * - ?dependsOn=task-123&status=pending - Pending tasks waiting for task-123\n     *\n     * **Ordering:**\n     * Tasks are returned in reverse chronological order (most recent first)."
+      operationId: listTasks
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter tasks by task list ID. Task lists are implicit groupings - any string can be used.
+        example: world-1
+        explode: true
+        in: query
+        name: taskListId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Filter tasks by status
+        example: pending
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          type: string
+        style: form
+      - description: Filter tasks by assigned agent ID
+        example: agent-code-reviewer
+        explode: true
+        in: query
+        name: assignedAgentId
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Maximum number of tasks to return (default 50, max 100)
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: 'Reverse lookup: find tasks that depend on this task ID. Returns tasks waiting for the specified task to complete.'
+        example: 550e8400-e29b-41d4-a716-446655440000
+        explode: true
+        in: query
+        name: dependsOn
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: When using dependsOn, return full task objects in addition to IDs. Default false (IDs only for lightweight responses).
+        explode: true
+        in: query
+        name: includeDetails
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listTasks_200_response'
+          description: 'Tasks retrieved successfully. Response format varies: standard returns {tasks, count}, with dependsOn returns {taskIds, count, dependsOn}, with dependsOn+includeDetails returns {taskIds, tasks, count, dependsOn}'
+        '500':
+          description: Failed to list tasks
+      summary: List tasks with optional filtering
+      tags:
+      - AI Task Management
+    post:
+      description: "Creates a new task for multi-agent coordination and workflow orchestration.\n     *\n     * **Key Features:**\n     * - **Persistent State**: Tasks survive across conversations and sessions\n     * - **Agent Assignment**: Pre-assign tasks to specific agents\n     * - **Task Lists**: Group related tasks using taskListId (implicit - no need to create lists first)\n     * - **Dependencies**: Define task dependencies for workflow orchestration\n     * - **Metadata**: Store flexible JSON metadata for task-specific data\n     * - **Progress Tracking**: Track progress from 0.0 to 1.0\n     *\n     * **Use Cases:**\n     * - Break down complex requests into manageable steps\n     * - Assign work to specialized agents\n     * - Track long-running operations\n     * - Coordinate multi-agent workflows"
+      operationId: createTask
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createTask_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createTask_201_response'
+          description: Task created successfully
+        '400':
+          description: Invalid request
+        '500':
+          description: Failed to create task
+      summary: Create a new task
+      tags:
+      - AI Task Management
+  /api/v3/organizations/{organisation}/ai/tasks/{taskId}:
+    delete:
+      description: "Permanently deletes a task. This action cannot be undone.\n     *\n     * **Dependency Protection:**\n     * By default, deletion is blocked if other tasks depend on this task (TASK_HAS_DEPENDENTS error).\n     * This prevents breaking workflows.\n     *\n     * **Cascade Delete:**\n     * Use `?cascade=true` to delete the task AND all tasks that depend on it recursively.\n     * Useful for cleaning up entire dependency chains.\n     *\n     * **Examples:**\n     * - DELETE /tasks/{id} - Deletes task if no dependents, otherwise returns 409 error\n     * - DELETE /tasks/{id}?cascade=true - Deletes task and all dependent tasks"
+      operationId: deleteTask
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The task UUID
+        explode: false
+        in: path
+        name: taskId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: If true, delete task and all dependent tasks recursively
+        explode: true
+        in: query
+        name: cascade
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteTask_200_response'
+          description: Task deleted successfully
+        '409':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteTask_409_response'
+          description: Task has dependents - cannot delete without cascade
+        '404':
+          description: Task not found
+        '500':
+          description: Failed to delete task
+      summary: Delete a task
+      tags:
+      - AI Task Management
+    get:
+      description: Retrieves detailed information about a specific task including status, progress, dependencies, and results.
+      operationId: getTask
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The task UUID
+        explode: false
+        in: path
+        name: taskId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getTask_200_response'
+          description: Task details retrieved successfully
+        '404':
+          description: Task not found
+        '500':
+          description: Failed to get task
+      summary: Get task details
+      tags:
+      - AI Task Management
+    put:
+      description: "Updates an existing task. All fields are optional - only provided fields will be updated.\n     *\n     * **Status Transitions:**\n     * - Changing from **pending** to **in_progress** automatically sets startedAt timestamp\n     * - Changing to **completed**, **failed**, or **cancelled** automatically sets completedAt timestamp\n     * - Changing to **blocked** automatically sets blockedAt timestamp\n     * - Changing from **blocked** to **in_progress** or **pending** clears blocked fields\n     * - Completed tasks get a 30-day TTL for automatic cleanup\n     *\n     * **Progress Updates:**\n     * - Update progress (0.0 to 1.0) to track completion percentage\n     * - Update progressMessage for human-readable status updates\n     * - Set result object when task completes successfully\n     * - Set error string when task fails\n     * - Set blockedReason and blockedByTaskIds when blocking a task"
+      operationId: updateTask
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The task UUID
+        example: 550e8400-e29b-41d4-a716-446655440000
+        explode: false
+        in: path
+        name: taskId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateTask_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateTask_200_response'
+          description: Task updated successfully
+        '400':
+          description: Invalid request
+        '404':
+          description: Task not found
+        '500':
+          description: Failed to update task
+      summary: Update a task
+      tags:
+      - AI Task Management
+  /api/v3/organizations/{organisation}/ai/tasks/{taskListId}/dependency-graph:
+    get:
+      description: "Returns the full dependency graph for all tasks in a task list.\n     *\n     * **Use Cases:**\n     * - Visualize task dependencies in a UI (DAG diagram)\n     * - Analyze workflow structure and critical paths\n     * - Find starting tasks (roots) and terminal tasks (leaves)\n     * - Plan parallel execution by identifying independent task groups\n     *\n     * **Response Structure:**\n     * - `taskCount`: Total number of tasks in the list\n     * - `roots`: Task IDs with no dependencies (starting points)\n     * - `leaves`: Task IDs with no dependents (terminal tasks)\n     * - `graph`: Adjacency list with each task's dependencies and dependents"
+      operationId: getDependencyGraph
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The task list ID to get the dependency graph for
+        example: world-1
+        explode: false
+        in: path
+        name: taskListId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getDependencyGraph_200_response'
+          description: Dependency graph retrieved successfully
+        '500':
+          description: Failed to get dependency graph
+      summary: Get dependency graph for a task list
+      tags:
+      - AI Task Management
+components:
+  schemas:
+    createTask_201_response:
+      example:
+        createdAt: 0
+        title: title
+        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        orgId: orgId
+        status: status
+      properties:
+        taskId:
+          format: uuid
+          type: string
+        orgId:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: integer
+      type: object
+    updateTask_request:
+      properties:
+        title:
+          example: Updated task title
+          type: string
+        description:
+          example: Updated description with more details
+          type: string
+        taskListId:
+          description: Move task to different list or remove from list (set null)
+          example: world-2
+          nullable: true
+          type: string
+        status:
+          description: Task status (triggers automatic timestamp updates)
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          example: in_progress
+          type: string
+        assignedAgentId:
+          description: Reassign task to different agent
+          example: agent-specialist
+          nullable: true
+          type: string
+        dependsOn:
+          description: Update task dependencies
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+          items:
+            format: uuid
+            type: string
+          type: array
+        metadata:
+          description: Update task metadata (replaces entire metadata object)
+          example:
+            priority: urgent
+          type: object
+        progress:
+          description: Progress from 0.0 to 1.0
+          example: 0.75
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+        progressMessage:
+          description: Human-readable progress message
+          example: Processing document 3 of 4...
+          type: string
+        result:
+          description: Task result data (set when completing task)
+          example:
+            summary: Document processed successfully
+            wordCount: 1500
+          type: object
+        error:
+          description: Error message (set when task fails)
+          example: Failed to connect to external API
+          nullable: true
+          type: string
+        retryCount:
+          description: Update retry count
+          example: 1
+          minimum: 0
+          type: integer
+        maxRetries:
+          description: Update maximum retry attempts
+          example: 5
+          maximum: 10
+          minimum: 0
+          type: integer
+        blockedReason:
+          description: Reason task is blocked (set when status is blocked)
+          example: Waiting for external approval
+          nullable: true
+          type: string
+        blockedByTaskIds:
+          description: Task IDs that are blocking this task
+          items:
+            format: uuid
+            type: string
+          nullable: true
+          type: array
+      type: object
+    updateTask_200_response:
+      example:
+        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        status: status
+        updatedAt: 0
+      properties:
+        taskId:
+          format: uuid
+          type: string
+        status:
+          type: string
+        updatedAt:
+          type: integer
+      type: object
+    deleteTask_200_response:
+      example:
+        deleted: true
+        deletedCount: 1
+        deletedTaskIds:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        deleted:
+          example: true
+          type: boolean
+        deletedCount:
+          description: Number of tasks deleted (more than 1 for cascade)
+          example: 1
+          type: integer
+        deletedTaskIds:
+          items:
+            format: uuid
+            type: string
+          type: array
+      type: object
+    listTasks_200_response:
+      example:
+        dependsOn: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        count: 2
+        taskIds:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tasks:
+        - createdAt: 1735689600000
+          assignedAgentId: agent-123
+          blockedByTaskIds:
+          - blockedByTaskIds
+          - blockedByTaskIds
+          blockedReason: blockedReason
+          description: Extract text from PDF, analyze content
+          progress: 0.5
+          taskListId: world-1
+          title: Process document and create summary
+          taskId: 550e8400-e29b-41d4-a716-446655440000
+          orgId: quant
+          status: in_progress
+          updatedAt: 1735689700000
+        - createdAt: 1735689600000
+          assignedAgentId: agent-123
+          blockedByTaskIds:
+          - blockedByTaskIds
+          - blockedByTaskIds
+          blockedReason: blockedReason
+          description: Extract text from PDF, analyze content
+          progress: 0.5
+          taskListId: world-1
+          title: Process document and create summary
+          taskId: 550e8400-e29b-41d4-a716-446655440000
+          orgId: quant
+          status: in_progress
+          updatedAt: 1735689700000
+      properties:
+        tasks:
+          items:
+            $ref: '#/components/schemas/listTasks_200_response_tasks_inner'
+          type: array
+        taskIds:
+          description: Task IDs (only with dependsOn filter)
+          items:
+            format: uuid
+            type: string
+          type: array
+        count:
+          example: 2
+          type: integer
+        dependsOn:
+          description: The queried task ID (only with dependsOn filter)
+          format: uuid
+          type: string
+      type: object
+    getDependencyGraph_200_response:
+      example:
+        taskCount: 4
+        leaves:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        taskListId: world-1
+        roots:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        graph: '{}'
+      properties:
+        taskListId:
+          example: world-1
+          type: string
+        taskCount:
+          example: 4
+          type: integer
+        roots:
+          description: Task IDs with no dependencies
+          items:
+            format: uuid
+            type: string
+          type: array
+        leaves:
+          description: Task IDs with no dependents
+          items:
+            format: uuid
+            type: string
+          type: array
+        graph:
+          description: Adjacency list with task summaries, dependsOn, and dependents arrays
+          type: object
+      type: object
+    createTask_request:
+      properties:
+        title:
+          description: Task title
+          example: Process document and create summary
+          type: string
+        description:
+          description: Detailed task description
+          example: Extract text from PDF, analyze content, and generate executive summary
+          type: string
+        taskListId:
+          description: Task list ID for grouping related tasks (implicit - lists are created automatically)
+          example: world-1
+          type: string
+        status:
+          default: pending
+          description: Initial task status
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          type: string
+        assignedAgentId:
+          description: Pre-assign task to specific agent
+          example: agent-code-reviewer
+          type: string
+        createdByAgentId:
+          description: Agent ID that created this task
+          example: agent-coordinator
+          type: string
+        dependsOn:
+          description: Task IDs that must complete before this task can start
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+          items:
+            format: uuid
+            type: string
+          type: array
+        metadata:
+          description: Flexible JSON metadata for task-specific data
+          example:
+            priority: high
+            tags:
+            - document-processing
+            workflow: document-pipeline
+          type: object
+        maxRetries:
+          default: 3
+          description: Maximum retry attempts on failure
+          maximum: 10
+          minimum: 0
+          type: integer
+        blockedReason:
+          description: Reason task is blocked (when status is blocked)
+          example: Waiting for approval
+          type: string
+        blockedByTaskIds:
+          description: Task IDs that are blocking this task
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - title
+      type: object
+    deleteTask_409_response:
+      example:
+        dependentTaskIds:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        error: TASK_HAS_DEPENDENTS
+        message: Cannot delete task with 3 dependent task(s). Use cascade=true to delete all.
+      properties:
+        error:
+          example: TASK_HAS_DEPENDENTS
+          type: string
+        message:
+          example: Cannot delete task with 3 dependent task(s). Use cascade=true to delete all.
+          type: string
+        dependentTaskIds:
+          items:
+            format: uuid
+            type: string
+          type: array
+      type: object
+    getTask_200_response:
+      example:
+        metadata:
+          priority: high
+        completedAt: 6
+        blockedByTaskIds:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        dependsOn:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        blockedReason: blockedReason
+        retryCount: 0
+        description: Extract text from PDF, analyze content
+        startedAt: 0
+        title: Process document and create summary
+        error: error
+        orgId: quant
+        expiresAt: 1
+        result: '{}'
+        createdAt: 1735689600000
+        assignedAgentId: agent-123
+        maxRetries: 3
+        blockedAt: 5
+        progress: 0.5
+        createdByAgentId: agent-coordinator
+        taskListId: world-1
+        taskId: 550e8400-e29b-41d4-a716-446655440000
+        status: in_progress
+        progressMessage: Extracted text, analyzing content...
+        updatedAt: 1735689700000
+      properties:
+        taskId:
+          example: 550e8400-e29b-41d4-a716-446655440000
+          format: uuid
+          type: string
+        orgId:
+          example: quant
+          type: string
+        taskListId:
+          example: world-1
+          nullable: true
+          type: string
+        title:
+          example: Process document and create summary
+          type: string
+        description:
+          example: Extract text from PDF, analyze content
+          type: string
+        status:
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          example: in_progress
+          type: string
+        assignedAgentId:
+          example: agent-123
+          nullable: true
+          type: string
+        createdByAgentId:
+          example: agent-coordinator
+          nullable: true
+          type: string
+        dependsOn:
+          items:
+            format: uuid
+            type: string
+          type: array
+        metadata:
+          example:
+            priority: high
+          type: object
+        progress:
+          example: 0.5
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+        progressMessage:
+          example: Extracted text, analyzing content...
+          type: string
+        result:
+          description: Task result data when completed
+          nullable: true
+          type: object
+        error:
+          description: Error message if status is failed
+          nullable: true
+          type: string
+        retryCount:
+          example: 0
+          type: integer
+        maxRetries:
+          example: 3
+          type: integer
+        createdAt:
+          description: Unix timestamp in milliseconds
+          example: 1735689600000
+          format: int64
+          type: integer
+        updatedAt:
+          description: Unix timestamp in milliseconds
+          example: 1735689700000
+          format: int64
+          type: integer
+        startedAt:
+          description: When status changed to in_progress
+          format: int64
+          nullable: true
+          type: integer
+        completedAt:
+          description: When task completed/failed/cancelled
+          format: int64
+          nullable: true
+          type: integer
+        expiresAt:
+          description: TTL timestamp for completed tasks
+          format: int64
+          nullable: true
+          type: integer
+        blockedReason:
+          description: Reason task is blocked
+          nullable: true
+          type: string
+        blockedByTaskIds:
+          description: Task IDs that are blocking this task
+          items:
+            format: uuid
+            type: string
+          nullable: true
+          type: array
+        blockedAt:
+          description: When status changed to blocked
+          format: int64
+          nullable: true
+          type: integer
+      type: object
+    listTasks_200_response_tasks_inner:
+      example:
+        createdAt: 1735689600000
+        assignedAgentId: agent-123
+        blockedByTaskIds:
+        - blockedByTaskIds
+        - blockedByTaskIds
+        blockedReason: blockedReason
+        description: Extract text from PDF, analyze content
+        progress: 0.5
+        taskListId: world-1
+        title: Process document and create summary
+        taskId: 550e8400-e29b-41d4-a716-446655440000
+        orgId: quant
+        status: in_progress
+        updatedAt: 1735689700000
+      properties:
+        taskId:
+          example: 550e8400-e29b-41d4-a716-446655440000
+          format: uuid
+          type: string
+        orgId:
+          example: quant
+          type: string
+        taskListId:
+          example: world-1
+          nullable: true
+          type: string
+        title:
+          example: Process document and create summary
+          type: string
+        description:
+          example: Extract text from PDF, analyze content
+          type: string
+        status:
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          example: in_progress
+          type: string
+        assignedAgentId:
+          example: agent-123
+          nullable: true
+          type: string
+        progress:
+          example: 0.5
+          maximum: 1
+          minimum: 0
+          type: number
+        blockedReason:
+          nullable: true
+          type: string
+        blockedByTaskIds:
+          items:
+            type: string
+          nullable: true
+          type: array
+        createdAt:
+          example: 1735689600000
+          type: integer
+        updatedAt:
+          example: 1735689700000
+          type: integer
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

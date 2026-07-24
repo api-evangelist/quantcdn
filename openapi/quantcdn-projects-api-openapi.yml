@@ -1,0 +1,337 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Projects API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Static site project management
+  name: Projects
+paths:
+  /api/v2/organizations/{organization}/projects:
+    get:
+      operationId: Projects_list
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2Project'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Retrieve all projects for an organization
+      tags:
+      - Projects
+    post:
+      operationId: Projects_create
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2ProjectRequest'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Project'
+          description: The request has succeeded and a new resource has been created as a result.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Create a new project
+      tags:
+      - Projects
+  /api/v2/organizations/{organization}/projects/{project}:
+    delete:
+      operationId: Projects_delete
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a project
+      tags:
+      - Projects
+    get:
+      operationId: Projects_read
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: query
+        name: with_token
+        required: true
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Project'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get details of a single project
+      tags:
+      - Projects
+    patch:
+      operationId: Projects_update
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2ProjectRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Project'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Update a project
+      tags:
+      - Projects
+components:
+  schemas:
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    V2Project:
+      example:
+        name: Test Project
+        id: 123
+        machine_name: test-project
+        write_token: abc123token
+        uuid: 550e8400-e29b-41d4-a716-446655440000
+      properties:
+        id:
+          description: Project ID
+          example: 123
+          type: integer
+        uuid:
+          description: Project UUID
+          example: 550e8400-e29b-41d4-a716-446655440000
+          type: string
+        name:
+          description: Project name
+          example: Test Project
+          type: string
+        machine_name:
+          description: Project machine name
+          example: test-project
+          type: string
+        write_token:
+          description: Write token for API access
+          example: abc123token
+          type: string
+      required:
+      - id
+      - machine_name
+      - name
+      - uuid
+      type: object
+    V2ProjectRequest:
+      example:
+        disable_revisions: false
+        basic_auth_preview_only: true
+        allow_query_params: true
+        basic_auth_password: secure_password123
+        name: Test Project
+        basic_auth_username: admin
+        machine_name: test-project
+        region: au
+      properties:
+        name:
+          description: Project name
+          example: Test Project
+          type: string
+        machine_name:
+          description: Project machine name
+          example: test-project
+          type: string
+        region:
+          description: Project region
+          example: au
+          type: string
+        allow_query_params:
+          description: Allow query parameters
+          example: true
+          type: boolean
+        disable_revisions:
+          description: Disable revisions
+          example: false
+          type: boolean
+        basic_auth_username:
+          description: Basic auth username
+          example: admin
+          type: string
+        basic_auth_password:
+          description: Basic auth password
+          example: secure_password123
+          type: string
+        basic_auth_preview_only:
+          default: false
+          description: Apply basic auth to preview domain only
+          example: true
+          type: boolean
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

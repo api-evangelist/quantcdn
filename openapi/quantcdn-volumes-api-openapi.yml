@@ -1,0 +1,256 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents Volumes API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Persistent storage volume management
+  name: Volumes
+paths:
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/volumes:
+    get:
+      operationId: listVolumes
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+          description: The volumes
+        '404':
+          description: The environment not found
+      summary: Get all volumes for an environment
+      tags:
+      - Volumes
+    post:
+      operationId: createVolume
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createVolume_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+          description: The volume created
+        '404':
+          description: The environment not found
+      summary: Create a new volume
+      tags:
+      - Volumes
+  /api/v3/organizations/{organisation}/applications/{application}/environments/{environment}/volumes/{volume}:
+    delete:
+      operationId: deleteVolume
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The volume ID
+        explode: false
+        in: path
+        name: volume
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The volume deleted
+        '404':
+          description: The environment not found
+      summary: Delete a volume
+      tags:
+      - Volumes
+    get:
+      operationId: getVolume
+      parameters:
+      - description: The organisation ID
+        example: test-org
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The application ID
+        example: test-app
+        explode: false
+        in: path
+        name: application
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The environment ID
+        example: test-env
+        explode: false
+        in: path
+        name: environment
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The volume ID
+        explode: false
+        in: path
+        name: volume
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Volume'
+          description: The volume
+        '404':
+          description: The environment not found
+      summary: Get a volume
+      tags:
+      - Volumes
+components:
+  schemas:
+    createVolume_request:
+      properties:
+        volumeName:
+          description: Volume name
+          type: string
+        description:
+          description: Volume description
+          nullable: true
+          type: string
+        rootDirectory:
+          description: Root directory path
+          nullable: true
+          type: string
+      required:
+      - volumeName
+      type: object
+    Volume:
+      example:
+        createdAt: createdAt
+        accessPointArn: accessPointArn
+        volumeName: volumeName
+        accessPointId: accessPointId
+        volumeId: volumeId
+        description: description
+        rootDirectory: rootDirectory
+        environmentEfsId: environmentEfsId
+      properties:
+        volumeId:
+          type: string
+        volumeName:
+          type: string
+        description:
+          type: string
+        environmentEfsId:
+          type: string
+        createdAt:
+          type: string
+        rootDirectory:
+          type: string
+        accessPointId:
+          type: string
+        accessPointArn:
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

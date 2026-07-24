@@ -1,0 +1,834 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents KV API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Key-value store operations
+  name: KV
+paths:
+  /api/v2/organizations/{organization}/projects/{project}/kv:
+    get:
+      operationId: KV_list
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/V2Store'
+                type: array
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List key-value stores
+      tags:
+      - KV
+    post:
+      operationId: KV_create
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2StoreRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Store'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Add a kv store
+      tags:
+      - KV
+  /api/v2/organizations/{organization}/projects/{project}/kv/{store_id}:
+    delete:
+      operationId: KV_delete
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: '0000'
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete a kv store
+      tags:
+      - KV
+    get:
+      operationId: KV_show
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: '0000'
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Store'
+          description: The request has succeeded.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: KV store not found.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get a kv store
+      tags:
+      - KV
+  /api/v2/organizations/{organization}/projects/{project}/kv/{store_id}/link:
+    delete:
+      description: Remove access to a linked KV store from this project. The store must be linked (not owned by this project).
+      operationId: KV_unlink_from_project
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: KV store identifier
+        example: store-123
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KV_link_to_project_200_response'
+          description: Store unlinked successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Store not linked or invalid request
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Cannot unlink store owned by this project
+      summary: Unlink a KV store from this project
+      tags:
+      - KV
+    post:
+      description: Share a KV store from the source project with a target project. The store will be accessible in the target project.
+      operationId: KV_link_to_project
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Source project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: KV store identifier
+        example: store-123
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KV_link_to_project_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KV_link_to_project_200_response'
+          description: Store linked successfully
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Store already linked or invalid request
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Store or target project not found
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access forbidden
+      summary: Link a KV store to another project
+      tags:
+      - KV
+  /api/v2/organizations/{organization}/projects/{project}/kv/{store_id}/items:
+    get:
+      operationId: KV_items_list
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: '0000'
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Cursor for pagination
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Number of items to return
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 10
+          type: integer
+        style: form
+      - description: Search filter for keys
+        explode: true
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Include values in the response. Secret values will be redacted as '[ENCRYPTED]' for security.
+        explode: true
+        in: query
+        name: include_values
+        required: false
+        schema:
+          default: false
+          type: boolean
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2StoreItemsListResponse'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: List items in a kv store
+      tags:
+      - KV
+    post:
+      operationId: KV_items_create
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: '0000'
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2StoreItemRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KV_items_create_200_response'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Validation error.
+      summary: Add an item to a kv store
+      tags:
+      - KV
+  /api/v2/organizations/{organization}/projects/{project}/kv/{store_id}/items/{key}:
+    delete:
+      operationId: KV_items_delete
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: '0000'
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KV_items_delete_200_response'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Delete an item from a kv store
+      tags:
+      - KV
+    get:
+      description: Retrieves an item from the KV store. **Security Note:** If the item was stored as a secret (secret=true), the value will be redacted and returned as '[ENCRYPTED]' for security. Secrets should be accessed directly via the Quant Cloud platform KVStore abstraction.
+      operationId: KV_items_show
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: '0000'
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KV_items_show_200_response'
+          description: The request has succeeded.
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Item not found.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+      summary: Get an item from a kv store
+      tags:
+      - KV
+    put:
+      operationId: KV_items_update
+      parameters:
+      - description: Organization identifier
+        example: test-org
+        explode: false
+        in: path
+        name: organization
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Project identifier
+        example: test-project
+        explode: false
+        in: path
+        name: project
+        required: true
+        schema:
+          type: string
+        style: simple
+      - example: '0000'
+        explode: false
+        in: path
+        name: store_id
+        required: true
+        schema:
+          type: string
+        style: simple
+      - explode: false
+        in: path
+        name: key
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2StoreItemUpdateRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KV_items_create_200_response'
+          description: The request has succeeded.
+        '400':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: The server could not understand the request due to invalid syntax.
+        '403':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Access is forbidden.
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2Error'
+          description: Validation error.
+      summary: Update an item in a kv store
+      tags:
+      - KV
+components:
+  schemas:
+    V2StoreRequest:
+      example:
+        name: session-data
+      properties:
+        name:
+          description: Store name
+          example: session-data
+          type: string
+      required:
+      - name
+      type: object
+    V2StoreItemsListResponse:
+      example:
+        next_cursor: next-page-token
+        data:
+        - data
+        - data
+      properties:
+        data:
+          description: List of item keys
+          items:
+            type: string
+          type: array
+        next_cursor:
+          description: Cursor for next page of results
+          example: next-page-token
+          nullable: true
+          type: string
+      type: object
+    KV_items_show_200_response_value:
+      description: Item value (decoded from JSON if applicable). Returns '[ENCRYPTED]' for secret items.
+      oneOf:
+      - type: string
+      - type: object
+    KV_items_create_200_response:
+      example:
+        success: true
+        value: value
+        key: user-session-123
+      properties:
+        success:
+          example: true
+          type: boolean
+        key:
+          example: user-session-123
+          type: string
+        value:
+          type: string
+      type: object
+    KV_link_to_project_request:
+      properties:
+        project_id:
+          description: Target project ID to link to
+          type: integer
+      required:
+      - project_id
+      type: object
+    KV_link_to_project_200_response:
+      example:
+        success: true
+        message: message
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          type: string
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    KV_items_show_200_response:
+      example:
+        value: KV_items_show_200_response_value
+        key: user-session-123
+      properties:
+        key:
+          example: user-session-123
+          type: string
+        value:
+          $ref: '#/components/schemas/KV_items_show_200_response_value'
+      type: object
+    V2StoreItemRequest:
+      example:
+        secret: false
+        value: value
+        key: user-session-123
+      properties:
+        key:
+          description: Item key
+          example: user-session-123
+          type: string
+        value:
+          description: Item value (can be JSON string)
+          type: string
+        secret:
+          default: false
+          description: Store as secret with KMS encryption. Secrets cannot be retrieved via GET operations (returns [ENCRYPTED]). Ideal for API keys, passwords, and credentials.
+          type: boolean
+      required:
+      - key
+      - value
+      type: object
+    KV_items_delete_200_response:
+      example:
+        success: true
+        key: user-session-123
+      properties:
+        success:
+          example: true
+          type: boolean
+        key:
+          example: user-session-123
+          type: string
+      type: object
+    V2Store:
+      example:
+        name: session-data
+        id: kv-store-123
+      properties:
+        id:
+          description: Store ID
+          example: kv-store-123
+          type: string
+        name:
+          description: Store name
+          example: session-data
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    V2StoreItemUpdateRequest:
+      example:
+        secret: true
+        value: value
+      properties:
+        value:
+          description: Item value (can be JSON string)
+          type: string
+        secret:
+          description: 'Store as secret with KMS encryption. Note: Encryption status cannot be changed after initial creation - this value is preserved from the original item.'
+          type: boolean
+      required:
+      - value
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

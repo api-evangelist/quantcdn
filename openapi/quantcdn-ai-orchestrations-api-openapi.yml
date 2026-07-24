@@ -1,0 +1,589 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Orchestrations API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Durable batch processing orchestrations with pause/resume support
+  name: AI Orchestrations
+paths:
+  /api/v3/organizations/{organisation}/ai/orchestrations:
+    get:
+      description: "List durable orchestrations for an organization with optional filtering.\n     *\n     * **Note:** This is different from `/tools/orchestrations` which handles async tool execution\n     * polling. These durable orchestrations are for long-running batch processing loops.\n     *\n     * **Filter Options:**\n     * - `status`: Filter by orchestration status\n     * - `limit`: Max results (default 20, max 100)\n     * - `cursor`: Pagination cursor"
+      operationId: listOrchestrations
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter by orchestration status
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - pending
+          - running
+          - paused
+          - completed
+          - failed
+          - cancelled
+          type: string
+        style: form
+      - description: Maximum number of results
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: Pagination cursor from previous response
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listOrchestrations_200_response'
+          description: List of orchestrations
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to list orchestrations
+      summary: List Durable Orchestrations
+      tags:
+      - AI Orchestrations
+    post:
+      description: "Create a new durable orchestration for batch processing.\n     *\n     * **Input Sources:**\n     * - `static`: Process a fixed list of items\n     * - `task_query`: Process tasks matching a query\n     * - `generator`: AI generates items from a prompt\n     *\n     * **Stop Conditions:**\n     * - `all_complete`: Stop when all items processed\n     * - `max_iterations`: Stop after N iterations\n     * - `condition`: AI evaluates a prompt to decide\n     * - `manual`: Run until manually stopped\n     *\n     * **Auto-start:**\n     * By default, the orchestration starts immediately. Set `autoStart: false` to create in pending state."
+      operationId: createOrchestration
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createOrchestration_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Orchestration created
+        '400':
+          description: Invalid request
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to create orchestration
+      summary: Create Durable Orchestration
+      tags:
+      - AI Orchestrations
+  /api/v3/organizations/{organisation}/ai/orchestrations/{orchestrationId}:
+    delete:
+      description: Delete an orchestration. Can only delete orchestrations in completed, failed, or cancelled status.
+      operationId: deleteOrchestration
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Orchestration identifier
+        explode: false
+        in: path
+        name: orchestrationId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '204':
+          description: Orchestration deleted
+        '400':
+          description: Cannot delete active orchestration
+        '403':
+          description: Access denied
+        '404':
+          description: Orchestration not found
+        '500':
+          description: Failed to delete orchestration
+      summary: Delete Durable Orchestration
+      tags:
+      - AI Orchestrations
+    get:
+      description: "Get orchestration details including status and progress.\n     *\n     * **Progress Tracking:**\n     * - `total`: Total items to process\n     * - `completed`: Successfully processed\n     * - `failed`: Failed processing\n     * - `pending`: Awaiting processing"
+      operationId: getOrchestration
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Orchestration identifier
+        example: orch_1704067200_abc123xyz
+        explode: false
+        in: path
+        name: orchestrationId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Orchestration details
+        '403':
+          description: Access denied
+        '404':
+          description: Orchestration not found
+        '500':
+          description: Failed to get orchestration
+      summary: Get Durable Orchestration
+      tags:
+      - AI Orchestrations
+  /api/v3/organizations/{organisation}/ai/orchestrations/{orchestrationId}/start:
+    post:
+      description: 'Start a pending orchestration. Only works on orchestrations created with `autoStart: false`.'
+      operationId: startOrchestration
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Orchestration identifier
+        explode: false
+        in: path
+        name: orchestrationId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Orchestration started
+        '400':
+          description: Orchestration not in pending state
+        '403':
+          description: Access denied
+        '404':
+          description: Orchestration not found
+        '500':
+          description: Failed to start orchestration
+      summary: Start Durable Orchestration
+      tags:
+      - AI Orchestrations
+  /api/v3/organizations/{organisation}/ai/orchestrations/{orchestrationId}/pause:
+    post:
+      description: Pause a running orchestration. The current batch will complete, but no new batches will start. Can be resumed later.
+      operationId: pauseOrchestration
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Orchestration identifier
+        explode: false
+        in: path
+        name: orchestrationId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Orchestration paused
+        '400':
+          description: Orchestration not running
+        '403':
+          description: Access denied
+        '404':
+          description: Orchestration not found
+        '500':
+          description: Failed to pause orchestration
+      summary: Pause Durable Orchestration
+      tags:
+      - AI Orchestrations
+  /api/v3/organizations/{organisation}/ai/orchestrations/{orchestrationId}/resume:
+    post:
+      description: Resume a paused orchestration. Processing continues from where it left off.
+      operationId: resumeOrchestration
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Orchestration identifier
+        explode: false
+        in: path
+        name: orchestrationId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Orchestration resumed
+        '400':
+          description: Orchestration not paused
+        '403':
+          description: Access denied
+        '404':
+          description: Orchestration not found
+        '500':
+          description: Failed to resume orchestration
+      summary: Resume Durable Orchestration
+      tags:
+      - AI Orchestrations
+  /api/v3/organizations/{organisation}/ai/orchestrations/{orchestrationId}/cancel:
+    post:
+      description: Cancel an orchestration permanently. Cannot be resumed. Any in-progress items will complete, but no new processing starts.
+      operationId: cancelOrchestration
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Orchestration identifier
+        explode: false
+        in: path
+        name: orchestrationId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: Orchestration cancelled
+        '400':
+          description: Orchestration already completed/cancelled
+        '403':
+          description: Access denied
+        '404':
+          description: Orchestration not found
+        '500':
+          description: Failed to cancel orchestration
+      summary: Cancel Durable Orchestration
+      tags:
+      - AI Orchestrations
+  /api/v3/organizations/{organisation}/ai/orchestrations/{orchestrationId}/batches:
+    get:
+      description: Get history of batches processed by this orchestration. Returns paginated batch records with status and item counts.
+      operationId: listOrchestrationBatches
+      parameters:
+      - description: The organisation machine name
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Orchestration identifier
+        explode: false
+        in: path
+        name: orchestrationId
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Maximum number of batches to return
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 20
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: Pagination cursor from previous response
+        explode: true
+        in: query
+        name: cursor
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listOrchestrationBatches_200_response'
+          description: Batch history
+        '403':
+          description: Access denied
+        '404':
+          description: Orchestration not found
+        '500':
+          description: Failed to list orchestration batches
+      summary: List Orchestration Batches
+      tags:
+      - AI Orchestrations
+components:
+  schemas:
+    createOrchestration_request:
+      properties:
+        name:
+          description: Orchestration name
+          example: Process batch documents
+          type: string
+        description:
+          description: Optional description
+          nullable: true
+          type: string
+        agentId:
+          description: Agent to process items
+          nullable: true
+          type: string
+        toolId:
+          description: Tool to execute for items
+          nullable: true
+          type: string
+        workflowId:
+          description: Workflow to run for items
+          nullable: true
+          type: string
+        inputSource:
+          $ref: '#/components/schemas/createOrchestration_request_inputSource'
+        batchSize:
+          default: 10
+          description: Items per batch
+          maximum: 100
+          minimum: 1
+          type: integer
+        concurrency:
+          default: 1
+          description: Concurrent items within a batch
+          maximum: 10
+          minimum: 1
+          type: integer
+        stopCondition:
+          $ref: '#/components/schemas/createOrchestration_request_stopCondition'
+        assignedSkills:
+          description: Skill IDs to assign
+          items:
+            type: string
+          type: array
+        context:
+          description: Optional context merged into each item before processing (e.g. shared credentials or endpoints)
+          nullable: true
+          type: object
+        autoStart:
+          default: true
+          description: Whether to start immediately
+          type: boolean
+      required:
+      - inputSource
+      - name
+      type: object
+    createOrchestration_request_stopCondition:
+      properties:
+        type:
+          default: all_complete
+          enum:
+          - all_complete
+          - max_iterations
+          - condition
+          - manual
+          type: string
+        maxIterations:
+          description: Max iterations (for type=max_iterations)
+          minimum: 1
+          type: integer
+        conditionPrompt:
+          description: AI prompt to evaluate stop (for type=condition)
+          type: string
+      type: object
+    listOrchestrations_200_response:
+      example:
+        nextCursor: nextCursor
+        orchestrations:
+        - '{}'
+        - '{}'
+      properties:
+        orchestrations:
+          items:
+            type: object
+          type: array
+        nextCursor:
+          nullable: true
+          type: string
+      type: object
+    listOrchestrationBatches_200_response:
+      example:
+        nextCursor: nextCursor
+        batches:
+        - completedAt: 2000-01-23 04:56:07+00:00
+          failedCount: 5
+          orchestrationId: orchestrationId
+          iteration: 0
+          startedAt: 2000-01-23 04:56:07+00:00
+          batchId: batchId
+          completedCount: 1
+          error: error
+          itemCount: 6
+          status: pending
+        - completedAt: 2000-01-23 04:56:07+00:00
+          failedCount: 5
+          orchestrationId: orchestrationId
+          iteration: 0
+          startedAt: 2000-01-23 04:56:07+00:00
+          batchId: batchId
+          completedCount: 1
+          error: error
+          itemCount: 6
+          status: pending
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/listOrchestrationBatches_200_response_batches_inner'
+          type: array
+        nextCursor:
+          nullable: true
+          type: string
+      type: object
+    listOrchestrationBatches_200_response_batches_inner:
+      example:
+        completedAt: 2000-01-23 04:56:07+00:00
+        failedCount: 5
+        orchestrationId: orchestrationId
+        iteration: 0
+        startedAt: 2000-01-23 04:56:07+00:00
+        batchId: batchId
+        completedCount: 1
+        error: error
+        itemCount: 6
+        status: pending
+      properties:
+        batchId:
+          type: string
+        orchestrationId:
+          type: string
+        iteration:
+          type: integer
+        itemCount:
+          type: integer
+        completedCount:
+          type: integer
+        failedCount:
+          type: integer
+        status:
+          enum:
+          - pending
+          - running
+          - completed
+          - failed
+          type: string
+        startedAt:
+          format: date-time
+          type: string
+        completedAt:
+          format: date-time
+          type: string
+        error:
+          nullable: true
+          type: string
+      type: object
+    createOrchestration_request_inputSource:
+      properties:
+        type:
+          description: Input source type (api type not yet supported)
+          enum:
+          - static
+          - task_query
+          - generator
+          type: string
+        items:
+          description: Static items (for type=static)
+          items:
+            type: object
+          type: array
+        taskQuery:
+          description: Task query filters (for type=task_query)
+          type: object
+        generatorPrompt:
+          description: AI prompt (for type=generator)
+          type: string
+      required:
+      - type
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

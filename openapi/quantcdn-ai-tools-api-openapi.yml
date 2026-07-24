@@ -1,0 +1,638 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Tools API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Built-in tool listing and async tool execution polling
+  name: AI Tools
+paths:
+  /api/v3/organizations/{organisation}/ai/tools:
+    get:
+      description: "Retrieves all available built-in tools that can be used with function calling. These tools can be included in `toolConfig` when making AI inference requests.\n     *\n     * **Available Built-in Tools:**\n     * - `get_weather`: Get current weather for a location using Open-Meteo API\n     * - `calculate`: Perform basic mathematical calculations (add, subtract, multiply, divide)\n     * - `search_web`: Search the web for information (mock implementation)\n     * - `generate_image`: Generate images with Amazon Nova Canvas (async execution, 10-15s typical runtime)\n     *\n     * **Use Cases:**\n     * - Discover available tools dynamically without hardcoding\n     * - Get complete tool specifications including input schemas\n     * - Build UI for tool selection\n     * - Validate tool names before sending requests\n     *\n     * **Dynamic Tool Discovery:**\n     * This endpoint enables clients to:\n     * 1. Fetch all available tools on page load\n     * 2. Display tool capabilities to users\n     * 3. Filter tools based on user permissions\n     * 4. Use `allowedTools` whitelist for security\n     *\n     * **Alternative Endpoint:**\n     * - `GET /ai/tools/names` - Returns only tool names (faster, lighter response)"
+      operationId: listAITools
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listAITools_200_response'
+          description: Available tools retrieved successfully
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to fetch tools
+      summary: List available built-in tools for function calling
+      tags:
+      - AI Tools
+  /api/v3/organizations/{organisation}/ai/tools/names:
+    get:
+      description: Retrieves just the names of available built-in tools. Useful for quick validation or UI dropdown population without the full tool specifications.
+      operationId: listAIToolNames
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listAIToolNames_200_response'
+          description: Tool names retrieved successfully
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to fetch tool names
+      summary: List tool names only (lightweight response)
+      tags:
+      - AI Tools
+  /api/v3/organizations/{organisation}/ai/tools/executions/{executionId}:
+    get:
+      description: "Retrieves the status and result of an async tool execution. Used for polling long-running tools like image generation.\n     *\n     * **Async Tool Execution Pattern:**\n     * This endpoint enables a polling pattern for long-running tools that would otherwise hit API Gateway's 30-second timeout.\n     *\n     * **Flow:**\n     * 1. AI requests tool use (e.g., `generate_image`)\n     * 2. Chat API returns `toolUse` with execution tracking info\n     * 3. Client starts polling this endpoint with the `executionId`\n     * 4. When `status === 'complete'`, retrieve `result` and send back to AI\n     * 5. AI incorporates result into final response\n     *\n     * **Status Values:**\n     * - `pending`: Tool execution queued, not yet started\n     * - `running`: Tool is currently executing\n     * - `complete`: Tool execution finished successfully, `result` available\n     * - `failed`: Tool execution failed, `error` available\n     *\n     * **Polling Recommendations:**\n     * - Poll every 2-3 seconds for image generation\n     * - Exponential backoff for other tools (start 1s, max 5s)\n     * - Stop polling after 5 minutes (consider failed)\n     * - Auto-cleanup after 24 hours (TTL)\n     *\n     * **Use Cases:**\n     * - Image generation (10-15s typical runtime)\n     * - Video processing\n     * - Large file uploads/downloads\n     * - Complex database queries\n     * - External API calls with high latency"
+      operationId: getAIToolExecutionStatus
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Tool execution identifier
+        explode: false
+        in: path
+        name: executionId
+        required: true
+        schema:
+          example: exec_0123456789abcdef0123456789abcdef
+          pattern: ^exec_[a-f0-9]{32}$
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAIToolExecutionStatus_200_response'
+          description: Tool execution status retrieved successfully
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAIToolExecutionStatus_404_response'
+          description: Execution not found (may have expired after 24h)
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to retrieve execution status
+      summary: Get async tool execution status and result
+      tags:
+      - AI Tools
+  /api/v3/organizations/{organisation}/ai/tools/orchestrations/{orchestrationId}:
+    get:
+      description: "Retrieves the status and synthesized result of a multi-tool async execution orchestration.\n     *\n     * **Note:** This endpoint is for async tool execution polling (`/tools/orchestrations`).\n     * For durable batch processing orchestrations, see `GET /orchestrations` endpoints.\n     *\n     * **Orchestration Pattern:**\n     * When the AI requests multiple async tools simultaneously, an orchestration is created\n     * to track all tool executions and synthesize their results into a single coherent response.\n     *\n     * **Flow:**\n     * 1. AI requests multiple async tools (e.g., image generation + web search)\n     * 2. Chat API creates orchestration and returns orchestrationId\n     * 3. Tool Orchestrator Lambda polls all async tools\n     * 4. When all tools complete, Orchestrator synthesizes results using AI\n     * 5. Client polls this endpoint and receives final synthesized response\n     *\n     * **Status Values:**\n     * - pending: Orchestration created, tools not yet started\n     * - polling: Orchestrator is actively polling async tools\n     * - synthesizing: All tools complete, AI is synthesizing response\n     * - complete: Orchestration finished, synthesizedResponse available\n     * - failed: Orchestration failed, error available\n     *\n     * **Polling Recommendations:**\n     * - Poll every 2 seconds\n     * - Maximum poll time: 10 minutes\n     * - Orchestrator handles tool polling internally\n     *\n     * **Benefits over individual polling:**\n     * - Single poll endpoint for multiple async tools\n     * - AI synthesizes all results into coherent response\n     * - Answers the original user question, not just tool summaries"
+      operationId: getAIOrchestrationStatus
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Orchestration identifier for aggregated async tool executions
+        explode: false
+        in: path
+        name: orchestrationId
+        required: true
+        schema:
+          example: orch_abc123def456789012345678901234
+          pattern: ^orch_[a-f0-9]{32}$
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAIOrchestrationStatus_200_response'
+          description: Orchestration status retrieved successfully
+        '404':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAIOrchestrationStatus_404_response'
+          description: Orchestration not found (may have expired after 24h)
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to retrieve orchestration status
+      summary: Get Tool Orchestration Status (Async Tool Polling)
+      tags:
+      - AI Tools
+  /api/v3/organizations/{organisation}/ai/tools/executions:
+    get:
+      description: "Lists recent async tool executions for an organization. Useful for debugging, monitoring, and building admin UIs.\n     *\n     * **Query Patterns:**\n     * - All recent executions: `GET /ai/tools/executions`\n     * - Filter by status: `GET /ai/tools/executions?status=running`\n     * - Limit results: `GET /ai/tools/executions?limit=20`\n     *\n     * **Results:**\n     * - Ordered by creation time (newest first)\n     * - Limited to 50 by default (configurable via `limit` parameter)\n     * - Only shows executions not yet expired (24h TTL)\n     *\n     * **Use Cases:**\n     * - Monitor all active tool executions\n     * - Debug failed executions\n     * - Build admin dashboards\n     * - Track tool usage patterns\n     * - Audit async operations"
+      operationId: listAIToolExecutions
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter by execution status
+        explode: true
+        in: query
+        name: status
+        required: false
+        schema:
+          enum:
+          - pending
+          - running
+          - complete
+          - failed
+          type: string
+        style: form
+      - description: Maximum number of executions to return
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/listAIToolExecutions_200_response'
+          description: Tool executions retrieved successfully
+        '400':
+          description: Invalid parameters
+        '403':
+          description: Access denied
+        '500':
+          description: Failed to retrieve executions
+      summary: List tool executions for monitoring and debugging
+      tags:
+      - AI Tools
+components:
+  schemas:
+    listAITools_200_response_tools_inner_toolSpec:
+      example:
+        inputSchema:
+          json:
+            type: object
+            properties:
+              location:
+                type: string
+                description: City name
+              unit:
+                type: string
+                enum:
+                - celsius
+                - fahrenheit
+            required:
+            - location
+        name: get_weather
+        description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+      properties:
+        name:
+          example: get_weather
+          type: string
+        description:
+          example: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+          type: string
+        inputSchema:
+          $ref: '#/components/schemas/listAITools_200_response_tools_inner_toolSpec_inputSchema'
+      type: object
+    getAIOrchestrationStatus_404_response:
+      example:
+        orchestrationId: orch_abc123def456789012345678901234
+        error: Orchestration not found
+      properties:
+        error:
+          example: Orchestration not found
+          type: string
+        orchestrationId:
+          example: orch_abc123def456789012345678901234
+          type: string
+      type: object
+    listAITools_200_response_tools_inner:
+      example:
+        toolSpec:
+          inputSchema:
+            json:
+              type: object
+              properties:
+                location:
+                  type: string
+                  description: City name
+                unit:
+                  type: string
+                  enum:
+                  - celsius
+                  - fahrenheit
+              required:
+              - location
+          name: get_weather
+          description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+      properties:
+        toolSpec:
+          $ref: '#/components/schemas/listAITools_200_response_tools_inner_toolSpec'
+      type: object
+    getAIOrchestrationStatus_200_response_tools_inner:
+      example:
+        result: '{}'
+        executionId: exec_abc123def456
+        error: error
+        toolName: generate_image
+        status: complete
+      properties:
+        executionId:
+          example: exec_abc123def456
+          type: string
+        toolName:
+          example: generate_image
+          type: string
+        status:
+          enum:
+          - pending
+          - running
+          - complete
+          - failed
+          example: complete
+          type: string
+        result:
+          description: Tool result (if complete)
+          type: object
+        error:
+          description: Error message (if failed)
+          type: string
+      type: object
+    listAIToolExecutions_200_response_executions_inner:
+      example:
+        executionId: exec_abc123def456
+        createdAt: 2000-01-23 04:56:07+00:00
+        completedAt: 2000-01-23 04:56:07+00:00
+        toolName: generate_image
+        status: complete
+      properties:
+        executionId:
+          example: exec_abc123def456
+          type: string
+        toolName:
+          example: generate_image
+          type: string
+        status:
+          description: 'Execution status: pending, running, complete, or failed'
+          example: complete
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        completedAt:
+          format: date-time
+          type: string
+      type: object
+    listAIToolNames_200_response:
+      example:
+        count: 4
+        tools:
+        - get_weather
+        - calculate
+        - search_web
+        - generate_image
+      properties:
+        tools:
+          description: Array of tool names
+          example:
+          - get_weather
+          - calculate
+          - search_web
+          - generate_image
+          items:
+            type: string
+          type: array
+        count:
+          description: Number of tools
+          example: 4
+          type: integer
+      required:
+      - count
+      - tools
+      type: object
+    getAIToolExecutionStatus_200_response_result:
+      description: Tool execution result (only present when status='complete'). Structure varies by tool type.
+      example:
+        images:
+        - data:image/jpeg;base64,/9j/4AAQSkZJRg...
+        s3Urls:
+        - https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...
+      properties:
+        images:
+          description: 'For image generation: Array of base64-encoded data URIs for inline display/preview'
+          items:
+            example: data:image/jpeg;base64,/9j/4AAQSkZJRg...
+            type: string
+          type: array
+        s3Urls:
+          description: 'For image generation: Array of signed S3 URLs for high-quality downloads (expire after 1 hour)'
+          items:
+            example: https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...?X-Amz-Security-Token=...
+            type: string
+          type: array
+      type: object
+    listAITools_200_response:
+      example:
+        count: 4
+        tools:
+        - toolSpec:
+            inputSchema:
+              json:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: City name
+                  unit:
+                    type: string
+                    enum:
+                    - celsius
+                    - fahrenheit
+                required:
+                - location
+            name: get_weather
+            description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+        - toolSpec:
+            inputSchema:
+              json:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: City name
+                  unit:
+                    type: string
+                    enum:
+                    - celsius
+                    - fahrenheit
+                required:
+                - location
+            name: get_weather
+            description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+      properties:
+        tools:
+          description: Array of available tool specifications
+          items:
+            $ref: '#/components/schemas/listAITools_200_response_tools_inner'
+          type: array
+        count:
+          description: Number of available tools
+          example: 4
+          type: integer
+      required:
+      - count
+      - tools
+      type: object
+    listAITools_200_response_tools_inner_toolSpec_inputSchema:
+      example:
+        json:
+          type: object
+          properties:
+            location:
+              type: string
+              description: City name
+            unit:
+              type: string
+              enum:
+              - celsius
+              - fahrenheit
+          required:
+          - location
+      properties:
+        json:
+          description: JSON Schema defining function parameters
+          example:
+            type: object
+            properties:
+              location:
+                type: string
+                description: City name
+              unit:
+                type: string
+                enum:
+                - celsius
+                - fahrenheit
+            required:
+            - location
+          type: object
+      type: object
+    listAIToolExecutions_200_response:
+      example:
+        executions:
+        - executionId: exec_abc123def456
+          createdAt: 2000-01-23 04:56:07+00:00
+          completedAt: 2000-01-23 04:56:07+00:00
+          toolName: generate_image
+          status: complete
+        - executionId: exec_abc123def456
+          createdAt: 2000-01-23 04:56:07+00:00
+          completedAt: 2000-01-23 04:56:07+00:00
+          toolName: generate_image
+          status: complete
+        count: 0
+        orgId: orgId
+        status: status
+      properties:
+        executions:
+          items:
+            $ref: '#/components/schemas/listAIToolExecutions_200_response_executions_inner'
+          type: array
+        count:
+          description: Number of executions returned
+          type: integer
+        orgId:
+          description: Organization identifier
+          type: string
+        status:
+          description: Filter applied (or 'all')
+          type: string
+      required:
+      - count
+      - executions
+      - orgId
+      type: object
+    getAIOrchestrationStatus_200_response:
+      example:
+        createdAt: 2000-01-23 04:56:07+00:00
+        completedAt: 2000-01-23 04:56:07+00:00
+        orchestrationId: orch_abc123def456789012345678901234
+        completedTools: 2
+        synthesizedResponse: Based on the image I generated and the web research...
+        error: error
+        tools:
+        - result: '{}'
+          executionId: exec_abc123def456
+          error: error
+          toolName: generate_image
+          status: complete
+        - result: '{}'
+          executionId: exec_abc123def456
+          error: error
+          toolName: generate_image
+          status: complete
+        status: complete
+        toolCount: 2
+      properties:
+        orchestrationId:
+          description: Unique orchestration identifier
+          example: orch_abc123def456789012345678901234
+          type: string
+        status:
+          description: Current orchestration status
+          enum:
+          - pending
+          - polling
+          - synthesizing
+          - complete
+          - failed
+          example: complete
+          type: string
+        toolCount:
+          description: Total number of async tools in this orchestration
+          example: 2
+          type: integer
+        completedTools:
+          description: Number of tools that have completed
+          example: 2
+          type: integer
+        synthesizedResponse:
+          description: AI-synthesized response combining all tool results (only present when status=complete)
+          example: Based on the image I generated and the web research...
+          type: string
+        tools:
+          description: Status of individual tool executions
+          items:
+            $ref: '#/components/schemas/getAIOrchestrationStatus_200_response_tools_inner'
+          type: array
+        error:
+          description: Error message (only present when status=failed)
+          type: string
+        createdAt:
+          description: When orchestration was created
+          format: date-time
+          type: string
+        completedAt:
+          description: When orchestration completed (if status in complete or failed)
+          format: date-time
+          type: string
+      required:
+      - createdAt
+      - orchestrationId
+      - status
+      - toolCount
+      type: object
+    getAIToolExecutionStatus_404_response:
+      example:
+        executionId: exec_abc123def456
+        error: Execution not found
+      properties:
+        error:
+          example: Execution not found
+          type: string
+        executionId:
+          example: exec_abc123def456
+          type: string
+      type: object
+    getAIToolExecutionStatus_200_response:
+      example:
+        result:
+          images:
+          - data:image/jpeg;base64,/9j/4AAQSkZJRg...
+          s3Urls:
+          - https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...
+        duration: 11
+        executionId: exec_abc123def456
+        createdAt: 1730271600
+        completedAt: 1730271612
+        startedAt: 1730271601
+        error: 'Image generation failed: Invalid prompt'
+        toolName: generate_image
+        status: complete
+      properties:
+        executionId:
+          example: exec_abc123def456
+          type: string
+        toolName:
+          example: generate_image
+          type: string
+        status:
+          description: 'Execution status: pending, running, complete, or failed'
+          example: complete
+          type: string
+        result:
+          $ref: '#/components/schemas/getAIToolExecutionStatus_200_response_result'
+        error:
+          description: Error message (only present when status='failed')
+          example: 'Image generation failed: Invalid prompt'
+          type: string
+        createdAt:
+          description: Unix timestamp when execution was created
+          example: 1730271600
+          type: integer
+        startedAt:
+          description: Unix timestamp when execution started (if status >= 'running')
+          example: 1730271601
+          type: integer
+        completedAt:
+          description: Unix timestamp when execution completed (if status in ['complete', 'failed'])
+          example: 1730271612
+          type: integer
+        duration:
+          description: Execution duration in seconds (if completed)
+          example: 11
+          type: number
+      required:
+      - createdAt
+      - executionId
+      - status
+      - toolName
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http

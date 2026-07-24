@@ -1,0 +1,474 @@
+openapi: 3.0.0
+info:
+  description: Unified API for QuantCDN Admin and QuantCloud Platform services
+  title: QuantCDN AI Agents AI Sessions API
+  version: 4.15.8
+servers:
+- description: QuantCDN Public Cloud
+  url: https://dashboard.quantcdn.io
+- description: QuantGov Cloud
+  url: https://dash.quantgov.cloud
+security:
+- BearerAuth: []
+tags:
+- description: Conversation session management for multi-turn interactions
+  name: AI Sessions
+paths:
+  /api/v3/organizations/{organisation}/ai/sessions:
+    get:
+      description: "Lists active sessions for an organization with flexible filtering options.\n     *\n     * **Query Combinations:**\n     * 1. By Organization (default): Returns all sessions in the organization\n     * 2. By Organization + Group: `?sessionGroup=drupal-prod` - Sessions in a specific group\n     * 3. By User: `?userId=user-123` - All sessions for a user\n     * 4. By User + Group: `?userId=user-123&sessionGroup=drupal-prod` - User's sessions in a specific group\n     *\n     * **Use Cases:**\n     * - List user's conversations in a specific app/environment\n     * - Admin view of all sessions in a customer/tenant group\n     * - User profile showing all AI conversations across apps"
+      operationId: listAISessions
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: Filter sessions by user ID
+        explode: true
+        in: query
+        name: userId
+        required: false
+        schema:
+          example: user-12345
+          type: string
+        style: form
+      - description: Filter by session group. Returns only sessions matching the specified group.
+        explode: true
+        in: query
+        name: sessionGroup
+        required: false
+        schema:
+          example: drupal-production
+          type: string
+        style: form
+      - description: Maximum number of sessions to return (default 50, max 100)
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          default: 50
+          maximum: 100
+          minimum: 1
+          type: integer
+        style: form
+      - description: Offset for pagination
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: Filter by model ID
+        explode: true
+        in: query
+        name: model
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/listAISessions_200_response_inner'
+                type: array
+          description: List of chat sessions
+        '500':
+          description: Failed to fetch sessions
+      summary: List chat sessions with multi-tenant filtering
+      tags:
+      - AI Sessions
+    post:
+      description: Creates an AI session with automatic expiration (60 min default, 24h max). Sessions are isolated by organization. Use userId to identify the user creating the session. Use sessionGroup for logical grouping. Use metadata for additional custom data. Filter sessions by userId or sessionGroup when listing.
+      operationId: createAISession
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createAISession_request'
+        required: true
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/createAISession_201_response'
+          description: Session created successfully
+        '400':
+          description: Invalid request (missing userId or invalid parameters)
+        '500':
+          description: Failed to create session
+      summary: Create a new chat session with multi-tenant isolation
+      tags:
+      - AI Sessions
+  /api/v3/organizations/{organisation}/ai/sessions/{sessionId}:
+    delete:
+      operationId: deleteAISession
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The session ID
+        explode: false
+        in: path
+        name: sessionId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/deleteAISession_200_response'
+          description: Session deleted successfully
+        '500':
+          description: Failed to delete session
+      summary: Delete a chat session
+      tags:
+      - AI Sessions
+    get:
+      operationId: getAISession
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The session ID
+        explode: false
+        in: path
+        name: sessionId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/getAISession_200_response'
+          description: The chat session
+        '404':
+          description: Session not found
+      summary: Get a specific chat session
+      tags:
+      - AI Sessions
+    put:
+      description: "Updates session with new conversation messages and tracks token usage. Appends new messages to conversation history and updates session stats.\n     *\n     * **Typical Flow:**\n     * 1. Get session to retrieve conversation history\n     * 2. Call AI inference with full message history\n     * 3. Update session with new user + assistant messages"
+      operationId: updateAISession
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The session ID
+        explode: false
+        in: path
+        name: sessionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateAISession_request'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/updateAISession_200_response'
+          description: Session updated successfully
+        '400':
+          description: Invalid request parameters
+        '403':
+          description: Access denied
+        '404':
+          description: Session not found
+        '500':
+          description: Failed to update session
+      summary: Update Session
+      tags:
+      - AI Sessions
+  /api/v3/organizations/{organisation}/ai/sessions/{sessionId}/extend:
+    put:
+      description: Extends the expiration time of an active session. Useful for keeping long-running conversations alive.
+      operationId: extendAISession
+      parameters:
+      - description: The organisation ID
+        explode: false
+        in: path
+        name: organisation
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: The session ID
+        explode: false
+        in: path
+        name: sessionId
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/extendAISession_request'
+        required: false
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/extendAISession_200_response'
+          description: Session extended successfully
+        '400':
+          description: Invalid parameters
+        '403':
+          description: Access denied
+        '404':
+          description: Session not found
+        '500':
+          description: Failed to extend session
+      summary: Extend Session Expiration
+      tags:
+      - AI Sessions
+components:
+  schemas:
+    extendAISession_200_response:
+      example:
+        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        message: Session extended by 60 minutes
+        expiresAt: 2000-01-23 04:56:07+00:00
+      properties:
+        sessionId:
+          format: uuid
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+        message:
+          example: Session extended by 60 minutes
+          type: string
+      type: object
+    createAISession_201_response:
+      example:
+        createdAt: 2000-01-23 04:56:07+00:00
+        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        expiresAt: 2000-01-23 04:56:07+00:00
+        status: active
+      properties:
+        sessionId:
+          format: uuid
+          type: string
+        status:
+          enum:
+          - active
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    deleteAISession_200_response:
+      example:
+        message: message
+      properties:
+        message:
+          type: string
+      type: object
+    createAISession_request_initialMessages_inner:
+      properties:
+        role:
+          enum:
+          - system
+          - user
+          - assistant
+          type: string
+        content:
+          type: string
+      type: object
+    updateAISession_request_newMessages_inner:
+      properties:
+        role:
+          enum:
+          - user
+          - assistant
+          type: string
+        content:
+          type: string
+      type: object
+    createAISession_request:
+      properties:
+        userId:
+          description: User identifier for this session
+          example: user-12345
+          type: string
+        sessionGroup:
+          description: Optional user-defined grouping identifier (e.g., app name, environment, tenant). Use any format that makes sense for your application.
+          example: drupal-production
+          type: string
+        metadata:
+          additionalProperties: true
+          description: Optional custom metadata for additional context
+          example:
+            feature: chat-assistant
+            source: web-app
+          type: object
+        expirationMinutes:
+          default: 60
+          description: Session expiration in minutes
+          maximum: 1440
+          minimum: 5
+          type: integer
+        initialMessages:
+          description: Initial conversation messages (e.g., system prompt)
+          items:
+            $ref: '#/components/schemas/createAISession_request_initialMessages_inner'
+          type: array
+      required:
+      - userId
+      type: object
+    getAISession_200_response:
+      example:
+        messages:
+        - '{}'
+        - '{}'
+        created_at: 2000-01-23 04:56:07+00:00
+        model: model
+        id: id
+        title: title
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        model:
+          type: string
+        messages:
+          items:
+            type: object
+          type: array
+        created_at:
+          format: date-time
+          type: string
+      type: object
+    updateAISession_200_response:
+      example:
+        totalMessages: 0
+        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        totalTokens: 6
+        status: status
+        updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        sessionId:
+          format: uuid
+          type: string
+        status:
+          type: string
+        totalMessages:
+          type: integer
+        totalTokens:
+          type: integer
+        updatedAt:
+          format: date-time
+          type: string
+      type: object
+    extendAISession_request:
+      properties:
+        additionalMinutes:
+          default: 60
+          description: Minutes to add to expiration time (default 60, max 1440)
+          example: 60
+          maximum: 1440
+          minimum: 1
+          type: integer
+      type: object
+    listAISessions_200_response_inner:
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        created_at: 2000-01-23 04:56:07+00:00
+        model: model
+        id: id
+        title: title
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        model:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    updateAISession_request:
+      properties:
+        newMessages:
+          description: New messages to append to conversation
+          items:
+            $ref: '#/components/schemas/updateAISession_request_newMessages_inner'
+          type: array
+        tokensUsed:
+          description: Tokens consumed in this turn
+          type: integer
+        status:
+          description: Update session status
+          enum:
+          - active
+          - completed
+          type: string
+        metadata:
+          description: Update custom metadata
+          type: object
+      type: object
+  securitySchemes:
+    BearerAuth:
+      bearerFormat: JWT
+      description: 'Enter your Bearer token in the format: `Bearer <your-token-here>`. Obtain your API token from the QuantCDN dashboard under Profile > API Tokens.'
+      scheme: bearer
+      type: http
