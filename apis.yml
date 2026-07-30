@@ -5,9 +5,22 @@ description: >-
   maintain static and dynamic versions of their websites with a global CDN, WAF, edge functions, key-value storage, AI
   inference, and DNS management.
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 position: Consumer
 access: 3rd-Party
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/quantcdn.png
 tags:
   - CDN
   - Edge
@@ -23,40 +36,919 @@ modified: '2026-05-19'
 url: https://raw.githubusercontent.com/api-evangelist/quantcdn/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 apis:
-  - aid: quantcdn:quantcdn
-    name: QuantCDN API
-    description: >-
-      Unified API for the QuantCDN Admin and QuantCloud Platform covering CDN projects, static site content,
-      deployments, edge functions, key-value storage, DNS, WAF rules, AI agents, AI inference, AI orchestrations, and
-      platform administration.
-    humanURL: https://www.quantcdn.io/home
-    baseURL: https://dashboard.quantcdn.io
-    tags:
-      - CDN
-      - Edge
-      - Static Hosting
-      - DNS
-      - WAF
-      - Edge Computing
-      - Key-Value Storage
-      - AI Inference
-    properties:
-      - type: Documentation
-        url: https://docs.quantcdn.io/
-      - type: API Documentation
-        url: https://docs.quantcdn.io/api/get-started-content/
-      - type: GettingStarted
-        url: https://docs.quantcdn.io/api/get-started-content/
-      - type: OpenAPI
-        url: openapi/quantcdn-openapi.yml
-      - type: SDKs
-        url: https://github.com/quantcdn/quant-python-client
-      - type: SDKs
-        url: https://github.com/quantcdn/quant-ts-client
-      - type: SDKs
-        url: https://github.com/quantcdn/quant-php-client
-      - type: SDKs
-        url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-agents-api
+  name: QuantCDN AI Agents API
+  description: >-
+    Pre-configured AI assistants with specific system prompts, model settings, and tool permissions
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Agents
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-agents-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-custom-tools-api
+  name: QuantCDN AI Custom Tools API
+  description: Custom tool definitions for AI function calling
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Custom Tools
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-custom-tools-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-file-storage-api
+  name: QuantCDN AI File Storage API
+  description: S3-backed file storage for AI workloads
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI File Storage
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-file-storage-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-filter-policies-api
+  name: QuantCDN AI Filter Policies API
+  description: AI Filter Policies
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Filter Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-filter-policies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-governance-api
+  name: QuantCDN AI Governance API
+  description: AI Governance
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Governance
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-governance-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-inference-api
+  name: QuantCDN AI Inference API
+  description: Chat inference, embeddings, and image generation services
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Inference
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-inference-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-models-api
+  name: QuantCDN AI Models API
+  description: Foundation model listing and configuration
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Models
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-models-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-monitoring-api
+  name: QuantCDN AI Monitoring API
+  description: Usage statistics and monitoring for AI services
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Monitoring
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-monitoring-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-orchestrations-api
+  name: QuantCDN AI Orchestrations API
+  description: Durable batch processing orchestrations with pause/resume support
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Orchestrations
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-orchestrations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-sessions-api
+  name: QuantCDN AI Sessions API
+  description: Conversation session management for multi-turn interactions
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Sessions
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-sessions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-skills-api
+  name: QuantCDN AI Skills API
+  description: Reusable prompts, workflows, and instructions for agents
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Skills
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-skills-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-slack-bots-api
+  name: QuantCDN AI Slack Bots API
+  description: AI Slack Bots
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Slack Bots
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-slack-bots-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-task-management-api
+  name: QuantCDN AI Task Management API
+  description: Multi-agent task coordination and dependency management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Task Management
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-task-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-tools-api
+  name: QuantCDN AI Tools API
+  description: Built-in tool listing and async tool execution polling
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Tools
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-tools-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-usage-api
+  name: QuantCDN AI Usage API
+  description: AI Usage
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Usage
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-usage-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ai-vector-database-api
+  name: QuantCDN AI Vector Database API
+  description: Vector database collections for RAG and semantic search
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - AI Vector Database
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ai-vector-database-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-applications-api
+  name: QuantCDN Applications API
+  description: Cloud application lifecycle management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Applications
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-applications-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-backup-management-api
+  name: QuantCDN Backup Management API
+  description: Backup and restore operations for applications
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Backup Management
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-backup-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-cdn-metrics-api
+  name: QuantCDN CDN Metrics API
+  description: CDN traffic metrics and analytics
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - CDN Metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-cdn-metrics-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-commands-api
+  name: QuantCDN Commands API
+  description: Execute commands in application containers
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Commands
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-commands-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-compose-api
+  name: QuantCDN Compose API
+  description: Docker compose configuration management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Compose
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-compose-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-containers-api
+  name: QuantCDN Containers API
+  description: Container management and operations
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Containers
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-containers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-crawlers-api
+  name: QuantCDN Crawlers API
+  description: Website crawler configuration and management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Crawlers
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-crawlers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-crawlerschedules-api
+  name: QuantCDN CrawlerSchedules API
+  description: Scheduled website crawl operations
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - CrawlerSchedules
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-crawlerschedules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-cron-api
+  name: QuantCDN Cron API
+  description: Scheduled task management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Cron
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-cron-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-domains-api
+  name: QuantCDN Domains API
+  description: Domain and DNS management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Domains
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-domains-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-environments-api
+  name: QuantCDN Environments API
+  description: Application environment management and configuration
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Environments
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-environments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-headers-api
+  name: QuantCDN Headers API
+  description: HTTP header rule management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Headers
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-headers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-kv-api
+  name: QuantCDN KV API
+  description: Key-value store operations
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - KV
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-kv-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-organizations-api
+  name: QuantCDN Organizations API
+  description: Organization management and settings
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Organizations
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-organizations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-projects-api
+  name: QuantCDN Projects API
+  description: Static site project management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Projects
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-projects-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-purge-api
+  name: QuantCDN Purge API
+  description: Cache purging and invalidation
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Purge
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-purge-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-rules-api
+  name: QuantCDN Rules API
+  description: Edge rules (redirects, authentication, proxies, etc.)
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Rules
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-rules-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-scalingpolicy-api
+  name: QuantCDN ScalingPolicy API
+  description: Auto-scaling policies and configuration
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - ScalingPolicy
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-scalingpolicy-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-ssh-access-api
+  name: QuantCDN SSH Access API
+  description: SSH key management for container access
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - SSH Access
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-ssh-access-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-tokens-api
+  name: QuantCDN Tokens API
+  description: API token management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Tokens
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-tokens-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-variables-api
+  name: QuantCDN Variables API
+  description: Environment variable management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Variables
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-variables-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
+- aid: quantcdn:quantcdn-volumes-api
+  name: QuantCDN Volumes API
+  description: Persistent storage volume management
+  humanURL: https://www.quantcdn.io/home
+  baseURL: https://dashboard.quantcdn.io
+  tags:
+  - Volumes
+  properties:
+  - type: OpenAPI
+    url: openapi/quantcdn-volumes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.quantcdn.io/
+  - type: API Documentation
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: GettingStarted
+    url: https://docs.quantcdn.io/api/get-started-content/
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-python-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-ts-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-php-client
+  - type: SDKs
+    url: https://github.com/quantcdn/quant-admin-go
 common:
   - type: AgenticAccess
     url: agentic-access/quantcdn-agentic-access.yml
