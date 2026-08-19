@@ -1,0 +1,1357 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Rules API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Rules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List authentication rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/auth",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List authentication rules"
+        },
+        {
+          "info": {
+            "name": "Create an authentication rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/auth",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an authentication rule"
+        },
+        {
+          "info": {
+            "name": "Get details of an authentication rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/auth/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Get details of an authentication rule"
+        },
+        {
+          "info": {
+            "name": "Update an authentication rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/auth/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an authentication rule"
+        },
+        {
+          "info": {
+            "name": "Delete an authentication rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/auth/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Delete an authentication rule"
+        },
+        {
+          "info": {
+            "name": "List bot challenge rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/bot-challenge",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List bot challenge rules"
+        },
+        {
+          "info": {
+            "name": "Create a bot challenge rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/bot-challenge",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a bot challenge rule"
+        },
+        {
+          "info": {
+            "name": "Get details of a bot challenge rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/bot-challenge/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Get details of a bot challenge rule"
+        },
+        {
+          "info": {
+            "name": "Update a bot challenge rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/bot-challenge/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a bot challenge rule"
+        },
+        {
+          "info": {
+            "name": "Delete a bot challenge rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/bot-challenge/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Delete a bot challenge rule"
+        },
+        {
+          "info": {
+            "name": "List content filter rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/content-filter",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List content filter rules"
+        },
+        {
+          "info": {
+            "name": "Create a content filter rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/content-filter",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a content filter rule"
+        },
+        {
+          "info": {
+            "name": "Get details of a content filter rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/content-filter/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Get details of a content filter rule"
+        },
+        {
+          "info": {
+            "name": "Update a content filter rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/content-filter/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a content filter rule"
+        },
+        {
+          "info": {
+            "name": "Delete a content filter rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/content-filter/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Delete a content filter rule"
+        },
+        {
+          "info": {
+            "name": "List custom response rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/custom-response",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List custom response rules"
+        },
+        {
+          "info": {
+            "name": "Create a custom response rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/custom-response",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a custom response rule"
+        },
+        {
+          "info": {
+            "name": "Get details of a custom response rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/custom-response/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Get details of a custom response rule"
+        },
+        {
+          "info": {
+            "name": "Update a custom response rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/custom-response/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a custom response rule"
+        },
+        {
+          "info": {
+            "name": "Delete a custom response rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/custom-response/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Delete a custom response rule"
+        },
+        {
+          "info": {
+            "name": "List edge function rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/function",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List edge function rules"
+        },
+        {
+          "info": {
+            "name": "Create an edge function rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/function",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an edge function rule"
+        },
+        {
+          "info": {
+            "name": "Get details of an edge function rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/function/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Get details of an edge function rule"
+        },
+        {
+          "info": {
+            "name": "Update an edge function rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/function/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update an edge function rule"
+        },
+        {
+          "info": {
+            "name": "Delete an edge function rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/function/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Delete an edge function rule"
+        },
+        {
+          "info": {
+            "name": "List header rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/headers",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List header rules"
+        },
+        {
+          "info": {
+            "name": "Create a header rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/headers",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a header rule"
+        },
+        {
+          "info": {
+            "name": "Get details of a header rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/headers/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Get details of a header rule"
+        },
+        {
+          "info": {
+            "name": "Update a header rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/headers/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a header rule"
+        },
+        {
+          "info": {
+            "name": "Delete a header rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/headers/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Delete a header rule"
+        },
+        {
+          "info": {
+            "name": "List proxy rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/proxy",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List proxy rules"
+        },
+        {
+          "info": {
+            "name": "Create a proxy rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/proxy",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a proxy rule"
+        },
+        {
+          "info": {
+            "name": "Get details of a proxy rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/proxy/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a proxy rule"
+        },
+        {
+          "info": {
+            "name": "Update a proxy rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/proxy/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a proxy rule"
+        },
+        {
+          "info": {
+            "name": "Delete a proxy rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/proxy/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a proxy rule"
+        },
+        {
+          "info": {
+            "name": "List redirect rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/redirect",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List redirect rules"
+        },
+        {
+          "info": {
+            "name": "Create a redirect rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/redirect",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a redirect rule"
+        },
+        {
+          "info": {
+            "name": "Get details of a redirect rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/redirect/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details of a redirect rule"
+        },
+        {
+          "info": {
+            "name": "Update a redirect rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/redirect/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a redirect rule"
+        },
+        {
+          "info": {
+            "name": "Delete a redirect rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/redirect/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a redirect rule"
+        },
+        {
+          "info": {
+            "name": "List serve static rules",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/serve-static",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List serve static rules"
+        },
+        {
+          "info": {
+            "name": "Create a serve static rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/serve-static",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a serve static rule"
+        },
+        {
+          "info": {
+            "name": "Get details of a serve static rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/serve-static/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Get details of a serve static rule"
+        },
+        {
+          "info": {
+            "name": "Update a serve static rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/serve-static/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a serve static rule"
+        },
+        {
+          "info": {
+            "name": "Delete a serve static rule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/rules/serve-static/:rule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "rule",
+                "value": "",
+                "type": "path",
+                "description": "Rule identifier"
+              }
+            ]
+          },
+          "docs": "Delete a serve static rule"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

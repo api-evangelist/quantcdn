@@ -1,0 +1,3179 @@
+{
+  "item": [
+    {
+      "id": "aa620554-a0fe-4e7d-8251-9659f3bd2e31",
+      "name": "AI Agents",
+      "description": {
+        "content": "Pre-configured AI assistants with specific system prompts, model settings, and tool permissions",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "74a860d8-eb94-45f8-9a9c-90d7bf4d56ee",
+          "name": "List AI Agents",
+          "request": {
+            "name": "List AI Agents",
+            "description": {
+              "content": "Lists all AI agents for an organization. Agents are pre-configured AI assistants with specific system prompts, model settings, and tool permissions.\n     *\n     * **Features:**\n     * - Filter by group (e.g., 'development', 'compliance')\n     * - Organization-scoped\n     * - Returns agent configurations without execution history",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "group",
+                  "value": "<string>",
+                  "description": "Optional group filter (e.g., 'development', 'compliance')"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "02da0e49-6c02-45a8-8793-461a474715e5",
+              "name": "List of agents retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "group",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"agents\": [\n    {\n      \"assignedSkills\": [\n        \"assignedSkills\",\n        \"assignedSkills\"\n      ],\n      \"agentId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"guardrailPreset\": \"guardrailPreset\",\n      \"modelId\": \"modelId\",\n      \"description\": \"description\",\n      \"hasOverlay\": true,\n      \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n      \"longContext\": true,\n      \"name\": \"name\",\n      \"temperature\": 0.8008281904610115,\n      \"maxTokens\": 6,\n      \"isGlobal\": true,\n      \"group\": \"group\",\n      \"allowedTools\": [\n        \"allowedTools\",\n        \"allowedTools\"\n      ],\n      \"updatedAt\": \"2000-01-23 04:56:07+00:00\"\n    },\n    {\n      \"assignedSkills\": [\n        \"assignedSkills\",\n        \"assignedSkills\"\n      ],\n      \"agentId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n      \"guardrailPreset\": \"guardrailPreset\",\n      \"modelId\": \"modelId\",\n      \"description\": \"description\",\n      \"hasOverlay\": true,\n      \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n      \"longContext\": true,\n      \"name\": \"name\",\n      \"temperature\": 0.8008281904610115,\n      \"maxTokens\": 6,\n      \"isGlobal\": true,\n      \"group\": \"group\",\n      \"allowedTools\": [\n        \"allowedTools\",\n        \"allowedTools\"\n      ],\n      \"updatedAt\": \"2000-01-23 04:56:07+00:00\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1642cda2-f06a-4225-8d70-514215864cde",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "group",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2acff35b-bc6a-4658-8d67-2615f9200efe",
+              "name": "Failed to retrieve agents",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "group",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "00321a07-8b2d-46da-b76a-908e336821b4",
+          "name": "Create AI Agent",
+          "request": {
+            "name": "Create AI Agent",
+            "description": {
+              "content": "Creates a new AI agent with specific configuration, system prompt, and tool permissions.\n     *\n     * **Agent Configuration:**\n     * - **System Prompt**: Instructions that guide the agent's behavior\n     * - **Model**: Which foundation model to use (e.g., 'amazon.nova-pro-v1:0')\n     * - **Temperature**: Creativity level (0-1)\n     * - **Allowed Tools**: Which tools the agent can auto-execute\n     * - **Allowed Collections**: Vector DB collections for RAG\n     * - **Group**: Optional categorization (e.g., 'development', 'compliance')\n     *\n     * **Auto-Execution:**\n     * All tools are automatically executed when an agent requests them (no client confirmation needed).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"group\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdBy\": \"<string>\",\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "893fbc00-c7fd-4b38-a4e6-ee884898aba6",
+              "name": "Agent created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Reviews code for security vulnerabilities and best practices\",\n  \"modelId\": \"anthropic.claude-3-5-sonnet-20241022-v2:0\",\n  \"name\": \"Code Review Assistant\",\n  \"systemPrompt\": \"You are a senior software engineer specializing in secure code review.\",\n  \"group\": \"development\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 4000,\n  \"allowedTools\": [\n    \"fetch_web_content\",\n    \"search_web\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdBy\": \"<string>\",\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"agent\": {},\n  \"message\": \"Agent created successfully\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "abb50c1c-4b6a-4139-8375-5aa336e0098e",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Reviews code for security vulnerabilities and best practices\",\n  \"modelId\": \"anthropic.claude-3-5-sonnet-20241022-v2:0\",\n  \"name\": \"Code Review Assistant\",\n  \"systemPrompt\": \"You are a senior software engineer specializing in secure code review.\",\n  \"group\": \"development\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 4000,\n  \"allowedTools\": [\n    \"fetch_web_content\",\n    \"search_web\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdBy\": \"<string>\",\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a2c12c41-0801-4c2e-b419-000f4908f497",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Reviews code for security vulnerabilities and best practices\",\n  \"modelId\": \"anthropic.claude-3-5-sonnet-20241022-v2:0\",\n  \"name\": \"Code Review Assistant\",\n  \"systemPrompt\": \"You are a senior software engineer specializing in secure code review.\",\n  \"group\": \"development\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 4000,\n  \"allowedTools\": [\n    \"fetch_web_content\",\n    \"search_web\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdBy\": \"<string>\",\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "49600a0c-8087-4f29-89c3-a606663da860",
+              "name": "Failed to create agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"description\": \"Reviews code for security vulnerabilities and best practices\",\n  \"modelId\": \"anthropic.claude-3-5-sonnet-20241022-v2:0\",\n  \"name\": \"Code Review Assistant\",\n  \"systemPrompt\": \"You are a senior software engineer specializing in secure code review.\",\n  \"group\": \"development\",\n  \"temperature\": 0.3,\n  \"maxTokens\": 4000,\n  \"allowedTools\": [\n    \"fetch_web_content\",\n    \"search_web\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"createdBy\": \"<string>\",\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4520ced5-a69c-45b3-bd42-efdfff26c7fa",
+          "name": "Delete Agent",
+          "request": {
+            "name": "Delete Agent",
+            "description": {
+              "content": "Permanently deletes an AI agent. This action cannot be undone.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents",
+                ":agentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agentId",
+                  "description": "(Required) The agent ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fbf8acd1-b58e-4b64-905c-92136d004748",
+              "name": "Agent deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Agent deleted successfully\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "679494bf-8267-4469-bcea-f6532ed35940",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "944b96ae-9911-41b1-a98d-b427ea853c75",
+              "name": "Agent not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4072901c-ba10-4b96-816e-83cb8c6c243b",
+              "name": "Failed to delete agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "81a34016-f7f1-4564-af04-6b13724ca67b",
+          "name": "Get Agent Details",
+          "request": {
+            "name": "Get Agent Details",
+            "description": {
+              "content": "Retrieves detailed configuration for a specific AI agent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents",
+                ":agentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agentId",
+                  "description": "(Required) The agent ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8f776e26-1c41-4aa4-8517-a88aaa30f23a",
+              "name": "Agent details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"agent\": {\n    \"assignedSkills\": [\n      \"assignedSkills\",\n      \"assignedSkills\"\n    ],\n    \"agentId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n    \"guardrailPreset\": \"guardrailPreset\",\n    \"modelId\": \"modelId\",\n    \"description\": \"description\",\n    \"hasOverlay\": true,\n    \"systemPrompt\": \"systemPrompt\",\n    \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n    \"createdBy\": \"createdBy\",\n    \"longContext\": true,\n    \"name\": \"name\",\n    \"temperature\": 0.8008281904610115,\n    \"maxTokens\": 6,\n    \"allowedCollections\": [\n      \"allowedCollections\",\n      \"allowedCollections\"\n    ],\n    \"isGlobal\": true,\n    \"group\": \"group\",\n    \"allowedTools\": [\n      \"allowedTools\",\n      \"allowedTools\"\n    ],\n    \"updatedAt\": \"2000-01-23 04:56:07+00:00\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b46bbf1d-96ba-4e4b-aae1-ec4324b1e745",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b6134269-a89d-4369-abb3-ef4038630370",
+              "name": "Agent not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "151d000e-deda-41cc-ab8e-ffad6c85bcb0",
+              "name": "Failed to retrieve agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c2fb193d-a952-49dc-8f82-a051787d55b8",
+          "name": "Update Agent",
+          "request": {
+            "name": "Update Agent",
+            "description": {
+              "content": "Updates an existing AI agent configuration. All fields except agentId, organizationId, createdAt, and createdBy can be updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents",
+                ":agentId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agentId",
+                  "description": "(Required) The agent ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"group\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"modelId\": \"<string>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f670f0cd-2dc9-41e1-a096-58dba8641ea2",
+              "name": "Agent updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"group\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"modelId\": \"<string>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"agent\": {},\n  \"message\": \"Agent updated successfully\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "754c022c-cf60-4808-bc48-414e801ee5a7",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"group\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"modelId\": \"<string>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "41136f24-2e8a-479d-88d2-c022e6c7a9d1",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"group\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"modelId\": \"<string>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aed154f5-7335-45b1-818d-d92cfe65211d",
+              "name": "Agent not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"group\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"modelId\": \"<string>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e51382f4-82d1-4164-af97-46d166d8c704",
+              "name": "Failed to update agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"group\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"modelId\": \"<string>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "103a419e-1dfd-45e0-ba47-9446ca47f9b9",
+          "name": "Chat with AI Agent",
+          "request": {
+            "name": "Chat with AI Agent",
+            "description": {
+              "content": "Initiates a chat session with a specific AI agent. The agent's configuration (system prompt, temperature, model, allowed tools) is automatically applied.\n     *\n     * **Key Features:**\n     * - **Session Management**: Automatic session creation and state tracking\n     * - **Multi-turn Conversations**: Full conversation history maintained server-side\n     * - Agent's system prompt is prepended to conversation\n     * - Only agent's allowed tools are available\n     * - All tools are auto-executed on cloud (no client confirmation needed)\n     * - Temperature and model from agent config\n     * - Supports sync, streaming, and async modes\n     *\n     * **Execution Modes:**\n     * - **Sync Mode** (default): Standard JSON response, waits for completion\n     * - **Streaming Mode**: Set `stream: true` for SSE token-by-token responses\n     * - **Async Mode**: Set `async: true` for long-running tasks with polling\n     *\n     * **Async/Durable Mode (`async: true`):**\n     * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)\n     * - Uses AWS Lambda Durable Functions for long-running agent tasks\n     * - All tools are auto-executed on cloud (no `waiting_callback` state)\n     * - Poll `/ai/chat/executions/{requestId}` for status\n     * - Ideal for agents with slow tools (image generation, web search, etc.)\n     *\n     * **Session Support:**\n     * - Omit `sessionId` to create a new session automatically\n     * - Include `sessionId` to continue an existing conversation\n     * - Sessions expire after 60 minutes of inactivity\n     * - Sessions work in all modes (sync, streaming, async)\n     * - Use `/sessions/{sessionId}` to retrieve full conversation history",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents",
+                ":agentId",
+                "chat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "agentId",
+                  "description": "(Required) The agent ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"<string>\",\n  \"sessionId\": \"<uuid>\",\n  \"userId\": \"<string>\",\n  \"stream\": false,\n  \"async\": false,\n  \"system\": \"<string>\",\n  \"longContext\": false,\n  \"maxToolIterations\": \"<integer>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aafcbacc-1a62-4618-b7cf-e84aed59375d",
+              "name": "Agent response generated successfully (sync mode)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\",\n  \"sessionId\": \"<uuid>\",\n  \"userId\": \"<string>\",\n  \"stream\": false,\n  \"async\": false,\n  \"system\": \"<string>\",\n  \"longContext\": false,\n  \"maxToolIterations\": \"<integer>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sessionId\": \"cfe45fcf-3114-94d1-d477-e25c73674cda\",\n  \"response\": {\n    \"text\": \"string\",\n    \"stopReason\": \"string\",\n    \"usage\": {\n      \"costCents\": 5.962134,\n      \"inputTokens\": 0,\n      \"outputTokens\": 6,\n      \"totalTokens\": 1\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a232e41b-8760-4b90-8d22-2e03f8534292",
+              "name": "Async execution started (when `async: true` in request)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\",\n  \"sessionId\": \"<uuid>\",\n  \"userId\": \"<string>\",\n  \"stream\": false,\n  \"async\": false,\n  \"system\": \"<string>\",\n  \"longContext\": false,\n  \"maxToolIterations\": \"<integer>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"agentId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n  \"requestId\": \"90fe0c53-a41b-4b28-b19e-5e900b3df959\",\n  \"pollUrl\": \"/ai/chat/executions/90fe0c53-a41b-4b28-b19e-5e900b3df959\",\n  \"agentName\": \"Weather Assistant\",\n  \"sessionId\": \"sessionId\",\n  \"message\": \"Agent execution started. Poll the status endpoint for updates.\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "43e01595-d834-409f-9f7e-1ce8be05197b",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\",\n  \"sessionId\": \"<uuid>\",\n  \"userId\": \"<string>\",\n  \"stream\": false,\n  \"async\": false,\n  \"system\": \"<string>\",\n  \"longContext\": false,\n  \"maxToolIterations\": \"<integer>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a3a52e1c-9230-474c-b291-fb0f42129429",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\",\n  \"sessionId\": \"<uuid>\",\n  \"userId\": \"<string>\",\n  \"stream\": false,\n  \"async\": false,\n  \"system\": \"<string>\",\n  \"longContext\": false,\n  \"maxToolIterations\": \"<integer>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f21dcc6e-9309-4d52-9e75-a26f2f9c9dcd",
+              "name": "Agent not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\",\n  \"sessionId\": \"<uuid>\",\n  \"userId\": \"<string>\",\n  \"stream\": false,\n  \"async\": false,\n  \"system\": \"<string>\",\n  \"longContext\": false,\n  \"maxToolIterations\": \"<integer>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0e464d4d-1925-48b3-b35d-95be9587907f",
+              "name": "Failed to chat with agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "agentId",
+                      "description": "(Required) The agent ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"message\": \"<string>\",\n  \"sessionId\": \"<uuid>\",\n  \"userId\": \"<string>\",\n  \"stream\": false,\n  \"async\": false,\n  \"system\": \"<string>\",\n  \"longContext\": false,\n  \"maxToolIterations\": \"<integer>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1e6b6cd6-85b1-48e6-aa58-37360f7c61d1",
+          "name": "Delete Agent Overlay",
+          "request": {
+            "name": "Delete Agent Overlay",
+            "description": {
+              "content": "Removes the per-organisation overlay for a global agent, reverting it to platform defaults.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents",
+                ":agentId",
+                "overlay"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "agentId",
+                  "description": "(Required) Global agent identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1624141d-ffaf-4496-bedd-ab5d9b9d64f7",
+              "name": "Overlay deleted — agent reverted to defaults",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Agent reverted to defaults\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80ac4d9e-39df-47be-a155-bdcedc9b89a8",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "429cd31e-2147-4c22-b47c-280caafd0752",
+              "name": "Not a global agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce0d6911-b381-4ba8-b1ba-b96fe226cf08",
+              "name": "Failed to reset overlay",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0764f458-78e7-473f-8b99-081af6dbc332",
+          "name": "Get Agent Overlay",
+          "request": {
+            "name": "Get Agent Overlay",
+            "description": {
+              "content": "Returns the per-organisation overlay for a global agent, plus base agent metadata for UI context. If no overlay exists the response contains `overlay: null`. Overlays can only be created for global agents.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents",
+                ":agentId",
+                "overlay"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "agentId",
+                  "description": "(Required) Global agent identifier (e.g., 'quantgov-code')"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "4db7ee3d-fb8b-4719-9c8c-229ee0ee3b07",
+              "name": "Overlay retrieved (may be null if none set)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier (e.g., 'quantgov-code')"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"overlay\": {\n    \"disabledSkills\": [\n      \"disabledSkills\",\n      \"disabledSkills\"\n    ],\n    \"guardrailPreset\": \"guardrailPreset\",\n    \"modelId\": \"modelId\",\n    \"disabledTools\": [\n      \"disabledTools\",\n      \"disabledTools\"\n    ],\n    \"temperature\": 0.8008281904610115,\n    \"maxTokens\": 6,\n    \"additionalSkills\": [\n      \"additionalSkills\",\n      \"additionalSkills\"\n    ],\n    \"allowedCollections\": [\n      \"allowedCollections\",\n      \"allowedCollections\"\n    ],\n    \"systemPromptAppend\": \"systemPromptAppend\",\n    \"version\": 1,\n    \"additionalTools\": [\n      \"additionalTools\",\n      \"additionalTools\"\n    ]\n  },\n  \"base\": {\n    \"assignedSkillIds\": [\n      \"assignedSkillIds\",\n      \"assignedSkillIds\"\n    ],\n    \"agentId\": \"agentId\",\n    \"modelId\": \"modelId\",\n    \"name\": \"name\",\n    \"allowedTools\": [\n      \"allowedTools\",\n      \"allowedTools\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e7fd86a-b7e9-4639-ab32-848d676ef61a",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier (e.g., 'quantgov-code')"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea62c82d-7e43-4c7e-926c-504bd972353d",
+              "name": "Not a global agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier (e.g., 'quantgov-code')"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f0c7f428-90b8-41d3-8cd2-da99b895fefb",
+              "name": "Failed to retrieve overlay",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier (e.g., 'quantgov-code')"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff1d14ac-baa8-453e-b34e-34a44ba93672",
+          "name": "Upsert Agent Overlay",
+          "request": {
+            "name": "Upsert Agent Overlay",
+            "description": {
+              "content": "Creates or replaces the per-organisation overlay for a global agent. PUT is full replacement — omitted optional fields are removed. Include `version` from a prior GET to enable compare-and-swap (409 on conflict). Omit for last-writer-wins.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "agents",
+                ":agentId",
+                "overlay"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "agentId",
+                  "description": "(Required) Global agent identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"disabledSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disabledTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"systemPromptAppend\": \"<string>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"version\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "aa57888b-83c6-4aca-8b5b-8edb69d774ca",
+              "name": "Overlay created or updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"disabledSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disabledTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"systemPromptAppend\": \"<string>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"overlay\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62905585-ba8e-421a-8e0a-315e90eafb4c",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"disabledSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disabledTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"systemPromptAppend\": \"<string>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3cf8de74-8a4e-4945-9d4b-a3ff891af315",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"disabledSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disabledTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"systemPromptAppend\": \"<string>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "516398d0-94a2-4ec7-af62-20aa18215e4b",
+              "name": "Not a global agent",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"disabledSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disabledTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"systemPromptAppend\": \"<string>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "114f558e-f790-4271-9eea-2c1506d1dc6d",
+              "name": "Version conflict — overlay was modified concurrently",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"disabledSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disabledTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"systemPromptAppend\": \"<string>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "937df06b-9d50-4beb-8897-deed80915113",
+              "name": "Failed to save overlay",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "agents",
+                    ":agentId",
+                    "overlay"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "agentId",
+                      "description": "(Required) Global agent identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"disabledSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"additionalTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"disabledTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"systemPromptAppend\": \"<string>\",\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "ab7f2f83-6c46-41ad-a720-ec8b6b44d4a2",
+    "name": "QuantCDN AI Agents API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2241 @@
+{
+  "item": [
+    {
+      "id": "12abe504-2083-46f1-ad6d-b05c54a37c6a",
+      "name": "AI Slack Bots",
+      "description": {
+        "content": "AI Slack Bots",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1ea1b774-ecb8-400e-abcf-0d3fc44c167c",
+          "name": "List Slack Bots",
+          "request": {
+            "name": "List Slack Bots",
+            "description": {
+              "content": "Lists all Slack bots configured for the organization. Each bot is backed by an AI agent and can be connected to a Slack workspace. Agent configuration fields are flattened onto each bot object.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "slack-bots"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05477c01-1c1a-4ae9-8aaa-42388459b41e",
+              "name": "Slack bots retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bots\": [\n    {\n      \"assignedSkills\": [\n        \"assignedSkills\",\n        \"assignedSkills\"\n      ],\n      \"guardrailPreset\": \"guardrailPreset\",\n      \"modelId\": \"modelId\",\n      \"connected\": true,\n      \"systemPrompt\": \"systemPrompt\",\n      \"allowedSubAgents\": [\n        \"allowedSubAgents\",\n        \"allowedSubAgents\"\n      ],\n      \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n      \"sessionTtlDays\": 1,\n      \"setupType\": \"quant\",\n      \"longContext\": true,\n      \"keywordsEnabled\": true,\n      \"name\": \"name\",\n      \"temperature\": 0.8008281904610115,\n      \"maxTokens\": 6,\n      \"allowedCollections\": [\n        \"allowedCollections\",\n        \"allowedCollections\"\n      ],\n      \"botId\": \"botId\",\n      \"filterPolicies\": [\n        \"filterPolicies\",\n        \"filterPolicies\"\n      ],\n      \"status\": \"active\",\n      \"allowedTools\": [\n        \"allowedTools\",\n        \"allowedTools\"\n      ]\n    },\n    {\n      \"assignedSkills\": [\n        \"assignedSkills\",\n        \"assignedSkills\"\n      ],\n      \"guardrailPreset\": \"guardrailPreset\",\n      \"modelId\": \"modelId\",\n      \"connected\": true,\n      \"systemPrompt\": \"systemPrompt\",\n      \"allowedSubAgents\": [\n        \"allowedSubAgents\",\n        \"allowedSubAgents\"\n      ],\n      \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n      \"sessionTtlDays\": 1,\n      \"setupType\": \"quant\",\n      \"longContext\": true,\n      \"keywordsEnabled\": true,\n      \"name\": \"name\",\n      \"temperature\": 0.8008281904610115,\n      \"maxTokens\": 6,\n      \"allowedCollections\": [\n        \"allowedCollections\",\n        \"allowedCollections\"\n      ],\n      \"botId\": \"botId\",\n      \"filterPolicies\": [\n        \"filterPolicies\",\n        \"filterPolicies\"\n      ],\n      \"status\": \"active\",\n      \"allowedTools\": [\n        \"allowedTools\",\n        \"allowedTools\"\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "99d79c98-e287-4ec0-9eea-709d200c808d",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "74d6768e-fef0-4eda-b8f3-f171e76c2512",
+              "name": "Failed to retrieve Slack bots",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6192046-943e-4c7b-aab9-e5f6544e12be",
+          "name": "Create Slack Bot",
+          "request": {
+            "name": "Create Slack Bot",
+            "description": {
+              "content": "Creates a new Slack bot with inline AI agent configuration. A backing agent is created automatically — callers do not need to manage agents separately.\n     *\n     * **Setup Types:**\n     * - `quant`: Quant-managed Slack app — uses shared OAuth credentials\n     * - `byo`: Bring Your Own — customer provides their own Slack app credentials",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "slack-bots"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"modelId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"setupType\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1d98ab86-7c87-4821-9ef0-535d50be1519",
+              "name": "Slack bot created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"setupType\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bot\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "810eb3bb-bf53-47ce-b592-b59e197ad8b1",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"setupType\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6e3d863b-80af-4dbf-a349-7080ccf8e195",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"setupType\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "74f50e84-408d-4b77-b69c-c9cfa286e394",
+              "name": "Failed to create Slack bot",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"modelId\": \"<string>\",\n  \"name\": \"<string>\",\n  \"setupType\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a4f25b01-aabb-44ed-b454-77f3317172c6",
+          "name": "Delete Slack Bot",
+          "request": {
+            "name": "Delete Slack Bot",
+            "description": {
+              "content": "Permanently deletes a Slack bot, disconnects it from the workspace, and deletes its backing AI agent.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "slack-bots",
+                ":botId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "botId",
+                  "description": "(Required) The Slack bot ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7aa31df5-3831-4476-93a9-6ab74fa6944e",
+              "name": "Slack bot deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"message\": \"Slack bot deleted successfully\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7d64d285-70eb-4a23-b875-664dc53a37bf",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9ac55f51-8db2-4da2-b7fe-2f3abe7d7e14",
+              "name": "Slack bot not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b828af84-c0e8-4ca5-864a-031ec9bc95ab",
+              "name": "Failed to delete Slack bot",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6d425365-4d42-4d9d-833f-7beecee1cd65",
+          "name": "Get Slack Bot",
+          "request": {
+            "name": "Get Slack Bot",
+            "description": {
+              "content": "Retrieves details for a specific Slack bot including its configuration, connection status, and flattened agent configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "slack-bots",
+                ":botId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "botId",
+                  "description": "(Required) The Slack bot ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c8292af4-3c86-466f-a8ca-6df54eaba8fd",
+              "name": "Slack bot details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bot\": {\n    \"botId\": \"string\",\n    \"name\": \"string\",\n    \"setupType\": \"byo\",\n    \"status\": \"active\",\n    \"connected\": true,\n    \"systemPrompt\": \"string\",\n    \"modelId\": \"string\",\n    \"temperature\": 1181.0993196141928,\n    \"maxTokens\": 3923,\n    \"allowedTools\": [\n      \"string\",\n      \"string\"\n    ],\n    \"assignedSkills\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allowedCollections\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allowedSubAgents\": [\n      \"string\",\n      \"string\"\n    ],\n    \"guardrailPreset\": \"string\",\n    \"filterPolicies\": [\n      \"string\",\n      \"string\"\n    ],\n    \"longContext\": false,\n    \"sessionTtlDays\": 5358,\n    \"allowedChannels\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allowedUsers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"deniedUsers\": [\n      \"string\",\n      \"string\"\n    ],\n    \"allowGuests\": true,\n    \"homeTabContent\": \"string\",\n    \"agentAccessControl\": {},\n    \"keywordsEnabled\": false,\n    \"keywords\": [\n      \"string\",\n      \"string\"\n    ],\n    \"createdAt\": \"1999-07-11T23:29:49.768Z\",\n    \"updatedAt\": \"2003-03-01T12:53:16.984Z\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "53958fc6-5a13-4a2d-aa1c-b1b88a93988a",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6c60b21f-e4bf-45ef-878e-35bf4dcf17ed",
+              "name": "Slack bot not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a5cafaa7-c326-4171-afde-00e0999ac0f8",
+              "name": "Failed to retrieve Slack bot",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cebe1c8d-9e0b-4742-a68c-7b80fdb172e8",
+          "name": "Update Slack Bot",
+          "request": {
+            "name": "Update Slack Bot",
+            "description": {
+              "content": "Updates a Slack bot's configuration and/or its backing agent. Only provided fields are updated.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "slack-bots",
+                ":botId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "botId",
+                  "description": "(Required) The Slack bot ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "33e254d0-edd3-429f-9cc2-cb012b2a89bb",
+              "name": "Slack bot updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bot\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a67369b9-3826-4fe5-bcef-83e2143a8932",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae4fb124-a30b-4c43-96f2-accc2bde33a1",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "38e1e1b5-fcf1-42f3-9e82-58cd9a9a553c",
+              "name": "Slack bot not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9df884e0-2744-4746-90a2-4947ccec85d9",
+              "name": "Failed to update Slack bot",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"status\": \"<string>\",\n  \"systemPrompt\": \"<string>\",\n  \"modelId\": \"<string>\",\n  \"temperature\": \"<number>\",\n  \"maxTokens\": \"<integer>\",\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"assignedSkills\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedCollections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedSubAgents\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrailPreset\": \"<string>\",\n  \"filterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"longContext\": \"<boolean>\",\n  \"sessionTtlDays\": \"<integer>\",\n  \"allowedChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"deniedUsers\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"allowGuests\": \"<boolean>\",\n  \"homeTabContent\": \"<string>\",\n  \"agentAccessControl\": \"<object>\",\n  \"keywordsEnabled\": \"<boolean>\",\n  \"keywords\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "963d4acb-bf30-4766-be1a-1cab6985333d",
+          "name": "Search Slack Workspace Users",
+          "request": {
+            "name": "Search Slack Workspace Users",
+            "description": {
+              "content": "Searches users in the Slack workspace connected to this bot. Requires the bot to be connected via OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "slack-bots",
+                ":botId",
+                "workspace",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query to filter users by name"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "botId",
+                  "description": "(Required) The Slack bot ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c7f5c4e4-1df7-45fb-8dbd-813dda5c1e06",
+              "name": "Workspace users retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId",
+                    "workspace",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"name\": \"name\",\n      \"real_name\": \"real_name\"\n    },\n    {\n      \"name\": \"name\",\n      \"real_name\": \"real_name\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94dfd759-1c50-431c-969b-814b3946e496",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId",
+                    "workspace",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "559d879e-4354-4db6-b4a6-c8d16eac8c9a",
+              "name": "Slack bot not found or not connected",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId",
+                    "workspace",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ab80ea48-c972-440a-b9a3-3ef55bb4d653",
+              "name": "Failed to search users",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId",
+                    "workspace",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae63295c-2662-4c53-910a-f12ad6102144",
+          "name": "Search Slack Workspace Channels",
+          "request": {
+            "name": "Search Slack Workspace Channels",
+            "description": {
+              "content": "Searches channels in the Slack workspace connected to this bot. Requires the bot to be connected via OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "slack-bots",
+                ":botId",
+                "workspace",
+                "channels"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "q",
+                  "value": "<string>",
+                  "description": "Search query to filter channels by name"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "botId",
+                  "description": "(Required) The Slack bot ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6b40a9b1-d62d-487e-905a-cfdee98e47b0",
+              "name": "Workspace channels retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId",
+                    "workspace",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"results\": [\n    {\n      \"name\": \"name\"\n    },\n    {\n      \"name\": \"name\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b53e86b-928e-4c87-bed7-7c7b89eeed8a",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId",
+                    "workspace",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "761ed6a5-7c4d-405c-8494-1124790b89fe",
+              "name": "Slack bot not found or not connected",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId",
+                    "workspace",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7f2581c3-efef-4564-b129-0fe220a142cc",
+              "name": "Failed to search channels",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "slack-bots",
+                    ":botId",
+                    "workspace",
+                    "channels"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "q",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "botId",
+                      "description": "(Required) The Slack bot ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a353ebde-3716-4dde-9c63-6a3a241a3d79",
+    "name": "QuantCDN AI Agents AI Slack Bots API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

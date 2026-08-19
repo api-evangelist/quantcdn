@@ -1,0 +1,278 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Crawlers API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Crawlers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List crawlers for the project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List crawlers for the project"
+        },
+        {
+          "info": {
+            "name": "Create a new crawler",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new crawler"
+        },
+        {
+          "info": {
+            "name": "Get details of a single crawler",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "00000000-0000-0000-0000-000000000000",
+                "type": "path",
+                "description": "The UUID of the crawler"
+              }
+            ]
+          },
+          "docs": "Get details of a single crawler"
+        },
+        {
+          "info": {
+            "name": "Update a crawler",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "00000000-0000-0000-0000-000000000000",
+                "type": "path",
+                "description": "The UUID of the crawler"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a crawler"
+        },
+        {
+          "info": {
+            "name": "Delete a crawler",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "00000000-0000-0000-0000-000000000000",
+                "type": "path",
+                "description": "The UUID of the crawler"
+              }
+            ]
+          },
+          "docs": "Delete a crawler"
+        },
+        {
+          "info": {
+            "name": "Run a crawler",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler/run",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "00000000-0000-0000-0000-000000000000",
+                "type": "path",
+                "description": "Crawler identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Run a crawler"
+        },
+        {
+          "info": {
+            "name": "Get all runs for a crawler",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler/runs",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "00000000-0000-0000-0000-000000000000",
+                "type": "path",
+                "description": "Crawler identifier"
+              }
+            ]
+          },
+          "docs": "Get all runs for a crawler"
+        },
+        {
+          "info": {
+            "name": "Get a run by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler/runs/:run_id",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "00000000-0000-0000-0000-000000000000",
+                "type": "path",
+                "description": "Crawler identifier"
+              },
+              {
+                "name": "run_id",
+                "value": "1",
+                "type": "path",
+                "description": "Run identifier"
+              }
+            ]
+          },
+          "docs": "Get a run by ID"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

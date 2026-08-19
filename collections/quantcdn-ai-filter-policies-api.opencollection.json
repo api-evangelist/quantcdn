@@ -1,0 +1,185 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Filter Policies API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Filter Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List AI filter policies for an organisation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/filter-policies",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "List AI filter policies for an organisation"
+        },
+        {
+          "info": {
+            "name": "Create an AI filter policy for an organisation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/filter-policies",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create an AI filter policy for an organisation"
+        },
+        {
+          "info": {
+            "name": "Get a specific AI filter policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/filter-policies/:policyId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get a specific AI filter policy"
+        },
+        {
+          "info": {
+            "name": "Update a specific AI filter policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/filter-policies/:policyId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a specific AI filter policy"
+        },
+        {
+          "info": {
+            "name": "Delete a specific AI filter policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/filter-policies/:policyId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Delete a specific AI filter policy"
+        },
+        {
+          "info": {
+            "name": "Enable a specific AI filter policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/filter-policies/:policyId/enable",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Enable a specific AI filter policy"
+        },
+        {
+          "info": {
+            "name": "Disable a specific AI filter policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/filter-policies/:policyId/disable",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Disable a specific AI filter policy"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

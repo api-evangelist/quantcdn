@@ -1,0 +1,224 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Backup Management API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Backup Management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List backups for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/backups/:type",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "The backup type"
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "Sort order for backups by creation date (asc = oldest first, desc = newest first)"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of backups to return (max 100)"
+              },
+              {
+                "name": "createdBefore",
+                "value": "",
+                "type": "query",
+                "description": "Only return backups created before this ISO 8601 timestamp (e.g., 2025-01-01T00:00:00Z)"
+              },
+              {
+                "name": "createdAfter",
+                "value": "",
+                "type": "query",
+                "description": "Only return backups created after this ISO 8601 timestamp (e.g., 2024-12-01T00:00:00Z)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter backups by status"
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Token for retrieving the next page of results"
+              }
+            ]
+          },
+          "docs": "Retrieves a list of backups (database or filesystem) for the environment with status, size, and metadata. Supports filtering and ordering via query parameters."
+        },
+        {
+          "info": {
+            "name": "Create a backup for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/backups/:type",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "The backup type"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a backup for an environment"
+        },
+        {
+          "info": {
+            "name": "Delete a backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/backups/:type/:backupId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "The backup type"
+              },
+              {
+                "name": "backupId",
+                "value": "",
+                "type": "path",
+                "description": "The backup ID"
+              }
+            ]
+          },
+          "docs": "Delete a backup"
+        },
+        {
+          "info": {
+            "name": "Generate a download URL for a backup",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/backups/:type/:backupId/download",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "The backup type"
+              },
+              {
+                "name": "backupId",
+                "value": "",
+                "type": "path",
+                "description": "The backup ID"
+              }
+            ]
+          },
+          "docs": "Generate a download URL for a backup"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

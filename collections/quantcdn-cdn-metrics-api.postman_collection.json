@@ -1,0 +1,986 @@
+{
+  "item": [
+    {
+      "id": "83095fc1-0700-4420-89f8-b112a00a9700",
+      "name": "CDN Metrics",
+      "description": {
+        "content": "CDN traffic metrics and analytics",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9cbcf577-705e-441e-8305-7c0859d3dcd7",
+          "name": "Get hourly metrics",
+          "request": {
+            "name": "Get hourly metrics",
+            "description": {
+              "content": "Returns the last hour of minute-by-minute metrics data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "metrics",
+                "hourly"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "Filter by domain ID or domain name"
+                },
+                {
+                  "disabled": false,
+                  "key": "metrics[]",
+                  "value": "<string>",
+                  "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+                },
+                {
+                  "disabled": false,
+                  "key": "metrics[]",
+                  "value": "<string>",
+                  "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_format",
+                  "value": "iso8601",
+                  "description": "Timestamp format in response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "45b0745d-5a99-4ec2-ab60-5c22b30763d2",
+              "name": "Hourly metrics data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "hourly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"hits\": {\n      \"series\": [\n        {\n          \"timestamp\": \"2026-01-29 12:00:00+00:00\",\n          \"value\": 150\n        },\n        {\n          \"timestamp\": \"2026-01-29 12:01:00+00:00\",\n          \"value\": 142\n        }\n      ],\n      \"period_total\": 8523,\n      \"all_time_total\": 1284567,\n      \"period_average\": 142.05\n    },\n    \"bytes\": {\n      \"series\": [\n        {\n          \"timestamp\": \"2026-01-29 12:00:00+00:00\",\n          \"value\": 1520576\n        },\n        {\n          \"timestamp\": \"2026-01-29 12:01:00+00:00\",\n          \"value\": 1423456\n        }\n      ],\n      \"period_total\": 91234567,\n      \"all_time_total\": 12845670000,\n      \"period_average\": 1520576.12\n    }\n  },\n  \"meta\": {\n    \"start_time\": \"2026-01-29 12:00:00+00:00\",\n    \"period\": \"hourly\",\n    \"granularity\": \"minute\",\n    \"domain\": \"domain\",\n    \"end_time\": \"2026-01-29 13:00:00+00:00\",\n    \"metrics\": [\n      \"hits\",\n      \"bytes\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "067e0bf1-c427-48b4-8505-062526863867",
+              "name": "Invalid metric requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "hourly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f48a98dd-29ea-4362-828e-d63b29efd049",
+              "name": "No domains found or domain not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "hourly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7444d28d-4a6e-41c9-ad31-6cef47d5032c",
+          "name": "Get daily metrics",
+          "request": {
+            "name": "Get daily metrics",
+            "description": {
+              "content": "Returns the last 30 days of daily metrics data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "metrics",
+                "daily"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "Filter by domain ID or domain name"
+                },
+                {
+                  "disabled": false,
+                  "key": "metrics[]",
+                  "value": "<string>",
+                  "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+                },
+                {
+                  "disabled": false,
+                  "key": "metrics[]",
+                  "value": "<string>",
+                  "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_format",
+                  "value": "iso8601",
+                  "description": "Timestamp format in response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "a60e02b5-dc0c-4f9e-bc1b-983f68e71caf",
+              "name": "Daily metrics data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"hits\": {\n      \"series\": [\n        {\n          \"timestamp\": \"2026-01-29 12:00:00+00:00\",\n          \"value\": 150\n        },\n        {\n          \"timestamp\": \"2026-01-29 12:01:00+00:00\",\n          \"value\": 142\n        }\n      ],\n      \"period_total\": 8523,\n      \"all_time_total\": 1284567,\n      \"period_average\": 142.05\n    },\n    \"bytes\": {\n      \"series\": [\n        {\n          \"timestamp\": \"2026-01-29 12:00:00+00:00\",\n          \"value\": 1520576\n        },\n        {\n          \"timestamp\": \"2026-01-29 12:01:00+00:00\",\n          \"value\": 1423456\n        }\n      ],\n      \"period_total\": 91234567,\n      \"all_time_total\": 12845670000,\n      \"period_average\": 1520576.12\n    }\n  },\n  \"meta\": {\n    \"start_time\": \"2026-01-29 12:00:00+00:00\",\n    \"period\": \"hourly\",\n    \"granularity\": \"minute\",\n    \"domain\": \"domain\",\n    \"end_time\": \"2026-01-29 13:00:00+00:00\",\n    \"metrics\": [\n      \"hits\",\n      \"bytes\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "278caf7b-21f3-4b82-bfde-f09483ba61a2",
+              "name": "Invalid metric requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f34ef970-3f6f-4871-8866-189ddebda6b6",
+              "name": "No domains found or domain not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "daily"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f4231734-95b5-4dc1-9137-f27e39e8c90f",
+          "name": "Get monthly metrics",
+          "request": {
+            "name": "Get monthly metrics",
+            "description": {
+              "content": "Returns the last 12 months of monthly metrics data",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "metrics",
+                "monthly"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "domain",
+                  "value": "<string>",
+                  "description": "Filter by domain ID or domain name"
+                },
+                {
+                  "disabled": false,
+                  "key": "metrics[]",
+                  "value": "<string>",
+                  "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+                },
+                {
+                  "disabled": false,
+                  "key": "metrics[]",
+                  "value": "<string>",
+                  "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+                },
+                {
+                  "disabled": false,
+                  "key": "timestamp_format",
+                  "value": "iso8601",
+                  "description": "Timestamp format in response"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET"
+          },
+          "response": [
+            {
+              "id": "8c083c55-ed1a-4741-a545-fc6ca41f71c1",
+              "name": "Monthly metrics data",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "monthly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"hits\": {\n      \"series\": [\n        {\n          \"timestamp\": \"2026-01-29 12:00:00+00:00\",\n          \"value\": 150\n        },\n        {\n          \"timestamp\": \"2026-01-29 12:01:00+00:00\",\n          \"value\": 142\n        }\n      ],\n      \"period_total\": 8523,\n      \"all_time_total\": 1284567,\n      \"period_average\": 142.05\n    },\n    \"bytes\": {\n      \"series\": [\n        {\n          \"timestamp\": \"2026-01-29 12:00:00+00:00\",\n          \"value\": 1520576\n        },\n        {\n          \"timestamp\": \"2026-01-29 12:01:00+00:00\",\n          \"value\": 1423456\n        }\n      ],\n      \"period_total\": 91234567,\n      \"all_time_total\": 12845670000,\n      \"period_average\": 1520576.12\n    }\n  },\n  \"meta\": {\n    \"start_time\": \"2026-01-29 12:00:00+00:00\",\n    \"period\": \"hourly\",\n    \"granularity\": \"minute\",\n    \"domain\": \"domain\",\n    \"end_time\": \"2026-01-29 13:00:00+00:00\",\n    \"metrics\": [\n      \"hits\",\n      \"bytes\"\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80569a9b-402a-487e-821b-8755a2b206a6",
+              "name": "Invalid metric requested",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "monthly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a6066f2d-4114-44d5-ae49-f2bd1c2a4377",
+              "name": "No domains found or domain not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "metrics",
+                    "monthly"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "domain",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "metrics[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "timestamp_format",
+                      "value": "iso8601"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7a6b536c-7c92-4bd3-b77b-e6dd046a2c19",
+    "name": "QuantCDN AI Agents CDN Metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

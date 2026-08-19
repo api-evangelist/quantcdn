@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Tools API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Tools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available built-in tools for function calling",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/tools",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "Retrieves all available built-in tools that can be used with function calling. These tools can be included in `toolConfig` when making AI inference requests.\n     *\n     * **Available Built-in Tools:**\n     * - `get_weather`: Get current weather for a location using Open-Meteo API\n     * - `calculate`: Perform basic mathematical calculations (add, subtract, multiply, divide)\n     * - `search_web`: Search the web for information (mock implementation)\n     * - `generate_image`: Generate images wit"
+        },
+        {
+          "info": {
+            "name": "List tool names only (lightweight response)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/tools/names",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "Retrieves just the names of available built-in tools. Useful for quick validation or UI dropdown population without the full tool specifications."
+        },
+        {
+          "info": {
+            "name": "Get async tool execution status and result",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/tools/executions/:executionId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "executionId",
+                "value": "",
+                "type": "path",
+                "description": "Tool execution identifier"
+              }
+            ]
+          },
+          "docs": "Retrieves the status and result of an async tool execution. Used for polling long-running tools like image generation.\n     *\n     * **Async Tool Execution Pattern:**\n     * This endpoint enables a polling pattern for long-running tools that would otherwise hit API Gateway's 30-second timeout.\n     *\n     * **Flow:**\n     * 1. AI requests tool use (e.g., `generate_image`)\n     * 2. Chat API returns `toolUse` with execution tracking info\n     * 3. Client starts polling this endpoint with the `exe"
+        },
+        {
+          "info": {
+            "name": "Get Tool Orchestration Status (Async Tool Polling)",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/tools/orchestrations/:orchestrationId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "orchestrationId",
+                "value": "",
+                "type": "path",
+                "description": "Orchestration identifier for aggregated async tool executions"
+              }
+            ]
+          },
+          "docs": "Retrieves the status and synthesized result of a multi-tool async execution orchestration.\n     *\n     * **Note:** This endpoint is for async tool execution polling (`/tools/orchestrations`).\n     * For durable batch processing orchestrations, see `GET /orchestrations` endpoints.\n     *\n     * **Orchestration Pattern:**\n     * When the AI requests multiple async tools simultaneously, an orchestration is created\n     * to track all tool executions and synthesize their results into a single cohere"
+        },
+        {
+          "info": {
+            "name": "List tool executions for monitoring and debugging",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/tools/executions",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by execution status"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of executions to return"
+              }
+            ]
+          },
+          "docs": "Lists recent async tool executions for an organization. Useful for debugging, monitoring, and building admin UIs.\n     *\n     * **Query Patterns:**\n     * - All recent executions: `GET /ai/tools/executions`\n     * - Filter by status: `GET /ai/tools/executions?status=running`\n     * - Limit results: `GET /ai/tools/executions?limit=20`\n     *\n     * **Results:**\n     * - Ordered by creation time (newest first)\n     * - Limited to 50 by default (configurable via `limit` parameter)\n     * - Only sho"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

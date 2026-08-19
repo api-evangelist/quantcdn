@@ -1,0 +1,74 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Models API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List available AI models for an organization",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/models",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "feature",
+                "value": "embeddings",
+                "type": "query",
+                "description": "Filter models by supported feature"
+              }
+            ]
+          },
+          "docs": "List available AI models for an organization"
+        },
+        {
+          "info": {
+            "name": "Get AI Model Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/models/:modelId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "modelId",
+                "value": "amazon.nova-lite-v1:0",
+                "type": "path",
+                "description": "The model identifier (e.g., amazon.nova-lite-v1:0)"
+              }
+            ]
+          },
+          "docs": "Retrieves detailed information about a specific Bedrock model from the catalog.\n     *\n     * **Features:**\n     * - Complete pricing breakdown (input/output per million tokens)\n     * - Context window and output token limits\n     * - Supported features (chat, vision, streaming, embeddings)\n     * - Model availability and deprecation status\n     * - Release date for version tracking\n     *\n     * **Example Model IDs:**\n     * - `amazon.nova-lite-v1:0` - Default multimodal model\n     * - `anthrop"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

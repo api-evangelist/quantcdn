@@ -1,0 +1,85 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Governance API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Governance",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get AI governance configuration for an organisation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/governance",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "Get AI governance configuration for an organisation"
+        },
+        {
+          "info": {
+            "name": "Update AI governance configuration for an organisation",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/governance",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update AI governance configuration for an organisation"
+        },
+        {
+          "info": {
+            "name": "Get AI spend summary for an organisation",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/governance/spend",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "Get AI spend summary for an organisation"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

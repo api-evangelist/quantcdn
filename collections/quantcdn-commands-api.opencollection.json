@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Commands API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Commands",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all commands for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/environments/:environment/commands",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ]
+          },
+          "docs": "Get all commands for an environment"
+        },
+        {
+          "info": {
+            "name": "Create a command for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/environments/:environment/commands",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a command for an environment"
+        },
+        {
+          "info": {
+            "name": "Get a command",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/environments/:environment/commands/:command",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "command",
+                "value": "test-cmd",
+                "type": "path",
+                "description": "The command ID"
+              }
+            ]
+          },
+          "docs": "Get a command"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

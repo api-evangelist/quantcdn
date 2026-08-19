@@ -1,0 +1,107 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Headers API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Headers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List custom headers for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/custom-headers",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List custom headers for a project"
+        },
+        {
+          "info": {
+            "name": "Create or update custom headers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/custom-headers",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update custom headers"
+        },
+        {
+          "info": {
+            "name": "Delete custom headers",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/custom-headers",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete custom headers"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

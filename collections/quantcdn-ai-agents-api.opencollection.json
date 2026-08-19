@@ -1,0 +1,259 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Agents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List AI Agents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "group",
+                "value": "",
+                "type": "query",
+                "description": "Optional group filter (e.g., 'development', 'compliance')"
+              }
+            ]
+          },
+          "docs": "Lists all AI agents for an organization. Agents are pre-configured AI assistants with specific system prompts, model settings, and tool permissions.\n     *\n     * **Features:**\n     * - Filter by group (e.g., 'development', 'compliance')\n     * - Organization-scoped\n     * - Returns agent configurations without execution history"
+        },
+        {
+          "info": {
+            "name": "Create AI Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new AI agent with specific configuration, system prompt, and tool permissions.\n     *\n     * **Agent Configuration:**\n     * - **System Prompt**: Instructions that guide the agent's behavior\n     * - **Model**: Which foundation model to use (e.g., 'amazon.nova-pro-v1:0')\n     * - **Temperature**: Creativity level (0-1)\n     * - **Allowed Tools**: Which tools the agent can auto-execute\n     * - **Allowed Collections**: Vector DB collections for RAG\n     * - **Group**: Optional categoriz"
+        },
+        {
+          "info": {
+            "name": "Get Agent Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents/:agentId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "agentId",
+                "value": "",
+                "type": "path",
+                "description": "The agent ID"
+              }
+            ]
+          },
+          "docs": "Retrieves detailed configuration for a specific AI agent."
+        },
+        {
+          "info": {
+            "name": "Update Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents/:agentId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "agentId",
+                "value": "",
+                "type": "path",
+                "description": "The agent ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing AI agent configuration. All fields except agentId, organizationId, createdAt, and createdBy can be updated."
+        },
+        {
+          "info": {
+            "name": "Delete Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents/:agentId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "agentId",
+                "value": "",
+                "type": "path",
+                "description": "The agent ID"
+              }
+            ]
+          },
+          "docs": "Permanently deletes an AI agent. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "Chat with AI Agent",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents/:agentId/chat",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "agentId",
+                "value": "",
+                "type": "path",
+                "description": "The agent ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Initiates a chat session with a specific AI agent. The agent's configuration (system prompt, temperature, model, allowed tools) is automatically applied.\n     *\n     * **Key Features:**\n     * - **Session Management**: Automatic session creation and state tracking\n     * - **Multi-turn Conversations**: Full conversation history maintained server-side\n     * - Agent's system prompt is prepended to conversation\n     * - Only agent's allowed tools are available\n     * - All tools are auto-executed "
+        },
+        {
+          "info": {
+            "name": "Get Agent Overlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents/:agentId/overlay",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "agentId",
+                "value": "",
+                "type": "path",
+                "description": "Global agent identifier (e.g., 'quantgov-code')"
+              }
+            ]
+          },
+          "docs": "Returns the per-organisation overlay for a global agent, plus base agent metadata for UI context. If no overlay exists the response contains `overlay: null`. Overlays can only be created for global agents."
+        },
+        {
+          "info": {
+            "name": "Upsert Agent Overlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents/:agentId/overlay",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "agentId",
+                "value": "",
+                "type": "path",
+                "description": "Global agent identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates or replaces the per-organisation overlay for a global agent. PUT is full replacement — omitted optional fields are removed. Include `version` from a prior GET to enable compare-and-swap (409 on conflict). Omit for last-writer-wins."
+        },
+        {
+          "info": {
+            "name": "Delete Agent Overlay",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/agents/:agentId/overlay",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "agentId",
+                "value": "",
+                "type": "path",
+                "description": "Global agent identifier"
+              }
+            ]
+          },
+          "docs": "Removes the per-organisation overlay for a global agent, reverting it to platform defaults."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

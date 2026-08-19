@@ -1,0 +1,592 @@
+{
+  "item": [
+    {
+      "id": "6113da8d-6402-4e34-a79b-632e45b2f7ac",
+      "name": "AI Governance",
+      "description": {
+        "content": "AI Governance",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0770a0dd-4db5-4d5b-b664-ba39d5863286",
+          "name": "Get AI governance configuration for an organisation",
+          "request": {
+            "name": "Get AI governance configuration for an organisation",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "governance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f38e687a-4592-4aae-b1d4-47d87ffbfcdf",
+              "name": "AI governance configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "governance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"mandatoryFilterPolicies\": [\n    \"mandatoryFilterPolicies\",\n    \"mandatoryFilterPolicies\"\n  ],\n  \"modelList\": [\n    \"modelList\",\n    \"modelList\"\n  ],\n  \"modelPolicy\": \"unrestricted\",\n  \"aiEnabled\": true,\n  \"mandatoryGuardrailPreset\": \"mandatoryGuardrailPreset\",\n  \"version\": 2,\n  \"orgId\": \"orgId\",\n  \"spendLimits\": {\n    \"monthlyBudgetCents\": 0,\n    \"perUserDailyBudgetCents\": 5,\n    \"warningThresholdPercent\": 5,\n    \"perUserMonthlyBudgetCents\": 1,\n    \"dailyBudgetCents\": 6\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b160447c-f1e4-4b76-9161-53b87a07e303",
+              "name": "Failed to retrieve governance configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "governance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5135df68-9c1a-4383-9f5c-61928e8955f0",
+          "name": "Update AI governance configuration for an organisation",
+          "request": {
+            "name": "Update AI governance configuration for an organisation",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "governance"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"aiEnabled\": \"<boolean>\",\n  \"modelPolicy\": \"<string>\",\n  \"modelList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mandatoryGuardrailPreset\": \"<string>\",\n  \"mandatoryFilterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"spendLimits\": {\n    \"monthlyBudgetCents\": \"<integer>\",\n    \"dailyBudgetCents\": \"<integer>\",\n    \"perUserMonthlyBudgetCents\": \"<integer>\",\n    \"perUserDailyBudgetCents\": \"<integer>\",\n    \"warningThresholdPercent\": \"<integer>\"\n  },\n  \"version\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "99f9c5a2-eba8-456e-983a-1075b127a5d6",
+              "name": "Governance configuration updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "governance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aiEnabled\": \"<boolean>\",\n  \"modelPolicy\": \"<string>\",\n  \"modelList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mandatoryGuardrailPreset\": \"<string>\",\n  \"mandatoryFilterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"spendLimits\": {\n    \"monthlyBudgetCents\": 0,\n    \"perUserDailyBudgetCents\": 5,\n    \"warningThresholdPercent\": 5,\n    \"perUserMonthlyBudgetCents\": 1,\n    \"dailyBudgetCents\": 6\n  },\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": true,\n  \"config\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "de301eff-e3d8-44c7-8a03-899afc7f4495",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "governance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aiEnabled\": \"<boolean>\",\n  \"modelPolicy\": \"<string>\",\n  \"modelList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mandatoryGuardrailPreset\": \"<string>\",\n  \"mandatoryFilterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"spendLimits\": {\n    \"monthlyBudgetCents\": 0,\n    \"perUserDailyBudgetCents\": 5,\n    \"warningThresholdPercent\": 5,\n    \"perUserMonthlyBudgetCents\": 1,\n    \"dailyBudgetCents\": 6\n  },\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5c19a6a1-aa3b-423e-911f-d293094fec2b",
+              "name": "Failed to update governance configuration",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "governance"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"aiEnabled\": \"<boolean>\",\n  \"modelPolicy\": \"<string>\",\n  \"modelList\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"mandatoryGuardrailPreset\": \"<string>\",\n  \"mandatoryFilterPolicies\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"spendLimits\": {\n    \"monthlyBudgetCents\": 0,\n    \"perUserDailyBudgetCents\": 5,\n    \"warningThresholdPercent\": 5,\n    \"perUserMonthlyBudgetCents\": 1,\n    \"dailyBudgetCents\": 6\n  },\n  \"version\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "318efa76-e250-4d03-965a-15807628b734",
+          "name": "Get AI spend summary for an organisation",
+          "request": {
+            "name": "Get AI spend summary for an organisation",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "governance",
+                "spend"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "32bc63e0-5573-4a78-8815-bed538050c39",
+              "name": "AI spend summary",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "governance",
+                    "spend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"todayTotal\": {\n    \"requestCount\": 5,\n    \"spendCents\": 1\n  },\n  \"dailyBudget\": {\n    \"usedPercent\": 3.6160767,\n    \"remainingCents\": 2,\n    \"dailyBudgetCents\": 9\n  },\n  \"userTotal\": {\n    \"dailySpendCents\": 7,\n    \"monthlySpendCents\": 4\n  },\n  \"orgTotal\": {\n    \"requestCount\": 6,\n    \"spendCents\": 0\n  },\n  \"budget\": {\n    \"monthlyBudgetCents\": 5,\n    \"usedPercent\": 2.302136,\n    \"remainingCents\": 7\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0b1a2e28-d07e-4bbd-9253-066f4de66cba",
+              "name": "Failed to retrieve spend summary",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "governance",
+                    "spend"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "74731b4a-6f90-488d-80df-d4f5ef0508d7",
+    "name": "QuantCDN AI Agents AI Governance API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,2503 @@
+{
+  "item": [
+    {
+      "id": "6153df1a-79f0-43a3-96ff-0ea681c82808",
+      "name": "Environments",
+      "description": {
+        "content": "Application environment management and configuration",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d8d8020b-3d88-47af-8021-5201c9c65852",
+          "name": "Get all environments for an application",
+          "request": {
+            "name": "Get all environments for an application",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c203be8-8ab1-47da-9238-f482b95c67bb",
+              "name": "List of environments with summary information including deployment status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"deploymentStatus\": \"COMPLETED\",\n    \"envName\": \"production\",\n    \"desiredCount\": 2,\n    \"runningCount\": 2,\n    \"maxCapacity\": 5,\n    \"minCapacity\": 1,\n    \"status\": \"ACTIVE\"\n  },\n  {\n    \"deploymentStatus\": \"COMPLETED\",\n    \"envName\": \"production\",\n    \"desiredCount\": 2,\n    \"runningCount\": 2,\n    \"maxCapacity\": 5,\n    \"minCapacity\": 1,\n    \"status\": \"ACTIVE\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2f67ee6e-037a-4a59-a5e2-678e810d86f2",
+              "name": "The organisation or application not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "09f0d832-2249-4a7f-9f70-fd2a06db6582",
+          "name": "Create a new environment",
+          "request": {
+            "name": "Create a new environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"envName\": \"<string>\",\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\",\n  \"cloneConfigurationFrom\": \"<string>\",\n  \"composeDefinition\": {\n    \"containers\": [\n      {\n        \"imageReference\": {\n          \"identifier\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"cpu\": \"<integer>\",\n        \"memory\": \"<integer>\",\n        \"memoryReservation\": \"<integer>\",\n        \"exposedPorts\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"mountPoints\": [\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          },\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          }\n        ],\n        \"environment\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ],\n        \"secrets\": [\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          }\n        ],\n        \"healthCheck\": {\n          \"command\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"interval\": 30,\n          \"timeout\": 5,\n          \"retries\": 3,\n          \"startPeriod\": \"<integer>\"\n        },\n        \"dependsOn\": [\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          },\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          }\n        ],\n        \"command\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"entryPoint\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"workingDirectory\": \"<string>\",\n        \"essential\": true,\n        \"readonlyRootFilesystem\": false,\n        \"user\": \"<string>\",\n        \"originProtection\": false,\n        \"originProtectionConfig\": {\n          \"enabled\": true,\n          \"ipAllow\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"imageReference\": {\n          \"identifier\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"cpu\": \"<integer>\",\n        \"memory\": \"<integer>\",\n        \"memoryReservation\": \"<integer>\",\n        \"exposedPorts\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"mountPoints\": [\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          },\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          }\n        ],\n        \"environment\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ],\n        \"secrets\": [\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          }\n        ],\n        \"healthCheck\": {\n          \"command\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"interval\": 30,\n          \"timeout\": 5,\n          \"retries\": 3,\n          \"startPeriod\": \"<integer>\"\n        },\n        \"dependsOn\": [\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          },\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          }\n        ],\n        \"command\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"entryPoint\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"workingDirectory\": \"<string>\",\n        \"essential\": true,\n        \"readonlyRootFilesystem\": false,\n        \"user\": \"<string>\",\n        \"originProtection\": false,\n        \"originProtectionConfig\": {\n          \"enabled\": true,\n          \"ipAllow\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ],\n    \"architecture\": \"<string>\",\n    \"taskCpu\": \"<integer>\",\n    \"taskMemory\": \"<integer>\",\n    \"minCapacity\": \"<integer>\",\n    \"maxCapacity\": \"<integer>\",\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"enableCrossEnvNetworking\": false,\n    \"enableCrossAppNetworking\": false\n  },\n  \"imageSuffix\": \"<string>\",\n  \"spotConfiguration\": {\n    \"strategy\": \"spot-only\"\n  },\n  \"environment\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"mergeEnvironment\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1825c858-12f3-4e1f-9ee7-59a7e9784b4d",
+              "name": "The environment created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"envName\": \"<string>\",\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\",\n  \"cloneConfigurationFrom\": \"<string>\",\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"imageSuffix\": \"<string>\",\n  \"spotConfiguration\": {\n    \"strategy\": \"spot-only\"\n  },\n  \"environment\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"mergeEnvironment\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"envName\": \"production\",\n  \"status\": \"ACTIVE\",\n  \"runningCount\": 2,\n  \"desiredCount\": 2,\n  \"minCapacity\": 1,\n  \"maxCapacity\": 5,\n  \"publicIpAddress\": \"54.123.45.67\",\n  \"deploymentStatus\": \"COMPLETED\",\n  \"deploymentFailureType\": \"string\",\n  \"deploymentFailureReason\": \"string\",\n  \"taskDefinition\": {},\n  \"service\": {},\n  \"loadBalancer\": {},\n  \"securityGroup\": {},\n  \"subnet\": {},\n  \"vpc\": {},\n  \"containerNames\": [\n    \"string\",\n    \"string\"\n  ],\n  \"volumes\": [\n    {\n      \"createdAt\": \"createdAt\",\n      \"accessPointArn\": \"accessPointArn\",\n      \"volumeName\": \"volumeName\",\n      \"accessPointId\": \"accessPointId\",\n      \"volumeId\": \"volumeId\",\n      \"description\": \"description\",\n      \"rootDirectory\": \"rootDirectory\",\n      \"environmentEfsId\": \"environmentEfsId\"\n    },\n    {\n      \"createdAt\": \"createdAt\",\n      \"accessPointArn\": \"accessPointArn\",\n      \"volumeName\": \"volumeName\",\n      \"accessPointId\": \"accessPointId\",\n      \"volumeId\": \"volumeId\",\n      \"description\": \"description\",\n      \"rootDirectory\": \"rootDirectory\",\n      \"environmentEfsId\": \"environmentEfsId\"\n    }\n  ],\n  \"cron\": [\n    {\n      \"targetContainerName\": \"targetContainerName\",\n      \"scheduleExpression\": \"scheduleExpression\",\n      \"isEnabled\": true,\n      \"name\": \"name\",\n      \"description\": \"description\",\n      \"command\": [\n        \"command\",\n        \"command\"\n      ]\n    },\n    {\n      \"targetContainerName\": \"targetContainerName\",\n      \"scheduleExpression\": \"scheduleExpression\",\n      \"isEnabled\": true,\n      \"name\": \"name\",\n      \"description\": \"description\",\n      \"command\": [\n        \"command\",\n        \"command\"\n      ]\n    }\n  ],\n  \"albRouting\": {},\n  \"createdAt\": \"1972-03-02T06:20:25.121Z\",\n  \"updatedAt\": \"1962-02-25T01:26:50.371Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff3e37b1-7c00-419b-aab5-af80769dee7c",
+              "name": "The environment data is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"envName\": \"<string>\",\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\",\n  \"cloneConfigurationFrom\": \"<string>\",\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"imageSuffix\": \"<string>\",\n  \"spotConfiguration\": {\n    \"strategy\": \"spot-only\"\n  },\n  \"environment\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"mergeEnvironment\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f5d234b8-3d30-4482-80d8-5abeeb766d24",
+              "name": "Environment limit reached - application has reached the maximum number of allowed environments",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"envName\": \"<string>\",\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\",\n  \"cloneConfigurationFrom\": \"<string>\",\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"imageSuffix\": \"<string>\",\n  \"spotConfiguration\": {\n    \"strategy\": \"spot-only\"\n  },\n  \"environment\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"mergeEnvironment\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Environment limit reached\",\n  \"error\": \"Application my-app has reached the maximum number of allowed environments (5/5). Please contact support to increase your limit.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c9b97aa-0989-40a2-995c-35c439dbae81",
+          "name": "Delete an environment",
+          "request": {
+            "name": "Delete an environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "84904081-1769-43af-879c-21f7173fc7a4",
+              "name": "The environment deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7af99bdf-5cff-4218-8741-8ad90f548789",
+              "name": "The environment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "58bbfb30-29cc-4251-baa2-eae5e3db5598",
+          "name": "Get a single environment",
+          "request": {
+            "name": "Get a single environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "594554de-08ea-4ea3-8077-91c3102caeab",
+              "name": "The environment with runtime details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"envName\": \"production\",\n  \"status\": \"ACTIVE\",\n  \"runningCount\": 2,\n  \"desiredCount\": 2,\n  \"minCapacity\": 1,\n  \"maxCapacity\": 5,\n  \"publicIpAddress\": \"54.123.45.67\",\n  \"deploymentStatus\": \"COMPLETED\",\n  \"deploymentFailureType\": \"string\",\n  \"deploymentFailureReason\": \"string\",\n  \"taskDefinition\": {},\n  \"service\": {},\n  \"loadBalancer\": {},\n  \"securityGroup\": {},\n  \"subnet\": {},\n  \"vpc\": {},\n  \"containerNames\": [\n    \"string\",\n    \"string\"\n  ],\n  \"volumes\": [\n    {\n      \"createdAt\": \"createdAt\",\n      \"accessPointArn\": \"accessPointArn\",\n      \"volumeName\": \"volumeName\",\n      \"accessPointId\": \"accessPointId\",\n      \"volumeId\": \"volumeId\",\n      \"description\": \"description\",\n      \"rootDirectory\": \"rootDirectory\",\n      \"environmentEfsId\": \"environmentEfsId\"\n    },\n    {\n      \"createdAt\": \"createdAt\",\n      \"accessPointArn\": \"accessPointArn\",\n      \"volumeName\": \"volumeName\",\n      \"accessPointId\": \"accessPointId\",\n      \"volumeId\": \"volumeId\",\n      \"description\": \"description\",\n      \"rootDirectory\": \"rootDirectory\",\n      \"environmentEfsId\": \"environmentEfsId\"\n    }\n  ],\n  \"cron\": [\n    {\n      \"targetContainerName\": \"targetContainerName\",\n      \"scheduleExpression\": \"scheduleExpression\",\n      \"isEnabled\": true,\n      \"name\": \"name\",\n      \"description\": \"description\",\n      \"command\": [\n        \"command\",\n        \"command\"\n      ]\n    },\n    {\n      \"targetContainerName\": \"targetContainerName\",\n      \"scheduleExpression\": \"scheduleExpression\",\n      \"isEnabled\": true,\n      \"name\": \"name\",\n      \"description\": \"description\",\n      \"command\": [\n        \"command\",\n        \"command\"\n      ]\n    }\n  ],\n  \"albRouting\": {},\n  \"createdAt\": \"2022-03-02T12:25:38.009Z\",\n  \"updatedAt\": \"1984-10-04T15:00:24.447Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "343d5b1a-5fc9-462d-b89a-053227fbafad",
+              "name": "The environment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f7c8ba08-d254-446e-ab63-afda14ae7001",
+          "name": "Update Environment Compose Definition",
+          "request": {
+            "name": "Update Environment Compose Definition",
+            "description": {
+              "content": "Replaces the entire task definition for the environment based on the provided multi-container compose definition. This will create a new task definition revision and update the ECS service, triggering a redeployment. Optionally accepts minCapacity and maxCapacity at the root level for convenience.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"composeDefinition\": {\n    \"containers\": [\n      {\n        \"imageReference\": {\n          \"identifier\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"cpu\": \"<integer>\",\n        \"memory\": \"<integer>\",\n        \"memoryReservation\": \"<integer>\",\n        \"exposedPorts\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"mountPoints\": [\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          },\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          }\n        ],\n        \"environment\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ],\n        \"secrets\": [\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          }\n        ],\n        \"healthCheck\": {\n          \"command\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"interval\": 30,\n          \"timeout\": 5,\n          \"retries\": 3,\n          \"startPeriod\": \"<integer>\"\n        },\n        \"dependsOn\": [\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          },\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          }\n        ],\n        \"command\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"entryPoint\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"workingDirectory\": \"<string>\",\n        \"essential\": true,\n        \"readonlyRootFilesystem\": false,\n        \"user\": \"<string>\",\n        \"originProtection\": false,\n        \"originProtectionConfig\": {\n          \"enabled\": true,\n          \"ipAllow\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"imageReference\": {\n          \"identifier\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"cpu\": \"<integer>\",\n        \"memory\": \"<integer>\",\n        \"memoryReservation\": \"<integer>\",\n        \"exposedPorts\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"mountPoints\": [\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          },\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          }\n        ],\n        \"environment\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ],\n        \"secrets\": [\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          }\n        ],\n        \"healthCheck\": {\n          \"command\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"interval\": 30,\n          \"timeout\": 5,\n          \"retries\": 3,\n          \"startPeriod\": \"<integer>\"\n        },\n        \"dependsOn\": [\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          },\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          }\n        ],\n        \"command\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"entryPoint\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"workingDirectory\": \"<string>\",\n        \"essential\": true,\n        \"readonlyRootFilesystem\": false,\n        \"user\": \"<string>\",\n        \"originProtection\": false,\n        \"originProtectionConfig\": {\n          \"enabled\": true,\n          \"ipAllow\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ],\n    \"architecture\": \"<string>\",\n    \"taskCpu\": \"<integer>\",\n    \"taskMemory\": \"<integer>\",\n    \"minCapacity\": \"<integer>\",\n    \"maxCapacity\": \"<integer>\",\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"enableCrossEnvNetworking\": false,\n    \"enableCrossAppNetworking\": false\n  },\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9a295a55-b739-454b-ba4f-1145b6b54ce6",
+              "name": "Request accepted, compose definition update is processing.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "db1c7be3-5a3c-4f7d-a431-eb15ea672604",
+              "name": "Invalid compose definition or validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6eec28c5-4ce5-4d9e-9124-d6ef24c329a1",
+              "name": "Application or environment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da902487-1107-4336-ad2d-2fced3bb82e1",
+          "name": "Update the state of an environment",
+          "request": {
+            "name": "Update the state of an environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "state"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"action\": \"<string>\",\n  \"imageTag\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8ced7603-9622-4d2d-ba95-ddd016e54cff",
+              "name": "The environment state updated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "state"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\",\n  \"imageTag\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "80db9f3f-9125-4d24-813a-3a915827166e",
+              "name": "The environment data is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "state"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"action\": \"<string>\",\n  \"imageTag\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d32fd092-d4fc-4fba-b37d-365ee25251a0",
+          "name": "Get the logs for an environment",
+          "request": {
+            "name": "Get the logs for an environment",
+            "description": {
+              "content": "Retrieves logs from CloudWatch for the specified environment with optional filtering by time range, container, and pattern matching. Supports pagination via nextToken.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "logs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<string>",
+                  "description": "Start time for log retrieval (ISO 8601 format or Unix timestamp)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<string>",
+                  "description": "End time for log retrieval (ISO 8601 format or Unix timestamp)"
+                },
+                {
+                  "disabled": false,
+                  "key": "containerName",
+                  "value": "<string>",
+                  "description": "Filter logs by specific container name"
+                },
+                {
+                  "disabled": false,
+                  "key": "filterPattern",
+                  "value": "<string>",
+                  "description": "CloudWatch Logs filter pattern for searching log content"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of log entries to return per page"
+                },
+                {
+                  "disabled": false,
+                  "key": "nextToken",
+                  "value": "<string>",
+                  "description": "Pagination token from previous response for retrieving next page of results"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c4405e50-c655-41af-a0e7-0a095b9cd1dc",
+              "name": "The logs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "containerName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filterPattern",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "nextToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"logEvents\": [\n    {\n      \"message\": \"message\",\n      \"timestamp\": 0\n    },\n    {\n      \"message\": \"message\",\n      \"timestamp\": 0\n    }\n  ],\n  \"nextToken\": \"nextToken\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f8b2968-7ad0-4903-81ed-aae56cb0af48",
+              "name": "The environment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "containerName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filterPattern",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "nextToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "784d6376-07d5-4163-8725-0e12b48d2934",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "logs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "containerName",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "filterPattern",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "nextToken",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "502241bb-d303-478e-ba57-045396ef5f31",
+          "name": "Get the metrics for an environment",
+          "request": {
+            "name": "Get the metrics for an environment",
+            "description": {
+              "content": "Retrieves CloudWatch metrics for the specified environment with optional filtering by time range, container, and metric configuration.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "metrics"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "startTime",
+                  "value": "<integer>",
+                  "description": "Start time for metrics retrieval (Unix timestamp in milliseconds)"
+                },
+                {
+                  "disabled": false,
+                  "key": "endTime",
+                  "value": "<integer>",
+                  "description": "End time for metrics retrieval (Unix timestamp in milliseconds)"
+                },
+                {
+                  "disabled": false,
+                  "key": "period",
+                  "value": "<integer>",
+                  "description": "Period in seconds for metric aggregation (e.g., 60 for 1 minute, 300 for 5 minutes)"
+                },
+                {
+                  "disabled": false,
+                  "key": "statistics",
+                  "value": "<string>",
+                  "description": "Comma-separated list of CloudWatch statistics (e.g., Average, Maximum, Minimum, Sum, SampleCount)"
+                },
+                {
+                  "disabled": false,
+                  "key": "containerName",
+                  "value": "<string>",
+                  "description": "Filter metrics by specific container name"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5ad0ea2c-f476-478f-b9f7-2a0e4afbad6e",
+              "name": "The metrics",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "statistics",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "containerName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a4079f5d-7300-4139-bdb9-632b1bc9f789",
+              "name": "The environment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "statistics",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "containerName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea97d2ac-e229-4c7d-8011-0d8ccc2db98c",
+              "name": "Validation error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "metrics"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "startTime",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "endTime",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "period",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "statistics",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "containerName",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2bafd777-029b-49ae-b838-a5cf23ed97b5",
+          "name": "List the sync operations for an environment",
+          "request": {
+            "name": "List the sync operations for an environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "sync",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) The sync type"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0cfa731b-62c5-4dce-abb9-8ae7babdab1f",
+              "name": "The sync operations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "sync",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) The sync type"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"createdAt\": \"createdAt\",\n    \"completedAt\": \"completedAt\",\n    \"targetEnvironment\": \"targetEnvironment\",\n    \"syncType\": \"syncType\",\n    \"sourceEnvironment\": \"sourceEnvironment\",\n    \"syncId\": \"syncId\",\n    \"status\": \"status\"\n  },\n  {\n    \"createdAt\": \"createdAt\",\n    \"completedAt\": \"completedAt\",\n    \"targetEnvironment\": \"targetEnvironment\",\n    \"syncType\": \"syncType\",\n    \"sourceEnvironment\": \"sourceEnvironment\",\n    \"syncId\": \"syncId\",\n    \"status\": \"status\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eda2feb4-bf6f-4f4d-9dbc-b41fbe00913d",
+          "name": "Perform a sync operation from a source environment to the current environment",
+          "request": {
+            "name": "Perform a sync operation from a source environment to the current environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "sync",
+                ":type"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "type",
+                  "description": "(Required) The sync type"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceEnvironment\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf1eb48d-cd2c-43ff-8c93-e6a95f1464c8",
+              "name": "The sync operation details",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "sync",
+                    ":type"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "type",
+                      "description": "(Required) The sync type"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceEnvironment\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": \"createdAt\",\n  \"completedAt\": \"completedAt\",\n  \"targetEnvironment\": \"targetEnvironment\",\n  \"syncType\": \"syncType\",\n  \"sourceEnvironment\": \"sourceEnvironment\",\n  \"syncId\": \"syncId\",\n  \"status\": \"status\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4da4f045-3c01-4c78-8fbe-60ac28ad10b5",
+    "name": "QuantCDN AI Agents Environments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

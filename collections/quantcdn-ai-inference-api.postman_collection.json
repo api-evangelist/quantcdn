@@ -1,0 +1,1829 @@
+{
+  "item": [
+    {
+      "id": "23fe30c7-ccf1-494e-8866-39693f822b24",
+      "name": "AI Inference",
+      "description": {
+        "content": "Chat inference, embeddings, and image generation services",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "94f5dd64-8b0e-4bb9-ba41-748414b59094",
+          "name": "Chat inference via API Gateway (buffered responses) with multimodal support",
+          "request": {
+            "name": "Chat inference via API Gateway (buffered responses) with multimodal support",
+            "description": {
+              "content": "Sends requests to the AI API Gateway endpoint which buffers responses. Supports text, images, videos, and documents via base64 encoding.\n     *\n     * **Execution Modes:**\n     * - **Sync Mode** (default): Standard JSON response, waits for completion (200 response)\n     * - **Async Mode**: Set `async: true` for long-running tasks with polling (202 response)\n     *\n     * **Async/Durable Mode (`async: true`):**\n     * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)\n     * - Uses AWS Lambda Durable Functions for long-running inference\n     * - Supports client-executed tools via `waiting_callback` state\n     * - Poll `/ai/chat/executions/{requestId}` for status\n     * - Submit client tool results via `/ai/chat/callback`\n     * - Ideal for complex prompts, large contexts, or client-side tools\n     *\n     * **Multimodal Support:**\n     * - **Text**: Simple string content\n     * - **Images**: Base64-encoded PNG, JPEG, GIF, WebP (up to 25MB)\n     * - **Videos**: Base64-encoded MP4, MOV, WebM, etc. (up to 25MB)\n     * - **Documents**: Base64-encoded PDF, DOCX, CSV, etc. (up to 25MB)\n     *\n     * **Supported Models (Multimodal):**\n     * - **Claude 4.5 Series**: Sonnet 4.5, Haiku 4.5, Opus 4.5 (images, up to 20 per request)\n     * - **Claude 3.5 Series**: Sonnet v1/v2 (images, up to 20 per request)\n     * - **Amazon Nova**: Lite, Pro, Micro (images, videos, documents)\n     *\n     * **Usage Tips:**\n     * - Use base64 encoding for images/videos < 5-10MB\n     * - Place media before text prompts for best results\n     * - Label multiple media files (e.g., 'Image 1:', 'Image 2:')\n     * - Maximum 25MB total payload size\n     *\n     * **Response Patterns:**\n     * - **Text-only**: Returns simple text response when no tools requested\n     * - **Single tool**: Returns `toolUse` object when AI requests one tool\n     * - **Multiple tools**: Returns `toolUse` array when AI requests multiple tools\n     * - **Auto-execute sync**: Automatically executes tool and returns final text response\n     * - **Auto-execute async**: Returns toolUse with `executionId` and `status` for polling",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "chat"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"modelId\": \"<string>\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"topP\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"systemPrompt\": \"<string>\",\n  \"stopSequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"responseFormat\": {\n    \"type\": \"<string>\",\n    \"jsonSchema\": \"<object>\"\n  },\n  \"toolConfig\": {\n    \"tools\": [\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"autoExecute\": false,\n    \"allowedTools\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"sessionId\": \"<uuid>\",\n  \"async\": false,\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrails\": {\n    \"guardrailIdentifier\": \"<string>\",\n    \"guardrailVersion\": \"<string>\",\n    \"trace\": \"<string>\"\n  },\n  \"longContext\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ba206968-ecd5-4840-a657-ced9a4c3b570",
+              "name": "Chat inference completed (buffered response, sync mode)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"modelId\": \"amazon.nova-lite-v1:0\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"topP\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"systemPrompt\": \"<string>\",\n  \"stopSequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"responseFormat\": {\n    \"type\": \"<string>\",\n    \"jsonSchema\": \"<object>\"\n  },\n  \"toolConfig\": {\n    \"tools\": [\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"autoExecute\": false,\n    \"allowedTools\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"sessionId\": \"<uuid>\",\n  \"async\": false,\n  \"allowedTools\": [\n    \"get_weather\",\n    \"generate_image\"\n  ],\n  \"guardrails\": {\n    \"guardrailIdentifier\": \"<string>\",\n    \"guardrailVersion\": \"<string>\",\n    \"trace\": \"<string>\"\n  },\n  \"longContext\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"response\": {\n    \"role\": \"assistant\",\n    \"content\": \"The capital of Australia is Canberra.\"\n  },\n  \"model\": \"amazon.nova-lite-v1:0\",\n  \"requestId\": \"req-abc123\",\n  \"finishReason\": \"stop\",\n  \"usage\": {\n    \"inputTokens\": 12,\n    \"outputTokens\": 8,\n    \"totalTokens\": 20,\n    \"costCents\": 0.18\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "62356a4e-230b-4722-ac63-12554f0c7281",
+              "name": "Async execution started (when `async: true` in request)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"modelId\": \"amazon.nova-lite-v1:0\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"topP\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"systemPrompt\": \"<string>\",\n  \"stopSequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"responseFormat\": {\n    \"type\": \"<string>\",\n    \"jsonSchema\": \"<object>\"\n  },\n  \"toolConfig\": {\n    \"tools\": [\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"autoExecute\": false,\n    \"allowedTools\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"sessionId\": \"<uuid>\",\n  \"async\": false,\n  \"allowedTools\": [\n    \"get_weather\",\n    \"generate_image\"\n  ],\n  \"guardrails\": {\n    \"guardrailIdentifier\": \"<string>\",\n    \"guardrailVersion\": \"<string>\",\n    \"trace\": \"<string>\"\n  },\n  \"longContext\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"XkdVWiEfSwMEPrw=\",\n  \"pollUrl\": \"/ai/chat/executions/XkdVWiEfSwMEPrw%3D\",\n  \"sessionId\": \"session-1769056496430\",\n  \"message\": \"Execution started. Poll the status endpoint for updates.\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "992f630c-d054-4a8d-941e-f29bf4353f29",
+              "name": "Failed to perform chat inference",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"modelId\": \"amazon.nova-lite-v1:0\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"topP\": \"<number>\",\n  \"stream\": \"<boolean>\",\n  \"systemPrompt\": \"<string>\",\n  \"stopSequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"responseFormat\": {\n    \"type\": \"<string>\",\n    \"jsonSchema\": \"<object>\"\n  },\n  \"toolConfig\": {\n    \"tools\": [\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"autoExecute\": false,\n    \"allowedTools\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"sessionId\": \"<uuid>\",\n  \"async\": false,\n  \"allowedTools\": [\n    \"get_weather\",\n    \"generate_image\"\n  ],\n  \"guardrails\": {\n    \"guardrailIdentifier\": \"<string>\",\n    \"guardrailVersion\": \"<string>\",\n    \"trace\": \"<string>\"\n  },\n  \"longContext\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "510c014e-13c9-49a1-bfb9-5fc2beba76f1",
+          "name": "Chat inference via streaming endpoint (true HTTP streaming) with multimodal support",
+          "request": {
+            "name": "Chat inference via streaming endpoint (true HTTP streaming) with multimodal support",
+            "description": {
+              "content": "Streams responses from the AI streaming subdomain using Server-Sent Events (SSE). Tokens are streamed in real-time as they are generated.\n     *\n     * **Execution Modes:**\n     * - **Streaming Mode** (default): Real-time SSE token-by-token responses\n     * - **Async Mode**: Set `async: true` for long-running tasks with polling (202 response)\n     *\n     * **Async/Durable Mode (`async: true`):**\n     * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)\n     * - Uses AWS Lambda Durable Functions for long-running inference\n     * - Supports client-executed tools via `waiting_callback` state\n     * - Poll `/ai/chat/executions/{requestId}` for status\n     * - Submit client tool results via `/ai/chat/callback`\n     *\n     * **Multimodal Support:**\n     * - **Text**: Simple string content\n     * - **Images**: Base64-encoded PNG, JPEG, GIF, WebP (up to 25MB)\n     * - **Videos**: Base64-encoded MP4, MOV, WebM, etc. (up to 25MB)\n     * - **Documents**: Base64-encoded PDF, DOCX, CSV, etc. (up to 25MB)\n     *\n     * **Supported Models (Multimodal):**\n     * - **Claude 4.5 Series**: Sonnet 4.5, Haiku 4.5, Opus 4.5 (images, up to 20 per request)\n     * - **Claude 3.5 Series**: Sonnet v1/v2 (images, up to 20 per request)\n     * - **Amazon Nova**: Lite, Pro, Micro (images, videos, documents)\n     *\n     * **Usage Tips:**\n     * - Use base64 encoding for images/videos < 5-10MB\n     * - Place media before text prompts for best results\n     * - Label multiple media files (e.g., 'Image 1:', 'Image 2:')\n     * - Maximum 25MB total payload size\n     * - Streaming works with all content types (text, image, video, document)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "chat",
+                "stream"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "text/event-stream"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"modelId\": \"<string>\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"topP\": \"<number>\",\n  \"systemPrompt\": \"<string>\",\n  \"stopSequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"responseFormat\": {\n    \"type\": \"<string>\",\n    \"jsonSchema\": \"<object>\"\n  },\n  \"toolConfig\": {\n    \"tools\": [\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"autoExecute\": false,\n    \"allowedTools\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"sessionId\": \"<uuid>\",\n  \"async\": false,\n  \"allowedTools\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"guardrails\": {\n    \"guardrailIdentifier\": \"<string>\",\n    \"guardrailVersion\": \"<string>\",\n    \"trace\": \"<string>\"\n  },\n  \"longContext\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "53d32001-8d5c-4a6d-a48f-748870d4ba3a",
+              "name": "Streaming response (text/event-stream, sync mode)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "text/event-stream"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"modelId\": \"amazon.nova-lite-v1:0\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"topP\": \"<number>\",\n  \"systemPrompt\": \"<string>\",\n  \"stopSequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"responseFormat\": {\n    \"type\": \"<string>\",\n    \"jsonSchema\": \"<object>\"\n  },\n  \"toolConfig\": {\n    \"tools\": [\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"autoExecute\": false,\n    \"allowedTools\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"sessionId\": \"<uuid>\",\n  \"async\": false,\n  \"allowedTools\": [\n    \"get_weather\",\n    \"generate_image\"\n  ],\n  \"guardrails\": {\n    \"guardrailIdentifier\": \"<string>\",\n    \"guardrailVersion\": \"<string>\",\n    \"trace\": \"<string>\"\n  },\n  \"longContext\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/event-stream"
+                }
+              ],
+              "body": "id: chunk-0\nevent: start\ndata: {\"requestId\":\"abc123\",\"model\":\"amazon.nova-lite-v1:0\",\"streaming\":true}\n\nid: chunk-1\nevent: content\ndata: {\"delta\":\"Hello\",\"complete\":false}\n\nid: chunk-2\nevent: content\ndata: {\"delta\":\" there!\",\"complete\":false}\n\nid: chunk-3\nevent: done\ndata: {\"complete\":true,\"usage\":{\"inputTokens\":8,\"outputTokens\":15,\"totalTokens\":23}}",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e03476f9-718a-49ab-b9eb-d4bea299ad58",
+              "name": "Async execution started (when `async: true` in request)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"modelId\": \"amazon.nova-lite-v1:0\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"topP\": \"<number>\",\n  \"systemPrompt\": \"<string>\",\n  \"stopSequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"responseFormat\": {\n    \"type\": \"<string>\",\n    \"jsonSchema\": \"<object>\"\n  },\n  \"toolConfig\": {\n    \"tools\": [\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"autoExecute\": false,\n    \"allowedTools\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"sessionId\": \"<uuid>\",\n  \"async\": false,\n  \"allowedTools\": [\n    \"get_weather\",\n    \"generate_image\"\n  ],\n  \"guardrails\": {\n    \"guardrailIdentifier\": \"<string>\",\n    \"guardrailVersion\": \"<string>\",\n    \"trace\": \"<string>\"\n  },\n  \"longContext\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"XkdVWiEfSwMEPrw=\",\n  \"pollUrl\": \"/ai/chat/executions/XkdVWiEfSwMEPrw%3D\",\n  \"sessionId\": \"session-1769056496430\",\n  \"message\": \"Execution started. Poll the status endpoint for updates.\",\n  \"status\": \"queued\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9a164896-d18c-454e-8dbf-e2f3f28148c9",
+              "name": "Failed to perform streaming inference",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "stream"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"messages\": [\n    {\n      \"content\": \"<string>\",\n      \"role\": \"<string>\"\n    }\n  ],\n  \"modelId\": \"amazon.nova-lite-v1:0\",\n  \"temperature\": 0.7,\n  \"maxTokens\": 4096,\n  \"topP\": \"<number>\",\n  \"systemPrompt\": \"<string>\",\n  \"stopSequences\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"responseFormat\": {\n    \"type\": \"<string>\",\n    \"jsonSchema\": \"<object>\"\n  },\n  \"toolConfig\": {\n    \"tools\": [\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      },\n      {\n        \"toolSpec\": {\n          \"name\": \"<string>\",\n          \"description\": \"<string>\",\n          \"inputSchema\": {\n            \"json\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    ],\n    \"autoExecute\": false,\n    \"allowedTools\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  },\n  \"sessionId\": \"<uuid>\",\n  \"async\": false,\n  \"allowedTools\": [\n    \"get_weather\",\n    \"generate_image\"\n  ],\n  \"guardrails\": {\n    \"guardrailIdentifier\": \"<string>\",\n    \"guardrailVersion\": \"<string>\",\n    \"trace\": \"<string>\"\n  },\n  \"longContext\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "780cd806-ee53-4294-ad06-ac59cc8c2a67",
+          "name": "Generate text embeddings for semantic search and RAG applications",
+          "request": {
+            "name": "Generate text embeddings for semantic search and RAG applications",
+            "description": {
+              "content": "Generates vector embeddings for text content using embedding models. Used for semantic search, document similarity, and RAG applications.\n     *\n     * **Features:**\n     * - Single text or batch processing (up to 100 texts)\n     * - Configurable dimensions (256, 512, 1024, 8192 for Titan v2)\n     * - Optional normalization to unit length\n     * - Usage tracking for billing\n     *\n     * **Use Cases:**\n     * - Semantic search across documents\n     * - Similarity matching for content recommendations\n     * - RAG (Retrieval-Augmented Generation) pipelines\n     * - Clustering and classification\n     *\n     * **Available Embedding Models:**\n     * - amazon.titan-embed-text-v2:0 (default, supports 256-8192 dimensions)\n     * - amazon.titan-embed-text-v1:0 (1536 dimensions fixed)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "embeddings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"input\": \"<string>\",\n  \"modelId\": \"amazon.titan-embed-text-v2:0\",\n  \"dimensions\": 1024,\n  \"normalize\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6145aea4-3c22-4fc9-92b7-8ca98e98ba0a",
+              "name": "Embeddings generated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "embeddings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"The Australian government announced new climate policy\",\n  \"modelId\": \"amazon.titan-embed-text-v2:0\",\n  \"dimensions\": 1024,\n  \"normalize\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"embeddings\": [\n    0.0215,\n    0.0008,\n    0.0312,\n    -0.0087,\n    0.0273\n  ],\n  \"model\": \"amazon.titan-embed-text-v2:0\",\n  \"dimension\": 1024,\n  \"usage\": {\n    \"inputTokens\": 8,\n    \"totalTokens\": 8\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "563084a2-1676-4677-a223-c535bbe2d1e0",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "embeddings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"The Australian government announced new climate policy\",\n  \"modelId\": \"amazon.titan-embed-text-v2:0\",\n  \"dimensions\": 1024,\n  \"normalize\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "be394ddb-5d42-4021-a2d6-0f04a36d22a0",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "embeddings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"The Australian government announced new climate policy\",\n  \"modelId\": \"amazon.titan-embed-text-v2:0\",\n  \"dimensions\": 1024,\n  \"normalize\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "47bff241-ca6f-4991-af3a-7933935894e4",
+              "name": "Failed to generate embeddings",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "embeddings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"input\": \"The Australian government announced new climate policy\",\n  \"modelId\": \"amazon.titan-embed-text-v2:0\",\n  \"dimensions\": 1024,\n  \"normalize\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df8ca1ba-fd30-42fd-8104-adbb0f719092",
+          "name": "Generate images with Amazon Nova Canvas",
+          "request": {
+            "name": "Generate images with Amazon Nova Canvas",
+            "description": {
+              "content": "Generates images using Amazon Nova Canvas image generation model.\n     *\n     * **Region Restriction:** Nova Canvas is ONLY available in:\n     * - `us-east-1` (US East, N. Virginia)\n     * - `ap-northeast-1` (Asia Pacific, Tokyo)\n     * - `eu-west-1` (Europe, Ireland)\n     * ❌ NOT available in `ap-southeast-2` (Sydney)\n     *\n     * **Supported Task Types:**\n     * - **TEXT_IMAGE**: Basic text-to-image generation\n     * - **TEXT_IMAGE with Conditioning**: Layout-guided generation using edge detection or segmentation\n     * - **COLOR_GUIDED_GENERATION**: Generate images with specific color palettes\n     * - **IMAGE_VARIATION**: Create variations of existing images\n     * - **INPAINTING**: Fill masked areas in images\n     * - **OUTPAINTING**: Extend images beyond their borders\n     * - **BACKGROUND_REMOVAL**: Remove backgrounds from images\n     * - **VIRTUAL_TRY_ON**: Try on garments/objects on people\n     *\n     * **Quality Options:**\n     * - **standard**: Faster generation, lower cost\n     * - **premium**: Higher quality, slower generation\n     *\n     * **Timeout:** Image generation can take up to 5 minutes",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "image-generation"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"taskType\": \"<string>\",\n  \"modelId\": \"amazon.nova-canvas-v1:0\",\n  \"textToImageParams\": {\n    \"text\": \"<string>\",\n    \"negativeText\": \"<string>\",\n    \"style\": \"<string>\",\n    \"conditionImage\": \"<byte>\",\n    \"controlMode\": \"CANNY_EDGE\",\n    \"controlStrength\": 0.7\n  },\n  \"colorGuidedGenerationParams\": {\n    \"colors\": [\n      \"<string>\"\n    ],\n    \"referenceImage\": \"<byte>\",\n    \"text\": \"<string>\",\n    \"negativeText\": \"<string>\"\n  },\n  \"imageVariationParams\": {\n    \"images\": [\n      \"<byte>\"\n    ],\n    \"similarityStrength\": \"<float>\",\n    \"text\": \"<string>\",\n    \"negativeText\": \"<string>\"\n  },\n  \"inPaintingParams\": {\n    \"image\": \"<byte>\",\n    \"maskImage\": \"<byte>\",\n    \"maskPrompt\": \"<string>\",\n    \"text\": \"<string>\",\n    \"negativeText\": \"<string>\"\n  },\n  \"outPaintingParams\": {\n    \"image\": \"<byte>\",\n    \"maskImage\": \"<byte>\",\n    \"maskPrompt\": \"<string>\",\n    \"outPaintingMode\": \"DEFAULT\",\n    \"text\": \"<string>\",\n    \"negativeText\": \"<string>\"\n  },\n  \"backgroundRemovalParams\": {\n    \"image\": \"<byte>\"\n  },\n  \"virtualTryOnParams\": \"<object>\",\n  \"imageGenerationConfig\": {\n    \"width\": \"<integer>\",\n    \"height\": \"<integer>\",\n    \"quality\": \"standard\",\n    \"cfgScale\": 6.5,\n    \"seed\": \"<integer>\",\n    \"numberOfImages\": 1\n  },\n  \"region\": \"us-east-1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a36d6ca7-bddc-4bf7-85a0-7e193c486029",
+              "name": "Image(s) generated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "image-generation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskType\": \"TEXT_IMAGE\",\n  \"textToImageParams\": {\n    \"text\": \"A serene mountain landscape at sunset with snow-capped peaks\",\n    \"negativeText\": \"blurry, low quality, distorted\",\n    \"style\": \"PHOTOREALISM\"\n  },\n  \"imageGenerationConfig\": {\n    \"width\": 1024,\n    \"height\": 1024,\n    \"quality\": \"premium\",\n    \"numberOfImages\": 1,\n    \"cfgScale\": 7\n  },\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"images\": [\n    \"images\",\n    \"images\"\n  ],\n  \"error\": \"error\",\n  \"maskImage\": \"maskImage\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cebd2060-225f-49de-92c2-e2315a09915c",
+              "name": "Invalid request parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "image-generation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskType\": \"TEXT_IMAGE\",\n  \"textToImageParams\": {\n    \"text\": \"A serene mountain landscape at sunset with snow-capped peaks\",\n    \"negativeText\": \"blurry, low quality, distorted\",\n    \"style\": \"PHOTOREALISM\"\n  },\n  \"imageGenerationConfig\": {\n    \"width\": 1024,\n    \"height\": 1024,\n    \"quality\": \"premium\",\n    \"numberOfImages\": 1,\n    \"cfgScale\": 7\n  },\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8e7a8441-ae9d-489c-b00c-4f1cf0c57bdf",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "image-generation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskType\": \"TEXT_IMAGE\",\n  \"textToImageParams\": {\n    \"text\": \"A serene mountain landscape at sunset with snow-capped peaks\",\n    \"negativeText\": \"blurry, low quality, distorted\",\n    \"style\": \"PHOTOREALISM\"\n  },\n  \"imageGenerationConfig\": {\n    \"width\": 1024,\n    \"height\": 1024,\n    \"quality\": \"premium\",\n    \"numberOfImages\": 1,\n    \"cfgScale\": 7\n  },\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aa5cb4a4-75d6-4828-a6fa-b7a48c477e4d",
+              "name": "Failed to generate images",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "image-generation"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"taskType\": \"TEXT_IMAGE\",\n  \"textToImageParams\": {\n    \"text\": \"A serene mountain landscape at sunset with snow-capped peaks\",\n    \"negativeText\": \"blurry, low quality, distorted\",\n    \"style\": \"PHOTOREALISM\"\n  },\n  \"imageGenerationConfig\": {\n    \"width\": 1024,\n    \"height\": 1024,\n    \"quality\": \"premium\",\n    \"numberOfImages\": 1,\n    \"cfgScale\": 7\n  },\n  \"region\": \"us-east-1\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a9ffa5f8-f24a-4c8e-850b-b318cf63b1ef",
+          "name": "Get Durable Execution Status",
+          "request": {
+            "name": "Get Durable Execution Status",
+            "description": {
+              "content": "Poll the status of an async/durable chat execution.\n     *\n     * **When to use:** After starting chat inference with `async: true`, poll this endpoint\n     * to check execution status and retrieve results when complete.\n     *\n     * **Identifier:** Accepts either:\n     * - `requestId` (recommended): The short ID returned from the async request\n     * - `executionArn`: The full AWS Lambda durable execution ARN (must be URL-encoded)\n     *\n     * **Statuses:**\n     * - `pending`: Execution is starting (retry shortly)\n     * - `running`: Execution is in progress\n     * - `waiting_callback`: Execution paused, waiting for client tool results\n     * - `complete`: Execution finished successfully\n     * - `failed`: Execution failed with error\n     *\n     * **Client Tool Callback:**\n     * When status is `waiting_callback`, submit tool results via `POST /ai/chat/callback`.\n     *\n     * **Polling Recommendations:**\n     * - Start with 1 second delay, exponential backoff up to 30 seconds\n     * - Stop polling after 15 minutes (consider failed)",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "chat",
+                "executions",
+                ":identifier"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "identifier",
+                  "description": "(Required) Either the requestId from async response, or full executionArn (URL-encoded)"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "b281749d-1cd6-4ed0-a107-dca87f1545ab",
+              "name": "Execution status retrieved",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "executions",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Either the requestId from async response, or full executionArn (URL-encoded)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"XkdVWiEfSwMEPrw=\",\n  \"executionArn\": \"arn:aws:lambda:ap-southeast-2:...\",\n  \"status\": \"complete\",\n  \"awsStatus\": \"SUCCEEDED\",\n  \"callbackId\": \"Ab9hZXi/YXJuOmF3czpsYW1iZGE...\",\n  \"pendingTools\": [\n    {\n      \"input\": {\n        \"location\": \"Sydney\"\n      },\n      \"name\": \"get_weather\",\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    },\n    {\n      \"input\": {\n        \"location\": \"Sydney\"\n      },\n      \"name\": \"get_weather\",\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    }\n  ],\n  \"result\": {\n    \"response\": {\n      \"role\": \"assistant\",\n      \"content\": \"The weather in Sydney is sunny.\"\n    },\n    \"usage\": {\n      \"costCents\": 5.962134,\n      \"inputTokens\": 0,\n      \"outputTokens\": 6,\n      \"totalTokens\": 1\n    }\n  },\n  \"error\": {\n    \"ErrorType\": \"ErrorType\",\n    \"ErrorMessage\": \"ErrorMessage\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc03d6e1-87cb-4d98-a80a-cbda64933e92",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "executions",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Either the requestId from async response, or full executionArn (URL-encoded)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8e922820-2db4-40a2-aa04-202bdfc69ff8",
+              "name": "Execution not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "executions",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Either the requestId from async response, or full executionArn (URL-encoded)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "efa0b000-0f10-4166-9148-22fd419d1c65",
+              "name": "Failed to retrieve execution status",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "executions",
+                    ":identifier"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "identifier",
+                      "description": "(Required) Either the requestId from async response, or full executionArn (URL-encoded)"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "71d64ff0-3f6d-443c-9b0b-fb36ca1120b9",
+          "name": "Submit Client Tool Results (Callback)",
+          "request": {
+            "name": "Submit Client Tool Results (Callback)",
+            "description": {
+              "content": "Submit tool execution results to resume a suspended durable execution.\n     *\n     * **When to use:** When polling the execution status returns `waiting_callback`, use this endpoint\n     * to submit the results of client-executed tools. The execution will then resume.\n     *\n     * **Flow:**\n     * 1. Start async chat with client-executed tools (`autoExecute: []` or tools not in autoExecute list)\n     * 2. Poll status until `waiting_callback`\n     * 3. Execute tools locally using `pendingTools` from status response\n     * 4. Submit results here with the `callbackId`\n     * 5. Poll status until `complete`\n     *\n     * **Important:** Each `callbackId` can only be used once. After submission, poll the execution\n     * status to see the updated state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "chat",
+                "callback"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"callbackId\": \"<string>\",\n  \"toolResults\": [\n    {\n      \"result\": \"<object>\",\n      \"toolUseId\": \"<string>\"\n    },\n    {\n      \"result\": \"<object>\",\n      \"toolUseId\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06017cc2-f449-4a41-b4f3-78d49a5d9664",
+              "name": "Callback submitted successfully, execution will resume",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callbackId\": \"Ab9hZXi/YXJuOmF3czpsYW1iZGE...\",\n  \"toolResults\": [\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    },\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"callbackId\": \"callbackId\",\n  \"success\": true,\n  \"message\": \"Callback submitted successfully\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "652426b4-5c10-4bc7-b9c8-21fd160ccc58",
+              "name": "Invalid request (missing callbackId or toolResults)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callbackId\": \"Ab9hZXi/YXJuOmF3czpsYW1iZGE...\",\n  \"toolResults\": [\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    },\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "06e39f28-3e2d-45a4-ab28-229914b4e685",
+              "name": "Access denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callbackId\": \"Ab9hZXi/YXJuOmF3czpsYW1iZGE...\",\n  \"toolResults\": [\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    },\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9e16aa8b-1f83-4932-ae63-1740fb29bf83",
+              "name": "Callback not found or already processed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callbackId\": \"Ab9hZXi/YXJuOmF3czpsYW1iZGE...\",\n  \"toolResults\": [\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    },\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "99ddb9e6-94e9-4a23-ad87-348025273829",
+              "name": "Failed to submit callback",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "chat",
+                    "callback"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"callbackId\": \"Ab9hZXi/YXJuOmF3czpsYW1iZGE...\",\n  \"toolResults\": [\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    },\n    {\n      \"result\": {\n        \"temperature\": \"24C\",\n        \"conditions\": \"Sunny\"\n      },\n      \"toolUseId\": \"toolu_bdrk_012KTC8NCG...\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "b1ff5242-0327-444a-a135-b4ad2b0bdfc7",
+    "name": "QuantCDN AI Agents AI Inference API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

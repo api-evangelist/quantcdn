@@ -1,0 +1,768 @@
+{
+  "item": [
+    {
+      "id": "d96bfc6f-9a91-49b6-a7a8-872f1c4e7f7e",
+      "name": "Compose",
+      "description": {
+        "content": "Docker compose configuration management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a20b7cda-0c77-4d42-93c8-d946b47a6037",
+          "name": "Get the compose file for an environment",
+          "request": {
+            "name": "Get the compose file for an environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "compose"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f8b8e8e0-40c3-4f54-9b60-3f203d5a3b57",
+              "name": "The compose file",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "compose"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"spotConfiguration\": {\n    \"strategy\": \"spot-only\"\n  },\n  \"taskMemory\": 2,\n  \"maxCapacity\": 7,\n  \"containers\": [\n    {\n      \"originProtectionConfig\": {\n        \"ipAllow\": [\n          \"ipAllow\",\n          \"ipAllow\"\n        ],\n        \"enabled\": true\n      },\n      \"memory\": 6,\n      \"dependsOn\": [\n        {\n          \"condition\": \"START\",\n          \"containerName\": \"containerName\"\n        },\n        {\n          \"condition\": \"START\",\n          \"containerName\": \"containerName\"\n        }\n      ],\n      \"workingDirectory\": \"workingDirectory\",\n      \"exposedPorts\": [\n        5,\n        5\n      ],\n      \"cpu\": 0,\n      \"imageReference\": {\n        \"identifier\": \"identifier\",\n        \"type\": \"internal\"\n      },\n      \"secrets\": [\n        {\n          \"name\": \"name\",\n          \"valueFrom\": \"valueFrom\"\n        },\n        {\n          \"name\": \"name\",\n          \"valueFrom\": \"valueFrom\"\n        }\n      ],\n      \"memoryReservation\": 1,\n      \"command\": [\n        \"command\",\n        \"command\"\n      ],\n      \"environment\": [\n        {\n          \"name\": \"name\",\n          \"value\": \"value\"\n        },\n        {\n          \"name\": \"name\",\n          \"value\": \"value\"\n        }\n      ],\n      \"readonlyRootFilesystem\": false,\n      \"originProtection\": false,\n      \"healthCheck\": {\n        \"retries\": 7,\n        \"startPeriod\": 279,\n        \"interval\": 171,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"timeout\": 15\n      },\n      \"name\": \"name\",\n      \"mountPoints\": [\n        {\n          \"readOnly\": false,\n          \"containerPath\": \"containerPath\",\n          \"sourceVolume\": \"sourceVolume\"\n        },\n        {\n          \"readOnly\": false,\n          \"containerPath\": \"containerPath\",\n          \"sourceVolume\": \"sourceVolume\"\n        }\n      ],\n      \"entryPoint\": [\n        \"entryPoint\",\n        \"entryPoint\"\n      ],\n      \"user\": \"user\",\n      \"essential\": true\n    },\n    {\n      \"originProtectionConfig\": {\n        \"ipAllow\": [\n          \"ipAllow\",\n          \"ipAllow\"\n        ],\n        \"enabled\": true\n      },\n      \"memory\": 6,\n      \"dependsOn\": [\n        {\n          \"condition\": \"START\",\n          \"containerName\": \"containerName\"\n        },\n        {\n          \"condition\": \"START\",\n          \"containerName\": \"containerName\"\n        }\n      ],\n      \"workingDirectory\": \"workingDirectory\",\n      \"exposedPorts\": [\n        5,\n        5\n      ],\n      \"cpu\": 0,\n      \"imageReference\": {\n        \"identifier\": \"identifier\",\n        \"type\": \"internal\"\n      },\n      \"secrets\": [\n        {\n          \"name\": \"name\",\n          \"valueFrom\": \"valueFrom\"\n        },\n        {\n          \"name\": \"name\",\n          \"valueFrom\": \"valueFrom\"\n        }\n      ],\n      \"memoryReservation\": 1,\n      \"command\": [\n        \"command\",\n        \"command\"\n      ],\n      \"environment\": [\n        {\n          \"name\": \"name\",\n          \"value\": \"value\"\n        },\n        {\n          \"name\": \"name\",\n          \"value\": \"value\"\n        }\n      ],\n      \"readonlyRootFilesystem\": false,\n      \"originProtection\": false,\n      \"healthCheck\": {\n        \"retries\": 7,\n        \"startPeriod\": 279,\n        \"interval\": 171,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"timeout\": 15\n      },\n      \"name\": \"name\",\n      \"mountPoints\": [\n        {\n          \"readOnly\": false,\n          \"containerPath\": \"containerPath\",\n          \"sourceVolume\": \"sourceVolume\"\n        },\n        {\n          \"readOnly\": false,\n          \"containerPath\": \"containerPath\",\n          \"sourceVolume\": \"sourceVolume\"\n        }\n      ],\n      \"entryPoint\": [\n        \"entryPoint\",\n        \"entryPoint\"\n      ],\n      \"user\": \"user\",\n      \"essential\": true\n    }\n  ],\n  \"minCapacity\": 4,\n  \"taskCpu\": 3,\n  \"enableCrossAppNetworking\": false,\n  \"architecture\": \"architecture\",\n  \"enableCrossEnvNetworking\": false\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2d58c8c4-b49c-4a70-9dc0-7feb9e1a9ece",
+              "name": "The compose file not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "compose"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6c6d712f-818e-48ae-811c-fa64a6876804",
+          "name": "Partially Update Environment Compose Definition",
+          "request": {
+            "name": "Partially Update Environment Compose Definition",
+            "description": {
+              "content": "Partially updates top-level fields of the environment's compose definition, such as architecture, task-level CPU/Memory, or min/max scaling capacity. Only fields included in the request body are modified. The 'containers' array, if provided, REPLACES the existing containers array; if omitted, the existing containers are NOT modified by this PATCH operation. (For modifying individual containers, use PATCH /containers/{containerName}). This triggers a validation, registers a new task definition, and updates the service.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "compose"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"architecture\": \"<string>\",\n  \"taskCpu\": \"<string>\",\n  \"taskMemory\": \"<string>\",\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\",\n  \"containers\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"spotConfiguration\": {\n    \"strategy\": \"<string>\"\n  },\n  \"enableCrossEnvNetworking\": \"<boolean>\",\n  \"enableCrossAppNetworking\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "100e2e7c-98f1-4b76-b7ee-88dea1e5ec95",
+              "name": "Request accepted, compose definition partial update is processing. Returns the full updated compose definition.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "compose"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"architecture\": \"<string>\",\n  \"taskCpu\": \"<string>\",\n  \"taskMemory\": \"<string>\",\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\",\n  \"containers\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"spotConfiguration\": {\n    \"strategy\": \"<string>\"\n  },\n  \"enableCrossEnvNetworking\": \"<boolean>\",\n  \"enableCrossAppNetworking\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"architecture\": \"ARM64\",\n  \"taskCpu\": \"512\",\n  \"taskMemory\": \"2048\",\n  \"minCapacity\": 1,\n  \"maxCapacity\": 1,\n  \"spotConfiguration\": {\n    \"tolerateDowntime\": true,\n    \"strategy\": \"off\"\n  },\n  \"enableCrossEnvNetworking\": true,\n  \"enableCrossAppNetworking\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6cd4771b-620e-439e-9e65-380dc190d379",
+              "name": "Invalid compose definition or validation failed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "compose"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"architecture\": \"<string>\",\n  \"taskCpu\": \"<string>\",\n  \"taskMemory\": \"<string>\",\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\",\n  \"containers\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"spotConfiguration\": {\n    \"strategy\": \"<string>\"\n  },\n  \"enableCrossEnvNetworking\": \"<boolean>\",\n  \"enableCrossAppNetworking\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errors\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c60c4b16-e09a-4e4f-8f6d-1cf205cfced1",
+              "name": "Application or environment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "compose"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"architecture\": \"<string>\",\n  \"taskCpu\": \"<string>\",\n  \"taskMemory\": \"<string>\",\n  \"minCapacity\": \"<integer>\",\n  \"maxCapacity\": \"<integer>\",\n  \"containers\": [\n    \"<object>\",\n    \"<object>\"\n  ],\n  \"spotConfiguration\": {\n    \"strategy\": \"<string>\"\n  },\n  \"enableCrossEnvNetworking\": \"<boolean>\",\n  \"enableCrossAppNetworking\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "297ba643-124c-4d4d-9c81-72247eeae923",
+          "name": "Validate a compose file",
+          "request": {
+            "name": "Validate a compose file",
+            "description": {
+              "content": "Accepts a docker-compose.yml file content, translates it into the internal compose definition format, and validates it. Quant Cloud provides comprehensive support for standard Docker Compose features including commands, entrypoints, health checks, dependencies, volume mounts, resource limits, and more. For detailed documentation on supported features and examples, see: https://docs.quantcdn.io/introduction-to-quant-cloud/importing-docker-compose/. Supports image tag suffixing via the imageSuffix query parameter or by sending a JSON wrapper with yamlContent and imageSuffix fields. When provided, internal image tags are transformed to {containerName}-{suffix} format (e.g., 'nginx-feature-xyz').",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "compose",
+                "validate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "imageSuffix",
+                  "value": "<string>",
+                  "description": "Optional. Image tag suffix to apply during translation. Transforms internal image tags to consistent '{containerName}-{suffix}' format (e.g., 'nginx-pr-456'). External images are left unchanged. Useful for feature branch deployments."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"compose\": \"<string>\",\n  \"imageSuffix\": \"<string>\",\n  \"application\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "00cb7ec1-e62b-4434-9a2d-d26732b20f80",
+              "name": "Validation successful. Body contains the translated compose definition and any warnings.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "compose",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "imageSuffix",
+                      "value": "pr-456"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compose\": \"<string>\",\n  \"imageSuffix\": \"<string>\",\n  \"application\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Docker-compose YAML translated and validated successfully.\",\n  \"translatedComposeDefinition\": {},\n  \"translationWarnings\": [\n    \"Service 'db' uses 'build' directive, image will be internal with a generated tag.\",\n    \"Volume 'cache' uses a relative path source, interpreted as logical volume name.\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da7d5fca-221d-4094-90ef-c605243f16f6",
+              "name": "Invalid YAML input or validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "compose",
+                    "validate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "imageSuffix",
+                      "value": "pr-456"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"compose\": \"<string>\",\n  \"imageSuffix\": \"<string>\",\n  \"application\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"Invalid YAML\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8178aa4b-a809-4c56-8fb4-633673c201cd",
+    "name": "QuantCDN AI Agents Compose API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

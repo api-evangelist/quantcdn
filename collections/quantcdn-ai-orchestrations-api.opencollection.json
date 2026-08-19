@@ -1,0 +1,271 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Orchestrations API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Orchestrations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Durable Orchestrations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by orchestration status"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of results"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response"
+              }
+            ]
+          },
+          "docs": "List durable orchestrations for an organization with optional filtering.\n     *\n     * **Note:** This is different from `/tools/orchestrations` which handles async tool execution\n     * polling. These durable orchestrations are for long-running batch processing loops.\n     *\n     * **Filter Options:**\n     * - `status`: Filter by orchestration status\n     * - `limit`: Max results (default 20, max 100)\n     * - `cursor`: Pagination cursor"
+        },
+        {
+          "info": {
+            "name": "Create Durable Orchestration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new durable orchestration for batch processing.\n     *\n     * **Input Sources:**\n     * - `static`: Process a fixed list of items\n     * - `task_query`: Process tasks matching a query\n     * - `generator`: AI generates items from a prompt\n     *\n     * **Stop Conditions:**\n     * - `all_complete`: Stop when all items processed\n     * - `max_iterations`: Stop after N iterations\n     * - `condition`: AI evaluates a prompt to decide\n     * - `manual`: Run until manually stopped\n     *\n    "
+        },
+        {
+          "info": {
+            "name": "Get Durable Orchestration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations/:orchestrationId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              },
+              {
+                "name": "orchestrationId",
+                "value": "orch_1704067200_abc123xyz",
+                "type": "path",
+                "description": "Orchestration identifier"
+              }
+            ]
+          },
+          "docs": "Get orchestration details including status and progress.\n     *\n     * **Progress Tracking:**\n     * - `total`: Total items to process\n     * - `completed`: Successfully processed\n     * - `failed`: Failed processing\n     * - `pending`: Awaiting processing"
+        },
+        {
+          "info": {
+            "name": "Delete Durable Orchestration",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations/:orchestrationId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              },
+              {
+                "name": "orchestrationId",
+                "value": "",
+                "type": "path",
+                "description": "Orchestration identifier"
+              }
+            ]
+          },
+          "docs": "Delete an orchestration. Can only delete orchestrations in completed, failed, or cancelled status."
+        },
+        {
+          "info": {
+            "name": "Start Durable Orchestration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations/:orchestrationId/start",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              },
+              {
+                "name": "orchestrationId",
+                "value": "",
+                "type": "path",
+                "description": "Orchestration identifier"
+              }
+            ]
+          },
+          "docs": "Start a pending orchestration. Only works on orchestrations created with `autoStart: false`."
+        },
+        {
+          "info": {
+            "name": "Pause Durable Orchestration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations/:orchestrationId/pause",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              },
+              {
+                "name": "orchestrationId",
+                "value": "",
+                "type": "path",
+                "description": "Orchestration identifier"
+              }
+            ]
+          },
+          "docs": "Pause a running orchestration. The current batch will complete, but no new batches will start. Can be resumed later."
+        },
+        {
+          "info": {
+            "name": "Resume Durable Orchestration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations/:orchestrationId/resume",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              },
+              {
+                "name": "orchestrationId",
+                "value": "",
+                "type": "path",
+                "description": "Orchestration identifier"
+              }
+            ]
+          },
+          "docs": "Resume a paused orchestration. Processing continues from where it left off."
+        },
+        {
+          "info": {
+            "name": "Cancel Durable Orchestration",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations/:orchestrationId/cancel",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              },
+              {
+                "name": "orchestrationId",
+                "value": "",
+                "type": "path",
+                "description": "Orchestration identifier"
+              }
+            ]
+          },
+          "docs": "Cancel an orchestration permanently. Cannot be resumed. Any in-progress items will complete, but no new processing starts."
+        },
+        {
+          "info": {
+            "name": "List Orchestration Batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/orchestrations/:orchestrationId/batches",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation machine name"
+              },
+              {
+                "name": "orchestrationId",
+                "value": "",
+                "type": "path",
+                "description": "Orchestration identifier"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of batches to return"
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Pagination cursor from previous response"
+              }
+            ]
+          },
+          "docs": "Get history of batches processed by this orchestration. Returns paginated batch records with status and item counts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

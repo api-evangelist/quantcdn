@@ -1,0 +1,153 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents CDN Metrics API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CDN Metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get hourly metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/v2/organizations/:organization/projects/:project/metrics/hourly",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain ID or domain name"
+              },
+              {
+                "name": "metrics[]",
+                "value": "",
+                "type": "query",
+                "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+              },
+              {
+                "name": "timestamp_format",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp format in response"
+              }
+            ]
+          },
+          "docs": "Returns the last hour of minute-by-minute metrics data"
+        },
+        {
+          "info": {
+            "name": "Get daily metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/v2/organizations/:organization/projects/:project/metrics/daily",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain ID or domain name"
+              },
+              {
+                "name": "metrics[]",
+                "value": "",
+                "type": "query",
+                "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+              },
+              {
+                "name": "timestamp_format",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp format in response"
+              }
+            ]
+          },
+          "docs": "Returns the last 30 days of daily metrics data"
+        },
+        {
+          "info": {
+            "name": "Get monthly metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/v2/organizations/:organization/projects/:project/metrics/monthly",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "domain",
+                "value": "",
+                "type": "query",
+                "description": "Filter by domain ID or domain name"
+              },
+              {
+                "name": "metrics[]",
+                "value": "",
+                "type": "query",
+                "description": "Metrics to return (default: hits, bytes). Use the /metrics/available endpoint to list all metrics by category."
+              },
+              {
+                "name": "timestamp_format",
+                "value": "",
+                "type": "query",
+                "description": "Timestamp format in response"
+              }
+            ]
+          },
+          "docs": "Returns the last 12 months of monthly metrics data"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

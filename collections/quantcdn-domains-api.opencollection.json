@@ -1,0 +1,171 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Domains API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Domains",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List all domains for a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/domains",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ]
+          },
+          "docs": "List all domains for a project"
+        },
+        {
+          "info": {
+            "name": "Add a new domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/domains",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new domain"
+        },
+        {
+          "info": {
+            "name": "Get details of a single domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/domains/:domain",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "domain",
+                "value": "0000",
+                "type": "path",
+                "description": "Domain id"
+              }
+            ]
+          },
+          "docs": "Get details of a single domain"
+        },
+        {
+          "info": {
+            "name": "Delete a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/domains/:domain",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "domain",
+                "value": "0000",
+                "type": "path",
+                "description": "Domain id"
+              }
+            ]
+          },
+          "docs": "Delete a domain"
+        },
+        {
+          "info": {
+            "name": "Renew the SSL certificate for a domain",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/domains/:domain/renew",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "domain",
+                "value": "0000",
+                "type": "path",
+                "description": "Domain id"
+              }
+            ]
+          },
+          "docs": "Renew the SSL certificate for a domain"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

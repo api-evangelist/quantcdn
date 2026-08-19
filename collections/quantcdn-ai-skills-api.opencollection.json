@@ -1,0 +1,303 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Skills API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Skills",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Organization's Skills",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter skills by tag"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "query",
+                "description": "Filter skills by collection namespace (e.g. 'superpowers')"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of skills to return"
+              }
+            ]
+          },
+          "docs": "Lists all skills available to the organization. Skills are reusable prompts,\n     * workflows, or instructions that can be assigned to agents or invoked directly.\n     *\n     * **Skill Sources:**\n     * - `inline`: Created directly via the API\n     * - `skills.sh`: Imported from skills.sh registry\n     * - `github`: Imported from a GitHub repository\n     * - `local`: Uploaded from local file"
+        },
+        {
+          "info": {
+            "name": "Create Inline Skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new skill with inline content. Use this for custom skills\n     * that are defined directly in your organization.\n     *\n     * **Trigger Conditions:**\n     * - Natural language description of when to use the skill\n     * - Used by AI to determine when to suggest or apply the skill\n     * - Example: 'When the user asks about code review or security analysis'"
+        },
+        {
+          "info": {
+            "name": "Get Skill Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/:skillId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "The skill ID"
+              }
+            ]
+          },
+          "docs": "Retrieves full details of a skill including its content, source information, and metadata."
+        },
+        {
+          "info": {
+            "name": "Update Skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/:skillId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "The skill ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing skill. For imported skills, this updates\n     * local overrides (name, tags, triggerCondition) but not the source content.\n     * Use the sync endpoint to update source content."
+        },
+        {
+          "info": {
+            "name": "Delete Skill",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/:skillId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "The skill ID"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a skill. This will also remove it from any agents that have it assigned."
+        },
+        {
+          "info": {
+            "name": "Import Skill from External Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/import",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Imports a skill from an external source like skills.sh registry or GitHub repository.\n     *\n     * **Supported Sources:**\n     * - `skills.sh`: Import from the skills.sh community registry\n     * - `github`: Import from a GitHub repository (public or private)\n     *\n     * **Version Control:**\n     * - Skills can be pinned to specific versions\n     * - Use the sync endpoint to update to latest version"
+        },
+        {
+          "info": {
+            "name": "Sync Skill from Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/:skillId/sync",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "skillId",
+                "value": "",
+                "type": "path",
+                "description": "The skill ID"
+              }
+            ]
+          },
+          "docs": "Re-fetches skill content from its original source.\n     * Only applicable to skills imported from external sources (skills.sh, github).\n     * Inline skills cannot be synced.\n     *\n     * **Version Behavior:**\n     * - If version is pinned, fetches that specific version\n     * - If no version specified, fetches latest"
+        },
+        {
+          "info": {
+            "name": "List Skill Collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/collections",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "Lists distinct namespaces (collections) for the organization, with skill counts and skill names for each collection."
+        },
+        {
+          "info": {
+            "name": "Import Skill Collection from GitHub",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/import-collection",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Discovers all skill directories under a given path in a GitHub repository\n     * and imports each as a skill within the specified namespace. Each subdirectory must contain a SKILL.md file.\n     *\n     * **Namespace:** Used for grouping and slash-command invocation (e.g., `/superpowers:brainstorming`).\n     *\n     * **Idempotent:** If a skill with the same namespace + name already exists, it is updated."
+        },
+        {
+          "info": {
+            "name": "Sync Skill Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/collections/:namespace/sync",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Collection namespace"
+              }
+            ]
+          },
+          "docs": "Re-syncs all skills in a namespace from their GitHub source. Detects new\n     * skills added to the repository and flags skills removed from the source. Does NOT auto-delete removed skills."
+        },
+        {
+          "info": {
+            "name": "Delete Skill Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/skills/collections/:namespace",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Collection namespace"
+              }
+            ]
+          },
+          "docs": "Permanently deletes all skills in the specified namespace."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,285 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Cron API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cron",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all cron jobs for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/cron",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ]
+          },
+          "docs": "Get all cron jobs for an environment"
+        },
+        {
+          "info": {
+            "name": "Create a new cron job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/cron",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new cron job"
+        },
+        {
+          "info": {
+            "name": "Get a cron job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/cron/:cron",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "cron",
+                "value": "",
+                "type": "path",
+                "description": "The cron job ID"
+              }
+            ]
+          },
+          "docs": "Get a cron job"
+        },
+        {
+          "info": {
+            "name": "Update a cron job",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/cron/:cron",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "cron",
+                "value": "",
+                "type": "path",
+                "description": "The cron job ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a cron job"
+        },
+        {
+          "info": {
+            "name": "Delete a cron job",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/cron/:cron",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "cron",
+                "value": "",
+                "type": "path",
+                "description": "The cron job ID"
+              }
+            ]
+          },
+          "docs": "Delete a cron job"
+        },
+        {
+          "info": {
+            "name": "Get all runs for a cron job",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/cron/:cron/runs",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "cron",
+                "value": "test-cron",
+                "type": "path",
+                "description": "The cron job ID"
+              }
+            ]
+          },
+          "docs": "Get all runs for a cron job"
+        },
+        {
+          "info": {
+            "name": "Get a cron run",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/cron/:cron/runs/:run",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "cron",
+                "value": "test-cron",
+                "type": "path",
+                "description": "The cron job ID"
+              },
+              {
+                "name": "run",
+                "value": "",
+                "type": "path",
+                "description": "The cron run ID"
+              }
+            ]
+          },
+          "docs": "Get a cron run"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Purge API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Purge",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Purge cache via URL or cache keys",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/purge",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path",
+                "description": "Project identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Purge cache via URL or cache keys"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

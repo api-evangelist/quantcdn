@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Compose API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Compose",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get the compose file for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/compose",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ]
+          },
+          "docs": "Get the compose file for an environment"
+        },
+        {
+          "info": {
+            "name": "Partially Update Environment Compose Definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/compose",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially updates top-level fields of the environment's compose definition, such as architecture, task-level CPU/Memory, or min/max scaling capacity. Only fields included in the request body are modified. The 'containers' array, if provided, REPLACES the existing containers array; if omitted, the existing containers are NOT modified by this PATCH operation. (For modifying individual containers, use PATCH /containers/{containerName}). This triggers a validation, registers a new task definition, a"
+        },
+        {
+          "info": {
+            "name": "Validate a compose file",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/compose/validate",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "imageSuffix",
+                "value": "pr-456",
+                "type": "query",
+                "description": "Optional. Image tag suffix to apply during translation. Transforms internal image tags to consistent '{containerName}-{suffix}' format (e.g., 'nginx-pr-456'). External images are left unchanged. Useful for feature branch deployments."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Accepts a docker-compose.yml file content, translates it into the internal compose definition format, and validates it. Quant Cloud provides comprehensive support for standard Docker Compose features including commands, entrypoints, health checks, dependencies, volume mounts, resource limits, and more. For detailed documentation on supported features and examples, see: https://docs.quantcdn.io/introduction-to-quant-cloud/importing-docker-compose/. Supports image tag suffixing via the imageSuffix"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

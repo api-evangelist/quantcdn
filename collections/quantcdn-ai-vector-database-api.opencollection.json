@@ -1,0 +1,242 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Vector Database API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Vector Database",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Vector Database Collections",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/vector-db/collections",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "Lists all vector database collections (knowledge bases) for an organization."
+        },
+        {
+          "info": {
+            "name": "Create Vector Database Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/vector-db/collections",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new vector database collection (knowledge base category) for semantic search. Collections store documents with embeddings for RAG (Retrieval Augmented Generation).\n     *\n     * **Use Cases:**\n     * - Product documentation ('docs')\n     * - Company policies ('policies')\n     * - Support knowledge base ('support')\n     * - Technical specifications ('specs')"
+        },
+        {
+          "info": {
+            "name": "Get Collection Details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/vector-db/collections/:collectionId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection ID"
+              }
+            ]
+          },
+          "docs": "Get detailed information about a specific vector database collection."
+        },
+        {
+          "info": {
+            "name": "Delete Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/vector-db/collections/:collectionId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection ID"
+              }
+            ]
+          },
+          "docs": "Deletes a vector database collection and all its documents. This action cannot be undone."
+        },
+        {
+          "info": {
+            "name": "List Documents in Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/vector-db/collections/:collectionId/documents",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "key",
+                "value": "",
+                "type": "query",
+                "description": "Filter by document key"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Lists documents in a collection with pagination. Supports filtering by document key."
+        },
+        {
+          "info": {
+            "name": "Upload Documents to Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/vector-db/collections/:collectionId/documents",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Uploads documents to a vector database collection with automatic embedding generation. Documents are chunked (if needed), embedded using the collection's embedding model, and stored.\n     *\n     * **Supported Content:**\n     * - Plain text content\n     * - URLs to fetch content from\n     * - Markdown documents\n     *\n     * **Metadata:**\n     * Each document can include metadata (title, source_url, section, tags) that is returned with search results."
+        },
+        {
+          "info": {
+            "name": "Delete Documents from Collection",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/vector-db/collections/:collectionId/documents",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "Organisation machine name"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "Collection UUID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Delete documents from a collection. Supports three deletion modes:\n     *\n     * 1. **Purge All** - Set `purgeAll: true` to delete ALL documents in the collection\n     *\n     * 2. **By Document IDs** - Provide `documentIds` array with specific document UUIDs\n     *\n     * 3. **By Metadata** - Provide `metadata` object with `field` and `values` to delete documents where the metadata field matches any of the values\n     *\n     * **Drupal Integration:**\n     * When using with Drupal AI Search, use "
+        },
+        {
+          "info": {
+            "name": "Semantic Search Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/vector-db/collections/:collectionId/query",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "collectionId",
+                "value": "",
+                "type": "path",
+                "description": "The collection ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Performs semantic search on a collection using vector similarity. Returns the most relevant documents based on meaning, not keyword matching.\n     *\n     * **Three Search Modes:**\n     *\n     * 1. **Text Query** - Provide `query` string, server generates embedding\n     *    - Query text is embedded using the collection's embedding model\n     *    - Embeddings are cached for repeated queries\n     *\n     * 2. **Vector Query** - Provide pre-computed `vector` array\n     *    - Skip embedding generat"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,207 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Slack Bots API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Slack Bots",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Slack Bots",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/slack-bots",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "Lists all Slack bots configured for the organization. Each bot is backed by an AI agent and can be connected to a Slack workspace. Agent configuration fields are flattened onto each bot object."
+        },
+        {
+          "info": {
+            "name": "Create Slack Bot",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/slack-bots",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Slack bot with inline AI agent configuration. A backing agent is created automatically — callers do not need to manage agents separately.\n     *\n     * **Setup Types:**\n     * - `quant`: Quant-managed Slack app — uses shared OAuth credentials\n     * - `byo`: Bring Your Own — customer provides their own Slack app credentials"
+        },
+        {
+          "info": {
+            "name": "Get Slack Bot",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/slack-bots/:botId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "botId",
+                "value": "",
+                "type": "path",
+                "description": "The Slack bot ID"
+              }
+            ]
+          },
+          "docs": "Retrieves details for a specific Slack bot including its configuration, connection status, and flattened agent configuration."
+        },
+        {
+          "info": {
+            "name": "Update Slack Bot",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/slack-bots/:botId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "botId",
+                "value": "",
+                "type": "path",
+                "description": "The Slack bot ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a Slack bot's configuration and/or its backing agent. Only provided fields are updated."
+        },
+        {
+          "info": {
+            "name": "Delete Slack Bot",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/slack-bots/:botId",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "botId",
+                "value": "",
+                "type": "path",
+                "description": "The Slack bot ID"
+              }
+            ]
+          },
+          "docs": "Permanently deletes a Slack bot, disconnects it from the workspace, and deletes its backing AI agent."
+        },
+        {
+          "info": {
+            "name": "Search Slack Workspace Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/slack-bots/:botId/workspace/users",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "botId",
+                "value": "",
+                "type": "path",
+                "description": "The Slack bot ID"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter users by name"
+              }
+            ]
+          },
+          "docs": "Searches users in the Slack workspace connected to this bot. Requires the bot to be connected via OAuth."
+        },
+        {
+          "info": {
+            "name": "Search Slack Workspace Channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/slack-bots/:botId/workspace/channels",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "botId",
+                "value": "",
+                "type": "path",
+                "description": "The Slack bot ID"
+              },
+              {
+                "name": "q",
+                "value": "",
+                "type": "query",
+                "description": "Search query to filter channels by name"
+              }
+            ]
+          },
+          "docs": "Searches channels in the Slack workspace connected to this bot. Requires the bot to be connected via OAuth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

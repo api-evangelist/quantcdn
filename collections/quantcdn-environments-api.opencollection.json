@@ -1,0 +1,416 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Environments API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Environments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all environments for an application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              }
+            ]
+          },
+          "docs": "Get all environments for an application"
+        },
+        {
+          "info": {
+            "name": "Create a new environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new environment"
+        },
+        {
+          "info": {
+            "name": "Get a single environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ]
+          },
+          "docs": "Get a single environment"
+        },
+        {
+          "info": {
+            "name": "Update Environment Compose Definition",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces the entire task definition for the environment based on the provided multi-container compose definition. This will create a new task definition revision and update the ECS service, triggering a redeployment. Optionally accepts minCapacity and maxCapacity at the root level for convenience."
+        },
+        {
+          "info": {
+            "name": "Delete an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ]
+          },
+          "docs": "Delete an environment"
+        },
+        {
+          "info": {
+            "name": "Update the state of an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/state",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update the state of an environment"
+        },
+        {
+          "info": {
+            "name": "Get the logs for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/logs",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Start time for log retrieval (ISO 8601 format or Unix timestamp)"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "End time for log retrieval (ISO 8601 format or Unix timestamp)"
+              },
+              {
+                "name": "containerName",
+                "value": "",
+                "type": "query",
+                "description": "Filter logs by specific container name"
+              },
+              {
+                "name": "filterPattern",
+                "value": "",
+                "type": "query",
+                "description": "CloudWatch Logs filter pattern for searching log content"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of log entries to return per page"
+              },
+              {
+                "name": "nextToken",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token from previous response for retrieving next page of results"
+              }
+            ]
+          },
+          "docs": "Retrieves logs from CloudWatch for the specified environment with optional filtering by time range, container, and pattern matching. Supports pagination via nextToken."
+        },
+        {
+          "info": {
+            "name": "Get the metrics for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/metrics",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "startTime",
+                "value": "",
+                "type": "query",
+                "description": "Start time for metrics retrieval (Unix timestamp in milliseconds)"
+              },
+              {
+                "name": "endTime",
+                "value": "",
+                "type": "query",
+                "description": "End time for metrics retrieval (Unix timestamp in milliseconds)"
+              },
+              {
+                "name": "period",
+                "value": "",
+                "type": "query",
+                "description": "Period in seconds for metric aggregation (e.g., 60 for 1 minute, 300 for 5 minutes)"
+              },
+              {
+                "name": "statistics",
+                "value": "",
+                "type": "query",
+                "description": "Comma-separated list of CloudWatch statistics (e.g., Average, Maximum, Minimum, Sum, SampleCount)"
+              },
+              {
+                "name": "containerName",
+                "value": "",
+                "type": "query",
+                "description": "Filter metrics by specific container name"
+              }
+            ]
+          },
+          "docs": "Retrieves CloudWatch metrics for the specified environment with optional filtering by time range, container, and metric configuration."
+        },
+        {
+          "info": {
+            "name": "List the sync operations for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/sync/:type",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "The sync type"
+              }
+            ]
+          },
+          "docs": "List the sync operations for an environment"
+        },
+        {
+          "info": {
+            "name": "Perform a sync operation from a source environment to the current environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/applications/:application/environments/:environment/sync/:type",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "path",
+                "description": "The sync type"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Perform a sync operation from a source environment to the current environment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

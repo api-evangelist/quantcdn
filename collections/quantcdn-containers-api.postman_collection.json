@@ -1,0 +1,484 @@
+{
+  "item": [
+    {
+      "id": "34cf4657-b606-4887-b1d2-fbf1680e3751",
+      "name": "Containers",
+      "description": {
+        "content": "Container management and operations",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "408081e1-d5eb-4391-bc77-bf2ef207a196",
+          "name": "Get the containers in an environment",
+          "request": {
+            "name": "Get the containers in an environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "containers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "80dd733d-d9ee-49b2-ba96-6f1ba61783ef",
+              "name": "The containers in the environment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "containers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f00485a4-f671-4489-b73e-c6351e24520c",
+              "name": "The environment not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "containers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4602bd22-e8bf-4424-9a79-a296fbe8431f",
+          "name": "Update a container in an environment",
+          "request": {
+            "name": "Update a container in an environment",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application",
+                "environments",
+                ":environment",
+                "containers",
+                ":container"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "environment",
+                  "description": "(Required) The environment ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "container",
+                  "description": "(Required) The container ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"imageReference\": {\n    \"identifier\": \"<string>\",\n    \"type\": \"<string>\"\n  },\n  \"name\": \"<string>\",\n  \"cpu\": \"<integer>\",\n  \"memory\": \"<integer>\",\n  \"memoryReservation\": \"<integer>\",\n  \"exposedPorts\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"mountPoints\": [\n    {\n      \"containerPath\": \"<string>\",\n      \"sourceVolume\": \"<string>\",\n      \"readOnly\": false\n    },\n    {\n      \"containerPath\": \"<string>\",\n      \"sourceVolume\": \"<string>\",\n      \"readOnly\": false\n    }\n  ],\n  \"environment\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ],\n  \"secrets\": [\n    {\n      \"name\": \"<string>\",\n      \"valueFrom\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"valueFrom\": \"<string>\"\n    }\n  ],\n  \"healthCheck\": {\n    \"command\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"interval\": 30,\n    \"timeout\": 5,\n    \"retries\": 3,\n    \"startPeriod\": \"<integer>\"\n  },\n  \"dependsOn\": [\n    {\n      \"containerName\": \"<string>\",\n      \"condition\": \"<string>\"\n    },\n    {\n      \"containerName\": \"<string>\",\n      \"condition\": \"<string>\"\n    }\n  ],\n  \"command\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"entryPoint\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"workingDirectory\": \"<string>\",\n  \"essential\": true,\n  \"readonlyRootFilesystem\": false,\n  \"user\": \"<string>\",\n  \"originProtection\": false,\n  \"originProtectionConfig\": {\n    \"enabled\": true,\n    \"ipAllow\": [\n      \"<string>\",\n      \"<string>\"\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "05b72eaf-c614-49cd-a809-13c0771ab265",
+              "name": "The updated container",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "containers",
+                    ":container"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "container",
+                      "description": "(Required) The container ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originProtectionConfig\": {\n    \"ipAllow\": [\n      \"ipAllow\",\n      \"ipAllow\"\n    ],\n    \"enabled\": true\n  },\n  \"memory\": 6,\n  \"dependsOn\": [\n    {\n      \"condition\": \"START\",\n      \"containerName\": \"containerName\"\n    },\n    {\n      \"condition\": \"START\",\n      \"containerName\": \"containerName\"\n    }\n  ],\n  \"workingDirectory\": \"workingDirectory\",\n  \"exposedPorts\": [\n    5,\n    5\n  ],\n  \"cpu\": 0,\n  \"imageReference\": {\n    \"identifier\": \"identifier\",\n    \"type\": \"internal\"\n  },\n  \"secrets\": [\n    {\n      \"name\": \"name\",\n      \"valueFrom\": \"valueFrom\"\n    },\n    {\n      \"name\": \"name\",\n      \"valueFrom\": \"valueFrom\"\n    }\n  ],\n  \"memoryReservation\": 1,\n  \"command\": [\n    \"command\",\n    \"command\"\n  ],\n  \"environment\": [\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    },\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    }\n  ],\n  \"readonlyRootFilesystem\": false,\n  \"originProtection\": false,\n  \"healthCheck\": {\n    \"retries\": 7,\n    \"startPeriod\": 279,\n    \"interval\": 171,\n    \"command\": [\n      \"command\",\n      \"command\"\n    ],\n    \"timeout\": 15\n  },\n  \"name\": \"name\",\n  \"mountPoints\": [\n    {\n      \"readOnly\": false,\n      \"containerPath\": \"containerPath\",\n      \"sourceVolume\": \"sourceVolume\"\n    },\n    {\n      \"readOnly\": false,\n      \"containerPath\": \"containerPath\",\n      \"sourceVolume\": \"sourceVolume\"\n    }\n  ],\n  \"entryPoint\": [\n    \"entryPoint\",\n    \"entryPoint\"\n  ],\n  \"user\": \"user\",\n  \"essential\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2500f0b9-0c0a-4ddd-859a-d1bff783707e",
+              "name": "The container not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application",
+                    "environments",
+                    ":environment",
+                    "containers",
+                    ":container"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "environment",
+                      "description": "(Required) The environment ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "container",
+                      "description": "(Required) The container ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"originProtectionConfig\": {\n    \"ipAllow\": [\n      \"ipAllow\",\n      \"ipAllow\"\n    ],\n    \"enabled\": true\n  },\n  \"memory\": 6,\n  \"dependsOn\": [\n    {\n      \"condition\": \"START\",\n      \"containerName\": \"containerName\"\n    },\n    {\n      \"condition\": \"START\",\n      \"containerName\": \"containerName\"\n    }\n  ],\n  \"workingDirectory\": \"workingDirectory\",\n  \"exposedPorts\": [\n    5,\n    5\n  ],\n  \"cpu\": 0,\n  \"imageReference\": {\n    \"identifier\": \"identifier\",\n    \"type\": \"internal\"\n  },\n  \"secrets\": [\n    {\n      \"name\": \"name\",\n      \"valueFrom\": \"valueFrom\"\n    },\n    {\n      \"name\": \"name\",\n      \"valueFrom\": \"valueFrom\"\n    }\n  ],\n  \"memoryReservation\": 1,\n  \"command\": [\n    \"command\",\n    \"command\"\n  ],\n  \"environment\": [\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    },\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    }\n  ],\n  \"readonlyRootFilesystem\": false,\n  \"originProtection\": false,\n  \"healthCheck\": {\n    \"retries\": 7,\n    \"startPeriod\": 279,\n    \"interval\": 171,\n    \"command\": [\n      \"command\",\n      \"command\"\n    ],\n    \"timeout\": 15\n  },\n  \"name\": \"name\",\n  \"mountPoints\": [\n    {\n      \"readOnly\": false,\n      \"containerPath\": \"containerPath\",\n      \"sourceVolume\": \"sourceVolume\"\n    },\n    {\n      \"readOnly\": false,\n      \"containerPath\": \"containerPath\",\n      \"sourceVolume\": \"sourceVolume\"\n    }\n  ],\n  \"entryPoint\": [\n    \"entryPoint\",\n    \"entryPoint\"\n  ],\n  \"user\": \"user\",\n  \"essential\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "c0b4d734-6d06-457f-887a-26254f1b4ef1",
+    "name": "QuantCDN AI Agents Containers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

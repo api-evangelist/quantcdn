@@ -1,0 +1,1628 @@
+{
+  "item": [
+    {
+      "id": "5cf0bcea-8c19-4cf3-b741-66e446b08fc1",
+      "name": "AI Task Management",
+      "description": {
+        "content": "Multi-agent task coordination and dependency management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f072ca03-4604-4ead-b1c5-3bacc63821d3",
+          "name": "List tasks with optional filtering",
+          "request": {
+            "name": "List tasks with optional filtering",
+            "description": {
+              "content": "Lists tasks for an organization with optional filtering. Filters can be combined for powerful queries.\n     *\n     * **Filter Examples:**\n     * - All tasks in a list: ?taskListId=world-1\n     * - Pending tasks in a list: ?taskListId=world-1&status=pending\n     * - Tasks assigned to an agent: ?assignedAgentId=agent-code-reviewer\n     * - Combined: ?taskListId=world-1&status=in_progress&assignedAgentId=agent-1\n     *\n     * **Reverse Dependency Lookup:**\n     * Use `dependsOn` to find tasks that depend on a specific task (waiting for it to complete):\n     * - ?dependsOn=task-123 - Returns task IDs only (lightweight)\n     * - ?dependsOn=task-123&includeDetails=true - Returns full task objects\n     * - ?dependsOn=task-123&status=pending - Pending tasks waiting for task-123\n     *\n     * **Ordering:**\n     * Tasks are returned in reverse chronological order (most recent first).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "taskListId",
+                  "value": "<string>",
+                  "description": "Filter tasks by task list ID. Task lists are implicit groupings - any string can be used."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "Filter tasks by status"
+                },
+                {
+                  "disabled": false,
+                  "key": "assignedAgentId",
+                  "value": "<string>",
+                  "description": "Filter tasks by assigned agent ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "50",
+                  "description": "Maximum number of tasks to return (default 50, max 100)"
+                },
+                {
+                  "disabled": false,
+                  "key": "dependsOn",
+                  "value": "<uuid>",
+                  "description": "Reverse lookup: find tasks that depend on this task ID. Returns tasks waiting for the specified task to complete."
+                },
+                {
+                  "disabled": false,
+                  "key": "includeDetails",
+                  "value": "false",
+                  "description": "When using dependsOn, return full task objects in addition to IDs. Default false (IDs only for lightweight responses)."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "27a56f22-8154-4a9f-af7a-fdd1ea545b7a",
+              "name": "Tasks retrieved successfully. Response format varies: standard returns {tasks, count}, with dependsOn returns {taskIds, count, dependsOn}, with dependsOn+includeDetails returns {taskIds, tasks, count, dependsOn}",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "taskListId",
+                      "value": "world-1"
+                    },
+                    {
+                      "key": "status",
+                      "value": "pending"
+                    },
+                    {
+                      "key": "assignedAgentId",
+                      "value": "agent-code-reviewer"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "dependsOn",
+                      "value": "550e8400-e29b-41d4-a716-446655440000"
+                    },
+                    {
+                      "key": "includeDetails",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dependsOn\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n  \"count\": 2,\n  \"taskIds\": [\n    \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n    \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n  ],\n  \"tasks\": [\n    {\n      \"createdAt\": 1735689600000,\n      \"assignedAgentId\": \"agent-123\",\n      \"blockedByTaskIds\": [\n        \"blockedByTaskIds\",\n        \"blockedByTaskIds\"\n      ],\n      \"blockedReason\": \"blockedReason\",\n      \"description\": \"Extract text from PDF, analyze content\",\n      \"progress\": 0.5,\n      \"taskListId\": \"world-1\",\n      \"title\": \"Process document and create summary\",\n      \"taskId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"orgId\": \"quant\",\n      \"status\": \"in_progress\",\n      \"updatedAt\": 1735689700000\n    },\n    {\n      \"createdAt\": 1735689600000,\n      \"assignedAgentId\": \"agent-123\",\n      \"blockedByTaskIds\": [\n        \"blockedByTaskIds\",\n        \"blockedByTaskIds\"\n      ],\n      \"blockedReason\": \"blockedReason\",\n      \"description\": \"Extract text from PDF, analyze content\",\n      \"progress\": 0.5,\n      \"taskListId\": \"world-1\",\n      \"title\": \"Process document and create summary\",\n      \"taskId\": \"550e8400-e29b-41d4-a716-446655440000\",\n      \"orgId\": \"quant\",\n      \"status\": \"in_progress\",\n      \"updatedAt\": 1735689700000\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e2f874d0-7fab-4f6c-aae5-c27338fff731",
+              "name": "Failed to list tasks",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "taskListId",
+                      "value": "world-1"
+                    },
+                    {
+                      "key": "status",
+                      "value": "pending"
+                    },
+                    {
+                      "key": "assignedAgentId",
+                      "value": "agent-code-reviewer"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "50"
+                    },
+                    {
+                      "key": "dependsOn",
+                      "value": "550e8400-e29b-41d4-a716-446655440000"
+                    },
+                    {
+                      "key": "includeDetails",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50c5f88e-b81a-471e-8a92-8874f79cde72",
+          "name": "Create a new task",
+          "request": {
+            "name": "Create a new task",
+            "description": {
+              "content": "Creates a new task for multi-agent coordination and workflow orchestration.\n     *\n     * **Key Features:**\n     * - **Persistent State**: Tasks survive across conversations and sessions\n     * - **Agent Assignment**: Pre-assign tasks to specific agents\n     * - **Task Lists**: Group related tasks using taskListId (implicit - no need to create lists first)\n     * - **Dependencies**: Define task dependencies for workflow orchestration\n     * - **Metadata**: Store flexible JSON metadata for task-specific data\n     * - **Progress Tracking**: Track progress from 0.0 to 1.0\n     *\n     * **Use Cases:**\n     * - Break down complex requests into manageable steps\n     * - Assign work to specialized agents\n     * - Track long-running operations\n     * - Coordinate multi-agent workflows",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "tasks"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"taskListId\": \"<string>\",\n  \"status\": \"pending\",\n  \"assignedAgentId\": \"<string>\",\n  \"createdByAgentId\": \"<string>\",\n  \"dependsOn\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"metadata\": \"<object>\",\n  \"maxRetries\": 3,\n  \"blockedReason\": \"<string>\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "10ddc958-6e9b-4df3-8def-09ce7bec62e0",
+              "name": "Task created successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Process document and create summary\",\n  \"description\": \"Extract text from PDF, analyze content, and generate executive summary\",\n  \"taskListId\": \"world-1\",\n  \"status\": \"pending\",\n  \"assignedAgentId\": \"agent-code-reviewer\",\n  \"createdByAgentId\": \"agent-coordinator\",\n  \"dependsOn\": [\n    \"550e8400-e29b-41d4-a716-446655440000\"\n  ],\n  \"metadata\": {\n    \"priority\": \"high\",\n    \"tags\": [\n      \"document-processing\"\n    ],\n    \"workflow\": \"document-pipeline\"\n  },\n  \"maxRetries\": 3,\n  \"blockedReason\": \"Waiting for approval\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"createdAt\": 0,\n  \"title\": \"title\",\n  \"taskId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n  \"orgId\": \"orgId\",\n  \"status\": \"status\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "22582f68-5d0a-4cde-a662-6f21cd02ee55",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Process document and create summary\",\n  \"description\": \"Extract text from PDF, analyze content, and generate executive summary\",\n  \"taskListId\": \"world-1\",\n  \"status\": \"pending\",\n  \"assignedAgentId\": \"agent-code-reviewer\",\n  \"createdByAgentId\": \"agent-coordinator\",\n  \"dependsOn\": [\n    \"550e8400-e29b-41d4-a716-446655440000\"\n  ],\n  \"metadata\": {\n    \"priority\": \"high\",\n    \"tags\": [\n      \"document-processing\"\n    ],\n    \"workflow\": \"document-pipeline\"\n  },\n  \"maxRetries\": 3,\n  \"blockedReason\": \"Waiting for approval\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "451aaee3-a692-48ab-b798-0e86d9d65b81",
+              "name": "Failed to create task",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Process document and create summary\",\n  \"description\": \"Extract text from PDF, analyze content, and generate executive summary\",\n  \"taskListId\": \"world-1\",\n  \"status\": \"pending\",\n  \"assignedAgentId\": \"agent-code-reviewer\",\n  \"createdByAgentId\": \"agent-coordinator\",\n  \"dependsOn\": [\n    \"550e8400-e29b-41d4-a716-446655440000\"\n  ],\n  \"metadata\": {\n    \"priority\": \"high\",\n    \"tags\": [\n      \"document-processing\"\n    ],\n    \"workflow\": \"document-pipeline\"\n  },\n  \"maxRetries\": 3,\n  \"blockedReason\": \"Waiting for approval\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cd5fbfba-ec23-40ea-89a1-d72011696a19",
+          "name": "Delete a task",
+          "request": {
+            "name": "Delete a task",
+            "description": {
+              "content": "Permanently deletes a task. This action cannot be undone.\n     *\n     * **Dependency Protection:**\n     * By default, deletion is blocked if other tasks depend on this task (TASK_HAS_DEPENDENTS error).\n     * This prevents breaking workflows.\n     *\n     * **Cascade Delete:**\n     * Use `?cascade=true` to delete the task AND all tasks that depend on it recursively.\n     * Useful for cleaning up entire dependency chains.\n     *\n     * **Examples:**\n     * - DELETE /tasks/{id} - Deletes task if no dependents, otherwise returns 409 error\n     * - DELETE /tasks/{id}?cascade=true - Deletes task and all dependent tasks",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "tasks",
+                ":taskId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "cascade",
+                  "value": "false",
+                  "description": "If true, delete task and all dependent tasks recursively"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "taskId",
+                  "description": "(Required) The task UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c964f02e-3449-4699-b4c6-e3ae3ec004c0",
+              "name": "Task deleted successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cascade",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"deleted\": true,\n  \"deletedCount\": 1,\n  \"deletedTaskIds\": [\n    \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n    \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "32cefd95-ea17-4556-b4ae-2d6fce9fc543",
+              "name": "Task not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cascade",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6b16c950-4dba-45e0-b18e-127c312f97a9",
+              "name": "Task has dependents - cannot delete without cascade",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cascade",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"dependentTaskIds\": [\n    \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n    \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\"\n  ],\n  \"error\": \"TASK_HAS_DEPENDENTS\",\n  \"message\": \"Cannot delete task with 3 dependent task(s). Use cascade=true to delete all.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "94db7c9f-0ebc-48e0-862f-a2c2ede1d100",
+              "name": "Failed to delete task",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "cascade",
+                      "value": "false"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e6afa1ab-4c63-4ed8-baae-cfd7504e7f45",
+          "name": "Get task details",
+          "request": {
+            "name": "Get task details",
+            "description": {
+              "content": "Retrieves detailed information about a specific task including status, progress, dependencies, and results.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "tasks",
+                ":taskId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "taskId",
+                  "description": "(Required) The task UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "fa9ce0a1-5025-4db2-bf6d-6de3749f8b39",
+              "name": "Task details retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"taskId\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"orgId\": \"quant\",\n  \"taskListId\": \"world-1\",\n  \"title\": \"Process document and create summary\",\n  \"description\": \"Extract text from PDF, analyze content\",\n  \"status\": \"in_progress\",\n  \"assignedAgentId\": \"agent-123\",\n  \"createdByAgentId\": \"agent-coordinator\",\n  \"dependsOn\": [\n    \"27f5e69d-7dee-59dc-40cd-f6b2e965c543\",\n    \"e928958e-fa34-40a4-3db7-730c2fbac14b\"\n  ],\n  \"metadata\": {\n    \"priority\": \"high\"\n  },\n  \"progress\": 0.5,\n  \"progressMessage\": \"Extracted text, analyzing content...\",\n  \"result\": {},\n  \"error\": \"string\",\n  \"retryCount\": 0,\n  \"maxRetries\": 3,\n  \"createdAt\": 1735689600000,\n  \"updatedAt\": 1735689700000,\n  \"startedAt\": 3657,\n  \"completedAt\": 7518,\n  \"expiresAt\": 5860,\n  \"blockedReason\": \"string\",\n  \"blockedByTaskIds\": [\n    \"318eb78f-9892-eb5f-fde9-b087eb82536a\",\n    \"1000eb70-1545-0351-3bd2-bdcaa8a66114\"\n  ],\n  \"blockedAt\": 3064\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "46f973a1-91f1-44fc-b1fc-f95f33314780",
+              "name": "Task not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "816a6083-430c-42f6-a972-e256939b733f",
+              "name": "Failed to get task",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0ee621d-3cf2-462a-9cde-14f5c8b6969e",
+          "name": "Update a task",
+          "request": {
+            "name": "Update a task",
+            "description": {
+              "content": "Updates an existing task. All fields are optional - only provided fields will be updated.\n     *\n     * **Status Transitions:**\n     * - Changing from **pending** to **in_progress** automatically sets startedAt timestamp\n     * - Changing to **completed**, **failed**, or **cancelled** automatically sets completedAt timestamp\n     * - Changing to **blocked** automatically sets blockedAt timestamp\n     * - Changing from **blocked** to **in_progress** or **pending** clears blocked fields\n     * - Completed tasks get a 30-day TTL for automatic cleanup\n     *\n     * **Progress Updates:**\n     * - Update progress (0.0 to 1.0) to track completion percentage\n     * - Update progressMessage for human-readable status updates\n     * - Set result object when task completes successfully\n     * - Set error string when task fails\n     * - Set blockedReason and blockedByTaskIds when blocking a task",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "tasks",
+                ":taskId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "taskId",
+                  "description": "(Required) The task UUID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"description\": \"<string>\",\n  \"taskListId\": \"<string>\",\n  \"status\": \"<string>\",\n  \"assignedAgentId\": \"<string>\",\n  \"dependsOn\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ],\n  \"metadata\": \"<object>\",\n  \"progress\": \"<float>\",\n  \"progressMessage\": \"<string>\",\n  \"result\": \"<object>\",\n  \"error\": \"<string>\",\n  \"retryCount\": \"<integer>\",\n  \"maxRetries\": \"<integer>\",\n  \"blockedReason\": \"<string>\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4846827d-e3d2-4ee0-ad93-e5e2ef7b6b29",
+              "name": "Task updated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated task title\",\n  \"description\": \"Updated description with more details\",\n  \"taskListId\": \"world-2\",\n  \"status\": \"in_progress\",\n  \"assignedAgentId\": \"agent-specialist\",\n  \"dependsOn\": [\n    \"550e8400-e29b-41d4-a716-446655440000\"\n  ],\n  \"metadata\": {\n    \"priority\": \"urgent\"\n  },\n  \"progress\": 0.75,\n  \"progressMessage\": \"Processing document 3 of 4...\",\n  \"result\": {\n    \"summary\": \"Document processed successfully\",\n    \"wordCount\": 1500\n  },\n  \"error\": \"Failed to connect to external API\",\n  \"retryCount\": 1,\n  \"maxRetries\": 5,\n  \"blockedReason\": \"Waiting for external approval\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"taskId\": \"046b6c7f-0b8a-43b9-b35d-6489e6daee91\",\n  \"status\": \"status\",\n  \"updatedAt\": 0\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2c273b6-2a29-48e9-b375-de04b430664d",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated task title\",\n  \"description\": \"Updated description with more details\",\n  \"taskListId\": \"world-2\",\n  \"status\": \"in_progress\",\n  \"assignedAgentId\": \"agent-specialist\",\n  \"dependsOn\": [\n    \"550e8400-e29b-41d4-a716-446655440000\"\n  ],\n  \"metadata\": {\n    \"priority\": \"urgent\"\n  },\n  \"progress\": 0.75,\n  \"progressMessage\": \"Processing document 3 of 4...\",\n  \"result\": {\n    \"summary\": \"Document processed successfully\",\n    \"wordCount\": 1500\n  },\n  \"error\": \"Failed to connect to external API\",\n  \"retryCount\": 1,\n  \"maxRetries\": 5,\n  \"blockedReason\": \"Waiting for external approval\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b7f7935a-46ce-4437-9e5d-d03a7e5c5c43",
+              "name": "Task not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated task title\",\n  \"description\": \"Updated description with more details\",\n  \"taskListId\": \"world-2\",\n  \"status\": \"in_progress\",\n  \"assignedAgentId\": \"agent-specialist\",\n  \"dependsOn\": [\n    \"550e8400-e29b-41d4-a716-446655440000\"\n  ],\n  \"metadata\": {\n    \"priority\": \"urgent\"\n  },\n  \"progress\": 0.75,\n  \"progressMessage\": \"Processing document 3 of 4...\",\n  \"result\": {\n    \"summary\": \"Document processed successfully\",\n    \"wordCount\": 1500\n  },\n  \"error\": \"Failed to connect to external API\",\n  \"retryCount\": 1,\n  \"maxRetries\": 5,\n  \"blockedReason\": \"Waiting for external approval\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ef3f11e1-546e-4e34-ad65-01a7a87b5bd3",
+              "name": "Failed to update task",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "taskId",
+                      "description": "(Required) The task UUID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Updated task title\",\n  \"description\": \"Updated description with more details\",\n  \"taskListId\": \"world-2\",\n  \"status\": \"in_progress\",\n  \"assignedAgentId\": \"agent-specialist\",\n  \"dependsOn\": [\n    \"550e8400-e29b-41d4-a716-446655440000\"\n  ],\n  \"metadata\": {\n    \"priority\": \"urgent\"\n  },\n  \"progress\": 0.75,\n  \"progressMessage\": \"Processing document 3 of 4...\",\n  \"result\": {\n    \"summary\": \"Document processed successfully\",\n    \"wordCount\": 1500\n  },\n  \"error\": \"Failed to connect to external API\",\n  \"retryCount\": 1,\n  \"maxRetries\": 5,\n  \"blockedReason\": \"Waiting for external approval\",\n  \"blockedByTaskIds\": [\n    \"<uuid>\",\n    \"<uuid>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "64b67b77-fa77-41d4-aa38-601ec01f745e",
+          "name": "Get dependency graph for a task list",
+          "request": {
+            "name": "Get dependency graph for a task list",
+            "description": {
+              "content": "Returns the full dependency graph for all tasks in a task list.\n     *\n     * **Use Cases:**\n     * - Visualize task dependencies in a UI (DAG diagram)\n     * - Analyze workflow structure and critical paths\n     * - Find starting tasks (roots) and terminal tasks (leaves)\n     * - Plan parallel execution by identifying independent task groups\n     *\n     * **Response Structure:**\n     * - `taskCount`: Total number of tasks in the list\n     * - `roots`: Task IDs with no dependencies (starting points)\n     * - `leaves`: Task IDs with no dependents (terminal tasks)\n     * - `graph`: Adjacency list with each task's dependencies and dependents",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "ai",
+                "tasks",
+                ":taskListId",
+                "dependency-graph"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "taskListId",
+                  "description": "(Required) The task list ID to get the dependency graph for"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f0181d79-5365-4169-b4ef-d482bfd379bd",
+              "name": "Dependency graph retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskListId",
+                    "dependency-graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskListId",
+                      "description": "(Required) The task list ID to get the dependency graph for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"taskListId\": \"world-1\",\n  \"taskCount\": 4,\n  \"roots\": [\n    \"aa8553b0-0b09-3bed-cb75-f4c3ad96a561\",\n    \"e33bb00e-4d18-c02d-2757-92831456d2aa\"\n  ],\n  \"leaves\": [\n    \"985f6712-edbf-6903-fed5-9844b8245cc3\",\n    \"c25450e3-4462-f24c-4c74-dd71a41cbf00\"\n  ],\n  \"graph\": {}\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cb6890a5-77ea-4083-a458-31391bdb1be5",
+              "name": "Failed to get dependency graph",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "ai",
+                    "tasks",
+                    ":taskListId",
+                    "dependency-graph"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "taskListId",
+                      "description": "(Required) The task list ID to get the dependency graph for"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "3df8bd31-3dd5-4f1f-a27b-caf39634863c",
+    "name": "QuantCDN AI Agents AI Task Management API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

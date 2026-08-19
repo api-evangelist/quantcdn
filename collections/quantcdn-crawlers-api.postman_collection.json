@@ -1,0 +1,2750 @@
+{
+  "item": [
+    {
+      "id": "3cf2690b-b75f-4f39-914b-e1c245251d2e",
+      "name": "Crawlers",
+      "description": {
+        "content": "Website crawler configuration and management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "99932ee0-11d5-4c15-8d2d-fc7fc676c11f",
+          "name": "List crawlers for the project",
+          "request": {
+            "name": "List crawlers for the project",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "crawlers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0644027f-e1de-423b-843b-74b1d1d9234c",
+              "name": "The server could not understand the request due to invalid syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f666b17c-b9e1-4ee4-962f-8e61d7ebdab0",
+              "name": "Access is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e19e0dc-1bb2-41f4-b7f7-df97b018d9ce",
+          "name": "Create a new crawler",
+          "request": {
+            "name": "Create a new crawler",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "crawlers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"name\": \"<string>\",\n  \"browser_mode\": false,\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"start_urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"headers\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"exclude\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"include\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"webhook_url\": \"<string>\",\n  \"webhook_auth_header\": \"<string>\",\n  \"webhook_extra_vars\": \"<string>\",\n  \"workers\": \"<integer>\",\n  \"delay\": \"<float>\",\n  \"depth\": \"<integer>\",\n  \"max_hits\": \"<integer>\",\n  \"max_html\": \"<integer>\",\n  \"status_ok\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"<string>\",\n      \"recursive\": \"<boolean>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"recursive\": \"<boolean>\"\n    }\n  ],\n  \"allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_agent\": \"<string>\",\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": \"<boolean>\",\n      \"timeout\": \"<integer>\",\n      \"execute_js\": \"<boolean>\"\n    },\n    \"parser\": {\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"max_errors\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9c9939f5-0fba-4122-a77e-31b348bb15f7",
+              "name": "The request has succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"test-domain.com\",\n  \"name\": \"Test Crawler\",\n  \"browser_mode\": false,\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ],\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token123\",\n    \"X-Custom-Header\": \"value\"\n  },\n  \"exclude\": [\n    \"/admin/*\",\n    \"/private/*\"\n  ],\n  \"include\": [\n    \"/blog/*\",\n    \"/products/*\"\n  ],\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"workers\": 2,\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"max_html\": 50,\n  \"status_ok\": [\n    200,\n    201\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"allowed_domains\": [\n    \"example.com\",\n    \"assets.example.com\"\n  ],\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"max_errors\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"urls_list\": \"single_url:\\\\n  - /\\\\n  - /about\\\\n  - /contact\",\n  \"allowed_domains\": [\n    \"example.com\"\n  ],\n  \"created_at\": \"2024-01-20 09:15:00+00:00\",\n  \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"status_ok\": [\n    200\n  ],\n  \"urls\": [\n    \"/\",\n    \"/about\"\n  ],\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"updated_at\": \"2024-10-11 16:45:00+00:00\",\n  \"project_id\": 789,\n  \"exclude\": [\n    \"/admin/*\"\n  ],\n  \"id\": 456,\n  \"workers\": 2,\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token\"\n  },\n  \"include\": [\n    \"/blog/*\"\n  ],\n  \"max_errors\": 100,\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"browser_mode\": false,\n  \"max_html\": 50,\n  \"deleted_at\": \"2000-01-23 04:56:07+00:00\",\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"domain\": \"test-domain.com\",\n  \"name\": \"Test Crawler\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"domain_verified\": 1,\n  \"config\": \"domain: test-domain.com\\\\nconfig:\\\\n  max_html: 100\\\\n  browser_mode: false\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6922e321-5c5f-412f-85fc-8828b0e29740",
+              "name": "The server could not understand the request due to invalid syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"test-domain.com\",\n  \"name\": \"Test Crawler\",\n  \"browser_mode\": false,\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ],\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token123\",\n    \"X-Custom-Header\": \"value\"\n  },\n  \"exclude\": [\n    \"/admin/*\",\n    \"/private/*\"\n  ],\n  \"include\": [\n    \"/blog/*\",\n    \"/products/*\"\n  ],\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"workers\": 2,\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"max_html\": 50,\n  \"status_ok\": [\n    200,\n    201\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"allowed_domains\": [\n    \"example.com\",\n    \"assets.example.com\"\n  ],\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"max_errors\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93793a12-3a4b-47e1-95d8-38c03cefd4fa",
+              "name": "Access is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"test-domain.com\",\n  \"name\": \"Test Crawler\",\n  \"browser_mode\": false,\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ],\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token123\",\n    \"X-Custom-Header\": \"value\"\n  },\n  \"exclude\": [\n    \"/admin/*\",\n    \"/private/*\"\n  ],\n  \"include\": [\n    \"/blog/*\",\n    \"/products/*\"\n  ],\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"workers\": 2,\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"max_html\": 50,\n  \"status_ok\": [\n    200,\n    201\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"allowed_domains\": [\n    \"example.com\",\n    \"assets.example.com\"\n  ],\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"max_errors\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "32fdcfae-c0a4-4ece-b0e0-ee4a14d9d877",
+          "name": "Delete a crawler",
+          "request": {
+            "name": "Delete a crawler",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "crawlers",
+                ":crawler"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crawler",
+                  "description": "(Required) The UUID of the crawler"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f21d576f-24d3-453b-bf0c-52f4414ba75a",
+              "name": "The request has succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cdea2b49-f286-49b2-8492-b47a0e7711fe",
+              "name": "The server could not understand the request due to invalid syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "334bd569-e43a-4048-acce-fe4f06c83728",
+              "name": "Access is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "61c0cbf6-ad76-4bdf-bcd8-5b6f733b2776",
+          "name": "Get details of a single crawler",
+          "request": {
+            "name": "Get details of a single crawler",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "crawlers",
+                ":crawler"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crawler",
+                  "description": "(Required) The UUID of the crawler"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5eaacde5-7a35-462f-9106-9b4087edc652",
+              "name": "The request has succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"config\": \"domain: test-domain.com\\\\nconfig:\\\\n  max_html: 100\\\\n  browser_mode: false\",\n  \"domain\": \"test-domain.com\",\n  \"id\": 456,\n  \"project_id\": 789,\n  \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Test Crawler\",\n  \"domain_verified\": 1,\n  \"urls_list\": \"single_url:\\\\n  - /\\\\n  - /about\\\\n  - /contact\",\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"browser_mode\": false,\n  \"workers\": 2,\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"max_html\": 50,\n  \"status_ok\": [\n    200\n  ],\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"max_errors\": 100,\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"urls\": [\n    \"/\",\n    \"/about\"\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token\"\n  },\n  \"exclude\": [\n    \"/admin/*\"\n  ],\n  \"include\": [\n    \"/blog/*\"\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"allowed_domains\": [\n    \"example.com\"\n  ],\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"created_at\": \"2024-01-20 09:15:00+00:00\",\n  \"updated_at\": \"2024-10-11 16:45:00+00:00\",\n  \"deleted_at\": \"1951-10-28T08:31:03.365Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5e19fa2f-5891-45f6-b075-9f2ff889bf06",
+              "name": "The server could not understand the request due to invalid syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f5c60a52-31f1-4667-bbd5-fb8caabf6fad",
+              "name": "Access is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0897371-32a1-41c5-ac1d-878c9298ca6d",
+          "name": "Update a crawler",
+          "request": {
+            "name": "Update a crawler",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "crawlers",
+                ":crawler"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crawler",
+                  "description": "(Required) The UUID of the crawler"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"domain\": \"<string>\",\n  \"name\": \"<string>\",\n  \"browser_mode\": false,\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"start_urls\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"headers\": {\n    \"key_0\": \"<string>\",\n    \"key_1\": \"<string>\",\n    \"key_2\": \"<string>\"\n  },\n  \"exclude\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"include\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"webhook_url\": \"<string>\",\n  \"webhook_auth_header\": \"<string>\",\n  \"webhook_extra_vars\": \"<string>\",\n  \"workers\": \"<integer>\",\n  \"delay\": \"<float>\",\n  \"depth\": \"<integer>\",\n  \"max_hits\": \"<integer>\",\n  \"max_html\": \"<integer>\",\n  \"status_ok\": [\n    \"<integer>\",\n    \"<integer>\"\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"<string>\",\n      \"recursive\": \"<boolean>\"\n    },\n    {\n      \"url\": \"<string>\",\n      \"recursive\": \"<boolean>\"\n    }\n  ],\n  \"allowed_domains\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"user_agent\": \"<string>\",\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": \"<boolean>\",\n      \"timeout\": \"<integer>\",\n      \"execute_js\": \"<boolean>\"\n    },\n    \"parser\": {\n      \"enabled\": \"<boolean>\"\n    }\n  },\n  \"max_errors\": \"<integer>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c73d73f-89ba-496b-9f39-9abacd579ceb",
+              "name": "The request has succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"test-domain.com\",\n  \"name\": \"Test Crawler\",\n  \"browser_mode\": false,\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ],\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token123\",\n    \"X-Custom-Header\": \"value\"\n  },\n  \"exclude\": [\n    \"/admin/*\",\n    \"/private/*\"\n  ],\n  \"include\": [\n    \"/blog/*\",\n    \"/products/*\"\n  ],\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"workers\": 2,\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"max_html\": 50,\n  \"status_ok\": [\n    200,\n    201\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"allowed_domains\": [\n    \"example.com\",\n    \"assets.example.com\"\n  ],\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"max_errors\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"config\": \"domain: test-domain.com\\\\nconfig:\\\\n  max_html: 100\\\\n  browser_mode: false\",\n  \"domain\": \"test-domain.com\",\n  \"id\": 456,\n  \"project_id\": 789,\n  \"uuid\": \"550e8400-e29b-41d4-a716-446655440000\",\n  \"name\": \"Test Crawler\",\n  \"domain_verified\": 1,\n  \"urls_list\": \"single_url:\\\\n  - /\\\\n  - /about\\\\n  - /contact\",\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"browser_mode\": false,\n  \"workers\": 2,\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"max_html\": 50,\n  \"status_ok\": [\n    200\n  ],\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"max_errors\": 100,\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"urls\": [\n    \"/\",\n    \"/about\"\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token\"\n  },\n  \"exclude\": [\n    \"/admin/*\"\n  ],\n  \"include\": [\n    \"/blog/*\"\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"allowed_domains\": [\n    \"example.com\"\n  ],\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"created_at\": \"2024-01-20 09:15:00+00:00\",\n  \"updated_at\": \"2024-10-11 16:45:00+00:00\",\n  \"deleted_at\": \"1951-10-28T08:31:03.365Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0f98f687-cb99-46d0-8df7-bf537ba53381",
+              "name": "The server could not understand the request due to invalid syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"test-domain.com\",\n  \"name\": \"Test Crawler\",\n  \"browser_mode\": false,\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ],\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token123\",\n    \"X-Custom-Header\": \"value\"\n  },\n  \"exclude\": [\n    \"/admin/*\",\n    \"/private/*\"\n  ],\n  \"include\": [\n    \"/blog/*\",\n    \"/products/*\"\n  ],\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"workers\": 2,\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"max_html\": 50,\n  \"status_ok\": [\n    200,\n    201\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"allowed_domains\": [\n    \"example.com\",\n    \"assets.example.com\"\n  ],\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"max_errors\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2da01a7b-14ad-406c-aad0-7f251da2b284",
+              "name": "Access is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) The UUID of the crawler"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"domain\": \"test-domain.com\",\n  \"name\": \"Test Crawler\",\n  \"browser_mode\": false,\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ],\n  \"start_urls\": [\n    \"/\",\n    \"/blog\"\n  ],\n  \"headers\": {\n    \"Authorization\": \"Bearer token123\",\n    \"X-Custom-Header\": \"value\"\n  },\n  \"exclude\": [\n    \"/admin/*\",\n    \"/private/*\"\n  ],\n  \"include\": [\n    \"/blog/*\",\n    \"/products/*\"\n  ],\n  \"webhook_url\": \"https://example.com/webhook\",\n  \"webhook_auth_header\": \"Bearer token123\",\n  \"webhook_extra_vars\": \"key1=value1&key2=value2\",\n  \"workers\": 2,\n  \"delay\": 4,\n  \"depth\": -1,\n  \"max_hits\": 0,\n  \"max_html\": 50,\n  \"status_ok\": [\n    200,\n    201\n  ],\n  \"sitemap\": [\n    {\n      \"url\": \"/sitemap.xml\",\n      \"recursive\": true\n    }\n  ],\n  \"allowed_domains\": [\n    \"example.com\",\n    \"assets.example.com\"\n  ],\n  \"user_agent\": \"Mozilla/5.0...\",\n  \"assets\": {\n    \"network_intercept\": {\n      \"enabled\": true,\n      \"timeout\": 30,\n      \"execute_js\": false\n    },\n    \"parser\": {\n      \"enabled\": true\n    }\n  },\n  \"max_errors\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "68fc74fb-9454-41f2-8688-20ddcfc74f6e",
+          "name": "Run a crawler",
+          "request": {
+            "name": "Run a crawler",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "crawlers",
+                ":crawler",
+                "run"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crawler",
+                  "description": "(Required) Crawler identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"urls\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b7b13f5e-946f-405d-ad5c-e632dda0c34b",
+              "name": "The request has succeeded.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"run_id\": \"12345\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "918c1a9d-ec57-4f9f-8214-f6b07bdc9bf3",
+              "name": "The server could not understand the request due to invalid syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "603edc3f-1229-4db1-8ead-e6d2cf93a5d7",
+              "name": "Access is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6f7fe4d5-cdaa-42f9-881f-af06fabdf37d",
+              "name": "The resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31d3b1ba-8c13-4285-9b8e-b0b5b831e51e",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "run"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"urls\": [\n    \"/\",\n    \"/about\",\n    \"/contact\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3b163c0d-4212-4b9e-9bb1-8e682dd27956",
+          "name": "Get all runs for a crawler",
+          "request": {
+            "name": "Get all runs for a crawler",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "crawlers",
+                ":crawler",
+                "runs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crawler",
+                  "description": "(Required) Crawler identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "c77a50b7-18c1-415b-ad8f-7b989020c4ae",
+              "name": "The runs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"completed_at\": 1705749600,\n    \"updated_at\": \"2024-01-20 09:15:00+00:00\",\n    \"project_id\": 12345,\n    \"last_status\": \"completed\",\n    \"crawler_config_id\": 12345,\n    \"started_at\": 1705749300,\n    \"created_at\": \"2024-01-20 09:15:00+00:00\",\n    \"task_id\": \"task-12345\",\n    \"id\": 12345\n  },\n  {\n    \"completed_at\": 1705749600,\n    \"updated_at\": \"2024-01-20 09:15:00+00:00\",\n    \"project_id\": 12345,\n    \"last_status\": \"completed\",\n    \"crawler_config_id\": 12345,\n    \"started_at\": 1705749300,\n    \"created_at\": \"2024-01-20 09:15:00+00:00\",\n    \"task_id\": \"task-12345\",\n    \"id\": 12345\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8d5208e-bf85-49ae-8dcc-9cbf7dafeb22",
+              "name": "The server could not understand the request due to invalid syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da02439b-765f-4822-87dd-bb0c94ffbed6",
+              "name": "Access is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "914e727a-af34-4ffa-ab00-b9d612f95d33",
+              "name": "The resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "80ab47d3-ef7c-4144-ab45-c08d42739f4f",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fb32bf33-200e-45b7-96db-ad470cee65eb",
+          "name": "Get a run by ID",
+          "request": {
+            "name": "Get a run by ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v2",
+                "organizations",
+                ":organization",
+                "projects",
+                ":project",
+                "crawlers",
+                ":crawler",
+                "runs",
+                ":run_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organization",
+                  "description": "(Required) Organization identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "project",
+                  "description": "(Required) Project identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "crawler",
+                  "description": "(Required) Crawler identifier"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<integer>",
+                  "key": "run_id",
+                  "description": "(Required) Run identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "55782e63-ba05-47e5-bb71-cb68b3a89b67",
+              "name": "The run",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs",
+                    ":run_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "run_id",
+                      "description": "(Required) Run identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"completed_at\": 1705749600,\n  \"updated_at\": \"2024-01-20 09:15:00+00:00\",\n  \"project_id\": 12345,\n  \"last_status\": \"completed\",\n  \"crawler_config_id\": 12345,\n  \"started_at\": 1705749300,\n  \"created_at\": \"2024-01-20 09:15:00+00:00\",\n  \"task_id\": \"task-12345\",\n  \"id\": 12345\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efcbe4b8-48cb-49c0-a2d9-661db2c8a827",
+              "name": "The server could not understand the request due to invalid syntax.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs",
+                    ":run_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "run_id",
+                      "description": "(Required) Run identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e0db9990-e75f-4fc3-ba8a-14336ed275e1",
+              "name": "Access is forbidden.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs",
+                    ":run_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "run_id",
+                      "description": "(Required) Run identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bdf01732-a45f-48b9-8d98-b87ec2f099ac",
+              "name": "The resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs",
+                    ":run_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "run_id",
+                      "description": "(Required) Run identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "908bc4c7-0d2c-416c-943d-ec1b318b0cfb",
+              "name": "An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v2",
+                    "organizations",
+                    ":organization",
+                    "projects",
+                    ":project",
+                    "crawlers",
+                    ":crawler",
+                    "runs",
+                    ":run_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organization",
+                      "description": "(Required) Organization identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "project",
+                      "description": "(Required) Project identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "crawler",
+                      "description": "(Required) Crawler identifier"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<integer>",
+                      "key": "run_id",
+                      "description": "(Required) Run identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"The requested resource was not found\",\n  \"error\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e33e35ed-ef3e-4e55-a149-64d32d68dc9b",
+    "name": "QuantCDN AI Agents Crawlers API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

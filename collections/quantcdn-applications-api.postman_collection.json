@@ -1,0 +1,821 @@
+{
+  "item": [
+    {
+      "id": "1b307e03-ec29-4d94-92c0-7e701f97f7b0",
+      "name": "Applications",
+      "description": {
+        "content": "Cloud application lifecycle management",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5cded830-2abd-41f7-8a29-d76cae45f8bc",
+          "name": "Get all applications for an organisation",
+          "request": {
+            "name": "Get all applications for an organisation",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a34174bd-4c34-4044-8373-e5292877d5a6",
+              "name": "A list of applications",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"appName\": \"appName\",\n    \"deploymentInformation\": [\n      {\n        \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n        \"taskDefinitionArn\": \"taskDefinitionArn\",\n        \"deploymentId\": \"deploymentId\",\n        \"imageTag\": \"imageTag\",\n        \"status\": \"status\"\n      },\n      {\n        \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n        \"taskDefinitionArn\": \"taskDefinitionArn\",\n        \"deploymentId\": \"deploymentId\",\n        \"imageTag\": \"imageTag\",\n        \"status\": \"status\"\n      }\n    ],\n    \"environmentNames\": [\n      \"environmentNames\",\n      \"environmentNames\"\n    ],\n    \"desiredCount\": 1,\n    \"organisation\": \"organisation\",\n    \"maxCapacity\": 1,\n    \"imageReference\": {\n      \"identifier\": \"identifier\",\n      \"type\": \"internal\"\n    },\n    \"filesystem\": {\n      \"mountPath\": \"mountPath\",\n      \"filesystemId\": \"filesystemId\"\n    },\n    \"containerNames\": [\n      \"containerNames\",\n      \"containerNames\"\n    ],\n    \"database\": {\n      \"rdsInstanceEngine\": \"mysql\",\n      \"rdsInstanceIdentifier\": \"rdsInstanceIdentifier\",\n      \"rdsInstanceStatus\": \"rdsInstanceStatus\",\n      \"rdsInstanceEndpoint\": \"rdsInstanceEndpoint\"\n    },\n    \"composeDefinition\": {\n      \"spotConfiguration\": {\n        \"strategy\": \"spot-only\"\n      },\n      \"taskMemory\": 2,\n      \"maxCapacity\": 7,\n      \"containers\": [\n        {\n          \"originProtectionConfig\": {\n            \"ipAllow\": [\n              \"ipAllow\",\n              \"ipAllow\"\n            ],\n            \"enabled\": true\n          },\n          \"memory\": 6,\n          \"dependsOn\": [\n            {\n              \"condition\": \"START\",\n              \"containerName\": \"containerName\"\n            },\n            {\n              \"condition\": \"START\",\n              \"containerName\": \"containerName\"\n            }\n          ],\n          \"workingDirectory\": \"workingDirectory\",\n          \"exposedPorts\": [\n            5,\n            5\n          ],\n          \"cpu\": 0,\n          \"imageReference\": {\n            \"identifier\": \"identifier\",\n            \"type\": \"internal\"\n          },\n          \"secrets\": [\n            {\n              \"name\": \"name\",\n              \"valueFrom\": \"valueFrom\"\n            },\n            {\n              \"name\": \"name\",\n              \"valueFrom\": \"valueFrom\"\n            }\n          ],\n          \"memoryReservation\": 1,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"environment\": [\n            {\n              \"name\": \"name\",\n              \"value\": \"value\"\n            },\n            {\n              \"name\": \"name\",\n              \"value\": \"value\"\n            }\n          ],\n          \"readonlyRootFilesystem\": false,\n          \"originProtection\": false,\n          \"healthCheck\": {\n            \"retries\": 7,\n            \"startPeriod\": 279,\n            \"interval\": 171,\n            \"command\": [\n              \"command\",\n              \"command\"\n            ],\n            \"timeout\": 15\n          },\n          \"name\": \"name\",\n          \"mountPoints\": [\n            {\n              \"readOnly\": false,\n              \"containerPath\": \"containerPath\",\n              \"sourceVolume\": \"sourceVolume\"\n            },\n            {\n              \"readOnly\": false,\n              \"containerPath\": \"containerPath\",\n              \"sourceVolume\": \"sourceVolume\"\n            }\n          ],\n          \"entryPoint\": [\n            \"entryPoint\",\n            \"entryPoint\"\n          ],\n          \"user\": \"user\",\n          \"essential\": true\n        },\n        {\n          \"originProtectionConfig\": {\n            \"ipAllow\": [\n              \"ipAllow\",\n              \"ipAllow\"\n            ],\n            \"enabled\": true\n          },\n          \"memory\": 6,\n          \"dependsOn\": [\n            {\n              \"condition\": \"START\",\n              \"containerName\": \"containerName\"\n            },\n            {\n              \"condition\": \"START\",\n              \"containerName\": \"containerName\"\n            }\n          ],\n          \"workingDirectory\": \"workingDirectory\",\n          \"exposedPorts\": [\n            5,\n            5\n          ],\n          \"cpu\": 0,\n          \"imageReference\": {\n            \"identifier\": \"identifier\",\n            \"type\": \"internal\"\n          },\n          \"secrets\": [\n            {\n              \"name\": \"name\",\n              \"valueFrom\": \"valueFrom\"\n            },\n            {\n              \"name\": \"name\",\n              \"valueFrom\": \"valueFrom\"\n            }\n          ],\n          \"memoryReservation\": 1,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"environment\": [\n            {\n              \"name\": \"name\",\n              \"value\": \"value\"\n            },\n            {\n              \"name\": \"name\",\n              \"value\": \"value\"\n            }\n          ],\n          \"readonlyRootFilesystem\": false,\n          \"originProtection\": false,\n          \"healthCheck\": {\n            \"retries\": 7,\n            \"startPeriod\": 279,\n            \"interval\": 171,\n            \"command\": [\n              \"command\",\n              \"command\"\n            ],\n            \"timeout\": 15\n          },\n          \"name\": \"name\",\n          \"mountPoints\": [\n            {\n              \"readOnly\": false,\n              \"containerPath\": \"containerPath\",\n              \"sourceVolume\": \"sourceVolume\"\n            },\n            {\n              \"readOnly\": false,\n              \"containerPath\": \"containerPath\",\n              \"sourceVolume\": \"sourceVolume\"\n            }\n          ],\n          \"entryPoint\": [\n            \"entryPoint\",\n            \"entryPoint\"\n          ],\n          \"user\": \"user\",\n          \"essential\": true\n        }\n      ],\n      \"minCapacity\": 4,\n      \"taskCpu\": 3,\n      \"enableCrossAppNetworking\": false,\n      \"architecture\": \"architecture\",\n      \"enableCrossEnvNetworking\": false\n    },\n    \"runningCount\": 6,\n    \"minCapacity\": 1,\n    \"status\": \"status\"\n  },\n  {\n    \"appName\": \"appName\",\n    \"deploymentInformation\": [\n      {\n        \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n        \"taskDefinitionArn\": \"taskDefinitionArn\",\n        \"deploymentId\": \"deploymentId\",\n        \"imageTag\": \"imageTag\",\n        \"status\": \"status\"\n      },\n      {\n        \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n        \"taskDefinitionArn\": \"taskDefinitionArn\",\n        \"deploymentId\": \"deploymentId\",\n        \"imageTag\": \"imageTag\",\n        \"status\": \"status\"\n      }\n    ],\n    \"environmentNames\": [\n      \"environmentNames\",\n      \"environmentNames\"\n    ],\n    \"desiredCount\": 1,\n    \"organisation\": \"organisation\",\n    \"maxCapacity\": 1,\n    \"imageReference\": {\n      \"identifier\": \"identifier\",\n      \"type\": \"internal\"\n    },\n    \"filesystem\": {\n      \"mountPath\": \"mountPath\",\n      \"filesystemId\": \"filesystemId\"\n    },\n    \"containerNames\": [\n      \"containerNames\",\n      \"containerNames\"\n    ],\n    \"database\": {\n      \"rdsInstanceEngine\": \"mysql\",\n      \"rdsInstanceIdentifier\": \"rdsInstanceIdentifier\",\n      \"rdsInstanceStatus\": \"rdsInstanceStatus\",\n      \"rdsInstanceEndpoint\": \"rdsInstanceEndpoint\"\n    },\n    \"composeDefinition\": {\n      \"spotConfiguration\": {\n        \"strategy\": \"spot-only\"\n      },\n      \"taskMemory\": 2,\n      \"maxCapacity\": 7,\n      \"containers\": [\n        {\n          \"originProtectionConfig\": {\n            \"ipAllow\": [\n              \"ipAllow\",\n              \"ipAllow\"\n            ],\n            \"enabled\": true\n          },\n          \"memory\": 6,\n          \"dependsOn\": [\n            {\n              \"condition\": \"START\",\n              \"containerName\": \"containerName\"\n            },\n            {\n              \"condition\": \"START\",\n              \"containerName\": \"containerName\"\n            }\n          ],\n          \"workingDirectory\": \"workingDirectory\",\n          \"exposedPorts\": [\n            5,\n            5\n          ],\n          \"cpu\": 0,\n          \"imageReference\": {\n            \"identifier\": \"identifier\",\n            \"type\": \"internal\"\n          },\n          \"secrets\": [\n            {\n              \"name\": \"name\",\n              \"valueFrom\": \"valueFrom\"\n            },\n            {\n              \"name\": \"name\",\n              \"valueFrom\": \"valueFrom\"\n            }\n          ],\n          \"memoryReservation\": 1,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"environment\": [\n            {\n              \"name\": \"name\",\n              \"value\": \"value\"\n            },\n            {\n              \"name\": \"name\",\n              \"value\": \"value\"\n            }\n          ],\n          \"readonlyRootFilesystem\": false,\n          \"originProtection\": false,\n          \"healthCheck\": {\n            \"retries\": 7,\n            \"startPeriod\": 279,\n            \"interval\": 171,\n            \"command\": [\n              \"command\",\n              \"command\"\n            ],\n            \"timeout\": 15\n          },\n          \"name\": \"name\",\n          \"mountPoints\": [\n            {\n              \"readOnly\": false,\n              \"containerPath\": \"containerPath\",\n              \"sourceVolume\": \"sourceVolume\"\n            },\n            {\n              \"readOnly\": false,\n              \"containerPath\": \"containerPath\",\n              \"sourceVolume\": \"sourceVolume\"\n            }\n          ],\n          \"entryPoint\": [\n            \"entryPoint\",\n            \"entryPoint\"\n          ],\n          \"user\": \"user\",\n          \"essential\": true\n        },\n        {\n          \"originProtectionConfig\": {\n            \"ipAllow\": [\n              \"ipAllow\",\n              \"ipAllow\"\n            ],\n            \"enabled\": true\n          },\n          \"memory\": 6,\n          \"dependsOn\": [\n            {\n              \"condition\": \"START\",\n              \"containerName\": \"containerName\"\n            },\n            {\n              \"condition\": \"START\",\n              \"containerName\": \"containerName\"\n            }\n          ],\n          \"workingDirectory\": \"workingDirectory\",\n          \"exposedPorts\": [\n            5,\n            5\n          ],\n          \"cpu\": 0,\n          \"imageReference\": {\n            \"identifier\": \"identifier\",\n            \"type\": \"internal\"\n          },\n          \"secrets\": [\n            {\n              \"name\": \"name\",\n              \"valueFrom\": \"valueFrom\"\n            },\n            {\n              \"name\": \"name\",\n              \"valueFrom\": \"valueFrom\"\n            }\n          ],\n          \"memoryReservation\": 1,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"environment\": [\n            {\n              \"name\": \"name\",\n              \"value\": \"value\"\n            },\n            {\n              \"name\": \"name\",\n              \"value\": \"value\"\n            }\n          ],\n          \"readonlyRootFilesystem\": false,\n          \"originProtection\": false,\n          \"healthCheck\": {\n            \"retries\": 7,\n            \"startPeriod\": 279,\n            \"interval\": 171,\n            \"command\": [\n              \"command\",\n              \"command\"\n            ],\n            \"timeout\": 15\n          },\n          \"name\": \"name\",\n          \"mountPoints\": [\n            {\n              \"readOnly\": false,\n              \"containerPath\": \"containerPath\",\n              \"sourceVolume\": \"sourceVolume\"\n            },\n            {\n              \"readOnly\": false,\n              \"containerPath\": \"containerPath\",\n              \"sourceVolume\": \"sourceVolume\"\n            }\n          ],\n          \"entryPoint\": [\n            \"entryPoint\",\n            \"entryPoint\"\n          ],\n          \"user\": \"user\",\n          \"essential\": true\n        }\n      ],\n      \"minCapacity\": 4,\n      \"taskCpu\": 3,\n      \"enableCrossAppNetworking\": false,\n      \"architecture\": \"architecture\",\n      \"enableCrossEnvNetworking\": false\n    },\n    \"runningCount\": 6,\n    \"minCapacity\": 1,\n    \"status\": \"status\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ff15804c-5d2c-4bf1-9ea4-1bf6d5475135",
+          "name": "Create a new application",
+          "request": {
+            "name": "Create a new application",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appName\": \"<string>\",\n  \"composeDefinition\": {\n    \"containers\": [\n      {\n        \"imageReference\": {\n          \"identifier\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"cpu\": \"<integer>\",\n        \"memory\": \"<integer>\",\n        \"memoryReservation\": \"<integer>\",\n        \"exposedPorts\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"mountPoints\": [\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          },\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          }\n        ],\n        \"environment\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ],\n        \"secrets\": [\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          }\n        ],\n        \"healthCheck\": {\n          \"command\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"interval\": 30,\n          \"timeout\": 5,\n          \"retries\": 3,\n          \"startPeriod\": \"<integer>\"\n        },\n        \"dependsOn\": [\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          },\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          }\n        ],\n        \"command\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"entryPoint\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"workingDirectory\": \"<string>\",\n        \"essential\": true,\n        \"readonlyRootFilesystem\": false,\n        \"user\": \"<string>\",\n        \"originProtection\": false,\n        \"originProtectionConfig\": {\n          \"enabled\": true,\n          \"ipAllow\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      },\n      {\n        \"imageReference\": {\n          \"identifier\": \"<string>\",\n          \"type\": \"<string>\"\n        },\n        \"name\": \"<string>\",\n        \"cpu\": \"<integer>\",\n        \"memory\": \"<integer>\",\n        \"memoryReservation\": \"<integer>\",\n        \"exposedPorts\": [\n          \"<integer>\",\n          \"<integer>\"\n        ],\n        \"mountPoints\": [\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          },\n          {\n            \"containerPath\": \"<string>\",\n            \"sourceVolume\": \"<string>\",\n            \"readOnly\": false\n          }\n        ],\n        \"environment\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ],\n        \"secrets\": [\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"valueFrom\": \"<string>\"\n          }\n        ],\n        \"healthCheck\": {\n          \"command\": [\n            \"<string>\",\n            \"<string>\"\n          ],\n          \"interval\": 30,\n          \"timeout\": 5,\n          \"retries\": 3,\n          \"startPeriod\": \"<integer>\"\n        },\n        \"dependsOn\": [\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          },\n          {\n            \"containerName\": \"<string>\",\n            \"condition\": \"<string>\"\n          }\n        ],\n        \"command\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"entryPoint\": [\n          \"<string>\",\n          \"<string>\"\n        ],\n        \"workingDirectory\": \"<string>\",\n        \"essential\": true,\n        \"readonlyRootFilesystem\": false,\n        \"user\": \"<string>\",\n        \"originProtection\": false,\n        \"originProtectionConfig\": {\n          \"enabled\": true,\n          \"ipAllow\": [\n            \"<string>\",\n            \"<string>\"\n          ]\n        }\n      }\n    ],\n    \"architecture\": \"<string>\",\n    \"taskCpu\": \"<integer>\",\n    \"taskMemory\": \"<integer>\",\n    \"minCapacity\": \"<integer>\",\n    \"maxCapacity\": \"<integer>\",\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"enableCrossEnvNetworking\": false,\n    \"enableCrossAppNetworking\": false\n  },\n  \"minCapacity\": 1,\n  \"maxCapacity\": 1,\n  \"database\": {\n    \"engine\": \"mysql\",\n    \"instanceClass\": \"db.t4g.micro\",\n    \"storageGb\": 20,\n    \"multiAz\": false\n  },\n  \"filesystem\": {\n    \"required\": true,\n    \"mountPath\": \"/mnt/data\"\n  },\n  \"environment\": [\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"value\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "461a20f0-13c6-48b4-b65b-fede265c8f9f",
+              "name": "The created application",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"database\": {\n    \"multiAz\": false,\n    \"engine\": \"mysql\",\n    \"instanceClass\": \"db.t4g.micro\",\n    \"storageGb\": 20\n  },\n  \"environment\": [\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    },\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    }\n  ],\n  \"appName\": \"my-app\",\n  \"maxCapacity\": 6,\n  \"minCapacity\": 0,\n  \"filesystem\": {\n    \"mountPath\": \"/data/shared\",\n    \"required\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"appName\": \"appName\",\n  \"deploymentInformation\": [\n    {\n      \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n      \"taskDefinitionArn\": \"taskDefinitionArn\",\n      \"deploymentId\": \"deploymentId\",\n      \"imageTag\": \"imageTag\",\n      \"status\": \"status\"\n    },\n    {\n      \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n      \"taskDefinitionArn\": \"taskDefinitionArn\",\n      \"deploymentId\": \"deploymentId\",\n      \"imageTag\": \"imageTag\",\n      \"status\": \"status\"\n    }\n  ],\n  \"environmentNames\": [\n    \"environmentNames\",\n    \"environmentNames\"\n  ],\n  \"desiredCount\": 1,\n  \"organisation\": \"organisation\",\n  \"maxCapacity\": 1,\n  \"imageReference\": {\n    \"identifier\": \"identifier\",\n    \"type\": \"internal\"\n  },\n  \"filesystem\": {\n    \"mountPath\": \"mountPath\",\n    \"filesystemId\": \"filesystemId\"\n  },\n  \"containerNames\": [\n    \"containerNames\",\n    \"containerNames\"\n  ],\n  \"database\": {\n    \"rdsInstanceEngine\": \"mysql\",\n    \"rdsInstanceIdentifier\": \"rdsInstanceIdentifier\",\n    \"rdsInstanceStatus\": \"rdsInstanceStatus\",\n    \"rdsInstanceEndpoint\": \"rdsInstanceEndpoint\"\n  },\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"runningCount\": 6,\n  \"minCapacity\": 1,\n  \"status\": \"status\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "483c0fd7-1d85-48f4-b61d-decb524946d2",
+              "name": "The request is invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"database\": {\n    \"multiAz\": false,\n    \"engine\": \"mysql\",\n    \"instanceClass\": \"db.t4g.micro\",\n    \"storageGb\": 20\n  },\n  \"environment\": [\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    },\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    }\n  ],\n  \"appName\": \"my-app\",\n  \"maxCapacity\": 6,\n  \"minCapacity\": 0,\n  \"filesystem\": {\n    \"mountPath\": \"/data/shared\",\n    \"required\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bba35426-6604-4108-bc8a-a75996c8f304",
+              "name": "Application limit reached - organisation has reached the maximum number of allowed applications",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"database\": {\n    \"multiAz\": false,\n    \"engine\": \"mysql\",\n    \"instanceClass\": \"db.t4g.micro\",\n    \"storageGb\": 20\n  },\n  \"environment\": [\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    },\n    {\n      \"name\": \"name\",\n      \"value\": \"value\"\n    }\n  ],\n  \"appName\": \"my-app\",\n  \"maxCapacity\": 6,\n  \"minCapacity\": 0,\n  \"filesystem\": {\n    \"mountPath\": \"/data/shared\",\n    \"required\": true\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Application limit reached\",\n  \"error\": \"Organisation has reached the maximum number of allowed applications (10/10). Please contact support to increase your limit.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "35ce1f92-d221-4d80-92a3-782dcd69fd04",
+          "name": "Delete an application",
+          "request": {
+            "name": "Delete an application",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d88918d8-776f-45de-9453-4dfe15407c17",
+              "name": "The application deleted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "No Content",
+              "code": 204,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4d1b9793-6e46-4de9-8fa8-b1d57e3550fa",
+              "name": "The application not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4385c33f-2594-49a8-8963-f1a9f3e88396",
+          "name": "Get a single application",
+          "request": {
+            "name": "Get a single application",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                ":application"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "application",
+                  "description": "(Required) The application ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7477c007-8f5c-4f0b-9940-341651e76685",
+              "name": "The application",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"appName\": \"appName\",\n  \"deploymentInformation\": [\n    {\n      \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n      \"taskDefinitionArn\": \"taskDefinitionArn\",\n      \"deploymentId\": \"deploymentId\",\n      \"imageTag\": \"imageTag\",\n      \"status\": \"status\"\n    },\n    {\n      \"createdAt\": \"2000-01-23 04:56:07+00:00\",\n      \"taskDefinitionArn\": \"taskDefinitionArn\",\n      \"deploymentId\": \"deploymentId\",\n      \"imageTag\": \"imageTag\",\n      \"status\": \"status\"\n    }\n  ],\n  \"environmentNames\": [\n    \"environmentNames\",\n    \"environmentNames\"\n  ],\n  \"desiredCount\": 1,\n  \"organisation\": \"organisation\",\n  \"maxCapacity\": 1,\n  \"imageReference\": {\n    \"identifier\": \"identifier\",\n    \"type\": \"internal\"\n  },\n  \"filesystem\": {\n    \"mountPath\": \"mountPath\",\n    \"filesystemId\": \"filesystemId\"\n  },\n  \"containerNames\": [\n    \"containerNames\",\n    \"containerNames\"\n  ],\n  \"database\": {\n    \"rdsInstanceEngine\": \"mysql\",\n    \"rdsInstanceIdentifier\": \"rdsInstanceIdentifier\",\n    \"rdsInstanceStatus\": \"rdsInstanceStatus\",\n    \"rdsInstanceEndpoint\": \"rdsInstanceEndpoint\"\n  },\n  \"composeDefinition\": {\n    \"spotConfiguration\": {\n      \"strategy\": \"spot-only\"\n    },\n    \"taskMemory\": 2,\n    \"maxCapacity\": 7,\n    \"containers\": [\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      },\n      {\n        \"originProtectionConfig\": {\n          \"ipAllow\": [\n            \"ipAllow\",\n            \"ipAllow\"\n          ],\n          \"enabled\": true\n        },\n        \"memory\": 6,\n        \"dependsOn\": [\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          },\n          {\n            \"condition\": \"START\",\n            \"containerName\": \"containerName\"\n          }\n        ],\n        \"workingDirectory\": \"workingDirectory\",\n        \"exposedPorts\": [\n          5,\n          5\n        ],\n        \"cpu\": 0,\n        \"imageReference\": {\n          \"identifier\": \"identifier\",\n          \"type\": \"internal\"\n        },\n        \"secrets\": [\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          },\n          {\n            \"name\": \"name\",\n            \"valueFrom\": \"valueFrom\"\n          }\n        ],\n        \"memoryReservation\": 1,\n        \"command\": [\n          \"command\",\n          \"command\"\n        ],\n        \"environment\": [\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          },\n          {\n            \"name\": \"name\",\n            \"value\": \"value\"\n          }\n        ],\n        \"readonlyRootFilesystem\": false,\n        \"originProtection\": false,\n        \"healthCheck\": {\n          \"retries\": 7,\n          \"startPeriod\": 279,\n          \"interval\": 171,\n          \"command\": [\n            \"command\",\n            \"command\"\n          ],\n          \"timeout\": 15\n        },\n        \"name\": \"name\",\n        \"mountPoints\": [\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          },\n          {\n            \"readOnly\": false,\n            \"containerPath\": \"containerPath\",\n            \"sourceVolume\": \"sourceVolume\"\n          }\n        ],\n        \"entryPoint\": [\n          \"entryPoint\",\n          \"entryPoint\"\n        ],\n        \"user\": \"user\",\n        \"essential\": true\n      }\n    ],\n    \"minCapacity\": 4,\n    \"taskCpu\": 3,\n    \"enableCrossAppNetworking\": false,\n    \"architecture\": \"architecture\",\n    \"enableCrossEnvNetworking\": false\n  },\n  \"runningCount\": 6,\n  \"minCapacity\": 1,\n  \"status\": \"status\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97f587ef-4a21-45a5-a961-e1617a435c5b",
+              "name": "The application not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    ":application"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "application",
+                      "description": "(Required) The application ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2b56fdff-2531-470d-8364-b1ff1a460eb7",
+          "name": "Get ECR login credentials",
+          "request": {
+            "name": "Get ECR login credentials",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v3",
+                "organizations",
+                ":organisation",
+                "applications",
+                "ecr-login"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "organisation",
+                  "description": "(Required) The organisation ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "22250d67-a3fd-4443-a846-d71a7aa8d58e",
+              "name": "The ECR login credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v3",
+                    "organizations",
+                    ":organisation",
+                    "applications",
+                    "ecr-login"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "organisation",
+                      "description": "(Required) The organisation ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"password\": \"password\",\n  \"endpoint\": \"endpoint\",\n  \"expiresAt\": \"expiresAt\",\n  \"username\": \"username\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://dashboard.quantcdn.io",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "eac88d27-7201-409a-8966-7ea421ddb89e",
+    "name": "QuantCDN AI Agents Applications API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Unified API for QuantCDN Admin and QuantCloud Platform services",
+      "type": "text/plain"
+    }
+  }
+}

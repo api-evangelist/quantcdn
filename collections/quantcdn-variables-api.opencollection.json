@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents Variables API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Variables",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all variables for an environment",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:api_organisation/applications/:api_application/environments/:api_environment/variables",
+            "params": [
+              {
+                "name": "api_organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "api_application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "api_environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ]
+          },
+          "docs": "Get all variables for an environment"
+        },
+        {
+          "info": {
+            "name": "Bulk set/replace environment variables",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:api_organisation/applications/:api_application/environments/:api_environment/variables",
+            "params": [
+              {
+                "name": "api_organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "api_application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "api_environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Bulk set/replace environment variables"
+        },
+        {
+          "info": {
+            "name": "Update a variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:api_organisation/applications/:api_application/environments/:api_environment/variables/:api_variable",
+            "params": [
+              {
+                "name": "api_organisation",
+                "value": "test-org",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "api_application",
+                "value": "test-app",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "api_environment",
+                "value": "test-env",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "api_variable",
+                "value": "",
+                "type": "path",
+                "description": "The variable key"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Update a variable"
+        },
+        {
+          "info": {
+            "name": "Delete a variable",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:api_organisation/applications/:api_application/environments/:api_environment/variables/:api_variable",
+            "params": [
+              {
+                "name": "api_organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "api_application",
+                "value": "",
+                "type": "path",
+                "description": "The application ID"
+              },
+              {
+                "name": "api_environment",
+                "value": "",
+                "type": "path",
+                "description": "The environment ID"
+              },
+              {
+                "name": "api_variable",
+                "value": "",
+                "type": "path",
+                "description": "The variable key"
+              }
+            ]
+          },
+          "docs": "Delete a variable"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

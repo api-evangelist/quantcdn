@@ -1,0 +1,164 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Inference API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Inference",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Chat inference via API Gateway (buffered responses) with multimodal support",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/chat",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Sends requests to the AI API Gateway endpoint which buffers responses. Supports text, images, videos, and documents via base64 encoding.\n     *\n     * **Execution Modes:**\n     * - **Sync Mode** (default): Standard JSON response, waits for completion (200 response)\n     * - **Async Mode**: Set `async: true` for long-running tasks with polling (202 response)\n     *\n     * **Async/Durable Mode (`async: true`):**\n     * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)\n     * - Uses A"
+        },
+        {
+          "info": {
+            "name": "Chat inference via streaming endpoint (true HTTP streaming) with multimodal support",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/chat/stream",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Streams responses from the AI streaming subdomain using Server-Sent Events (SSE). Tokens are streamed in real-time as they are generated.\n     *\n     * **Execution Modes:**\n     * - **Streaming Mode** (default): Real-time SSE token-by-token responses\n     * - **Async Mode**: Set `async: true` for long-running tasks with polling (202 response)\n     *\n     * **Async/Durable Mode (`async: true`):**\n     * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)\n     * - Uses AWS Lambda Durab"
+        },
+        {
+          "info": {
+            "name": "Generate text embeddings for semantic search and RAG applications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/embeddings",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates vector embeddings for text content using embedding models. Used for semantic search, document similarity, and RAG applications.\n     *\n     * **Features:**\n     * - Single text or batch processing (up to 100 texts)\n     * - Configurable dimensions (256, 512, 1024, 8192 for Titan v2)\n     * - Optional normalization to unit length\n     * - Usage tracking for billing\n     *\n     * **Use Cases:**\n     * - Semantic search across documents\n     * - Similarity matching for content recommendat"
+        },
+        {
+          "info": {
+            "name": "Generate images with Amazon Nova Canvas",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/image-generation",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Generates images using Amazon Nova Canvas image generation model.\n     *\n     * **Region Restriction:** Nova Canvas is ONLY available in:\n     * - `us-east-1` (US East, N. Virginia)\n     * - `ap-northeast-1` (Asia Pacific, Tokyo)\n     * - `eu-west-1` (Europe, Ireland)\n     * ❌ NOT available in `ap-southeast-2` (Sydney)\n     *\n     * **Supported Task Types:**\n     * - **TEXT_IMAGE**: Basic text-to-image generation\n     * - **TEXT_IMAGE with Conditioning**: Layout-guided generation using edge dete"
+        },
+        {
+          "info": {
+            "name": "Get Durable Execution Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/chat/executions/:identifier",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "identifier",
+                "value": "XkdVWiEfSwMEPrw=",
+                "type": "path",
+                "description": "Either the requestId from async response, or full executionArn (URL-encoded)"
+              }
+            ]
+          },
+          "docs": "Poll the status of an async/durable chat execution.\n     *\n     * **When to use:** After starting chat inference with `async: true`, poll this endpoint\n     * to check execution status and retrieve results when complete.\n     *\n     * **Identifier:** Accepts either:\n     * - `requestId` (recommended): The short ID returned from the async request\n     * - `executionArn`: The full AWS Lambda durable execution ARN (must be URL-encoded)\n     *\n     * **Statuses:**\n     * - `pending`: Execution is st"
+        },
+        {
+          "info": {
+            "name": "Submit Client Tool Results (Callback)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/chat/callback",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit tool execution results to resume a suspended durable execution.\n     *\n     * **When to use:** When polling the execution status returns `waiting_callback`, use this endpoint\n     * to submit the results of client-executed tools. The execution will then resume.\n     *\n     * **Flow:**\n     * 1. Start async chat with client-executed tools (`autoExecute: []` or tools not in autoExecute list)\n     * 2. Poll status until `waiting_callback`\n     * 3. Execute tools locally using `pendingTools` "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

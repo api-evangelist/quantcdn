@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents AI Custom Tools API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AI Custom Tools",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Custom Tools",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/custom-tools",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ]
+          },
+          "docs": "Lists all registered custom edge function tools for an organization."
+        },
+        {
+          "info": {
+            "name": "Register Custom Edge Function Tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/custom-tools",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Registers a custom edge function as a tool that AI models can invoke. Provide `edgeFunctionCode` (JavaScript) and the API will deploy it to the CDN, compute the edge function URL, and register the tool.\n     *\n     * **Edge Function Contract:**\n     * - Edge functions must accept POST requests with JSON payload\n     * - Expected request format: `{ 'toolName': '...', 'input': {...}, 'orgId': '...' }`\n     * - Must return JSON response with either `result` or `error` field\n     *\n     * **Idempote"
+        },
+        {
+          "info": {
+            "name": "Get Custom Tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/custom-tools/:toolName",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "toolName",
+                "value": "",
+                "type": "path",
+                "description": "The tool name to retrieve"
+              }
+            ]
+          },
+          "docs": "Retrieves a single registered custom tool by name."
+        },
+        {
+          "info": {
+            "name": "Delete Custom Tool",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v3/organizations/:organisation/ai/custom-tools/:toolName",
+            "params": [
+              {
+                "name": "organisation",
+                "value": "",
+                "type": "path",
+                "description": "The organisation ID"
+              },
+              {
+                "name": "toolName",
+                "value": "",
+                "type": "path",
+                "description": "The tool name to delete"
+              }
+            ]
+          },
+          "docs": "Deletes a custom tool registration and its deployed edge function."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

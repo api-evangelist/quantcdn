@@ -1,0 +1,202 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "QuantCDN AI Agents CrawlerSchedules API",
+    "version": "4.15.8"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "CrawlerSchedules",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List schedules for a crawler",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler/schedules",
+            "params": [
+              {
+                "name": "organization",
+                "value": "test-org",
+                "type": "path"
+              },
+              {
+                "name": "project",
+                "value": "test-project",
+                "type": "path"
+              },
+              {
+                "name": "crawler",
+                "value": "00000000-0000-0000-0000-000000000000",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "List schedules for a crawler"
+        },
+        {
+          "info": {
+            "name": "Add a new schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler/schedules",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "",
+                "type": "path",
+                "description": "Crawler identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Add a new schedule"
+        },
+        {
+          "info": {
+            "name": "Show a specific schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler/schedules/:crawler_schedule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "",
+                "type": "path",
+                "description": "Crawler identifier"
+              },
+              {
+                "name": "crawler_schedule",
+                "value": "",
+                "type": "path",
+                "description": "Crawler schedule identifier"
+              }
+            ]
+          },
+          "docs": "Show a specific schedule"
+        },
+        {
+          "info": {
+            "name": "Edit a schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler/schedules/:crawler_schedule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "",
+                "type": "path",
+                "description": "Crawler identifier"
+              },
+              {
+                "name": "crawler_schedule",
+                "value": "",
+                "type": "path",
+                "description": "Crawler schedule identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Edit a schedule"
+        },
+        {
+          "info": {
+            "name": "Delete a schedule",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://dashboard.quantcdn.io/api/v2/organizations/:organization/projects/:project/crawlers/:crawler/schedules/:crawler_schedule",
+            "params": [
+              {
+                "name": "organization",
+                "value": "",
+                "type": "path",
+                "description": "Organization identifier"
+              },
+              {
+                "name": "project",
+                "value": "",
+                "type": "path",
+                "description": "Project identifier"
+              },
+              {
+                "name": "crawler",
+                "value": "",
+                "type": "path",
+                "description": "Crawler identifier"
+              },
+              {
+                "name": "crawler_schedule",
+                "value": "",
+                "type": "path",
+                "description": "Crawler schedule identifier"
+              }
+            ]
+          },
+          "docs": "Delete a schedule"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
