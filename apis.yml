@@ -25,6 +25,16 @@ tags:
   - CDN
   - Edge
   - Static Hosting
+  - JAMstack
+  - DNS
+  - WAF
+  - Edge Computing
+  - Key-Value Storage
+  - AI Inference
+tags_raw:
+  - CDN
+  - Edge
+  - Static Hosting
   - Jamstack
   - DNS
   - WAF
@@ -427,6 +437,8 @@ apis:
   humanURL: https://www.quantcdn.io/home
   baseURL: https://dashboard.quantcdn.io
   tags:
+  - Application
+  tags_raw:
   - Applications
   properties:
   - type: OpenAPI
@@ -739,6 +751,8 @@ apis:
   humanURL: https://www.quantcdn.io/home
   baseURL: https://dashboard.quantcdn.io
   tags:
+  - Organization
+  tags_raw:
   - Organizations
   properties:
   - type: OpenAPI
@@ -763,6 +777,8 @@ apis:
   humanURL: https://www.quantcdn.io/home
   baseURL: https://dashboard.quantcdn.io
   tags:
+  - Project
+  tags_raw:
   - Projects
   properties:
   - type: OpenAPI
