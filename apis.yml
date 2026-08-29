@@ -5,6 +5,17 @@ description: >-
   maintain static and dynamic versions of their websites with a global CDN, WAF, edge functions, key-value storage, AI
   inference, and DNS management.
 type: Index
+deliveryModel:
+  model: unknown
+  open_source: false
+  commercial: false
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -966,6 +977,9 @@ apis:
   - type: SDKs
     url: https://github.com/quantcdn/quant-admin-go
 common:
+  - type: CapabilityMap
+    url: capabilities/quantcdn-capability-edges.yml
+    name: QuantCDN Business Capability Map
   - type: AgenticAccess
     url: agentic-access/quantcdn-agentic-access.yml
   - type: VulnerabilityDisclosure
