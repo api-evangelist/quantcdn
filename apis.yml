@@ -691,6 +691,8 @@ apis:
   humanURL: https://www.quantcdn.io/home
   baseURL: https://dashboard.quantcdn.io
   tags:
+  - Environment
+  tags_raw:
   - Environments
   properties:
   - type: OpenAPI
