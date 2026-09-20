@@ -1,0 +1,53 @@
+slug: quantcdn
+provider: QuantCDN
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Telecommunications
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 4
+edges:
+- tag: Variables
+  spec_file: quantcdn-variables-api-openapi.yml
+  capability_id: BC-4210.60
+  capability_id_l1: BC-4210
+  capability_name: Configuration & Secrets Management
+  confidence: 0.78
+  evidence: bulkSetEnvironmentVariables  Bulk set/replace environment variables
+  reason: CRUD over per-environment runtime variables is squarely Configuration & Secrets Management for
+    a deployed application.
+- tag: AI Agents
+  spec_file: quantcdn-ai-agents-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: createAIAgent  Create AI Agent; chatWithAIAgent  Chat with AI Agent
+  reason: Lifecycle management and invocation of AI agents on a cloud platform — an AI/ML capability (Artificial
+    Intelligence Management), not a customer-service or telecom capability.
+- tag: AI Governance
+  spec_file: quantcdn-ai-governance-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: getGovernanceConfig  Get AI governance configuration for an organisation; getGovernanceSpend  Get
+    AI spend summary
+  reason: Explicit AI governance configuration and spend limits for AI consumption — responsible-AI governance
+    under Artificial Intelligence Management (with a secondary IT-cost flavour).
+- tag: AI Inference
+  spec_file: quantcdn-ai-inference-api-openapi.yml
+  capability_id: BC-610.60
+  capability_id_l1: BC-610
+  capability_name: Artificial Intelligence Management
+  confidence: 0.7
+  evidence: chatInference  Chat inference via API Gateway; embeddings  Generate text embeddings for semantic
+    search and RAG applications
+  reason: Model serving/inference endpoints (chat, embeddings, image generation) are the operational side
+    of AI/ML model management on this platform.
