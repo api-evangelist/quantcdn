@@ -11,7 +11,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 4
+edge_count: 7
 edges:
 - tag: Variables
   spec_file: quantcdn-variables-api-openapi.yml
@@ -22,6 +22,16 @@ edges:
   evidence: bulkSetEnvironmentVariables  Bulk set/replace environment variables
   reason: CRUD over per-environment runtime variables is squarely Configuration & Secrets Management for
     a deployed application.
+- tag: ScalingPolicy
+  spec_file: quantcdn-scalingpolicy-api-openapi.yml
+  capability_id: BC-4220.50
+  capability_id_l1: BC-4220
+  capability_name: Capacity & Performance Management
+  confidence: 0.75
+  evidence: getScalingPolicies  Get the scaling policies for an environment; updateScalingPolicy
+  reason: Operations manage auto-scaling policies for running application environments, which matches
+    Capacity & Performance Management ('auto-scaling policies') under SaaS Platform Operations.
+  recovered_from: sweep-20260829T005356Z-edges.json
 - tag: AI Agents
   spec_file: quantcdn-ai-agents-api-openapi.yml
   capability_id: BC-610.60
@@ -51,3 +61,26 @@ edges:
     search and RAG applications
   reason: Model serving/inference endpoints (chat, embeddings, image generation) are the operational side
     of AI/ML model management on this platform.
+- tag: Backup Management
+  spec_file: quantcdn-backup-management-api-openapi.yml
+  capability_id: BC-4220.60
+  capability_id_l1: BC-4220
+  capability_name: Disaster Recovery & Resilience
+  confidence: 0.7
+  evidence: createBackup  Create a backup for an environment ... downloadBackup  Generate a download URL
+    for a backup
+  reason: Create, list, delete and download environment backups — backup and restore operations for a
+    hosted service, matching Disaster Recovery & Resilience in the software frame.
+  recovered_from: sweep-20260829T005356Z-edges.json
+- tag: Rules
+  spec_file: quantcdn-rules-api-openapi.yml
+  capability_id: BC-620
+  capability_id_l1: BC-620
+  capability_name: Cybersecurity Management
+  confidence: 0.7
+  evidence: RulesBotChallenge_list  List bot challenge rules; RulesContentFilter_create  Create a content
+    filter rule; schemas WafConfig, WafConfig_block_lists, V2RuleAuth
+  reason: Rules configure WAF behaviour, bot challenges, content filtering and edge authentication — protective
+    security controls on inbound traffic, so Cybersecurity Management at L1. The mix of preventive controls
+    and access rules makes a single L2 (architecture vs threat response vs IAM) unclear, so no L2 asserted.
+  recovered_from: sweep-20260829T005356Z-edges.json
