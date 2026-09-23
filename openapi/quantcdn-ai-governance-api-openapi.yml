@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents AI Governance API
+  title: QuantCDN AI Governance API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -95,23 +95,22 @@ paths:
       - AI Governance
 components:
   schemas:
-    updateGovernanceConfig_200_response:
+    getGovernanceSpend_200_response_todayTotal:
       example:
-        success: true
-        config: '{}'
+        requestCount: 5
+        spendCents: 1
       properties:
-        success:
-          example: true
-          type: boolean
-        config:
-          type: object
+        spendCents:
+          description: Org spend today in US cents
+          type: integer
+        requestCount:
+          type: integer
       type: object
     getGovernanceSpend_200_response_dailyBudget:
       example:
         usedPercent: 3.6160767
         remainingCents: 2
         dailyBudgetCents: 9
-      nullable: true
       properties:
         dailyBudgetCents:
           type: integer
@@ -120,7 +119,37 @@ components:
           type: number
         remainingCents:
           type: integer
-      type: object
+      type:
+      - object
+      - 'null'
+    getGovernanceSpend_200_response_userTotal:
+      example:
+        dailySpendCents: 7
+        monthlySpendCents: 4
+      properties:
+        monthlySpendCents:
+          type: integer
+        dailySpendCents:
+          type: integer
+      type:
+      - object
+      - 'null'
+    getGovernanceSpend_200_response_budget:
+      example:
+        monthlyBudgetCents: 5
+        usedPercent: 2.302136
+        remainingCents: 7
+      properties:
+        monthlyBudgetCents:
+          type: integer
+        usedPercent:
+          format: float
+          type: number
+        remainingCents:
+          type: integer
+      type:
+      - object
+      - 'null'
     getGovernanceSpend_200_response_orgTotal:
       example:
         requestCount: 6
@@ -131,6 +160,40 @@ components:
           type: integer
         requestCount:
           type: integer
+      type: object
+    updateGovernanceConfig_request:
+      properties:
+        aiEnabled:
+          type: boolean
+        modelPolicy:
+          enum:
+          - unrestricted
+          - allowlist
+          - blocklist
+          type: string
+        modelList:
+          items:
+            type: string
+          type: array
+        mandatoryGuardrailPreset:
+          enum:
+          - official
+          - official-sensitive
+          - protected
+          type:
+          - string
+          - 'null'
+        mandatoryFilterPolicies:
+          items:
+            type: string
+          type: array
+        spendLimits:
+          $ref: '#/components/schemas/getGovernanceConfig_200_response_spendLimits'
+        version:
+          type: integer
+      required:
+      - aiEnabled
+      - modelPolicy
       type: object
     getGovernanceSpend_200_response:
       example:
@@ -162,85 +225,6 @@ components:
           $ref: '#/components/schemas/getGovernanceSpend_200_response_dailyBudget'
         userTotal:
           $ref: '#/components/schemas/getGovernanceSpend_200_response_userTotal'
-      type: object
-    getGovernanceSpend_200_response_userTotal:
-      example:
-        dailySpendCents: 7
-        monthlySpendCents: 4
-      nullable: true
-      properties:
-        monthlySpendCents:
-          type: integer
-        dailySpendCents:
-          type: integer
-      type: object
-    getGovernanceConfig_200_response_spendLimits:
-      example:
-        monthlyBudgetCents: 0
-        perUserDailyBudgetCents: 5
-        warningThresholdPercent: 5
-        perUserMonthlyBudgetCents: 1
-        dailyBudgetCents: 6
-      properties:
-        monthlyBudgetCents:
-          nullable: true
-          type: integer
-        dailyBudgetCents:
-          nullable: true
-          type: integer
-        perUserMonthlyBudgetCents:
-          nullable: true
-          type: integer
-        perUserDailyBudgetCents:
-          nullable: true
-          type: integer
-        warningThresholdPercent:
-          nullable: true
-          type: integer
-      type: object
-    getGovernanceSpend_200_response_todayTotal:
-      example:
-        requestCount: 5
-        spendCents: 1
-      properties:
-        spendCents:
-          description: Org spend today in US cents
-          type: integer
-        requestCount:
-          type: integer
-      type: object
-    updateGovernanceConfig_request:
-      properties:
-        aiEnabled:
-          type: boolean
-        modelPolicy:
-          enum:
-          - unrestricted
-          - allowlist
-          - blocklist
-          type: string
-        modelList:
-          items:
-            type: string
-          type: array
-        mandatoryGuardrailPreset:
-          enum:
-          - official
-          - official-sensitive
-          - protected
-          nullable: true
-          type: string
-        mandatoryFilterPolicies:
-          items:
-            type: string
-          type: array
-        spendLimits:
-          $ref: '#/components/schemas/getGovernanceConfig_200_response_spendLimits'
-        version:
-          type: integer
-      required:
-      - aiEnabled
-      - modelPolicy
       type: object
     getGovernanceConfig_200_response:
       example:
@@ -277,8 +261,9 @@ components:
             type: string
           type: array
         mandatoryGuardrailPreset:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         mandatoryFilterPolicies:
           items:
             type: string
@@ -288,20 +273,45 @@ components:
         version:
           type: integer
       type: object
-    getGovernanceSpend_200_response_budget:
+    getGovernanceConfig_200_response_spendLimits:
       example:
-        monthlyBudgetCents: 5
-        usedPercent: 2.302136
-        remainingCents: 7
-      nullable: true
+        monthlyBudgetCents: 0
+        perUserDailyBudgetCents: 5
+        warningThresholdPercent: 5
+        perUserMonthlyBudgetCents: 1
+        dailyBudgetCents: 6
       properties:
         monthlyBudgetCents:
-          type: integer
-        usedPercent:
-          format: float
-          type: number
-        remainingCents:
-          type: integer
+          type:
+          - integer
+          - 'null'
+        dailyBudgetCents:
+          type:
+          - integer
+          - 'null'
+        perUserMonthlyBudgetCents:
+          type:
+          - integer
+          - 'null'
+        perUserDailyBudgetCents:
+          type:
+          - integer
+          - 'null'
+        warningThresholdPercent:
+          type:
+          - integer
+          - 'null'
+      type: object
+    updateGovernanceConfig_200_response:
+      example:
+        success: true
+        config: '{}'
+      properties:
+        success:
+          example: true
+          type: boolean
+        config:
+          type: object
       type: object
   securitySchemes:
     BearerAuth:

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents CDN Metrics API
+  title: QuantCDN CDN Metrics API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -298,6 +298,44 @@ components:
         type: string
       - description: Unix timestamp
         type: integer
+    V2MetricDataPoint:
+      properties:
+        timestamp:
+          $ref: '#/components/schemas/V2MetricDataPoint_timestamp'
+        value:
+          description: Metric value at this timestamp
+          example: 150
+          type: number
+      required:
+      - timestamp
+      - value
+      type: object
+    V2MetricData:
+      properties:
+        series:
+          description: Time series data points
+          items:
+            $ref: '#/components/schemas/V2MetricDataPoint'
+          type: array
+        period_total:
+          description: Total value for the period
+          example: 8523
+          type: number
+        all_time_total:
+          description: All-time total value
+          example: 1284567
+          type: number
+        period_average:
+          description: Average value per time unit in the period
+          example: 142.05
+          format: float
+          type: number
+      required:
+      - all_time_total
+      - period_average
+      - period_total
+      - series
+      type: object
     V2MetricsResponse:
       example:
         data:
@@ -359,44 +397,6 @@ components:
       - data
       - meta
       type: object
-    V2MetricDataPoint:
-      properties:
-        timestamp:
-          $ref: '#/components/schemas/V2MetricDataPoint_timestamp'
-        value:
-          description: Metric value at this timestamp
-          example: 150
-          type: number
-      required:
-      - timestamp
-      - value
-      type: object
-    V2MetricData:
-      properties:
-        series:
-          description: Time series data points
-          items:
-            $ref: '#/components/schemas/V2MetricDataPoint'
-          type: array
-        period_total:
-          description: Total value for the period
-          example: 8523
-          type: number
-        all_time_total:
-          description: All-time total value
-          example: 1284567
-          type: number
-        period_average:
-          description: Average value per time unit in the period
-          example: 142.05
-          format: float
-          type: number
-      required:
-      - all_time_total
-      - period_average
-      - period_total
-      - series
-      type: object
     V2MetricsMeta:
       example:
         start_time: 2026-01-29 12:00:00+00:00
@@ -442,8 +442,9 @@ components:
           type: array
         domain:
           description: Domain filter applied (if any)
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
           example: null
       required:
       - end_time

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Volumes API
+  title: QuantCDN Volumes API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -211,12 +211,14 @@ components:
           type: string
         description:
           description: Volume description
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         rootDirectory:
           description: Root directory path
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
       required:
       - volumeName
       type: object

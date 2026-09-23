@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Commands API
+  title: QuantCDN Commands API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -126,11 +126,6 @@ paths:
       - Commands
 components:
   schemas:
-    createCommand_request:
-      properties:
-        command:
-          type: string
-      type: object
     Command:
       example:
         output:
@@ -167,6 +162,11 @@ components:
         scheduleName:
           type: string
         targetContainerName:
+          type: string
+      type: object
+    createCommand_request:
+      properties:
+        command:
           type: string
       type: object
   securitySchemes:

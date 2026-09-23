@@ -1,0 +1,31 @@
+# Front Door AI Index — quantcdn — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: quantcdn
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.quantcdn.io
+  final_host: www.quantcdn.io
+  ownership: own
+  owner: quantcdn
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 13
+  host_score: 13
+  density: 23.81
+  words: 546
+  tiers:
+    agentic: 6
+    core: 6
+    model: 1
+  ambiguous: 0
+  top_terms:
+    AI: 5
+    RAG: 2
+    chatbot: 2
+    Claude: 1
+    LLMs: 1
+    embedding: 1
+    vector database: 1

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Domains API
+  title: QuantCDN Domains API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -261,6 +261,23 @@ paths:
       - Domains
 components:
   schemas:
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
     V2DomainRequest:
       example:
         domain: test-domain.com
@@ -271,21 +288,6 @@ components:
           type: string
       required:
       - domain
-      type: object
-    V2Domain_dns_validation_records_inner:
-      properties:
-        name:
-          description: DNS record name (host/subdomain)
-          example: _abc123.example.com
-          type: string
-        type:
-          description: DNS record type (typically CNAME)
-          example: CNAME
-          type: string
-        value:
-          description: DNS record value to point to
-          example: _xyz789.validation.example.com.
-          type: string
       type: object
     V2Domain:
       example:
@@ -322,8 +324,9 @@ components:
             value: _xyz789.validation.example.com.
           items:
             $ref: '#/components/schemas/V2Domain_dns_validation_records_inner'
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         dns_go_live_records:
           description: DNS records required to route traffic to the CDN. These records differ based on domain type (apex vs subdomain). Present when the CDN is configured and ready to receive traffic.
           example:
@@ -333,29 +336,13 @@ components:
             description: Add a CNAME record with the host set to your subdomain pointing to the CDN endpoint.
           items:
             $ref: '#/components/schemas/V2Domain_dns_go_live_records_inner'
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
       required:
       - dns_engaged
       - domain
       - id
-      type: object
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
-      properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
-      required:
-      - error
-      - message
       type: object
     V2Domain_dns_go_live_records_inner:
       properties:
@@ -370,11 +357,27 @@ components:
         value:
           description: DNS record value (IP addresses for A records, domain name for CNAME/ALIAS)
           example: cdn.example.com
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         description:
           description: Human-readable instructions for configuring this DNS record
           example: Add a CNAME record with the host set to your subdomain pointing to the CDN endpoint.
+          type: string
+      type: object
+    V2Domain_dns_validation_records_inner:
+      properties:
+        name:
+          description: DNS record name (host/subdomain)
+          example: _abc123.example.com
+          type: string
+        type:
+          description: DNS record type (typically CNAME)
+          example: CNAME
+          type: string
+        value:
+          description: DNS record value to point to
+          example: _xyz789.validation.example.com.
           type: string
       type: object
   securitySchemes:

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents AI Models API
+  title: QuantCDN AI Models API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -56,7 +56,31 @@ paths:
       - AI Models
   /api/v3/organizations/{organisation}/ai/models/{modelId}:
     get:
-      description: "Retrieves detailed information about a specific Bedrock model from the catalog.\n     *\n     * **Features:**\n     * - Complete pricing breakdown (input/output per million tokens)\n     * - Context window and output token limits\n     * - Supported features (chat, vision, streaming, embeddings)\n     * - Model availability and deprecation status\n     * - Release date for version tracking\n     *\n     * **Example Model IDs:**\n     * - `amazon.nova-lite-v1:0` - Default multimodal model\n     * - `anthropic.claude-3-5-sonnet-20241022-v2:0` - Latest Claude\n     * - `amazon.titan-embed-text-v2:0` - Latest embeddings"
+      description: 'Retrieves detailed information about a specific Bedrock model from the catalog.
+
+        *
+
+        * **Features:**
+
+        * - Complete pricing breakdown (input/output per million tokens)
+
+        * - Context window and output token limits
+
+        * - Supported features (chat, vision, streaming, embeddings)
+
+        * - Model availability and deprecation status
+
+        * - Release date for version tracking
+
+        *
+
+        * **Example Model IDs:**
+
+        * - `amazon.nova-lite-v1:0` - Default multimodal model
+
+        * - `anthropic.claude-3-5-sonnet-20241022-v2:0` - Latest Claude
+
+        * - `amazon.titan-embed-text-v2:0` - Latest embeddings'
       operationId: getAIModel
       parameters:
       - description: The organisation ID
@@ -96,47 +120,72 @@ paths:
       - AI Models
 components:
   schemas:
-    getAIModel_200_response_pricing:
+    getAIModel_404_response:
       example:
-        outputPerMToken: 0.24
-        currency: USD
-        inputPerMToken: 0.06
+        code: MODEL_NOT_FOUND
+        message: Model not found
       properties:
-        inputPerMToken:
-          example: 0.06
-          format: float
-          type: number
-        outputPerMToken:
-          example: 0.24
-          format: float
-          type: number
-        currency:
-          example: USD
+        message:
+          example: Model not found
+          type: string
+        code:
+          example: MODEL_NOT_FOUND
           type: string
       type: object
-    getAIModel_200_response_capabilities:
+    listAIModels_200_response:
       example:
-        supportsStructuredOutput: false
-        supportsMultimodal: true
-        supportsVision: true
-        supportsStreaming: true
-        supportsTools: false
+        models:
+        - capabilities:
+            embeddings: true
+            streaming: true
+            toolUse: true
+            multimodal: true
+            text: true
+          provider: Amazon
+          name: Amazon Nova Lite
+          id: amazon.nova-lite-v1:0
+        - capabilities:
+            embeddings: true
+            streaming: true
+            toolUse: true
+            multimodal: true
+            text: true
+          provider: Amazon
+          name: Amazon Nova Lite
+          id: amazon.nova-lite-v1:0
+        count: 10
       properties:
-        supportsTools:
-          example: false
-          type: boolean
-        supportsStructuredOutput:
-          example: false
-          type: boolean
-        supportsMultimodal:
-          example: true
-          type: boolean
-        supportsVision:
-          example: true
-          type: boolean
-        supportsStreaming:
-          example: true
-          type: boolean
+        count:
+          example: 10
+          type: integer
+        models:
+          items:
+            $ref: '#/components/schemas/listAIModels_200_response_models_inner'
+          type: array
+      type: object
+    listAIModels_200_response_models_inner:
+      example:
+        capabilities:
+          embeddings: true
+          streaming: true
+          toolUse: true
+          multimodal: true
+          text: true
+        provider: Amazon
+        name: Amazon Nova Lite
+        id: amazon.nova-lite-v1:0
+      properties:
+        id:
+          example: amazon.nova-lite-v1:0
+          type: string
+        name:
+          example: Amazon Nova Lite
+          type: string
+        provider:
+          example: Amazon
+          type: string
+        capabilities:
+          $ref: '#/components/schemas/listAIModels_200_response_models_inner_capabilities'
       type: object
     listAIModels_200_response_models_inner_capabilities:
       description: Model capabilities and features
@@ -161,6 +210,30 @@ components:
           type: boolean
         toolUse:
           description: Supports function calling
+          type: boolean
+      type: object
+    getAIModel_200_response_capabilities:
+      example:
+        supportsStructuredOutput: false
+        supportsMultimodal: true
+        supportsVision: true
+        supportsStreaming: true
+        supportsTools: false
+      properties:
+        supportsTools:
+          example: false
+          type: boolean
+        supportsStructuredOutput:
+          example: false
+          type: boolean
+        supportsMultimodal:
+          example: true
+          type: boolean
+        supportsVision:
+          example: true
+          type: boolean
+        supportsStreaming:
+          example: true
           type: boolean
       type: object
     getAIModel_200_response:
@@ -218,72 +291,23 @@ components:
           example: true
           type: boolean
       type: object
-    listAIModels_200_response:
+    getAIModel_200_response_pricing:
       example:
-        models:
-        - capabilities:
-            embeddings: true
-            streaming: true
-            toolUse: true
-            multimodal: true
-            text: true
-          provider: Amazon
-          name: Amazon Nova Lite
-          id: amazon.nova-lite-v1:0
-        - capabilities:
-            embeddings: true
-            streaming: true
-            toolUse: true
-            multimodal: true
-            text: true
-          provider: Amazon
-          name: Amazon Nova Lite
-          id: amazon.nova-lite-v1:0
-        count: 10
+        outputPerMToken: 0.24
+        currency: USD
+        inputPerMToken: 0.06
       properties:
-        count:
-          example: 10
-          type: integer
-        models:
-          items:
-            $ref: '#/components/schemas/listAIModels_200_response_models_inner'
-          type: array
-      type: object
-    getAIModel_404_response:
-      example:
-        code: MODEL_NOT_FOUND
-        message: Model not found
-      properties:
-        message:
-          example: Model not found
+        inputPerMToken:
+          example: 0.06
+          format: float
+          type: number
+        outputPerMToken:
+          example: 0.24
+          format: float
+          type: number
+        currency:
+          example: USD
           type: string
-        code:
-          example: MODEL_NOT_FOUND
-          type: string
-      type: object
-    listAIModels_200_response_models_inner:
-      example:
-        capabilities:
-          embeddings: true
-          streaming: true
-          toolUse: true
-          multimodal: true
-          text: true
-        provider: Amazon
-        name: Amazon Nova Lite
-        id: amazon.nova-lite-v1:0
-      properties:
-        id:
-          example: amazon.nova-lite-v1:0
-          type: string
-        name:
-          example: Amazon Nova Lite
-          type: string
-        provider:
-          example: Amazon
-          type: string
-        capabilities:
-          $ref: '#/components/schemas/listAIModels_200_response_models_inner_capabilities'
       type: object
   securitySchemes:
     BearerAuth:

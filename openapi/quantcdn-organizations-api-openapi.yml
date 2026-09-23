@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Organizations API
+  title: QuantCDN Organizations API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -84,23 +84,6 @@ paths:
       - Organizations
 components:
   schemas:
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
-      properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
-      required:
-      - error
-      - message
-      type: object
     Organizations_list_200_response_inner:
       example:
         name: Test Organization
@@ -158,6 +141,23 @@ components:
       required:
       - machine_name
       - name
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
       type: object
   securitySchemes:
     BearerAuth:

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents AI Filter Policies API
+  title: QuantCDN AI Filter Policies API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -227,15 +227,34 @@ paths:
       - AI Filter Policies
 components:
   schemas:
-    createFilterPolicy_request:
+    createFilterPolicy_request_rules_inner:
+      properties:
+        name:
+          type: string
+        match:
+          $ref: '#/components/schemas/createFilterPolicy_request_rules_inner_match'
+        action:
+          enum:
+          - BLOCK
+          - REDACT
+          type: string
+        applyTo:
+          enum:
+          - input
+          - output
+          - both
+          type: string
+      type: object
+    updateFilterPolicy_request:
       properties:
         name:
           maxLength: 255
           type: string
         description:
           maxLength: 1000
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         enabled:
           type: boolean
         rules:
@@ -244,9 +263,6 @@ components:
           maxItems: 100
           minItems: 1
           type: array
-      required:
-      - name
-      - rules
       type: object
     createFilterPolicy_request_rules_inner_match:
       description: Match criteria
@@ -267,15 +283,16 @@ components:
           maxLength: 500
           type: string
       type: object
-    updateFilterPolicy_request:
+    createFilterPolicy_request:
       properties:
         name:
           maxLength: 255
           type: string
         description:
           maxLength: 1000
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         enabled:
           type: boolean
         rules:
@@ -284,24 +301,9 @@ components:
           maxItems: 100
           minItems: 1
           type: array
-      type: object
-    createFilterPolicy_request_rules_inner:
-      properties:
-        name:
-          type: string
-        match:
-          $ref: '#/components/schemas/createFilterPolicy_request_rules_inner_match'
-        action:
-          enum:
-          - BLOCK
-          - REDACT
-          type: string
-        applyTo:
-          enum:
-          - input
-          - output
-          - both
-          type: string
+      required:
+      - name
+      - rules
       type: object
   securitySchemes:
     BearerAuth:

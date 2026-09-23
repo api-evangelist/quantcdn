@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents AI Sessions API
+  title: QuantCDN AI Sessions API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -16,7 +16,29 @@ tags:
 paths:
   /api/v3/organizations/{organisation}/ai/sessions:
     get:
-      description: "Lists active sessions for an organization with flexible filtering options.\n     *\n     * **Query Combinations:**\n     * 1. By Organization (default): Returns all sessions in the organization\n     * 2. By Organization + Group: `?sessionGroup=drupal-prod` - Sessions in a specific group\n     * 3. By User: `?userId=user-123` - All sessions for a user\n     * 4. By User + Group: `?userId=user-123&sessionGroup=drupal-prod` - User's sessions in a specific group\n     *\n     * **Use Cases:**\n     * - List user's conversations in a specific app/environment\n     * - Admin view of all sessions in a customer/tenant group\n     * - User profile showing all AI conversations across apps"
+      description: 'Lists active sessions for an organization with flexible filtering options.
+
+        *
+
+        * **Query Combinations:**
+
+        * 1. By Organization (default): Returns all sessions in the organization
+
+        * 2. By Organization + Group: `?sessionGroup=drupal-prod` - Sessions in a specific group
+
+        * 3. By User: `?userId=user-123` - All sessions for a user
+
+        * 4. By User + Group: `?userId=user-123&sessionGroup=drupal-prod` - User''s sessions in a specific group
+
+        *
+
+        * **Use Cases:**
+
+        * - List user''s conversations in a specific app/environment
+
+        * - Admin view of all sessions in a customer/tenant group
+
+        * - User profile showing all AI conversations across apps'
       operationId: listAISessions
       parameters:
       - description: The organisation ID
@@ -182,7 +204,17 @@ paths:
       tags:
       - AI Sessions
     put:
-      description: "Updates session with new conversation messages and tracks token usage. Appends new messages to conversation history and updates session stats.\n     *\n     * **Typical Flow:**\n     * 1. Get session to retrieve conversation history\n     * 2. Call AI inference with full message history\n     * 3. Update session with new user + assistant messages"
+      description: 'Updates session with new conversation messages and tracks token usage. Appends new messages to conversation history and updates session stats.
+
+        *
+
+        * **Typical Flow:**
+
+        * 1. Get session to retrieve conversation history
+
+        * 2. Call AI inference with full message history
+
+        * 3. Update session with new user + assistant messages'
       operationId: updateAISession
       parameters:
       - description: The organisation ID
@@ -290,54 +322,15 @@ components:
           example: Session extended by 60 minutes
           type: string
       type: object
-    createAISession_201_response:
-      example:
-        createdAt: 2000-01-23 04:56:07+00:00
-        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        expiresAt: 2000-01-23 04:56:07+00:00
-        status: active
+    extendAISession_request:
       properties:
-        sessionId:
-          format: uuid
-          type: string
-        status:
-          enum:
-          - active
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-      type: object
-    deleteAISession_200_response:
-      example:
-        message: message
-      properties:
-        message:
-          type: string
-      type: object
-    createAISession_request_initialMessages_inner:
-      properties:
-        role:
-          enum:
-          - system
-          - user
-          - assistant
-          type: string
-        content:
-          type: string
-      type: object
-    updateAISession_request_newMessages_inner:
-      properties:
-        role:
-          enum:
-          - user
-          - assistant
-          type: string
-        content:
-          type: string
+        additionalMinutes:
+          default: 60
+          description: Minutes to add to expiration time (default 60, max 1440)
+          example: 60
+          maximum: 1440
+          minimum: 1
+          type: integer
       type: object
     createAISession_request:
       properties:
@@ -370,6 +363,17 @@ components:
       required:
       - userId
       type: object
+    createAISession_request_initialMessages_inner:
+      properties:
+        role:
+          enum:
+          - system
+          - user
+          - assistant
+          type: string
+        content:
+          type: string
+      type: object
     getAISession_200_response:
       example:
         messages:
@@ -394,6 +398,36 @@ components:
           format: date-time
           type: string
       type: object
+    updateAISession_request_newMessages_inner:
+      properties:
+        role:
+          enum:
+          - user
+          - assistant
+          type: string
+        content:
+          type: string
+      type: object
+    updateAISession_request:
+      properties:
+        newMessages:
+          description: New messages to append to conversation
+          items:
+            $ref: '#/components/schemas/updateAISession_request_newMessages_inner'
+          type: array
+        tokensUsed:
+          description: Tokens consumed in this turn
+          type: integer
+        status:
+          description: Update session status
+          enum:
+          - active
+          - completed
+          type: string
+        metadata:
+          description: Update custom metadata
+          type: object
+      type: object
     updateAISession_200_response:
       example:
         totalMessages: 0
@@ -414,16 +448,6 @@ components:
         updatedAt:
           format: date-time
           type: string
-      type: object
-    extendAISession_request:
-      properties:
-        additionalMinutes:
-          default: 60
-          description: Minutes to add to expiration time (default 60, max 1440)
-          example: 60
-          maximum: 1440
-          minimum: 1
-          type: integer
       type: object
     listAISessions_200_response_inner:
       example:
@@ -446,25 +470,33 @@ components:
           format: date-time
           type: string
       type: object
-    updateAISession_request:
+    createAISession_201_response:
+      example:
+        createdAt: 2000-01-23 04:56:07+00:00
+        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        expiresAt: 2000-01-23 04:56:07+00:00
+        status: active
       properties:
-        newMessages:
-          description: New messages to append to conversation
-          items:
-            $ref: '#/components/schemas/updateAISession_request_newMessages_inner'
-          type: array
-        tokensUsed:
-          description: Tokens consumed in this turn
-          type: integer
+        sessionId:
+          format: uuid
+          type: string
         status:
-          description: Update session status
           enum:
           - active
-          - completed
           type: string
-        metadata:
-          description: Update custom metadata
-          type: object
+        expiresAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    deleteAISession_200_response:
+      example:
+        message: message
+      properties:
+        message:
+          type: string
       type: object
   securitySchemes:
     BearerAuth:

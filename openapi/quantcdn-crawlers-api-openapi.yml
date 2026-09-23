@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Crawlers API
+  title: QuantCDN Crawlers API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -474,195 +474,6 @@ paths:
       - Crawlers
 components:
   schemas:
-    V2Crawler_assets_parser:
-      description: Parser configuration for asset extraction
-      properties:
-        enabled:
-          description: Enable parser
-          example: true
-          type: boolean
-      type: object
-    V2CrawlerRequest:
-      example:
-        headers:
-          Authorization: Bearer token123
-          X-Custom-Header: value
-        include:
-        - /blog/*
-        - /products/*
-        max_errors: 100
-        webhook_url: https://example.com/webhook
-        allowed_domains:
-        - example.com
-        - assets.example.com
-        browser_mode: false
-        max_html: 50
-        urls:
-        - /
-        - /about
-        - /contact
-        status_ok:
-        - 200
-        - 201
-        delay: 4
-        depth: -1
-        assets:
-          network_intercept:
-            enabled: true
-            timeout: 30
-            execute_js: false
-          parser:
-            enabled: true
-        max_hits: 0
-        domain: test-domain.com
-        name: Test Crawler
-        webhook_extra_vars: key1=value1&key2=value2
-        exclude:
-        - /admin/*
-        - /private/*
-        start_urls:
-        - /
-        - /blog
-        workers: 2
-        webhook_auth_header: Bearer token123
-        sitemap:
-        - url: /sitemap.xml
-          recursive: true
-        user_agent: Mozilla/5.0...
-      properties:
-        name:
-          description: Crawler name
-          example: Test Crawler
-          type: string
-        domain:
-          description: Domain to crawl
-          example: test-domain.com
-          type: string
-        browser_mode:
-          default: false
-          description: Enable browser mode
-          example: false
-          type: boolean
-        urls:
-          description: URLs to crawl
-          example:
-          - /
-          - /about
-          - /contact
-          items:
-            example: /
-            type: string
-          type: array
-        start_urls:
-          description: Starting URLs for crawl
-          example:
-          - /
-          - /blog
-          items:
-            type: string
-          type: array
-        headers:
-          additionalProperties:
-            type: string
-          description: Custom headers
-          example:
-            Authorization: Bearer token123
-            X-Custom-Header: value
-          type: object
-        exclude:
-          description: URL patterns to exclude (regex)
-          example:
-          - /admin/*
-          - /private/*
-          items:
-            type: string
-          type: array
-        include:
-          description: URL patterns to include (regex)
-          example:
-          - /blog/*
-          - /products/*
-          items:
-            type: string
-          type: array
-        webhook_url:
-          description: Webhook URL for notifications
-          example: https://example.com/webhook
-          type: string
-        webhook_auth_header:
-          description: Authorization header for webhook
-          example: Bearer token123
-          type: string
-        webhook_extra_vars:
-          description: Extra variables for webhook
-          example: key1=value1&key2=value2
-          type: string
-        workers:
-          description: 'Number of concurrent workers (default: 2, non-default requires verification)'
-          example: 2
-          maximum: 20
-          minimum: 1
-          type: integer
-        delay:
-          description: 'Delay between requests in seconds (default: 4, non-default requires verification)'
-          example: 4
-          format: float
-          maximum: 10
-          minimum: 0
-          type: number
-        depth:
-          description: Maximum crawl depth, -1 for unlimited
-          example: -1
-          minimum: -1
-          type: integer
-        max_hits:
-          description: 'Maximum total requests, 0 for unlimited (default: 0, non-default requires verification)'
-          example: 0
-          minimum: 0
-          type: integer
-        max_html:
-          description: 'Maximum HTML pages, 0 for unlimited (default: org limit, non-default requires verification)'
-          example: 50
-          minimum: 0
-          type: integer
-        status_ok:
-          description: HTTP status codes that will result in content being captured and pushed to Quant
-          example:
-          - 200
-          - 201
-          items:
-            type: integer
-          type: array
-        sitemap:
-          description: Sitemap configuration
-          example:
-          - url: /sitemap.xml
-            recursive: true
-          items:
-            $ref: '#/components/schemas/V2Crawler_sitemap_inner'
-          type: array
-        allowed_domains:
-          description: Allowed domains for multi-domain crawling, automatically enables merge_domains
-          example:
-          - example.com
-          - assets.example.com
-          items:
-            type: string
-          type: array
-        user_agent:
-          description: Custom user agent, only when browser_mode is false
-          example: Mozilla/5.0...
-          type: string
-        assets:
-          $ref: '#/components/schemas/V2Crawler_assets'
-        max_errors:
-          description: Maximum errors before stopping crawl
-          example: 100
-          minimum: 0
-          type: integer
-      required:
-      - domain
-      type: object
     V2Crawler_sitemap_inner:
       properties:
         url:
@@ -673,102 +484,6 @@ components:
           description: Recursively follow sitemap links
           example: true
           type: boolean
-      type: object
-    V2Crawler_assets:
-      description: Asset harvesting configuration
-      example:
-        network_intercept:
-          enabled: true
-          timeout: 30
-          execute_js: false
-        parser:
-          enabled: true
-      properties:
-        network_intercept:
-          $ref: '#/components/schemas/V2Crawler_assets_network_intercept'
-        parser:
-          $ref: '#/components/schemas/V2Crawler_assets_parser'
-      type: object
-    Crawlers_run_200_response:
-      example:
-        run_id: '12345'
-      properties:
-        run_id:
-          description: The crawler run ID
-          example: '12345'
-          type: string
-      type: object
-    Crawlers_run_request:
-      properties:
-        urls:
-          description: Optional URLs to crawl (overrides crawler's default URL configuration). If not provided, the crawler will use its configured URLs or perform a full crawl.
-          example:
-          - /
-          - /about
-          - /contact
-          items:
-            example: /
-            type: string
-          type: array
-      type: object
-    V2CrawlerRun:
-      example:
-        completed_at: 1705749600
-        updated_at: 2024-01-20 09:15:00+00:00
-        project_id: 12345
-        last_status: completed
-        crawler_config_id: 12345
-        started_at: 1705749300
-        created_at: 2024-01-20 09:15:00+00:00
-        task_id: task-12345
-        id: 12345
-      properties:
-        id:
-          description: Run ID
-          example: 12345
-          type: integer
-        crawler_config_id:
-          description: Crawler config ID
-          example: 12345
-          type: integer
-        project_id:
-          description: Project ID
-          example: 12345
-          type: integer
-        last_status:
-          description: Run status
-          example: completed
-          type: string
-        task_id:
-          description: Task ID
-          example: task-12345
-          type: string
-        started_at:
-          description: Start time (Unix timestamp)
-          example: 1705749300
-          nullable: true
-          type: integer
-        completed_at:
-          description: Completion time (Unix timestamp)
-          example: 1705749600
-          nullable: true
-          type: integer
-        created_at:
-          description: Creation timestamp
-          example: 2024-01-20 09:15:00+00:00
-          format: date-time
-          type: string
-        updated_at:
-          description: Last update timestamp
-          example: 2024-01-20 09:15:00+00:00
-          format: date-time
-          type: string
-      required:
-      - crawler_config_id
-      - id
-      - last_status
-      - project_id
-      - task_id
       type: object
     V2Crawler_assets_network_intercept:
       description: Network intercept configuration for asset collection
@@ -785,6 +500,45 @@ components:
           description: Execute JavaScript during asset collection
           example: false
           type: boolean
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    Crawlers_run_request:
+      properties:
+        urls:
+          description: Optional URLs to crawl (overrides crawler's default URL configuration). If not provided, the crawler will use its configured URLs or perform a full crawl.
+          example:
+          - /
+          - /about
+          - /contact
+          items:
+            example: /
+            type: string
+          type: array
+      type: object
+    Crawlers_run_200_response:
+      example:
+        run_id: '12345'
+      properties:
+        run_id:
+          description: The crawler run ID
+          example: '12345'
+          type: string
       type: object
     V2Crawler:
       example:
@@ -989,8 +743,9 @@ components:
         deleted_at:
           description: Deletion timestamp
           format: date-time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
       required:
       - config
       - domain
@@ -998,22 +753,270 @@ components:
       - project_id
       - uuid
       type: object
-    V2Error:
+    V2CrawlerRun:
       example:
-        message: The requested resource was not found
-        error: true
+        completed_at: 1705749600
+        updated_at: 2024-01-20 09:15:00+00:00
+        project_id: 12345
+        last_status: completed
+        crawler_config_id: 12345
+        started_at: 1705749300
+        created_at: 2024-01-20 09:15:00+00:00
+        task_id: task-12345
+        id: 12345
       properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
+        id:
+          description: Run ID
+          example: 12345
+          type: integer
+        crawler_config_id:
+          description: Crawler config ID
+          example: 12345
+          type: integer
+        project_id:
+          description: Project ID
+          example: 12345
+          type: integer
+        last_status:
+          description: Run status
+          example: completed
           type: string
-        error:
-          description: Error flag
+        task_id:
+          description: Task ID
+          example: task-12345
+          type: string
+        started_at:
+          description: Start time (Unix timestamp)
+          example: 1705749300
+          type:
+          - integer
+          - 'null'
+        completed_at:
+          description: Completion time (Unix timestamp)
+          example: 1705749600
+          type:
+          - integer
+          - 'null'
+        created_at:
+          description: Creation timestamp
+          example: 2024-01-20 09:15:00+00:00
+          format: date-time
+          type: string
+        updated_at:
+          description: Last update timestamp
+          example: 2024-01-20 09:15:00+00:00
+          format: date-time
+          type: string
+      required:
+      - crawler_config_id
+      - id
+      - last_status
+      - project_id
+      - task_id
+      type: object
+    V2Crawler_assets:
+      description: Asset harvesting configuration
+      example:
+        network_intercept:
+          enabled: true
+          timeout: 30
+          execute_js: false
+        parser:
+          enabled: true
+      properties:
+        network_intercept:
+          $ref: '#/components/schemas/V2Crawler_assets_network_intercept'
+        parser:
+          $ref: '#/components/schemas/V2Crawler_assets_parser'
+      type: object
+    V2CrawlerRequest:
+      example:
+        headers:
+          Authorization: Bearer token123
+          X-Custom-Header: value
+        include:
+        - /blog/*
+        - /products/*
+        max_errors: 100
+        webhook_url: https://example.com/webhook
+        allowed_domains:
+        - example.com
+        - assets.example.com
+        browser_mode: false
+        max_html: 50
+        urls:
+        - /
+        - /about
+        - /contact
+        status_ok:
+        - 200
+        - 201
+        delay: 4
+        depth: -1
+        assets:
+          network_intercept:
+            enabled: true
+            timeout: 30
+            execute_js: false
+          parser:
+            enabled: true
+        max_hits: 0
+        domain: test-domain.com
+        name: Test Crawler
+        webhook_extra_vars: key1=value1&key2=value2
+        exclude:
+        - /admin/*
+        - /private/*
+        start_urls:
+        - /
+        - /blog
+        workers: 2
+        webhook_auth_header: Bearer token123
+        sitemap:
+        - url: /sitemap.xml
+          recursive: true
+        user_agent: Mozilla/5.0...
+      properties:
+        name:
+          description: Crawler name
+          example: Test Crawler
+          type: string
+        domain:
+          description: Domain to crawl
+          example: test-domain.com
+          type: string
+        browser_mode:
+          default: false
+          description: Enable browser mode
+          example: false
+          type: boolean
+        urls:
+          description: URLs to crawl
+          example:
+          - /
+          - /about
+          - /contact
+          items:
+            example: /
+            type: string
+          type: array
+        start_urls:
+          description: Starting URLs for crawl
+          example:
+          - /
+          - /blog
+          items:
+            type: string
+          type: array
+        headers:
+          additionalProperties:
+            type: string
+          description: Custom headers
+          example:
+            Authorization: Bearer token123
+            X-Custom-Header: value
+          type: object
+        exclude:
+          description: URL patterns to exclude (regex)
+          example:
+          - /admin/*
+          - /private/*
+          items:
+            type: string
+          type: array
+        include:
+          description: URL patterns to include (regex)
+          example:
+          - /blog/*
+          - /products/*
+          items:
+            type: string
+          type: array
+        webhook_url:
+          description: Webhook URL for notifications
+          example: https://example.com/webhook
+          type: string
+        webhook_auth_header:
+          description: Authorization header for webhook
+          example: Bearer token123
+          type: string
+        webhook_extra_vars:
+          description: Extra variables for webhook
+          example: key1=value1&key2=value2
+          type: string
+        workers:
+          description: 'Number of concurrent workers (default: 2, non-default requires verification)'
+          example: 2
+          maximum: 20
+          minimum: 1
+          type: integer
+        delay:
+          description: 'Delay between requests in seconds (default: 4, non-default requires verification)'
+          example: 4
+          format: float
+          maximum: 10
+          minimum: 0
+          type: number
+        depth:
+          description: Maximum crawl depth, -1 for unlimited
+          example: -1
+          minimum: -1
+          type: integer
+        max_hits:
+          description: 'Maximum total requests, 0 for unlimited (default: 0, non-default requires verification)'
+          example: 0
+          minimum: 0
+          type: integer
+        max_html:
+          description: 'Maximum HTML pages, 0 for unlimited (default: org limit, non-default requires verification)'
+          example: 50
+          minimum: 0
+          type: integer
+        status_ok:
+          description: HTTP status codes that will result in content being captured and pushed to Quant
+          example:
+          - 200
+          - 201
+          items:
+            type: integer
+          type: array
+        sitemap:
+          description: Sitemap configuration
+          example:
+          - url: /sitemap.xml
+            recursive: true
+          items:
+            $ref: '#/components/schemas/V2Crawler_sitemap_inner'
+          type: array
+        allowed_domains:
+          description: Allowed domains for multi-domain crawling, automatically enables merge_domains
+          example:
+          - example.com
+          - assets.example.com
+          items:
+            type: string
+          type: array
+        user_agent:
+          description: Custom user agent, only when browser_mode is false
+          example: Mozilla/5.0...
+          type: string
+        assets:
+          $ref: '#/components/schemas/V2Crawler_assets'
+        max_errors:
+          description: Maximum errors before stopping crawl
+          example: 100
+          minimum: 0
+          type: integer
+      required:
+      - domain
+      type: object
+    V2Crawler_assets_parser:
+      description: Parser configuration for asset extraction
+      properties:
+        enabled:
+          description: Enable parser
           example: true
           type: boolean
-      required:
-      - error
-      - message
       type: object
   securitySchemes:
     BearerAuth:

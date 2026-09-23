@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Cron API
+  title: QuantCDN Cron API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -379,8 +379,9 @@ components:
         name:
           type: string
         description:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         scheduleExpression:
           type: string
         command:
@@ -388,12 +389,14 @@ components:
             type: string
           type: array
         targetContainerName:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         isEnabled:
           default: true
-          nullable: true
-          type: boolean
+          type:
+          - boolean
+          - 'null'
       required:
       - command
       - name
@@ -402,60 +405,27 @@ components:
     updateCronJob_request:
       properties:
         description:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         scheduleExpression:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         command:
           items:
             type: string
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         targetContainerName:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         isEnabled:
-          nullable: true
-          type: boolean
-      type: object
-    patchEnvironmentCompose_400_response:
-      example:
-        message: message
-        errors: '{}'
-      properties:
-        message:
-          type: string
-        errors:
-          type: object
-      type: object
-    Cron:
-      example:
-        targetContainerName: targetContainerName
-        scheduleExpression: scheduleExpression
-        isEnabled: true
-        name: name
-        description: description
-        command:
-        - command
-        - command
-      properties:
-        name:
-          type: string
-        description:
-          nullable: true
-          type: string
-        scheduleExpression:
-          type: string
-        command:
-          items:
-            type: string
-          type: array
-        targetContainerName:
-          nullable: true
-          type: string
-        isEnabled:
-          type: boolean
+          type:
+          - boolean
+          - 'null'
       type: object
     CronRun:
       example:
@@ -480,8 +450,9 @@ components:
           - CRON
           type: string
         command:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         status:
           enum:
           - PENDING
@@ -493,25 +464,70 @@ components:
           type: string
         startTime:
           format: date-time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         endTime:
           format: date-time
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         exitCode:
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         output:
           items:
             type: string
           type: array
         scheduleName:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         targetContainerName:
-          nullable: true
+          type:
+          - string
+          - 'null'
+      type: object
+    Cron:
+      example:
+        targetContainerName: targetContainerName
+        scheduleExpression: scheduleExpression
+        isEnabled: true
+        name: name
+        description: description
+        command:
+        - command
+        - command
+      properties:
+        name:
           type: string
+        description:
+          type:
+          - string
+          - 'null'
+        scheduleExpression:
+          type: string
+        command:
+          items:
+            type: string
+          type: array
+        targetContainerName:
+          type:
+          - string
+          - 'null'
+        isEnabled:
+          type: boolean
+      type: object
+    patchEnvironmentCompose_400_response:
+      example:
+        message: message
+        errors: '{}'
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
       type: object
   securitySchemes:
     BearerAuth:

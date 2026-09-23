@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents AI Monitoring API
+  title: QuantCDN AI Monitoring API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -49,15 +49,6 @@ paths:
       - AI Monitoring
 components:
   schemas:
-    getAIUsageStats_200_response_by_model_value:
-      properties:
-        requests:
-          description: Number of requests for this model
-          type: integer
-        tokens:
-          description: Total tokens for this model
-          type: integer
-      type: object
     getAIUsageStats_200_response:
       example:
         by_model:
@@ -90,6 +81,15 @@ components:
               requests: 50
               tokens: 20000
           type: object
+      type: object
+    getAIUsageStats_200_response_by_model_value:
+      properties:
+        requests:
+          description: Number of requests for this model
+          type: integer
+        tokens:
+          description: Total tokens for this model
+          type: integer
       type: object
   securitySchemes:
     BearerAuth:

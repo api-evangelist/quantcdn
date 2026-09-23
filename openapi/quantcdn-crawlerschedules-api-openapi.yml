@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents CrawlerSchedules API
+  title: QuantCDN Crawler Schedules API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -313,23 +313,6 @@ components:
       required:
       - schedule_cron_string
       type: object
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
-      properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
-      required:
-      - error
-      - message
-      type: object
     V2CrawlerSchedule:
       example:
         crawler_last_run_id: 12345
@@ -386,6 +369,23 @@ components:
       - id
       - project_id
       - schedule_cron_string
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
       type: object
   securitySchemes:
     BearerAuth:

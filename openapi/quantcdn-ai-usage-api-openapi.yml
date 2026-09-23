@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents AI Usage API
+  title: QuantCDN AI Usage API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -63,17 +63,20 @@ components:
       example:
         dailyLimit: 5
         monthlyLimit: 5
-      nullable: true
       properties:
         monthlyLimit:
           description: Per-user monthly budget in US cents
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         dailyLimit:
           description: Per-user daily budget in US cents
-          nullable: true
-          type: integer
-      type: object
+          type:
+          - integer
+          - 'null'
+      type:
+      - object
+      - 'null'
     getMyUsage_200_response:
       example:
         daily:

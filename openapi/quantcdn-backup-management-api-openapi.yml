@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Backup Management API
+  title: QuantCDN Backup Management API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -313,10 +313,91 @@ paths:
       - Backup Management
 components:
   schemas:
-    createBackup_request:
+    downloadBackup_200_response:
+      example:
+        filename: filename
+        downloadUrl: downloadUrl
+        expiresAt: 2000-01-23 04:56:07+00:00
       properties:
-        description:
-          description: Optional backup description
+        downloadUrl:
+          description: Pre-signed S3 URL for download
+          type: string
+        expiresAt:
+          description: URL expiration time
+          format: date-time
+          type: string
+        filename:
+          description: Suggested filename for download
+          type: string
+      type: object
+    listBackups_200_response:
+      example:
+        nextToken: nextToken
+        count: 1
+        message: Found 1 database backup(s)
+        backups:
+        - bucketName: au-prd-manual-backups
+          backupId: quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z
+          taskArn: arn:aws:ecs:ap-southeast-4:056500205767:task/au-prd-quant-cloud-cluster/305a68f04bf641f887a87b74d67fa57e
+          sizeFormatted: 1.86 MB
+          description: Manual backup
+          fileExists: true
+          type: logical
+          createdAt: 2025-09-19 21:50:27.317000+00:00
+          s3Key: database-backups/quant-gov/dashboard/staging/quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z.sql.gz
+          size: 1945663
+          engine: mysql
+          status: completed
+          updatedAt: 2025-09-19 21:51:09+00:00
+        - bucketName: au-prd-manual-backups
+          backupId: quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z
+          taskArn: arn:aws:ecs:ap-southeast-4:056500205767:task/au-prd-quant-cloud-cluster/305a68f04bf641f887a87b74d67fa57e
+          sizeFormatted: 1.86 MB
+          description: Manual backup
+          fileExists: true
+          type: logical
+          createdAt: 2025-09-19 21:50:27.317000+00:00
+          s3Key: database-backups/quant-gov/dashboard/staging/quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z.sql.gz
+          size: 1945663
+          engine: mysql
+          status: completed
+          updatedAt: 2025-09-19 21:51:09+00:00
+      properties:
+        backups:
+          items:
+            $ref: '#/components/schemas/listBackups_200_response_backups_inner'
+          type: array
+        count:
+          example: 1
+          type: integer
+        nextToken:
+          description: Token for retrieving the next page of results, if more data is available
+          type:
+          - string
+          - 'null'
+        message:
+          example: Found 1 database backup(s)
+          type: string
+      type: object
+    listBackups_422_response:
+      example:
+        error: The backup type must be either database or filesystem
+      properties:
+        error:
+          example: The backup type must be either database or filesystem
+          type: string
+      type: object
+    createBackup_202_response:
+      example:
+        backupId: backupId
+        message: message
+        status: status
+      properties:
+        backupId:
+          type: string
+        status:
+          type: string
+        message:
           type: string
       type: object
     deleteBackup_200_response:
@@ -387,90 +468,10 @@ components:
           example: true
           type: boolean
       type: object
-    createBackup_202_response:
-      example:
-        backupId: backupId
-        message: message
-        status: status
+    createBackup_request:
       properties:
-        backupId:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-      type: object
-    listBackups_200_response:
-      example:
-        nextToken: nextToken
-        count: 1
-        message: Found 1 database backup(s)
-        backups:
-        - bucketName: au-prd-manual-backups
-          backupId: quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z
-          taskArn: arn:aws:ecs:ap-southeast-4:056500205767:task/au-prd-quant-cloud-cluster/305a68f04bf641f887a87b74d67fa57e
-          sizeFormatted: 1.86 MB
-          description: Manual backup
-          fileExists: true
-          type: logical
-          createdAt: 2025-09-19 21:50:27.317000+00:00
-          s3Key: database-backups/quant-gov/dashboard/staging/quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z.sql.gz
-          size: 1945663
-          engine: mysql
-          status: completed
-          updatedAt: 2025-09-19 21:51:09+00:00
-        - bucketName: au-prd-manual-backups
-          backupId: quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z
-          taskArn: arn:aws:ecs:ap-southeast-4:056500205767:task/au-prd-quant-cloud-cluster/305a68f04bf641f887a87b74d67fa57e
-          sizeFormatted: 1.86 MB
-          description: Manual backup
-          fileExists: true
-          type: logical
-          createdAt: 2025-09-19 21:50:27.317000+00:00
-          s3Key: database-backups/quant-gov/dashboard/staging/quant-gov-dashboard-staging-2025-09-19T21-50-27-145Z.sql.gz
-          size: 1945663
-          engine: mysql
-          status: completed
-          updatedAt: 2025-09-19 21:51:09+00:00
-      properties:
-        backups:
-          items:
-            $ref: '#/components/schemas/listBackups_200_response_backups_inner'
-          type: array
-        count:
-          example: 1
-          type: integer
-        nextToken:
-          description: Token for retrieving the next page of results, if more data is available
-          nullable: true
-          type: string
-        message:
-          example: Found 1 database backup(s)
-          type: string
-      type: object
-    listBackups_422_response:
-      example:
-        error: The backup type must be either database or filesystem
-      properties:
-        error:
-          example: The backup type must be either database or filesystem
-          type: string
-      type: object
-    downloadBackup_200_response:
-      example:
-        filename: filename
-        downloadUrl: downloadUrl
-        expiresAt: 2000-01-23 04:56:07+00:00
-      properties:
-        downloadUrl:
-          description: Pre-signed S3 URL for download
-          type: string
-        expiresAt:
-          description: URL expiration time
-          format: date-time
-          type: string
-        filename:
-          description: Suggested filename for download
+        description:
+          description: Optional backup description
           type: string
       type: object
   securitySchemes:

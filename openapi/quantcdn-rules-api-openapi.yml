@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Rules API
+  title: QuantCDN Rules API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -2159,899 +2159,6 @@ paths:
       - Rules
 components:
   schemas:
-    V2RuleBotChallengeAction:
-      example:
-        robot_challenge_type: invisible
-        robot_challenge_verification_ttl: 10800
-        robot_challenge_challenge_ttl: 30
-      properties:
-        robot_challenge_type:
-          description: Challenge type (invisible or checkbox)
-          example: invisible
-          type: string
-        robot_challenge_verification_ttl:
-          default: 10800
-          description: Verification TTL in seconds
-          example: 10800
-          type: integer
-        robot_challenge_challenge_ttl:
-          default: 30
-          description: Challenge TTL in seconds
-          example: 30
-          type: integer
-      required:
-      - robot_challenge_type
-      type: object
-    V2RuleHeaderRequest:
-      allOf:
-      - $ref: '#/components/schemas/V2RuleRequest'
-      - properties:
-          headers:
-            additionalProperties:
-              type: string
-            description: Headers to set
-            example:
-              X-Custom-Header: value
-              Cache-Control: max-age=3600
-            type: object
-        required:
-        - headers
-        type: object
-      example:
-        country: country_is
-        headers:
-          X-Custom-Header: value
-          Cache-Control: max-age=3600
-        asn_is:
-        - '15169'
-        - '8075'
-        method: method_is
-        ip_is_not:
-        - 172.16.0.0/12
-        method_is:
-        - GET
-        - POST
-        ip: ip_is
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        country_is_not:
-        - CN
-        - RU
-        asn_is_not:
-        - '13335'
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        disabled: false
-        asn: any
-      type: object
-    V2RuleContentFilter:
-      allOf:
-      - $ref: '#/components/schemas/V2Rule'
-      - properties:
-          action_config:
-            $ref: '#/components/schemas/V2RuleContentFilterAction'
-        required:
-        - action_config
-        type: object
-      example:
-        country: US
-        asn_is:
-        - '15169'
-        - '8075'
-        method: GET
-        ip_is_not:
-        - 172.16.0.0/12
-        only_with_cookie: session_id
-        method_is:
-        - GET
-        - POST
-        ip: 192.168.1.1
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        rule_id: rule-001
-        asn_is_not:
-        - '13335'
-        country_is_not:
-        - CN
-        - RU
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        action: redirect
-        disabled: false
-        asn: any
-        action_config:
-          fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
-      type: object
-    V2RuleFunction:
-      allOf:
-      - $ref: '#/components/schemas/V2Rule'
-      - properties:
-          action_config:
-            $ref: '#/components/schemas/V2RuleFunctionAction'
-        required:
-        - action_config
-        type: object
-      example:
-        country: US
-        asn_is:
-        - '15169'
-        - '8075'
-        method: GET
-        ip_is_not:
-        - 172.16.0.0/12
-        only_with_cookie: session_id
-        method_is:
-        - GET
-        - POST
-        ip: 192.168.1.1
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        rule_id: rule-001
-        asn_is_not:
-        - '13335'
-        country_is_not:
-        - CN
-        - RU
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        action: redirect
-        disabled: false
-        asn: any
-        action_config:
-          fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
-      type: object
-    V2RuleRedirectRequest:
-      example:
-        country: country_is
-        asn_is:
-        - '15169'
-        - '8075'
-        method: method_is
-        ip_is_not:
-        - 172.16.0.0/12
-        method_is:
-        - GET
-        - POST
-        ip: ip_is
-        redirect_code: '301'
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        redirect_to: https://test-domain.com/new-path
-        country_is_not:
-        - CN
-        - RU
-        asn_is_not:
-        - '13335'
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        disabled: false
-        asn: any
-      properties:
-        domain:
-          description: 'Domain patterns (default: any)'
-          example:
-          - test-domain.com
-          - '*.test-domain.com'
-          items:
-            type: string
-          type: array
-        name:
-          description: Rule name
-          example: Test redirect rule
-          type: string
-        uuid:
-          description: Rule UUID
-          example: 123e4567-e89b-12d3-a456-426614174000
-          type: string
-        weight:
-          default: 0
-          description: Rule weight
-          example: 100
-          type: integer
-        disabled:
-          default: false
-          description: Whether rule is disabled
-          example: false
-          type: boolean
-        url:
-          description: URL patterns
-          example:
-          - /old-path/*
-          - /legacy/*
-          items:
-            type: string
-          type: array
-        country:
-          description: Country filter type (country_is, country_is_not, any)
-          example: country_is
-          type: string
-        country_is:
-          description: Allowed countries
-          example:
-          - US
-          - CA
-          - GB
-          items:
-            type: string
-          type: array
-        country_is_not:
-          description: Excluded countries
-          example:
-          - CN
-          - RU
-          items:
-            type: string
-          type: array
-        method:
-          description: Method filter type (method_is, method_is_not, any)
-          example: method_is
-          type: string
-        method_is:
-          description: Allowed HTTP methods
-          example:
-          - GET
-          - POST
-          items:
-            type: string
-          type: array
-        method_is_not:
-          description: Excluded HTTP methods
-          example:
-          - DELETE
-          - PUT
-          items:
-            type: string
-          type: array
-        ip:
-          description: IP filter type (ip_is, ip_is_not, any)
-          example: ip_is
-          type: string
-        ip_is:
-          description: Allowed IP addresses
-          example:
-          - 192.168.1.0/24
-          - 10.0.0.1
-          items:
-            type: string
-          type: array
-        ip_is_not:
-          description: Excluded IP addresses
-          example:
-          - 172.16.0.0/12
-          items:
-            type: string
-          type: array
-        asn:
-          description: ASN filter type (asn_is, asn_is_not, any)
-          example: any
-          type: string
-        asn_is:
-          description: Allowed AS numbers
-          example:
-          - '15169'
-          - '8075'
-          items:
-            type: string
-          type: array
-        asn_is_not:
-          description: Excluded AS numbers
-          example:
-          - '13335'
-          items:
-            type: string
-          type: array
-        redirect_to:
-          description: Redirect destination URL
-          example: https://test-domain.com/new-path
-          type: string
-        redirect_code:
-          default: '301'
-          description: HTTP status code for redirect
-          example: '301'
-          type: string
-      required:
-      - domain
-      - redirect_to
-      - url
-      type: object
-    V2RuleCustomResponse:
-      allOf:
-      - $ref: '#/components/schemas/V2Rule'
-      - properties:
-          action_config:
-            $ref: '#/components/schemas/V2RuleCustomResponseAction'
-        type: object
-      example:
-        country: US
-        asn_is:
-        - '15169'
-        - '8075'
-        method: GET
-        ip_is_not:
-        - 172.16.0.0/12
-        only_with_cookie: session_id
-        method_is:
-        - GET
-        - POST
-        ip: 192.168.1.1
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        rule_id: rule-001
-        asn_is_not:
-        - '13335'
-        country_is_not:
-        - CN
-        - RU
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        action: redirect
-        disabled: false
-        asn: any
-        action_config:
-          custom_response_status_code: 503
-          custom_response_body: <html><body>Custom maintenance page</body></html>
-      type: object
-    WafConfig_block_lists:
-      description: Enable predefined block lists
-      example:
-        referer: false
-        ip: false
-        ai: false
-        user_agent: false
-      properties:
-        user_agent:
-          default: false
-          description: Block known bad user agents
-          type: boolean
-        referer:
-          default: false
-          description: Block known bad referers
-          type: boolean
-        ip:
-          default: false
-          description: Block known bad IPs
-          type: boolean
-        ai:
-          default: false
-          description: Block AI crawlers
-          type: boolean
-      type: object
-    V2RuleServeStaticRequest:
-      allOf:
-      - $ref: '#/components/schemas/V2RuleRequest'
-      - properties:
-          static_file_path:
-            description: Path to the static file to serve
-            example: /index.html
-            type: string
-        required:
-        - static_file_path
-        type: object
-      example:
-        country: country_is
-        asn_is:
-        - '15169'
-        - '8075'
-        method: method_is
-        static_file_path: /index.html
-        ip_is_not:
-        - 172.16.0.0/12
-        method_is:
-        - GET
-        - POST
-        ip: ip_is
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        country_is_not:
-        - CN
-        - RU
-        asn_is_not:
-        - '13335'
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        disabled: false
-        asn: any
-      type: object
-    V2RuleProxy:
-      allOf:
-      - $ref: '#/components/schemas/V2Rule'
-      - properties:
-          rule_id:
-            description: Rule ID
-            type: string
-          action_config:
-            $ref: '#/components/schemas/V2RuleProxyAction'
-        required:
-        - action_config
-        type: object
-      example:
-        country: US
-        asn_is:
-        - '15169'
-        - '8075'
-        method: GET
-        ip_is_not:
-        - 172.16.0.0/12
-        only_with_cookie: session_id
-        method_is:
-        - GET
-        - POST
-        ip: 192.168.1.1
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        rule_id: rule_id
-        asn_is_not:
-        - '13335'
-        country_is_not:
-        - CN
-        - RU
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        action: redirect
-        disabled: false
-        asn: any
-        action_config:
-          cache_lifetime: '3600'
-          proxy_strip_request_headers:
-          - Cookie
-          - Authorization
-          application_proxy: false
-          quant_cloud_selection:
-            app: my-app
-            container: web
-            port: 80
-            env: production
-          application_container: web
-          static_error_page: <html><body>Service temporarily unavailable</body></html>
-          proxy_strip_headers:
-          - Set-Cookie
-          - Server
-          notify_config:
-            webhook_url: https://hooks.slack.com/services/XXXXXX
-          notify: slack
-          application_name: my-app
-          auth_user: admin
-          host: backend.test-domain.com
-          waf_enabled: false
-          proxy_inline_fn_enabled: false
-          auth_pass: secure_password
-          application_port: 80
-          static_error_page_status_codes:
-          - '500'
-          - '502'
-          - '503'
-          - '504'
-          failover_mode: true
-          application_environment: production
-          origin_timeout: '30'
-          failover_origin_ttfb: '2000'
-          only_proxy_404: false
-          inject_headers:
-            X-Custom-Header: value
-            Authorization: Bearer token
-          to: https://backend.test-domain.com
-          disable_ssl_verify: false
-          failover_lifetime: '300'
-          waf_config:
-            block_lists:
-              referer: false
-              ip: false
-              ai: false
-              user_agent: false
-            allow_rules:
-            - allow_rules
-            - allow_rules
-            httpbl:
-              block_harvester: false
-              httpbl_enabled: false
-              block_spam: false
-              httpbl_key: httpbl_key
-              block_search_engine: false
-              block_suspicious: false
-            notify_slack_hits_rpm: 100
-            allow_ip:
-            - allow_ip
-            - allow_ip
-            block_asn:
-            - block_asn
-            - block_asn
-            mode: report
-            thresholds:
-            - hits: 10
-              mode: disabled
-              rps: 10
-              minutes: 5
-              cooldown: 30
-              type: ip
-              value: value
-              notify_slack: notify_slack
-            - hits: 10
-              mode: disabled
-              rps: 10
-              minutes: 5
-              cooldown: 30
-              type: ip
-              value: value
-              notify_slack: notify_slack
-            notify_email:
-            - notify_email
-            - notify_email
-            block_ip:
-            - block_ip
-            - block_ip
-            block_referer:
-            - block_referer
-            - block_referer
-            block_ua:
-            - block_ua
-            - block_ua
-            notify_slack: https://hooks.slack.com/services/XXX
-            paranoia_level: 1
-          failover_origin_status_codes:
-          - '200'
-          - '404'
-          - '301'
-          - '302'
-          - '304'
-          proxy_alert_enabled: false
-      type: object
-    WafConfig:
-      description: Web Application Firewall configuration
-      example:
-        block_lists:
-          referer: false
-          ip: false
-          ai: false
-          user_agent: false
-        allow_rules:
-        - allow_rules
-        - allow_rules
-        httpbl:
-          block_harvester: false
-          httpbl_enabled: false
-          block_spam: false
-          httpbl_key: httpbl_key
-          block_search_engine: false
-          block_suspicious: false
-        notify_slack_hits_rpm: 100
-        allow_ip:
-        - allow_ip
-        - allow_ip
-        block_asn:
-        - block_asn
-        - block_asn
-        mode: report
-        thresholds:
-        - hits: 10
-          mode: disabled
-          rps: 10
-          minutes: 5
-          cooldown: 30
-          type: ip
-          value: value
-          notify_slack: notify_slack
-        - hits: 10
-          mode: disabled
-          rps: 10
-          minutes: 5
-          cooldown: 30
-          type: ip
-          value: value
-          notify_slack: notify_slack
-        notify_email:
-        - notify_email
-        - notify_email
-        block_ip:
-        - block_ip
-        - block_ip
-        block_referer:
-        - block_referer
-        - block_referer
-        block_ua:
-        - block_ua
-        - block_ua
-        notify_slack: https://hooks.slack.com/services/XXX
-        paranoia_level: 1
-      properties:
-        mode:
-          default: report
-          description: WAF operation mode
-          enum:
-          - report
-          - block
-          type: string
-        paranoia_level:
-          default: 1
-          description: OWASP paranoia level
-          maximum: 4
-          minimum: 1
-          type: integer
-        allow_rules:
-          description: WAF rule IDs to allow/whitelist
-          items:
-            type: string
-          type: array
-        allow_ip:
-          description: IP addresses to allow
-          items:
-            type: string
-          type: array
-        block_ip:
-          description: IP addresses to block
-          items:
-            type: string
-          type: array
-        block_asn:
-          description: ASN numbers to block
-          items:
-            type: string
-          type: array
-        block_ua:
-          description: User agent patterns to block
-          items:
-            type: string
-          type: array
-        block_referer:
-          description: Referer patterns to block
-          items:
-            type: string
-          type: array
-        notify_slack:
-          description: Slack webhook URL for notifications
-          example: https://hooks.slack.com/services/XXX
-          type: string
-        notify_slack_hits_rpm:
-          description: Minimum hits per minute to trigger Slack notification
-          example: 100
-          type: integer
-        notify_email:
-          description: Email addresses for notifications
-          items:
-            type: string
-          type: array
-        httpbl:
-          $ref: '#/components/schemas/WafConfig_httpbl'
-        block_lists:
-          $ref: '#/components/schemas/WafConfig_block_lists'
-        thresholds:
-          description: Rate limiting thresholds
-          items:
-            $ref: '#/components/schemas/WafConfig_thresholds_inner'
-          type: array
-      type: object
-    V2RuleBotChallengeRequest:
-      allOf:
-      - $ref: '#/components/schemas/V2RuleRequest'
-      - properties:
-          robot_challenge_type:
-            description: Challenge type (invisible or checkbox)
-            example: invisible
-            type: string
-          robot_challenge_verification_ttl:
-            default: 10800
-            description: Verification TTL in seconds
-            example: 10800
-            type: integer
-          robot_challenge_challenge_ttl:
-            default: 30
-            description: Challenge TTL in seconds
-            example: 30
-            type: integer
-        required:
-        - robot_challenge_type
-        type: object
-      example:
-        country: country_is
-        robot_challenge_type: invisible
-        asn_is:
-        - '15169'
-        - '8075'
-        method: method_is
-        ip_is_not:
-        - 172.16.0.0/12
-        method_is:
-        - GET
-        - POST
-        ip: ip_is
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        country_is_not:
-        - CN
-        - RU
-        asn_is_not:
-        - '13335'
-        robot_challenge_verification_ttl: 10800
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        robot_challenge_challenge_ttl: 30
-        disabled: false
-        asn: any
-      type: object
-    V2RuleAuth:
-      allOf:
-      - $ref: '#/components/schemas/V2Rule'
-      - properties:
-          action_config:
-            $ref: '#/components/schemas/V2RuleAuthAction'
-        required:
-        - action_config
-        type: object
-      example:
-        country: US
-        asn_is:
-        - '15169'
-        - '8075'
-        method: GET
-        ip_is_not:
-        - 172.16.0.0/12
-        only_with_cookie: session_id
-        method_is:
-        - GET
-        - POST
-        ip: 192.168.1.1
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        rule_id: rule-001
-        asn_is_not:
-        - '13335'
-        country_is_not:
-        - CN
-        - RU
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        action: redirect
-        disabled: false
-        asn: any
-        action_config:
-          auth_user: admin
-          auth_pass: secure_password123
-      type: object
-    V2RuleProxyAction_notify_config:
-      description: Notification configuration (required when notify is slack)
-      example:
-        webhook_url: https://hooks.slack.com/services/XXXXXX
-      nullable: true
-      properties:
-        webhook_url:
-          description: Slack webhook URL
-          example: https://hooks.slack.com/services/XXXXXX
-          type: string
-      type: object
     V2RuleBotChallenge:
       allOf:
       - $ref: '#/components/schemas/V2Rule'
@@ -3107,6 +2214,57 @@ components:
           robot_challenge_verification_ttl: 10800
           robot_challenge_challenge_ttl: 30
       type: object
+    V2RuleServeStaticRequest:
+      allOf:
+      - $ref: '#/components/schemas/V2RuleRequest'
+      - properties:
+          static_file_path:
+            description: Path to the static file to serve
+            example: /index.html
+            type: string
+        required:
+        - static_file_path
+        type: object
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        static_file_path: /index.html
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      type: object
     WafConfig_thresholds_inner:
       example:
         hits: 10
@@ -3151,29 +2309,77 @@ components:
           type: string
         value:
           description: Header name (for header type)
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         notify_slack:
           description: Slack webhook for this threshold
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
       type: object
-    V2Error:
+    V2RuleCustomResponse:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleCustomResponseAction'
+        type: object
       example:
-        message: The requested resource was not found
-        error: true
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          custom_response_status_code: 503
+          custom_response_body: <html><body>Custom maintenance page</body></html>
+      type: object
+    V2RuleFunctionAction:
+      example:
+        fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
       properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
+        fn_uuid:
+          description: Function UUID
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
           type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
       required:
-      - error
-      - message
+      - fn_uuid
       type: object
     V2RuleCustomResponseRequest:
       example:
@@ -3354,34 +2560,180 @@ components:
       - domain
       - url
       type: object
-    V2RuleAuthRequest:
+    WafConfig_block_lists:
+      description: Enable predefined block lists
+      example:
+        referer: false
+        ip: false
+        ai: false
+        user_agent: false
+      properties:
+        user_agent:
+          default: false
+          description: Block known bad user agents
+          type: boolean
+        referer:
+          default: false
+          description: Block known bad referers
+          type: boolean
+        ip:
+          default: false
+          description: Block known bad IPs
+          type: boolean
+        ai:
+          default: false
+          description: Block AI crawlers
+          type: boolean
+      type: object
+    WafConfig:
+      description: Web Application Firewall configuration
+      example:
+        block_lists:
+          referer: false
+          ip: false
+          ai: false
+          user_agent: false
+        allow_rules:
+        - allow_rules
+        - allow_rules
+        httpbl:
+          block_harvester: false
+          httpbl_enabled: false
+          block_spam: false
+          httpbl_key: httpbl_key
+          block_search_engine: false
+          block_suspicious: false
+        notify_slack_hits_rpm: 100
+        allow_ip:
+        - allow_ip
+        - allow_ip
+        block_asn:
+        - block_asn
+        - block_asn
+        mode: report
+        thresholds:
+        - hits: 10
+          mode: disabled
+          rps: 10
+          minutes: 5
+          cooldown: 30
+          type: ip
+          value: value
+          notify_slack: notify_slack
+        - hits: 10
+          mode: disabled
+          rps: 10
+          minutes: 5
+          cooldown: 30
+          type: ip
+          value: value
+          notify_slack: notify_slack
+        notify_email:
+        - notify_email
+        - notify_email
+        block_ip:
+        - block_ip
+        - block_ip
+        block_referer:
+        - block_referer
+        - block_referer
+        block_ua:
+        - block_ua
+        - block_ua
+        notify_slack: https://hooks.slack.com/services/XXX
+        paranoia_level: 1
+      properties:
+        mode:
+          default: report
+          description: WAF operation mode
+          enum:
+          - report
+          - block
+          type: string
+        paranoia_level:
+          default: 1
+          description: OWASP paranoia level
+          maximum: 4
+          minimum: 1
+          type: integer
+        allow_rules:
+          description: WAF rule IDs to allow/whitelist
+          items:
+            type: string
+          type: array
+        allow_ip:
+          description: IP addresses to allow
+          items:
+            type: string
+          type: array
+        block_ip:
+          description: IP addresses to block
+          items:
+            type: string
+          type: array
+        block_asn:
+          description: ASN numbers to block
+          items:
+            type: string
+          type: array
+        block_ua:
+          description: User agent patterns to block
+          items:
+            type: string
+          type: array
+        block_referer:
+          description: Referer patterns to block
+          items:
+            type: string
+          type: array
+        notify_slack:
+          description: Slack webhook URL for notifications
+          example: https://hooks.slack.com/services/XXX
+          type: string
+        notify_slack_hits_rpm:
+          description: Minimum hits per minute to trigger Slack notification
+          example: 100
+          type: integer
+        notify_email:
+          description: Email addresses for notifications
+          items:
+            type: string
+          type: array
+        httpbl:
+          $ref: '#/components/schemas/WafConfig_httpbl'
+        block_lists:
+          $ref: '#/components/schemas/WafConfig_block_lists'
+        thresholds:
+          description: Rate limiting thresholds
+          items:
+            $ref: '#/components/schemas/WafConfig_thresholds_inner'
+          type: array
+      type: object
+    V2RuleProxy:
       allOf:
-      - $ref: '#/components/schemas/V2RuleRequest'
+      - $ref: '#/components/schemas/V2Rule'
       - properties:
-          auth_user:
-            description: Authentication username
-            example: admin
+          rule_id:
+            description: Rule ID
             type: string
-          auth_pass:
-            description: Authentication password
-            example: secure_password123
-            type: string
+          action_config:
+            $ref: '#/components/schemas/V2RuleProxyAction'
         required:
-        - auth_pass
-        - auth_user
+        - action_config
         type: object
       example:
-        country: country_is
+        country: US
         asn_is:
         - '15169'
         - '8075'
-        method: method_is
+        method: GET
         ip_is_not:
         - 172.16.0.0/12
+        only_with_cookie: session_id
         method_is:
         - GET
         - POST
-        ip: ip_is
+        ip: 192.168.1.1
         weight: 100
         country_is:
         - US
@@ -3394,12 +2746,12 @@ components:
         url:
         - /old-path/*
         - /legacy/*
+        rule_id: rule_id
+        asn_is_not:
+        - '13335'
         country_is_not:
         - CN
         - RU
-        asn_is_not:
-        - '13335'
-        auth_user: admin
         domain:
         - test-domain.com
         - '*.test-domain.com'
@@ -3407,71 +2759,208 @@ components:
         ip_is:
         - 192.168.1.0/24
         - 10.0.0.1
-        auth_pass: secure_password123
+        action: redirect
         disabled: false
         asn: any
+        action_config:
+          cache_lifetime: '3600'
+          proxy_strip_request_headers:
+          - Cookie
+          - Authorization
+          application_proxy: false
+          quant_cloud_selection:
+            app: my-app
+            container: web
+            port: 80
+            env: production
+          application_container: web
+          static_error_page: <html><body>Service temporarily unavailable</body></html>
+          proxy_strip_headers:
+          - Set-Cookie
+          - Server
+          notify_config:
+            webhook_url: https://hooks.slack.com/services/XXXXXX
+          notify: slack
+          application_name: my-app
+          auth_user: admin
+          host: backend.test-domain.com
+          waf_enabled: false
+          proxy_inline_fn_enabled: false
+          auth_pass: secure_password
+          application_port: 80
+          static_error_page_status_codes:
+          - '500'
+          - '502'
+          - '503'
+          - '504'
+          failover_mode: true
+          application_environment: production
+          origin_timeout: '30'
+          failover_origin_ttfb: '2000'
+          only_proxy_404: false
+          inject_headers:
+            X-Custom-Header: value
+            Authorization: Bearer token
+          to: https://backend.test-domain.com
+          disable_ssl_verify: false
+          failover_lifetime: '300'
+          waf_config:
+            block_lists:
+              referer: false
+              ip: false
+              ai: false
+              user_agent: false
+            allow_rules:
+            - allow_rules
+            - allow_rules
+            httpbl:
+              block_harvester: false
+              httpbl_enabled: false
+              block_spam: false
+              httpbl_key: httpbl_key
+              block_search_engine: false
+              block_suspicious: false
+            notify_slack_hits_rpm: 100
+            allow_ip:
+            - allow_ip
+            - allow_ip
+            block_asn:
+            - block_asn
+            - block_asn
+            mode: report
+            thresholds:
+            - hits: 10
+              mode: disabled
+              rps: 10
+              minutes: 5
+              cooldown: 30
+              type: ip
+              value: value
+              notify_slack: notify_slack
+            - hits: 10
+              mode: disabled
+              rps: 10
+              minutes: 5
+              cooldown: 30
+              type: ip
+              value: value
+              notify_slack: notify_slack
+            notify_email:
+            - notify_email
+            - notify_email
+            block_ip:
+            - block_ip
+            - block_ip
+            block_referer:
+            - block_referer
+            - block_referer
+            block_ua:
+            - block_ua
+            - block_ua
+            notify_slack: https://hooks.slack.com/services/XXX
+            paranoia_level: 1
+          failover_origin_status_codes:
+          - '200'
+          - '404'
+          - '301'
+          - '302'
+          - '304'
+          proxy_alert_enabled: false
       type: object
-    V2RuleProxyAction_quant_cloud_selection:
-      description: Quant Cloud application proxy selection (populated automatically when application_proxy is enabled)
+    V2RuleServeStatic:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleServeStaticAction'
+        required:
+        - action_config
+        type: object
       example:
-        app: my-app
-        container: web
-        port: 80
-        env: production
-      nullable: true
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          static_file_path: /index.html
+      type: object
+    V2RuleBotChallengeAction:
+      example:
+        robot_challenge_type: invisible
+        robot_challenge_verification_ttl: 10800
+        robot_challenge_challenge_ttl: 30
       properties:
-        app:
-          description: Application name
-          example: my-app
+        robot_challenge_type:
+          description: Challenge type (invisible or checkbox)
+          example: invisible
           type: string
-        env:
-          description: Environment name
-          example: production
-          type: string
-        container:
-          description: Container name
-          example: web
-          type: string
-        port:
-          description: Container port
-          example: 80
+        robot_challenge_verification_ttl:
+          default: 10800
+          description: Verification TTL in seconds
+          example: 10800
           type: integer
-      type: object
-    V2RuleRedirectAction:
-      example:
-        status_code: '301'
-        to: https://test-domain.com/new-path
-      properties:
-        to:
-          description: Redirect destination URL
-          example: https://test-domain.com/new-path
-          type: string
-        status_code:
-          default: '301'
-          description: HTTP status code for redirect
-          example: '301'
-          type: string
-      required:
-      - to
-      type: object
-    V2RuleCustomResponseAction:
-      example:
-        custom_response_status_code: 503
-        custom_response_body: <html><body>Custom maintenance page</body></html>
-      properties:
-        custom_response_body:
-          description: Custom response body content
-          example: <html><body>Custom maintenance page</body></html>
-          type: string
-        custom_response_status_code:
-          default: 200
-          description: HTTP status code for custom response
-          example: 503
+        robot_challenge_challenge_ttl:
+          default: 30
+          description: Challenge TTL in seconds
+          example: 30
           type: integer
       required:
-      - custom_response_body
+      - robot_challenge_type
       type: object
-    V2RuleFunctionRequest:
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    V2RuleRedirectRequest:
       example:
         country: country_is
         asn_is:
@@ -3484,6 +2973,7 @@ components:
         - GET
         - POST
         ip: ip_is
+        redirect_code: '301'
         weight: 100
         country_is:
         - US
@@ -3494,17 +2984,18 @@ components:
         - PUT
         uuid: 123e4567-e89b-12d3-a456-426614174000
         url:
-        - /*
+        - /old-path/*
+        - /legacy/*
+        redirect_to: https://test-domain.com/new-path
         country_is_not:
         - CN
         - RU
         asn_is_not:
         - '13335'
-        fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
         domain:
         - test-domain.com
         - '*.test-domain.com'
-        name: Test function rule
+        name: Test redirect rule
         ip_is:
         - 192.168.1.0/24
         - 10.0.0.1
@@ -3521,7 +3012,7 @@ components:
           type: array
         name:
           description: Rule name
-          example: Test function rule
+          example: Test redirect rule
           type: string
         uuid:
           description: Rule UUID
@@ -3540,7 +3031,8 @@ components:
         url:
           description: URL patterns
           example:
-          - /*
+          - /old-path/*
+          - /legacy/*
           items:
             type: string
           type: array
@@ -3623,37 +3115,50 @@ components:
           items:
             type: string
           type: array
-        fn_uuid:
-          description: Function UUID
-          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        redirect_to:
+          description: Redirect destination URL
+          example: https://test-domain.com/new-path
+          type: string
+        redirect_code:
+          default: '301'
+          description: HTTP status code for redirect
+          example: '301'
           type: string
       required:
       - domain
-      - fn_uuid
+      - redirect_to
       - url
       type: object
-    V2RuleServeStatic:
+    V2RuleHeaderRequest:
       allOf:
-      - $ref: '#/components/schemas/V2Rule'
+      - $ref: '#/components/schemas/V2RuleRequest'
       - properties:
-          action_config:
-            $ref: '#/components/schemas/V2RuleServeStaticAction'
+          headers:
+            additionalProperties:
+              type: string
+            description: Headers to set
+            example:
+              X-Custom-Header: value
+              Cache-Control: max-age=3600
+            type: object
         required:
-        - action_config
+        - headers
         type: object
       example:
-        country: US
+        country: country_is
+        headers:
+          X-Custom-Header: value
+          Cache-Control: max-age=3600
         asn_is:
         - '15169'
         - '8075'
-        method: GET
+        method: method_is
         ip_is_not:
         - 172.16.0.0/12
-        only_with_cookie: session_id
         method_is:
         - GET
         - POST
-        ip: 192.168.1.1
+        ip: ip_is
         weight: 100
         country_is:
         - US
@@ -3666,12 +3171,11 @@ components:
         url:
         - /old-path/*
         - /legacy/*
-        rule_id: rule-001
-        asn_is_not:
-        - '13335'
         country_is_not:
         - CN
         - RU
+        asn_is_not:
+        - '13335'
         domain:
         - test-domain.com
         - '*.test-domain.com'
@@ -3679,45 +3183,8 @@ components:
         ip_is:
         - 192.168.1.0/24
         - 10.0.0.1
-        action: redirect
         disabled: false
         asn: any
-        action_config:
-          static_file_path: /index.html
-      type: object
-    WafConfig_httpbl:
-      description: Project Honey Pot HTTP:BL configuration
-      example:
-        block_harvester: false
-        httpbl_enabled: false
-        block_spam: false
-        httpbl_key: httpbl_key
-        block_search_engine: false
-        block_suspicious: false
-      properties:
-        httpbl_enabled:
-          default: false
-          description: Enable HTTP:BL
-          type: boolean
-        block_suspicious:
-          default: false
-          description: Block suspicious IPs
-          type: boolean
-        block_harvester:
-          default: false
-          description: Block email harvesters
-          type: boolean
-        block_spam:
-          default: false
-          description: Block spam sources
-          type: boolean
-        block_search_engine:
-          default: false
-          description: Block search engines
-          type: boolean
-        httpbl_key:
-          description: HTTP:BL API key
-          type: string
       type: object
     V2RuleProxyAction:
       example:
@@ -3849,8 +3316,9 @@ components:
         cache_lifetime:
           description: Cache lifetime
           example: '3600'
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         only_proxy_404:
           default: false
           description: Only proxy 404 responses
@@ -3863,8 +3331,9 @@ components:
           example:
             X-Custom-Header: value
             Authorization: Bearer token
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
         proxy_strip_headers:
           description: Headers to strip from response
           example:
@@ -3963,8 +3432,9 @@ components:
         static_error_page:
           description: Static error page content (HTML) to serve on origin errors
           example: <html><body>Service temporarily unavailable</body></html>
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         static_error_page_status_codes:
           description: Origin status codes that trigger static error page
           example:
@@ -3978,9 +3448,30 @@ components:
       required:
       - to
       type: object
-    V2RuleContentFilterRequest:
+    V2RuleBotChallengeRequest:
+      allOf:
+      - $ref: '#/components/schemas/V2RuleRequest'
+      - properties:
+          robot_challenge_type:
+            description: Challenge type (invisible or checkbox)
+            example: invisible
+            type: string
+          robot_challenge_verification_ttl:
+            default: 10800
+            description: Verification TTL in seconds
+            example: 10800
+            type: integer
+          robot_challenge_challenge_ttl:
+            default: 30
+            description: Challenge TTL in seconds
+            example: 30
+            type: integer
+        required:
+        - robot_challenge_type
+        type: object
       example:
         country: country_is
+        robot_challenge_type: invisible
         asn_is:
         - '15169'
         - '8075'
@@ -4001,161 +3492,249 @@ components:
         - PUT
         uuid: 123e4567-e89b-12d3-a456-426614174000
         url:
-        - /*
+        - /old-path/*
+        - /legacy/*
         country_is_not:
         - CN
         - RU
         asn_is_not:
         - '13335'
-        fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+        robot_challenge_verification_ttl: 10800
         domain:
         - test-domain.com
         - '*.test-domain.com'
-        name: Test content filter rule
+        name: Test redirect rule
         ip_is:
         - 192.168.1.0/24
         - 10.0.0.1
+        robot_challenge_challenge_ttl: 30
         disabled: false
         asn: any
+      type: object
+    V2RuleRedirectAction:
+      example:
+        status_code: '301'
+        to: https://test-domain.com/new-path
       properties:
-        domain:
-          description: 'Domain patterns (default: any)'
-          example:
-          - test-domain.com
-          - '*.test-domain.com'
-          items:
-            type: string
-          type: array
-        name:
-          description: Rule name
-          example: Test content filter rule
+        to:
+          description: Redirect destination URL
+          example: https://test-domain.com/new-path
           type: string
-        uuid:
-          description: Rule UUID
-          example: 123e4567-e89b-12d3-a456-426614174000
+        status_code:
+          default: '301'
+          description: HTTP status code for redirect
+          example: '301'
           type: string
-        weight:
-          default: 0
-          description: Rule weight
-          example: 100
-          type: integer
-        disabled:
-          default: false
-          description: Whether rule is disabled
-          example: false
-          type: boolean
-        url:
-          description: URL patterns
-          example:
-          - /*
-          items:
-            type: string
-          type: array
-        country:
-          description: Country filter type (country_is, country_is_not, any)
-          example: country_is
-          type: string
-        country_is:
-          description: Allowed countries
-          example:
-          - US
-          - CA
-          - GB
-          items:
-            type: string
-          type: array
-        country_is_not:
-          description: Excluded countries
-          example:
-          - CN
-          - RU
-          items:
-            type: string
-          type: array
-        method:
-          description: Method filter type (method_is, method_is_not, any)
-          example: method_is
-          type: string
-        method_is:
-          description: Allowed HTTP methods
-          example:
-          - GET
-          - POST
-          items:
-            type: string
-          type: array
-        method_is_not:
-          description: Excluded HTTP methods
-          example:
-          - DELETE
-          - PUT
-          items:
-            type: string
-          type: array
-        ip:
-          description: IP filter type (ip_is, ip_is_not, any)
-          example: ip_is
-          type: string
-        ip_is:
-          description: Allowed IP addresses
-          example:
-          - 192.168.1.0/24
-          - 10.0.0.1
-          items:
-            type: string
-          type: array
-        ip_is_not:
-          description: Excluded IP addresses
-          example:
-          - 172.16.0.0/12
-          items:
-            type: string
-          type: array
-        asn:
-          description: ASN filter type (asn_is, asn_is_not, any)
-          example: any
-          type: string
+      required:
+      - to
+      type: object
+    V2RuleContentFilter:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleContentFilterAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
         asn_is:
-          description: Allowed AS numbers
-          example:
-          - '15169'
-          - '8075'
-          items:
-            type: string
-          type: array
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
         asn_is_not:
-          description: Excluded AS numbers
-          example:
-          - '13335'
-          items:
-            type: string
-          type: array
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+      type: object
+    V2RuleContentFilterAction:
+      example:
+        fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+      properties:
         fn_uuid:
           description: Function UUID
           example: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
           type: string
       required:
-      - domain
       - fn_uuid
-      - url
       type: object
-    V2RuleAuthAction:
+    V2RuleServeStaticAction:
       example:
-        auth_user: admin
-        auth_pass: secure_password123
+        static_file_path: /index.html
       properties:
-        auth_user:
-          description: Authentication username
-          example: admin
-          type: string
-        auth_pass:
-          description: Authentication password
-          example: secure_password123
+        static_file_path:
+          description: Path to the static file to serve
+          example: /index.html
           type: string
       required:
-      - auth_pass
-      - auth_user
+      - static_file_path
       type: object
+    V2RuleRedirect:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleRedirectAction'
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          status_code: '301'
+          to: https://test-domain.com/new-path
+      type: object
+    V2RuleFunction:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleFunctionAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+      type: object
+    V2RuleProxyAction_quant_cloud_selection:
+      description: Quant Cloud application proxy selection (populated automatically when application_proxy is enabled)
+      example:
+        app: my-app
+        container: web
+        port: 80
+        env: production
+      properties:
+        app:
+          description: Application name
+          example: my-app
+          type: string
+        env:
+          description: Environment name
+          example: production
+          type: string
+        container:
+          description: Container name
+          example: web
+          type: string
+        port:
+          description: Container port
+          example: 80
+          type: integer
+      type:
+      - object
+      - 'null'
     V2RuleProxyRequest:
       example:
         country: country_is
@@ -4426,8 +4005,9 @@ components:
         cache_lifetime:
           description: Cache lifetime
           example: '3600'
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         only_proxy_404:
           default: false
           description: Only proxy 404 responses
@@ -4439,8 +4019,9 @@ components:
           description: Headers to inject
           example:
             X-Custom: value
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
         proxy_strip_headers:
           description: Headers to strip from response
           example:
@@ -4521,8 +4102,9 @@ components:
         static_error_page:
           description: Static error page content (HTML) to serve on origin errors
           example: <html><body>Service temporarily unavailable</body></html>
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         static_error_page_status_codes:
           description: Origin status codes that trigger static error page
           example:
@@ -4537,6 +4119,40 @@ components:
       - domain
       - to
       - url
+      type: object
+    V2RuleAuthAction:
+      example:
+        auth_user: admin
+        auth_pass: secure_password123
+      properties:
+        auth_user:
+          description: Authentication username
+          example: admin
+          type: string
+        auth_pass:
+          description: Authentication password
+          example: secure_password123
+          type: string
+      required:
+      - auth_pass
+      - auth_user
+      type: object
+    V2RuleCustomResponseAction:
+      example:
+        custom_response_status_code: 503
+        custom_response_body: <html><body>Custom maintenance page</body></html>
+      properties:
+        custom_response_body:
+          description: Custom response body content
+          example: <html><body>Custom maintenance page</body></html>
+          type: string
+        custom_response_status_code:
+          default: 200
+          description: HTTP status code for custom response
+          example: 503
+          type: integer
+      required:
+      - custom_response_body
       type: object
     V2Rule:
       properties:
@@ -4670,91 +4286,6 @@ components:
       - disabled
       - uuid
       type: object
-    V2RuleRedirect:
-      allOf:
-      - $ref: '#/components/schemas/V2Rule'
-      - properties:
-          action_config:
-            $ref: '#/components/schemas/V2RuleRedirectAction'
-        type: object
-      example:
-        country: US
-        asn_is:
-        - '15169'
-        - '8075'
-        method: GET
-        ip_is_not:
-        - 172.16.0.0/12
-        only_with_cookie: session_id
-        method_is:
-        - GET
-        - POST
-        ip: 192.168.1.1
-        weight: 100
-        country_is:
-        - US
-        - CA
-        - GB
-        method_is_not:
-        - DELETE
-        - PUT
-        uuid: 123e4567-e89b-12d3-a456-426614174000
-        url:
-        - /old-path/*
-        - /legacy/*
-        rule_id: rule-001
-        asn_is_not:
-        - '13335'
-        country_is_not:
-        - CN
-        - RU
-        domain:
-        - test-domain.com
-        - '*.test-domain.com'
-        name: Test redirect rule
-        ip_is:
-        - 192.168.1.0/24
-        - 10.0.0.1
-        action: redirect
-        disabled: false
-        asn: any
-        action_config:
-          status_code: '301'
-          to: https://test-domain.com/new-path
-      type: object
-    V2RuleFunctionAction:
-      example:
-        fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
-      properties:
-        fn_uuid:
-          description: Function UUID
-          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
-          type: string
-      required:
-      - fn_uuid
-      type: object
-    V2RuleContentFilterAction:
-      example:
-        fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
-      properties:
-        fn_uuid:
-          description: Function UUID
-          example: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
-          type: string
-      required:
-      - fn_uuid
-      type: object
-    V2RuleServeStaticAction:
-      example:
-        static_file_path: /index.html
-      properties:
-        static_file_path:
-          description: Path to the static file to serve
-          example: /index.html
-          type: string
-      required:
-      - static_file_path
-      type: object
     V2RuleHeader:
       allOf:
       - $ref: '#/components/schemas/V2Rule'
@@ -4826,6 +4357,473 @@ components:
           type: object
       required:
       - headers
+      type: object
+    V2RuleAuth:
+      allOf:
+      - $ref: '#/components/schemas/V2Rule'
+      - properties:
+          action_config:
+            $ref: '#/components/schemas/V2RuleAuthAction'
+        required:
+        - action_config
+        type: object
+      example:
+        country: US
+        asn_is:
+        - '15169'
+        - '8075'
+        method: GET
+        ip_is_not:
+        - 172.16.0.0/12
+        only_with_cookie: session_id
+        method_is:
+        - GET
+        - POST
+        ip: 192.168.1.1
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        rule_id: rule-001
+        asn_is_not:
+        - '13335'
+        country_is_not:
+        - CN
+        - RU
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        action: redirect
+        disabled: false
+        asn: any
+        action_config:
+          auth_user: admin
+          auth_pass: secure_password123
+      type: object
+    V2RuleContentFilterRequest:
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        fn_uuid: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test content filter rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      properties:
+        domain:
+          description: 'Domain patterns (default: any)'
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        name:
+          description: Rule name
+          example: Test content filter rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        url:
+          description: URL patterns
+          example:
+          - /*
+          items:
+            type: string
+          type: array
+        country:
+          description: Country filter type (country_is, country_is_not, any)
+          example: country_is
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        method:
+          description: Method filter type (method_is, method_is_not, any)
+          example: method_is
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP filter type (ip_is, ip_is_not, any)
+          example: ip_is
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+        fn_uuid:
+          description: Function UUID
+          example: 8d3f4820-8536-51ef-b827-f18gc2g01bf8
+          type: string
+      required:
+      - domain
+      - fn_uuid
+      - url
+      type: object
+    V2RuleAuthRequest:
+      allOf:
+      - $ref: '#/components/schemas/V2RuleRequest'
+      - properties:
+          auth_user:
+            description: Authentication username
+            example: admin
+            type: string
+          auth_pass:
+            description: Authentication password
+            example: secure_password123
+            type: string
+        required:
+        - auth_pass
+        - auth_user
+        type: object
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /old-path/*
+        - /legacy/*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        auth_user: admin
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test redirect rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        auth_pass: secure_password123
+        disabled: false
+        asn: any
+      type: object
+    V2RuleFunctionRequest:
+      example:
+        country: country_is
+        asn_is:
+        - '15169'
+        - '8075'
+        method: method_is
+        ip_is_not:
+        - 172.16.0.0/12
+        method_is:
+        - GET
+        - POST
+        ip: ip_is
+        weight: 100
+        country_is:
+        - US
+        - CA
+        - GB
+        method_is_not:
+        - DELETE
+        - PUT
+        uuid: 123e4567-e89b-12d3-a456-426614174000
+        url:
+        - /*
+        country_is_not:
+        - CN
+        - RU
+        asn_is_not:
+        - '13335'
+        fn_uuid: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+        domain:
+        - test-domain.com
+        - '*.test-domain.com'
+        name: Test function rule
+        ip_is:
+        - 192.168.1.0/24
+        - 10.0.0.1
+        disabled: false
+        asn: any
+      properties:
+        domain:
+          description: 'Domain patterns (default: any)'
+          example:
+          - test-domain.com
+          - '*.test-domain.com'
+          items:
+            type: string
+          type: array
+        name:
+          description: Rule name
+          example: Test function rule
+          type: string
+        uuid:
+          description: Rule UUID
+          example: 123e4567-e89b-12d3-a456-426614174000
+          type: string
+        weight:
+          default: 0
+          description: Rule weight
+          example: 100
+          type: integer
+        disabled:
+          default: false
+          description: Whether rule is disabled
+          example: false
+          type: boolean
+        url:
+          description: URL patterns
+          example:
+          - /*
+          items:
+            type: string
+          type: array
+        country:
+          description: Country filter type (country_is, country_is_not, any)
+          example: country_is
+          type: string
+        country_is:
+          description: Allowed countries
+          example:
+          - US
+          - CA
+          - GB
+          items:
+            type: string
+          type: array
+        country_is_not:
+          description: Excluded countries
+          example:
+          - CN
+          - RU
+          items:
+            type: string
+          type: array
+        method:
+          description: Method filter type (method_is, method_is_not, any)
+          example: method_is
+          type: string
+        method_is:
+          description: Allowed HTTP methods
+          example:
+          - GET
+          - POST
+          items:
+            type: string
+          type: array
+        method_is_not:
+          description: Excluded HTTP methods
+          example:
+          - DELETE
+          - PUT
+          items:
+            type: string
+          type: array
+        ip:
+          description: IP filter type (ip_is, ip_is_not, any)
+          example: ip_is
+          type: string
+        ip_is:
+          description: Allowed IP addresses
+          example:
+          - 192.168.1.0/24
+          - 10.0.0.1
+          items:
+            type: string
+          type: array
+        ip_is_not:
+          description: Excluded IP addresses
+          example:
+          - 172.16.0.0/12
+          items:
+            type: string
+          type: array
+        asn:
+          description: ASN filter type (asn_is, asn_is_not, any)
+          example: any
+          type: string
+        asn_is:
+          description: Allowed AS numbers
+          example:
+          - '15169'
+          - '8075'
+          items:
+            type: string
+          type: array
+        asn_is_not:
+          description: Excluded AS numbers
+          example:
+          - '13335'
+          items:
+            type: string
+          type: array
+        fn_uuid:
+          description: Function UUID
+          example: 7c9e6679-7425-40de-944b-e07fc1f90ae7
+          type: string
+      required:
+      - domain
+      - fn_uuid
+      - url
+      type: object
+    WafConfig_httpbl:
+      description: Project Honey Pot HTTP:BL configuration
+      example:
+        block_harvester: false
+        httpbl_enabled: false
+        block_spam: false
+        httpbl_key: httpbl_key
+        block_search_engine: false
+        block_suspicious: false
+      properties:
+        httpbl_enabled:
+          default: false
+          description: Enable HTTP:BL
+          type: boolean
+        block_suspicious:
+          default: false
+          description: Block suspicious IPs
+          type: boolean
+        block_harvester:
+          default: false
+          description: Block email harvesters
+          type: boolean
+        block_spam:
+          default: false
+          description: Block spam sources
+          type: boolean
+        block_search_engine:
+          default: false
+          description: Block search engines
+          type: boolean
+        httpbl_key:
+          description: HTTP:BL API key
+          type: string
       type: object
     V2RuleRequest:
       properties:
@@ -4946,6 +4944,18 @@ components:
       - domain
       - url
       type: object
+    V2RuleProxyAction_notify_config:
+      description: Notification configuration (required when notify is slack)
+      example:
+        webhook_url: https://hooks.slack.com/services/XXXXXX
+      properties:
+        webhook_url:
+          description: Slack webhook URL
+          example: https://hooks.slack.com/services/XXXXXX
+          type: string
+      type:
+      - object
+      - 'null'
   securitySchemes:
     BearerAuth:
       bearerFormat: JWT

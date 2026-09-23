@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents AI Task Management API
+  title: QuantCDN AI Task Management API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -16,7 +16,37 @@ tags:
 paths:
   /api/v3/organizations/{organisation}/ai/tasks:
     get:
-      description: "Lists tasks for an organization with optional filtering. Filters can be combined for powerful queries.\n     *\n     * **Filter Examples:**\n     * - All tasks in a list: ?taskListId=world-1\n     * - Pending tasks in a list: ?taskListId=world-1&status=pending\n     * - Tasks assigned to an agent: ?assignedAgentId=agent-code-reviewer\n     * - Combined: ?taskListId=world-1&status=in_progress&assignedAgentId=agent-1\n     *\n     * **Reverse Dependency Lookup:**\n     * Use `dependsOn` to find tasks that depend on a specific task (waiting for it to complete):\n     * - ?dependsOn=task-123 - Returns task IDs only (lightweight)\n     * - ?dependsOn=task-123&includeDetails=true - Returns full task objects\n     * - ?dependsOn=task-123&status=pending - Pending tasks waiting for task-123\n     *\n     * **Ordering:**\n     * Tasks are returned in reverse chronological order (most recent first)."
+      description: 'Lists tasks for an organization with optional filtering. Filters can be combined for powerful queries.
+
+        *
+
+        * **Filter Examples:**
+
+        * - All tasks in a list: ?taskListId=world-1
+
+        * - Pending tasks in a list: ?taskListId=world-1&status=pending
+
+        * - Tasks assigned to an agent: ?assignedAgentId=agent-code-reviewer
+
+        * - Combined: ?taskListId=world-1&status=in_progress&assignedAgentId=agent-1
+
+        *
+
+        * **Reverse Dependency Lookup:**
+
+        * Use `dependsOn` to find tasks that depend on a specific task (waiting for it to complete):
+
+        * - ?dependsOn=task-123 - Returns task IDs only (lightweight)
+
+        * - ?dependsOn=task-123&includeDetails=true - Returns full task objects
+
+        * - ?dependsOn=task-123&status=pending - Pending tasks waiting for task-123
+
+        *
+
+        * **Ordering:**
+
+        * Tasks are returned in reverse chronological order (most recent first).'
       operationId: listTasks
       parameters:
       - description: The organisation ID
@@ -104,7 +134,35 @@ paths:
       tags:
       - AI Task Management
     post:
-      description: "Creates a new task for multi-agent coordination and workflow orchestration.\n     *\n     * **Key Features:**\n     * - **Persistent State**: Tasks survive across conversations and sessions\n     * - **Agent Assignment**: Pre-assign tasks to specific agents\n     * - **Task Lists**: Group related tasks using taskListId (implicit - no need to create lists first)\n     * - **Dependencies**: Define task dependencies for workflow orchestration\n     * - **Metadata**: Store flexible JSON metadata for task-specific data\n     * - **Progress Tracking**: Track progress from 0.0 to 1.0\n     *\n     * **Use Cases:**\n     * - Break down complex requests into manageable steps\n     * - Assign work to specialized agents\n     * - Track long-running operations\n     * - Coordinate multi-agent workflows"
+      description: 'Creates a new task for multi-agent coordination and workflow orchestration.
+
+        *
+
+        * **Key Features:**
+
+        * - **Persistent State**: Tasks survive across conversations and sessions
+
+        * - **Agent Assignment**: Pre-assign tasks to specific agents
+
+        * - **Task Lists**: Group related tasks using taskListId (implicit - no need to create lists first)
+
+        * - **Dependencies**: Define task dependencies for workflow orchestration
+
+        * - **Metadata**: Store flexible JSON metadata for task-specific data
+
+        * - **Progress Tracking**: Track progress from 0.0 to 1.0
+
+        *
+
+        * **Use Cases:**
+
+        * - Break down complex requests into manageable steps
+
+        * - Assign work to specialized agents
+
+        * - Track long-running operations
+
+        * - Coordinate multi-agent workflows'
       operationId: createTask
       parameters:
       - description: The organisation ID
@@ -137,7 +195,31 @@ paths:
       - AI Task Management
   /api/v3/organizations/{organisation}/ai/tasks/{taskId}:
     delete:
-      description: "Permanently deletes a task. This action cannot be undone.\n     *\n     * **Dependency Protection:**\n     * By default, deletion is blocked if other tasks depend on this task (TASK_HAS_DEPENDENTS error).\n     * This prevents breaking workflows.\n     *\n     * **Cascade Delete:**\n     * Use `?cascade=true` to delete the task AND all tasks that depend on it recursively.\n     * Useful for cleaning up entire dependency chains.\n     *\n     * **Examples:**\n     * - DELETE /tasks/{id} - Deletes task if no dependents, otherwise returns 409 error\n     * - DELETE /tasks/{id}?cascade=true - Deletes task and all dependent tasks"
+      description: 'Permanently deletes a task. This action cannot be undone.
+
+        *
+
+        * **Dependency Protection:**
+
+        * By default, deletion is blocked if other tasks depend on this task (TASK_HAS_DEPENDENTS error).
+
+        * This prevents breaking workflows.
+
+        *
+
+        * **Cascade Delete:**
+
+        * Use `?cascade=true` to delete the task AND all tasks that depend on it recursively.
+
+        * Useful for cleaning up entire dependency chains.
+
+        *
+
+        * **Examples:**
+
+        * - DELETE /tasks/{id} - Deletes task if no dependents, otherwise returns 409 error
+
+        * - DELETE /tasks/{id}?cascade=true - Deletes task and all dependent tasks'
       operationId: deleteTask
       parameters:
       - description: The organisation ID
@@ -222,7 +304,35 @@ paths:
       tags:
       - AI Task Management
     put:
-      description: "Updates an existing task. All fields are optional - only provided fields will be updated.\n     *\n     * **Status Transitions:**\n     * - Changing from **pending** to **in_progress** automatically sets startedAt timestamp\n     * - Changing to **completed**, **failed**, or **cancelled** automatically sets completedAt timestamp\n     * - Changing to **blocked** automatically sets blockedAt timestamp\n     * - Changing from **blocked** to **in_progress** or **pending** clears blocked fields\n     * - Completed tasks get a 30-day TTL for automatic cleanup\n     *\n     * **Progress Updates:**\n     * - Update progress (0.0 to 1.0) to track completion percentage\n     * - Update progressMessage for human-readable status updates\n     * - Set result object when task completes successfully\n     * - Set error string when task fails\n     * - Set blockedReason and blockedByTaskIds when blocking a task"
+      description: 'Updates an existing task. All fields are optional - only provided fields will be updated.
+
+        *
+
+        * **Status Transitions:**
+
+        * - Changing from **pending** to **in_progress** automatically sets startedAt timestamp
+
+        * - Changing to **completed**, **failed**, or **cancelled** automatically sets completedAt timestamp
+
+        * - Changing to **blocked** automatically sets blockedAt timestamp
+
+        * - Changing from **blocked** to **in_progress** or **pending** clears blocked fields
+
+        * - Completed tasks get a 30-day TTL for automatic cleanup
+
+        *
+
+        * **Progress Updates:**
+
+        * - Update progress (0.0 to 1.0) to track completion percentage
+
+        * - Update progressMessage for human-readable status updates
+
+        * - Set result object when task completes successfully
+
+        * - Set error string when task fails
+
+        * - Set blockedReason and blockedByTaskIds when blocking a task'
       operationId: updateTask
       parameters:
       - description: The organisation ID
@@ -267,7 +377,31 @@ paths:
       - AI Task Management
   /api/v3/organizations/{organisation}/ai/tasks/{taskListId}/dependency-graph:
     get:
-      description: "Returns the full dependency graph for all tasks in a task list.\n     *\n     * **Use Cases:**\n     * - Visualize task dependencies in a UI (DAG diagram)\n     * - Analyze workflow structure and critical paths\n     * - Find starting tasks (roots) and terminal tasks (leaves)\n     * - Plan parallel execution by identifying independent task groups\n     *\n     * **Response Structure:**\n     * - `taskCount`: Total number of tasks in the list\n     * - `roots`: Task IDs with no dependencies (starting points)\n     * - `leaves`: Task IDs with no dependents (terminal tasks)\n     * - `graph`: Adjacency list with each task's dependencies and dependents"
+      description: 'Returns the full dependency graph for all tasks in a task list.
+
+        *
+
+        * **Use Cases:**
+
+        * - Visualize task dependencies in a UI (DAG diagram)
+
+        * - Analyze workflow structure and critical paths
+
+        * - Find starting tasks (roots) and terminal tasks (leaves)
+
+        * - Plan parallel execution by identifying independent task groups
+
+        *
+
+        * **Response Structure:**
+
+        * - `taskCount`: Total number of tasks in the list
+
+        * - `roots`: Task IDs with no dependencies (starting points)
+
+        * - `leaves`: Task IDs with no dependents (terminal tasks)
+
+        * - `graph`: Adjacency list with each task''s dependencies and dependents'
       operationId: getDependencyGraph
       parameters:
       - description: The organisation ID
@@ -301,114 +435,6 @@ paths:
       - AI Task Management
 components:
   schemas:
-    createTask_201_response:
-      example:
-        createdAt: 0
-        title: title
-        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        orgId: orgId
-        status: status
-      properties:
-        taskId:
-          format: uuid
-          type: string
-        orgId:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-        createdAt:
-          type: integer
-      type: object
-    updateTask_request:
-      properties:
-        title:
-          example: Updated task title
-          type: string
-        description:
-          example: Updated description with more details
-          type: string
-        taskListId:
-          description: Move task to different list or remove from list (set null)
-          example: world-2
-          nullable: true
-          type: string
-        status:
-          description: Task status (triggers automatic timestamp updates)
-          enum:
-          - pending
-          - in_progress
-          - completed
-          - failed
-          - cancelled
-          - blocked
-          example: in_progress
-          type: string
-        assignedAgentId:
-          description: Reassign task to different agent
-          example: agent-specialist
-          nullable: true
-          type: string
-        dependsOn:
-          description: Update task dependencies
-          example:
-          - 550e8400-e29b-41d4-a716-446655440000
-          items:
-            format: uuid
-            type: string
-          type: array
-        metadata:
-          description: Update task metadata (replaces entire metadata object)
-          example:
-            priority: urgent
-          type: object
-        progress:
-          description: Progress from 0.0 to 1.0
-          example: 0.75
-          format: float
-          maximum: 1
-          minimum: 0
-          type: number
-        progressMessage:
-          description: Human-readable progress message
-          example: Processing document 3 of 4...
-          type: string
-        result:
-          description: Task result data (set when completing task)
-          example:
-            summary: Document processed successfully
-            wordCount: 1500
-          type: object
-        error:
-          description: Error message (set when task fails)
-          example: Failed to connect to external API
-          nullable: true
-          type: string
-        retryCount:
-          description: Update retry count
-          example: 1
-          minimum: 0
-          type: integer
-        maxRetries:
-          description: Update maximum retry attempts
-          example: 5
-          maximum: 10
-          minimum: 0
-          type: integer
-        blockedReason:
-          description: Reason task is blocked (set when status is blocked)
-          example: Waiting for external approval
-          nullable: true
-          type: string
-        blockedByTaskIds:
-          description: Task IDs that are blocking this task
-          items:
-            format: uuid
-            type: string
-          nullable: true
-          type: array
-      type: object
     updateTask_200_response:
       example:
         taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -422,27 +448,6 @@ components:
           type: string
         updatedAt:
           type: integer
-      type: object
-    deleteTask_200_response:
-      example:
-        deleted: true
-        deletedCount: 1
-        deletedTaskIds:
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        deleted:
-          example: true
-          type: boolean
-        deletedCount:
-          description: Number of tasks deleted (more than 1 for cascade)
-          example: 1
-          type: integer
-        deletedTaskIds:
-          items:
-            format: uuid
-            type: string
-          type: array
       type: object
     listTasks_200_response:
       example:
@@ -533,6 +538,26 @@ components:
           description: Adjacency list with task summaries, dependsOn, and dependents arrays
           type: object
       type: object
+    createTask_201_response:
+      example:
+        createdAt: 0
+        title: title
+        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        orgId: orgId
+        status: status
+      properties:
+        taskId:
+          format: uuid
+          type: string
+        orgId:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: integer
+      type: object
     createTask_request:
       properties:
         title:
@@ -621,6 +646,99 @@ components:
             type: string
           type: array
       type: object
+    deleteTask_200_response:
+      example:
+        deleted: true
+        deletedCount: 1
+        deletedTaskIds:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        deleted:
+          example: true
+          type: boolean
+        deletedCount:
+          description: Number of tasks deleted (more than 1 for cascade)
+          example: 1
+          type: integer
+        deletedTaskIds:
+          items:
+            format: uuid
+            type: string
+          type: array
+      type: object
+    listTasks_200_response_tasks_inner:
+      example:
+        createdAt: 1735689600000
+        assignedAgentId: agent-123
+        blockedByTaskIds:
+        - blockedByTaskIds
+        - blockedByTaskIds
+        blockedReason: blockedReason
+        description: Extract text from PDF, analyze content
+        progress: 0.5
+        taskListId: world-1
+        title: Process document and create summary
+        taskId: 550e8400-e29b-41d4-a716-446655440000
+        orgId: quant
+        status: in_progress
+        updatedAt: 1735689700000
+      properties:
+        taskId:
+          example: 550e8400-e29b-41d4-a716-446655440000
+          format: uuid
+          type: string
+        orgId:
+          example: quant
+          type: string
+        taskListId:
+          example: world-1
+          type:
+          - string
+          - 'null'
+        title:
+          example: Process document and create summary
+          type: string
+        description:
+          example: Extract text from PDF, analyze content
+          type: string
+        status:
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          example: in_progress
+          type: string
+        assignedAgentId:
+          example: agent-123
+          type:
+          - string
+          - 'null'
+        progress:
+          example: 0.5
+          maximum: 1
+          minimum: 0
+          type: number
+        blockedReason:
+          type:
+          - string
+          - 'null'
+        blockedByTaskIds:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        createdAt:
+          example: 1735689600000
+          type: integer
+        updatedAt:
+          example: 1735689700000
+          type: integer
+      type: object
     getTask_200_response:
       example:
         metadata:
@@ -662,8 +780,9 @@ components:
           type: string
         taskListId:
           example: world-1
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         title:
           example: Process document and create summary
           type: string
@@ -682,12 +801,14 @@ components:
           type: string
         assignedAgentId:
           example: agent-123
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         createdByAgentId:
           example: agent-coordinator
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         dependsOn:
           items:
             format: uuid
@@ -708,12 +829,14 @@ components:
           type: string
         result:
           description: Task result data when completed
-          nullable: true
-          type: object
+          type:
+          - object
+          - 'null'
         error:
           description: Error message if status is failed
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         retryCount:
           example: 0
           type: integer
@@ -733,70 +856,57 @@ components:
         startedAt:
           description: When status changed to in_progress
           format: int64
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         completedAt:
           description: When task completed/failed/cancelled
           format: int64
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         expiresAt:
           description: TTL timestamp for completed tasks
           format: int64
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         blockedReason:
           description: Reason task is blocked
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         blockedByTaskIds:
           description: Task IDs that are blocking this task
           items:
             format: uuid
             type: string
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         blockedAt:
           description: When status changed to blocked
           format: int64
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
       type: object
-    listTasks_200_response_tasks_inner:
-      example:
-        createdAt: 1735689600000
-        assignedAgentId: agent-123
-        blockedByTaskIds:
-        - blockedByTaskIds
-        - blockedByTaskIds
-        blockedReason: blockedReason
-        description: Extract text from PDF, analyze content
-        progress: 0.5
-        taskListId: world-1
-        title: Process document and create summary
-        taskId: 550e8400-e29b-41d4-a716-446655440000
-        orgId: quant
-        status: in_progress
-        updatedAt: 1735689700000
+    updateTask_request:
       properties:
-        taskId:
-          example: 550e8400-e29b-41d4-a716-446655440000
-          format: uuid
-          type: string
-        orgId:
-          example: quant
-          type: string
-        taskListId:
-          example: world-1
-          nullable: true
-          type: string
         title:
-          example: Process document and create summary
+          example: Updated task title
           type: string
         description:
-          example: Extract text from PDF, analyze content
+          example: Updated description with more details
           type: string
+        taskListId:
+          description: Move task to different list or remove from list (set null)
+          example: world-2
+          type:
+          - string
+          - 'null'
         status:
+          description: Task status (triggers automatic timestamp updates)
           enum:
           - pending
           - in_progress
@@ -807,28 +917,72 @@ components:
           example: in_progress
           type: string
         assignedAgentId:
-          example: agent-123
-          nullable: true
-          type: string
+          description: Reassign task to different agent
+          example: agent-specialist
+          type:
+          - string
+          - 'null'
+        dependsOn:
+          description: Update task dependencies
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+          items:
+            format: uuid
+            type: string
+          type: array
+        metadata:
+          description: Update task metadata (replaces entire metadata object)
+          example:
+            priority: urgent
+          type: object
         progress:
-          example: 0.5
+          description: Progress from 0.0 to 1.0
+          example: 0.75
+          format: float
           maximum: 1
           minimum: 0
           type: number
-        blockedReason:
-          nullable: true
+        progressMessage:
+          description: Human-readable progress message
+          example: Processing document 3 of 4...
           type: string
+        result:
+          description: Task result data (set when completing task)
+          example:
+            summary: Document processed successfully
+            wordCount: 1500
+          type: object
+        error:
+          description: Error message (set when task fails)
+          example: Failed to connect to external API
+          type:
+          - string
+          - 'null'
+        retryCount:
+          description: Update retry count
+          example: 1
+          minimum: 0
+          type: integer
+        maxRetries:
+          description: Update maximum retry attempts
+          example: 5
+          maximum: 10
+          minimum: 0
+          type: integer
+        blockedReason:
+          description: Reason task is blocked (set when status is blocked)
+          example: Waiting for external approval
+          type:
+          - string
+          - 'null'
         blockedByTaskIds:
+          description: Task IDs that are blocking this task
           items:
+            format: uuid
             type: string
-          nullable: true
-          type: array
-        createdAt:
-          example: 1735689600000
-          type: integer
-        updatedAt:
-          example: 1735689700000
-          type: integer
+          type:
+          - array
+          - 'null'
       type: object
   securitySchemes:
     BearerAuth:

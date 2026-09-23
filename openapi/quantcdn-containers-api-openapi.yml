@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents Containers API
+  title: QuantCDN Containers API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -124,6 +124,25 @@ components:
       - name
       - valueFrom
       type: object
+    Container_dependsOn_inner:
+      example:
+        condition: START
+        containerName: containerName
+      properties:
+        containerName:
+          description: The name of the container this container depends on
+          type: string
+        condition:
+          description: The condition to wait for on the dependency
+          enum:
+          - START
+          - HEALTHY
+          - COMPLETE
+          - SUCCESS
+          type: string
+      required:
+      - containerName
+      type: object
     Container_environment_inner:
       example:
         name: name
@@ -139,6 +158,47 @@ components:
       - name
       - value
       type: object
+    Container_mountPoints_inner:
+      example:
+        readOnly: false
+        containerPath: containerPath
+        sourceVolume: sourceVolume
+      properties:
+        sourceVolume:
+          description: The name of the logical volume
+          type: string
+        containerPath:
+          description: The path inside the container where the volume is mounted
+          type: string
+        readOnly:
+          default: false
+          type: boolean
+      required:
+      - containerPath
+      - sourceVolume
+      type: object
+    Container_originProtectionConfig:
+      description: Extended origin protection configuration with IP allow list support
+      example:
+        ipAllow:
+        - ipAllow
+        - ipAllow
+        enabled: true
+      properties:
+        enabled:
+          default: true
+          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
+          type: boolean
+        ipAllow:
+          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      type:
+      - object
+      - 'null'
     Container_healthCheck:
       description: Container health check configuration
       example:
@@ -149,7 +209,6 @@ components:
         - command
         - command
         timeout: 15
-      nullable: true
       properties:
         command:
           description: The command to run to determine if the container is healthy
@@ -178,9 +237,12 @@ components:
           description: Grace period (seconds) to ignore unhealthy checks after container starts
           maximum: 300
           minimum: 0
-          nullable: true
-          type: integer
-      type: object
+          type:
+          - integer
+          - 'null'
+      type:
+      - object
+      - 'null'
     Container_imageReference:
       example:
         identifier: identifier
@@ -198,64 +260,6 @@ components:
       required:
       - identifier
       - type
-      type: object
-    Container_originProtectionConfig:
-      description: Extended origin protection configuration with IP allow list support
-      example:
-        ipAllow:
-        - ipAllow
-        - ipAllow
-        enabled: true
-      nullable: true
-      properties:
-        enabled:
-          default: true
-          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
-          type: boolean
-        ipAllow:
-          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
-          items:
-            type: string
-          nullable: true
-          type: array
-      type: object
-    Container_dependsOn_inner:
-      example:
-        condition: START
-        containerName: containerName
-      properties:
-        containerName:
-          description: The name of the container this container depends on
-          type: string
-        condition:
-          description: The condition to wait for on the dependency
-          enum:
-          - START
-          - HEALTHY
-          - COMPLETE
-          - SUCCESS
-          type: string
-      required:
-      - containerName
-      type: object
-    Container_mountPoints_inner:
-      example:
-        readOnly: false
-        containerPath: containerPath
-        sourceVolume: sourceVolume
-      properties:
-        sourceVolume:
-          description: The name of the logical volume
-          type: string
-        containerPath:
-          description: The path inside the container where the volume is mounted
-          type: string
-        readOnly:
-          default: false
-          type: boolean
-      required:
-      - containerPath
-      - sourceVolume
       type: object
     Container:
       example:
@@ -324,76 +328,91 @@ components:
           $ref: '#/components/schemas/Container_imageReference'
         cpu:
           description: Container-level CPU units
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         memory:
           description: Container-level memory hard limit (MiB)
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         memoryReservation:
           description: Container-level memory soft limit (MiB)
-          nullable: true
-          type: integer
+          type:
+          - integer
+          - 'null'
         exposedPorts:
           description: List of container ports to expose
           items:
             type: integer
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         mountPoints:
           items:
             $ref: '#/components/schemas/Container_mountPoints_inner'
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         environment:
           description: Environment variables specific to this container
           items:
             $ref: '#/components/schemas/Container_environment_inner'
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         secrets:
           description: Secrets mapped to environment variables
           items:
             $ref: '#/components/schemas/Container_secrets_inner'
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         healthCheck:
           $ref: '#/components/schemas/Container_healthCheck'
         dependsOn:
           description: Container startup dependencies
           items:
             $ref: '#/components/schemas/Container_dependsOn_inner'
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         command:
           items:
             type: string
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         entryPoint:
           items:
             type: string
-          nullable: true
-          type: array
+          type:
+          - array
+          - 'null'
         workingDirectory:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         essential:
           default: true
-          nullable: true
-          type: boolean
+          type:
+          - boolean
+          - 'null'
         readonlyRootFilesystem:
           default: false
-          nullable: true
-          type: boolean
+          type:
+          - boolean
+          - 'null'
         user:
-          nullable: true
-          type: string
+          type:
+          - string
+          - 'null'
         originProtection:
           default: false
           description: Enable origin protection for all exposed ports on this container. Use originProtectionConfig for advanced options like IP allow lists.
-          nullable: true
-          type: boolean
+          type:
+          - boolean
+          - 'null'
         originProtectionConfig:
           $ref: '#/components/schemas/Container_originProtectionConfig'
       required:

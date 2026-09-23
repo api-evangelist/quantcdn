@@ -1,4 +1,4 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
   title: QuantCDN AI Agents API
@@ -16,7 +16,17 @@ tags:
 paths:
   /api/v3/organizations/{organisation}/ai/agents:
     get:
-      description: "Lists all AI agents for an organization. Agents are pre-configured AI assistants with specific system prompts, model settings, and tool permissions.\n     *\n     * **Features:**\n     * - Filter by group (e.g., 'development', 'compliance')\n     * - Organization-scoped\n     * - Returns agent configurations without execution history"
+      description: 'Lists all AI agents for an organization. Agents are pre-configured AI assistants with specific system prompts, model settings, and tool permissions.
+
+        *
+
+        * **Features:**
+
+        * - Filter by group (e.g., ''development'', ''compliance'')
+
+        * - Organization-scoped
+
+        * - Returns agent configurations without execution history'
       operationId: listAIAgents
       parameters:
       - description: The organisation ID
@@ -50,7 +60,29 @@ paths:
       tags:
       - AI Agents
     post:
-      description: "Creates a new AI agent with specific configuration, system prompt, and tool permissions.\n     *\n     * **Agent Configuration:**\n     * - **System Prompt**: Instructions that guide the agent's behavior\n     * - **Model**: Which foundation model to use (e.g., 'amazon.nova-pro-v1:0')\n     * - **Temperature**: Creativity level (0-1)\n     * - **Allowed Tools**: Which tools the agent can auto-execute\n     * - **Allowed Collections**: Vector DB collections for RAG\n     * - **Group**: Optional categorization (e.g., 'development', 'compliance')\n     *\n     * **Auto-Execution:**\n     * All tools are automatically executed when an agent requests them (no client confirmation needed)."
+      description: 'Creates a new AI agent with specific configuration, system prompt, and tool permissions.
+
+        *
+
+        * **Agent Configuration:**
+
+        * - **System Prompt**: Instructions that guide the agent''s behavior
+
+        * - **Model**: Which foundation model to use (e.g., ''amazon.nova-pro-v1:0'')
+
+        * - **Temperature**: Creativity level (0-1)
+
+        * - **Allowed Tools**: Which tools the agent can auto-execute
+
+        * - **Allowed Collections**: Vector DB collections for RAG
+
+        * - **Group**: Optional categorization (e.g., ''development'', ''compliance'')
+
+        *
+
+        * **Auto-Execution:**
+
+        * All tools are automatically executed when an agent requests them (no client confirmation needed).'
       operationId: createAIAgent
       parameters:
       - description: The organisation ID
@@ -205,7 +237,63 @@ paths:
       - AI Agents
   /api/v3/organizations/{organisation}/ai/agents/{agentId}/chat:
     post:
-      description: "Initiates a chat session with a specific AI agent. The agent's configuration (system prompt, temperature, model, allowed tools) is automatically applied.\n     *\n     * **Key Features:**\n     * - **Session Management**: Automatic session creation and state tracking\n     * - **Multi-turn Conversations**: Full conversation history maintained server-side\n     * - Agent's system prompt is prepended to conversation\n     * - Only agent's allowed tools are available\n     * - All tools are auto-executed on cloud (no client confirmation needed)\n     * - Temperature and model from agent config\n     * - Supports sync, streaming, and async modes\n     *\n     * **Execution Modes:**\n     * - **Sync Mode** (default): Standard JSON response, waits for completion\n     * - **Streaming Mode**: Set `stream: true` for SSE token-by-token responses\n     * - **Async Mode**: Set `async: true` for long-running tasks with polling\n     *\n     * **Async/Durable Mode (`async: true`):**\n     * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)\n     * - Uses AWS Lambda Durable Functions for long-running agent tasks\n     * - All tools are auto-executed on cloud (no `waiting_callback` state)\n     * - Poll `/ai/chat/executions/{requestId}` for status\n     * - Ideal for agents with slow tools (image generation, web search, etc.)\n     *\n     * **Session Support:**\n     * - Omit `sessionId` to create a new session automatically\n     * - Include `sessionId` to continue an existing conversation\n     * - Sessions expire after 60 minutes of inactivity\n     * - Sessions work in all modes (sync, streaming, async)\n     * - Use `/sessions/{sessionId}` to retrieve full conversation history"
+      description: 'Initiates a chat session with a specific AI agent. The agent''s configuration (system prompt, temperature, model, allowed tools) is automatically applied.
+
+        *
+
+        * **Key Features:**
+
+        * - **Session Management**: Automatic session creation and state tracking
+
+        * - **Multi-turn Conversations**: Full conversation history maintained server-side
+
+        * - Agent''s system prompt is prepended to conversation
+
+        * - Only agent''s allowed tools are available
+
+        * - All tools are auto-executed on cloud (no client confirmation needed)
+
+        * - Temperature and model from agent config
+
+        * - Supports sync, streaming, and async modes
+
+        *
+
+        * **Execution Modes:**
+
+        * - **Sync Mode** (default): Standard JSON response, waits for completion
+
+        * - **Streaming Mode**: Set `stream: true` for SSE token-by-token responses
+
+        * - **Async Mode**: Set `async: true` for long-running tasks with polling
+
+        *
+
+        * **Async/Durable Mode (`async: true`):**
+
+        * - Returns immediately with `requestId` and `pollUrl` (HTTP 202)
+
+        * - Uses AWS Lambda Durable Functions for long-running agent tasks
+
+        * - All tools are auto-executed on cloud (no `waiting_callback` state)
+
+        * - Poll `/ai/chat/executions/{requestId}` for status
+
+        * - Ideal for agents with slow tools (image generation, web search, etc.)
+
+        *
+
+        * **Session Support:**
+
+        * - Omit `sessionId` to create a new session automatically
+
+        * - Include `sessionId` to continue an existing conversation
+
+        * - Sessions expire after 60 minutes of inactivity
+
+        * - Sessions work in all modes (sync, streaming, async)
+
+        * - Use `/sessions/{sessionId}` to retrieve full conversation history'
       operationId: chatWithAIAgent
       parameters:
       - description: The organisation ID
@@ -376,68 +464,11 @@ paths:
       - AI Agents
 components:
   schemas:
-    chatWithAIAgent_200_response:
-      example:
-        response:
-          stopReason: stopReason
-          usage:
-            costCents: 5.962134
-            inputTokens: 0
-            outputTokens: 6
-            totalTokens: 1
-          toolResults:
-          - '{}'
-          - '{}'
-          text: text
-        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-      properties:
-        sessionId:
-          format: uuid
-          type: string
-        response:
-          $ref: '#/components/schemas/chatWithAIAgent_200_response_response'
-      type: object
-    chatWithAIAgent_200_response_response:
-      example:
-        stopReason: stopReason
-        usage:
-          costCents: 5.962134
-          inputTokens: 0
-          outputTokens: 6
-          totalTokens: 1
-        toolResults:
-        - '{}'
-        - '{}'
-        text: text
-      properties:
-        text:
-          type: string
-        stopReason:
-          type: string
-        usage:
-          $ref: '#/components/schemas/chatWithAIAgent_200_response_response_usage'
-        toolResults:
-          items:
-            type: object
-          type: array
-      type: object
-    deleteAIAgent_200_response:
-      example:
-        success: true
-        message: Agent deleted successfully
-      properties:
-        success:
-          example: true
-          type: boolean
-        message:
-          example: Agent deleted successfully
-          type: string
-      type: object
-    createAIAgent_201_response:
+    updateAIAgent_200_response:
       example:
         agent: '{}'
         success: true
-        message: Agent created successfully
+        message: Agent updated successfully
       properties:
         success:
           example: true
@@ -445,141 +476,61 @@ components:
         agent:
           type: object
         message:
-          example: Agent created successfully
+          example: Agent updated successfully
           type: string
       type: object
-    upsertAgentOverlay_200_response:
-      example:
-        overlay: '{}'
+    upsertAgentOverlay_request:
       properties:
-        overlay:
-          type: object
-      type: object
-    getAgentOverlay_200_response_base:
-      description: Base global agent metadata
-      example:
-        assignedSkillIds:
-        - assignedSkillIds
-        - assignedSkillIds
-        agentId: agentId
-        modelId: modelId
-        name: name
-        allowedTools:
-        - allowedTools
-        - allowedTools
-      properties:
-        agentId:
-          type: string
-        name:
-          type: string
         modelId:
-          type: string
-        allowedTools:
-          items:
-            type: string
-          type: array
-        assignedSkillIds:
-          items:
-            type: string
-          type: array
-      type: object
-    chatWithAIAgent_200_response_response_usage:
-      example:
-        costCents: 5.962134
-        inputTokens: 0
-        outputTokens: 6
-        totalTokens: 1
-      properties:
-        inputTokens:
-          type: integer
-        outputTokens:
-          type: integer
-        totalTokens:
-          type: integer
-        costCents:
-          description: Cost of this inference call in US cents
-          format: float
-          type: number
-      type: object
-    updateAIAgent_request:
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        group:
-          type: string
-        systemPrompt:
+          description: Override the base agent's model
           type: string
         temperature:
+          description: Override temperature
           maximum: 1
           minimum: 0
           type: number
-        modelId:
-          type: string
         maxTokens:
-          maximum: 200000
+          description: Override max tokens
           minimum: 1
           type: integer
-        allowedTools:
+        disabledSkills:
+          description: Global skill IDs to exclude
           items:
             type: string
           type: array
+        additionalSkills:
+          description: Org-owned skill IDs to add
+          items:
+            type: string
+          type: array
+        additionalTools:
+          description: Tool names to add
+          items:
+            type: string
+          type: array
+        disabledTools:
+          description: Tool names to remove
+          items:
+            type: string
+          type: array
+        systemPromptAppend:
+          description: Text appended to base system prompt
+          type: string
         allowedCollections:
+          description: Vector DB collections
           items:
             type: string
           type: array
-        assignedSkills:
-          description: Skill IDs to assign to this agent
-          items:
-            type: string
-          type: array
-        longContext:
-          description: Enable 1M context window support
-          type: boolean
         guardrailPreset:
-          description: Guardrail preset name
+          description: Guardrail preset
           enum:
           - official
           - official-sensitive
           - protected
           type: string
-        filterPolicies:
-          description: Filter policy IDs to apply to this agent's inference requests
-          items:
-            type: string
-          type: array
-      type: object
-    getAIAgent_200_response:
-      example:
-        agent:
-          assignedSkills:
-          - assignedSkills
-          - assignedSkills
-          agentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          guardrailPreset: guardrailPreset
-          modelId: modelId
-          description: description
-          hasOverlay: true
-          systemPrompt: systemPrompt
-          createdAt: 2000-01-23 04:56:07+00:00
-          createdBy: createdBy
-          longContext: true
-          name: name
-          temperature: 0.8008281904610115
-          maxTokens: 6
-          allowedCollections:
-          - allowedCollections
-          - allowedCollections
-          isGlobal: true
-          group: group
-          allowedTools:
-          - allowedTools
-          - allowedTools
-          updatedAt: 2000-01-23 04:56:07+00:00
-      properties:
-        agent:
-          $ref: '#/components/schemas/getAIAgent_200_response_agent'
+        version:
+          description: Current version for optimistic concurrency
+          type: integer
       type: object
     listAIAgents_200_response:
       example:
@@ -668,6 +619,177 @@ components:
         base:
           $ref: '#/components/schemas/getAgentOverlay_200_response_base'
       type: object
+    chatWithAIAgent_200_response_response:
+      example:
+        stopReason: stopReason
+        usage:
+          costCents: 5.962134
+          inputTokens: 0
+          outputTokens: 6
+          totalTokens: 1
+        toolResults:
+        - '{}'
+        - '{}'
+        text: text
+      properties:
+        text:
+          type: string
+        stopReason:
+          type: string
+        usage:
+          $ref: '#/components/schemas/chatWithAIAgent_200_response_response_usage'
+        toolResults:
+          items:
+            type: object
+          type: array
+      type: object
+    chatWithAIAgent_request:
+      properties:
+        message:
+          description: The user's message to the agent
+          type: string
+        sessionId:
+          description: Optional session ID to continue a conversation
+          format: uuid
+          type: string
+        userId:
+          description: Optional user identifier for session isolation
+          type: string
+        stream:
+          default: false
+          description: Whether to stream the response (SSE)
+          type: boolean
+        async:
+          default: false
+          description: Enable async/durable execution mode. When true, returns 202 with pollUrl. Use for long-running agent tasks.
+          type: boolean
+        system:
+          description: Optional additional system prompt (appended to agent's configured prompt)
+          type: string
+        longContext:
+          default: false
+          description: Per-request override to force 1M context window routing
+          type: boolean
+        maxToolIterations:
+          description: Maximum tool auto-execution iterations for this request
+          maximum: 1000
+          minimum: 1
+          type: integer
+        allowedCollections:
+          description: Per-request override for vector DB collections the agent can query
+          items:
+            type: string
+          type: array
+      required:
+      - message
+      type: object
+    deleteAgentOverlay_200_response:
+      example:
+        success: true
+        message: Agent reverted to defaults
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Agent reverted to defaults
+          type: string
+      type: object
+    getAIAgent_200_response:
+      example:
+        agent:
+          assignedSkills:
+          - assignedSkills
+          - assignedSkills
+          agentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          guardrailPreset: guardrailPreset
+          modelId: modelId
+          description: description
+          hasOverlay: true
+          systemPrompt: systemPrompt
+          createdAt: 2000-01-23 04:56:07+00:00
+          createdBy: createdBy
+          longContext: true
+          name: name
+          temperature: 0.8008281904610115
+          maxTokens: 6
+          allowedCollections:
+          - allowedCollections
+          - allowedCollections
+          isGlobal: true
+          group: group
+          allowedTools:
+          - allowedTools
+          - allowedTools
+          updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        agent:
+          $ref: '#/components/schemas/getAIAgent_200_response_agent'
+      type: object
+    updateAIAgent_request:
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        group:
+          type: string
+        systemPrompt:
+          type: string
+        temperature:
+          maximum: 1
+          minimum: 0
+          type: number
+        modelId:
+          type: string
+        maxTokens:
+          maximum: 200000
+          minimum: 1
+          type: integer
+        allowedTools:
+          items:
+            type: string
+          type: array
+        allowedCollections:
+          items:
+            type: string
+          type: array
+        assignedSkills:
+          description: Skill IDs to assign to this agent
+          items:
+            type: string
+          type: array
+        longContext:
+          description: Enable 1M context window support
+          type: boolean
+        guardrailPreset:
+          description: Guardrail preset name
+          enum:
+          - official
+          - official-sensitive
+          - protected
+          type: string
+        filterPolicies:
+          description: Filter policy IDs to apply to this agent's inference requests
+          items:
+            type: string
+          type: array
+      type: object
+    createAIAgent_201_response:
+      example:
+        agent: '{}'
+        success: true
+        message: Agent created successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        agent:
+          type: object
+        message:
+          example: Agent created successfully
+          type: string
+      type: object
     getAgentOverlay_200_response_overlay:
       example:
         disabledSkills:
@@ -691,7 +813,6 @@ components:
         additionalTools:
         - additionalTools
         - additionalTools
-      nullable: true
       properties:
         modelId:
           type: string
@@ -725,33 +846,202 @@ components:
           type: string
         version:
           type: integer
-      type: object
-    updateAIAgent_200_response:
+      type:
+      - object
+      - 'null'
+    chatWithAIAgent_200_response:
       example:
-        agent: '{}'
-        success: true
-        message: Agent updated successfully
+        response:
+          stopReason: stopReason
+          usage:
+            costCents: 5.962134
+            inputTokens: 0
+            outputTokens: 6
+            totalTokens: 1
+          toolResults:
+          - '{}'
+          - '{}'
+          text: text
+        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
       properties:
-        success:
-          example: true
+        sessionId:
+          format: uuid
+          type: string
+        response:
+          $ref: '#/components/schemas/chatWithAIAgent_200_response_response'
+      type: object
+    getAgentOverlay_200_response_base:
+      description: Base global agent metadata
+      example:
+        assignedSkillIds:
+        - assignedSkillIds
+        - assignedSkillIds
+        agentId: agentId
+        modelId: modelId
+        name: name
+        allowedTools:
+        - allowedTools
+        - allowedTools
+      properties:
+        agentId:
+          type: string
+        name:
+          type: string
+        modelId:
+          type: string
+        allowedTools:
+          items:
+            type: string
+          type: array
+        assignedSkillIds:
+          items:
+            type: string
+          type: array
+      type: object
+    listAIAgents_200_response_agents_inner:
+      example:
+        assignedSkills:
+        - assignedSkills
+        - assignedSkills
+        agentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        guardrailPreset: guardrailPreset
+        modelId: modelId
+        description: description
+        hasOverlay: true
+        createdAt: 2000-01-23 04:56:07+00:00
+        longContext: true
+        name: name
+        temperature: 0.8008281904610115
+        maxTokens: 6
+        isGlobal: true
+        group: group
+        allowedTools:
+        - allowedTools
+        - allowedTools
+        updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        agentId:
+          format: uuid
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        group:
+          type: string
+        modelId:
+          type: string
+        temperature:
+          type: number
+        maxTokens:
+          type: integer
+        allowedTools:
+          items:
+            type: string
+          type: array
+        assignedSkills:
+          items:
+            type: string
+          type: array
+        longContext:
           type: boolean
-        agent:
-          type: object
-        message:
-          example: Agent updated successfully
+        guardrailPreset:
+          type: string
+        isGlobal:
+          type: boolean
+        hasOverlay:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
           type: string
       type: object
-    deleteAgentOverlay_200_response:
-      example:
-        success: true
-        message: Agent reverted to defaults
+    createAIAgent_request:
       properties:
-        success:
-          example: true
-          type: boolean
-        message:
-          example: Agent reverted to defaults
+        name:
+          example: Code Review Assistant
           type: string
+        description:
+          example: Reviews code for security vulnerabilities and best practices
+          type: string
+        group:
+          example: development
+          type: string
+        systemPrompt:
+          example: You are a senior software engineer specializing in secure code review.
+          type: string
+        temperature:
+          example: 0.3
+          maximum: 1
+          minimum: 0
+          type: number
+        modelId:
+          example: anthropic.claude-3-5-sonnet-20241022-v2:0
+          type: string
+        maxTokens:
+          example: 4000
+          maximum: 200000
+          minimum: 1
+          type: integer
+        allowedTools:
+          example:
+          - fetch_web_content
+          - search_web
+          items:
+            type: string
+          type: array
+        allowedCollections:
+          items:
+            type: string
+          type: array
+        assignedSkills:
+          description: Skill IDs to assign to this agent
+          items:
+            type: string
+          type: array
+        createdBy:
+          description: User identifier who created the agent
+          type: string
+        longContext:
+          description: Enable 1M context window support
+          type: boolean
+        guardrailPreset:
+          description: Guardrail preset name
+          enum:
+          - official
+          - official-sensitive
+          - protected
+          type: string
+        filterPolicies:
+          description: Filter policy IDs to apply to this agent's inference requests
+          items:
+            type: string
+          type: array
+      required:
+      - description
+      - modelId
+      - name
+      - systemPrompt
+      type: object
+    chatWithAIAgent_200_response_response_usage:
+      example:
+        costCents: 5.962134
+        inputTokens: 0
+        outputTokens: 6
+        totalTokens: 1
+      properties:
+        inputTokens:
+          type: integer
+        outputTokens:
+          type: integer
+        totalTokens:
+          type: integer
+        costCents:
+          description: Cost of this inference call in US cents
+          format: float
+          type: number
       type: object
     chatWithAIAgent_202_response:
       example:
@@ -796,6 +1086,18 @@ components:
       - pollUrl
       - requestId
       - status
+      type: object
+    deleteAIAgent_200_response:
+      example:
+        success: true
+        message: Agent deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Agent deleted successfully
+          type: string
       type: object
     getAIAgent_200_response_agent:
       example:
@@ -874,225 +1176,12 @@ components:
           format: date-time
           type: string
       type: object
-    createAIAgent_request:
-      properties:
-        name:
-          example: Code Review Assistant
-          type: string
-        description:
-          example: Reviews code for security vulnerabilities and best practices
-          type: string
-        group:
-          example: development
-          type: string
-        systemPrompt:
-          example: You are a senior software engineer specializing in secure code review.
-          type: string
-        temperature:
-          example: 0.3
-          maximum: 1
-          minimum: 0
-          type: number
-        modelId:
-          example: anthropic.claude-3-5-sonnet-20241022-v2:0
-          type: string
-        maxTokens:
-          example: 4000
-          maximum: 200000
-          minimum: 1
-          type: integer
-        allowedTools:
-          example:
-          - fetch_web_content
-          - search_web
-          items:
-            type: string
-          type: array
-        allowedCollections:
-          items:
-            type: string
-          type: array
-        assignedSkills:
-          description: Skill IDs to assign to this agent
-          items:
-            type: string
-          type: array
-        createdBy:
-          description: User identifier who created the agent
-          type: string
-        longContext:
-          description: Enable 1M context window support
-          type: boolean
-        guardrailPreset:
-          description: Guardrail preset name
-          enum:
-          - official
-          - official-sensitive
-          - protected
-          type: string
-        filterPolicies:
-          description: Filter policy IDs to apply to this agent's inference requests
-          items:
-            type: string
-          type: array
-      required:
-      - description
-      - modelId
-      - name
-      - systemPrompt
-      type: object
-    chatWithAIAgent_request:
-      properties:
-        message:
-          description: The user's message to the agent
-          type: string
-        sessionId:
-          description: Optional session ID to continue a conversation
-          format: uuid
-          type: string
-        userId:
-          description: Optional user identifier for session isolation
-          type: string
-        stream:
-          default: false
-          description: Whether to stream the response (SSE)
-          type: boolean
-        async:
-          default: false
-          description: Enable async/durable execution mode. When true, returns 202 with pollUrl. Use for long-running agent tasks.
-          type: boolean
-        system:
-          description: Optional additional system prompt (appended to agent's configured prompt)
-          type: string
-        longContext:
-          default: false
-          description: Per-request override to force 1M context window routing
-          type: boolean
-        maxToolIterations:
-          description: Maximum tool auto-execution iterations for this request
-          maximum: 1000
-          minimum: 1
-          type: integer
-        allowedCollections:
-          description: Per-request override for vector DB collections the agent can query
-          items:
-            type: string
-          type: array
-      required:
-      - message
-      type: object
-    upsertAgentOverlay_request:
-      properties:
-        modelId:
-          description: Override the base agent's model
-          type: string
-        temperature:
-          description: Override temperature
-          maximum: 1
-          minimum: 0
-          type: number
-        maxTokens:
-          description: Override max tokens
-          minimum: 1
-          type: integer
-        disabledSkills:
-          description: Global skill IDs to exclude
-          items:
-            type: string
-          type: array
-        additionalSkills:
-          description: Org-owned skill IDs to add
-          items:
-            type: string
-          type: array
-        additionalTools:
-          description: Tool names to add
-          items:
-            type: string
-          type: array
-        disabledTools:
-          description: Tool names to remove
-          items:
-            type: string
-          type: array
-        systemPromptAppend:
-          description: Text appended to base system prompt
-          type: string
-        allowedCollections:
-          description: Vector DB collections
-          items:
-            type: string
-          type: array
-        guardrailPreset:
-          description: Guardrail preset
-          enum:
-          - official
-          - official-sensitive
-          - protected
-          type: string
-        version:
-          description: Current version for optimistic concurrency
-          type: integer
-      type: object
-    listAIAgents_200_response_agents_inner:
+    upsertAgentOverlay_200_response:
       example:
-        assignedSkills:
-        - assignedSkills
-        - assignedSkills
-        agentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        guardrailPreset: guardrailPreset
-        modelId: modelId
-        description: description
-        hasOverlay: true
-        createdAt: 2000-01-23 04:56:07+00:00
-        longContext: true
-        name: name
-        temperature: 0.8008281904610115
-        maxTokens: 6
-        isGlobal: true
-        group: group
-        allowedTools:
-        - allowedTools
-        - allowedTools
-        updatedAt: 2000-01-23 04:56:07+00:00
+        overlay: '{}'
       properties:
-        agentId:
-          format: uuid
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        group:
-          type: string
-        modelId:
-          type: string
-        temperature:
-          type: number
-        maxTokens:
-          type: integer
-        allowedTools:
-          items:
-            type: string
-          type: array
-        assignedSkills:
-          items:
-            type: string
-          type: array
-        longContext:
-          type: boolean
-        guardrailPreset:
-          type: string
-        isGlobal:
-          type: boolean
-        hasOverlay:
-          type: boolean
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
+        overlay:
+          type: object
       type: object
   securitySchemes:
     BearerAuth:

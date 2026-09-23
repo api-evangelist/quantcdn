@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   description: Unified API for QuantCDN Admin and QuantCloud Platform services
-  title: QuantCDN AI Agents AI Orchestrations API
+  title: QuantCDN AI Orchestrations API
   version: 4.15.8
 servers:
 - description: QuantCDN Public Cloud
@@ -16,7 +16,23 @@ tags:
 paths:
   /api/v3/organizations/{organisation}/ai/orchestrations:
     get:
-      description: "List durable orchestrations for an organization with optional filtering.\n     *\n     * **Note:** This is different from `/tools/orchestrations` which handles async tool execution\n     * polling. These durable orchestrations are for long-running batch processing loops.\n     *\n     * **Filter Options:**\n     * - `status`: Filter by orchestration status\n     * - `limit`: Max results (default 20, max 100)\n     * - `cursor`: Pagination cursor"
+      description: 'List durable orchestrations for an organization with optional filtering.
+
+        *
+
+        * **Note:** This is different from `/tools/orchestrations` which handles async tool execution
+
+        * polling. These durable orchestrations are for long-running batch processing loops.
+
+        *
+
+        * **Filter Options:**
+
+        * - `status`: Filter by orchestration status
+
+        * - `limit`: Max results (default 20, max 100)
+
+        * - `cursor`: Pagination cursor'
       operationId: listOrchestrations
       parameters:
       - description: The organisation machine name
@@ -76,7 +92,35 @@ paths:
       tags:
       - AI Orchestrations
     post:
-      description: "Create a new durable orchestration for batch processing.\n     *\n     * **Input Sources:**\n     * - `static`: Process a fixed list of items\n     * - `task_query`: Process tasks matching a query\n     * - `generator`: AI generates items from a prompt\n     *\n     * **Stop Conditions:**\n     * - `all_complete`: Stop when all items processed\n     * - `max_iterations`: Stop after N iterations\n     * - `condition`: AI evaluates a prompt to decide\n     * - `manual`: Run until manually stopped\n     *\n     * **Auto-start:**\n     * By default, the orchestration starts immediately. Set `autoStart: false` to create in pending state."
+      description: 'Create a new durable orchestration for batch processing.
+
+        *
+
+        * **Input Sources:**
+
+        * - `static`: Process a fixed list of items
+
+        * - `task_query`: Process tasks matching a query
+
+        * - `generator`: AI generates items from a prompt
+
+        *
+
+        * **Stop Conditions:**
+
+        * - `all_complete`: Stop when all items processed
+
+        * - `max_iterations`: Stop after N iterations
+
+        * - `condition`: AI evaluates a prompt to decide
+
+        * - `manual`: Run until manually stopped
+
+        *
+
+        * **Auto-start:**
+
+        * By default, the orchestration starts immediately. Set `autoStart: false` to create in pending state.'
       operationId: createOrchestration
       parameters:
       - description: The organisation machine name
@@ -145,7 +189,19 @@ paths:
       tags:
       - AI Orchestrations
     get:
-      description: "Get orchestration details including status and progress.\n     *\n     * **Progress Tracking:**\n     * - `total`: Total items to process\n     * - `completed`: Successfully processed\n     * - `failed`: Failed processing\n     * - `pending`: Awaiting processing"
+      description: 'Get orchestration details including status and progress.
+
+        *
+
+        * **Progress Tracking:**
+
+        * - `total`: Total items to process
+
+        * - `completed`: Successfully processed
+
+        * - `failed`: Failed processing
+
+        * - `pending`: Awaiting processing'
       operationId: getOrchestration
       parameters:
       - description: The organisation machine name
@@ -395,127 +451,6 @@ paths:
       - AI Orchestrations
 components:
   schemas:
-    createOrchestration_request:
-      properties:
-        name:
-          description: Orchestration name
-          example: Process batch documents
-          type: string
-        description:
-          description: Optional description
-          nullable: true
-          type: string
-        agentId:
-          description: Agent to process items
-          nullable: true
-          type: string
-        toolId:
-          description: Tool to execute for items
-          nullable: true
-          type: string
-        workflowId:
-          description: Workflow to run for items
-          nullable: true
-          type: string
-        inputSource:
-          $ref: '#/components/schemas/createOrchestration_request_inputSource'
-        batchSize:
-          default: 10
-          description: Items per batch
-          maximum: 100
-          minimum: 1
-          type: integer
-        concurrency:
-          default: 1
-          description: Concurrent items within a batch
-          maximum: 10
-          minimum: 1
-          type: integer
-        stopCondition:
-          $ref: '#/components/schemas/createOrchestration_request_stopCondition'
-        assignedSkills:
-          description: Skill IDs to assign
-          items:
-            type: string
-          type: array
-        context:
-          description: Optional context merged into each item before processing (e.g. shared credentials or endpoints)
-          nullable: true
-          type: object
-        autoStart:
-          default: true
-          description: Whether to start immediately
-          type: boolean
-      required:
-      - inputSource
-      - name
-      type: object
-    createOrchestration_request_stopCondition:
-      properties:
-        type:
-          default: all_complete
-          enum:
-          - all_complete
-          - max_iterations
-          - condition
-          - manual
-          type: string
-        maxIterations:
-          description: Max iterations (for type=max_iterations)
-          minimum: 1
-          type: integer
-        conditionPrompt:
-          description: AI prompt to evaluate stop (for type=condition)
-          type: string
-      type: object
-    listOrchestrations_200_response:
-      example:
-        nextCursor: nextCursor
-        orchestrations:
-        - '{}'
-        - '{}'
-      properties:
-        orchestrations:
-          items:
-            type: object
-          type: array
-        nextCursor:
-          nullable: true
-          type: string
-      type: object
-    listOrchestrationBatches_200_response:
-      example:
-        nextCursor: nextCursor
-        batches:
-        - completedAt: 2000-01-23 04:56:07+00:00
-          failedCount: 5
-          orchestrationId: orchestrationId
-          iteration: 0
-          startedAt: 2000-01-23 04:56:07+00:00
-          batchId: batchId
-          completedCount: 1
-          error: error
-          itemCount: 6
-          status: pending
-        - completedAt: 2000-01-23 04:56:07+00:00
-          failedCount: 5
-          orchestrationId: orchestrationId
-          iteration: 0
-          startedAt: 2000-01-23 04:56:07+00:00
-          batchId: batchId
-          completedCount: 1
-          error: error
-          itemCount: 6
-          status: pending
-      properties:
-        batches:
-          items:
-            $ref: '#/components/schemas/listOrchestrationBatches_200_response_batches_inner'
-          type: array
-        nextCursor:
-          nullable: true
-          type: string
-      type: object
     listOrchestrationBatches_200_response_batches_inner:
       example:
         completedAt: 2000-01-23 04:56:07+00:00
@@ -555,7 +490,136 @@ components:
           format: date-time
           type: string
         error:
-          nullable: true
+          type:
+          - string
+          - 'null'
+      type: object
+    createOrchestration_request:
+      properties:
+        name:
+          description: Orchestration name
+          example: Process batch documents
+          type: string
+        description:
+          description: Optional description
+          type:
+          - string
+          - 'null'
+        agentId:
+          description: Agent to process items
+          type:
+          - string
+          - 'null'
+        toolId:
+          description: Tool to execute for items
+          type:
+          - string
+          - 'null'
+        workflowId:
+          description: Workflow to run for items
+          type:
+          - string
+          - 'null'
+        inputSource:
+          $ref: '#/components/schemas/createOrchestration_request_inputSource'
+        batchSize:
+          default: 10
+          description: Items per batch
+          maximum: 100
+          minimum: 1
+          type: integer
+        concurrency:
+          default: 1
+          description: Concurrent items within a batch
+          maximum: 10
+          minimum: 1
+          type: integer
+        stopCondition:
+          $ref: '#/components/schemas/createOrchestration_request_stopCondition'
+        assignedSkills:
+          description: Skill IDs to assign
+          items:
+            type: string
+          type: array
+        context:
+          description: Optional context merged into each item before processing (e.g. shared credentials or endpoints)
+          type:
+          - object
+          - 'null'
+        autoStart:
+          default: true
+          description: Whether to start immediately
+          type: boolean
+      required:
+      - inputSource
+      - name
+      type: object
+    listOrchestrations_200_response:
+      example:
+        nextCursor: nextCursor
+        orchestrations:
+        - '{}'
+        - '{}'
+      properties:
+        orchestrations:
+          items:
+            type: object
+          type: array
+        nextCursor:
+          type:
+          - string
+          - 'null'
+      type: object
+    listOrchestrationBatches_200_response:
+      example:
+        nextCursor: nextCursor
+        batches:
+        - completedAt: 2000-01-23 04:56:07+00:00
+          failedCount: 5
+          orchestrationId: orchestrationId
+          iteration: 0
+          startedAt: 2000-01-23 04:56:07+00:00
+          batchId: batchId
+          completedCount: 1
+          error: error
+          itemCount: 6
+          status: pending
+        - completedAt: 2000-01-23 04:56:07+00:00
+          failedCount: 5
+          orchestrationId: orchestrationId
+          iteration: 0
+          startedAt: 2000-01-23 04:56:07+00:00
+          batchId: batchId
+          completedCount: 1
+          error: error
+          itemCount: 6
+          status: pending
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/listOrchestrationBatches_200_response_batches_inner'
+          type: array
+        nextCursor:
+          type:
+          - string
+          - 'null'
+      type: object
+    createOrchestration_request_stopCondition:
+      properties:
+        type:
+          default: all_complete
+          enum:
+          - all_complete
+          - max_iterations
+          - condition
+          - manual
+          type: string
+        maxIterations:
+          description: Max iterations (for type=max_iterations)
+          minimum: 1
+          type: integer
+        conditionPrompt:
+          description: AI prompt to evaluate stop (for type=condition)
           type: string
       type: object
     createOrchestration_request_inputSource:
