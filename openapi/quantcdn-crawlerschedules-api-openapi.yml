@@ -297,21 +297,22 @@ paths:
       - CrawlerSchedules
 components:
   schemas:
-    V2CrawlerScheduleRequest:
+    V2Error:
       example:
-        schedule_cron_string: 0 2 * * *
-        name: Daily Crawl
+        message: The requested resource was not found
+        error: true
       properties:
-        name:
-          description: Schedule name. If not provided, defaults to 'Schedule {crawler_name}'.
-          example: Daily Crawl
+        message:
+          description: Error message
+          example: The requested resource was not found
           type: string
-        schedule_cron_string:
-          description: 'Standard Unix cron expression with 5 space-separated fields: minute, hour, day-of-month, month, day-of-week. Example: 0 2 * * * for daily at 2 AM.'
-          example: 0 2 * * *
-          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
       required:
-      - schedule_cron_string
+      - error
+      - message
       type: object
     V2CrawlerSchedule:
       example:
@@ -370,22 +371,21 @@ components:
       - project_id
       - schedule_cron_string
       type: object
-    V2Error:
+    V2CrawlerScheduleRequest:
       example:
-        message: The requested resource was not found
-        error: true
+        schedule_cron_string: 0 2 * * *
+        name: Daily Crawl
       properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
+        name:
+          description: Schedule name. If not provided, defaults to 'Schedule {crawler_name}'.
+          example: Daily Crawl
           type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
+        schedule_cron_string:
+          description: 'Standard Unix cron expression with 5 space-separated fields: minute, hour, day-of-month, month, day-of-week. Example: 0 2 * * * for daily at 2 AM.'
+          example: 0 2 * * *
+          type: string
       required:
-      - error
-      - message
+      - schedule_cron_string
       type: object
   securitySchemes:
     BearerAuth:

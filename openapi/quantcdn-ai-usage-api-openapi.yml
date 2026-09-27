@@ -49,6 +49,31 @@ components:
         spendCents:
           type: integer
       type: object
+    getMyUsage_200_response:
+      example:
+        daily:
+          spendCents: 1
+        quota:
+          dailyLimit: 5
+          monthlyLimit: 5
+        monthly:
+          requestCount: 6
+          spendCents: 0
+        currentMonth: 2026-03
+        userId: userId
+      properties:
+        userId:
+          type: string
+        currentMonth:
+          example: 2026-03
+          type: string
+        monthly:
+          $ref: '#/components/schemas/getMyUsage_200_response_monthly'
+        daily:
+          $ref: '#/components/schemas/getMyUsage_200_response_daily'
+        quota:
+          $ref: '#/components/schemas/getMyUsage_200_response_quota'
+      type: object
     getMyUsage_200_response_monthly:
       example:
         requestCount: 6
@@ -77,31 +102,6 @@ components:
       type:
       - object
       - 'null'
-    getMyUsage_200_response:
-      example:
-        daily:
-          spendCents: 1
-        quota:
-          dailyLimit: 5
-          monthlyLimit: 5
-        monthly:
-          requestCount: 6
-          spendCents: 0
-        currentMonth: 2026-03
-        userId: userId
-      properties:
-        userId:
-          type: string
-        currentMonth:
-          example: 2026-03
-          type: string
-        monthly:
-          $ref: '#/components/schemas/getMyUsage_200_response_monthly'
-        daily:
-          $ref: '#/components/schemas/getMyUsage_200_response_daily'
-        quota:
-          $ref: '#/components/schemas/getMyUsage_200_response_quota'
-      type: object
   securitySchemes:
     BearerAuth:
       bearerFormat: JWT

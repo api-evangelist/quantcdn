@@ -313,6 +313,43 @@ paths:
       - Backup Management
 components:
   schemas:
+    createBackup_202_response:
+      example:
+        backupId: backupId
+        message: message
+        status: status
+      properties:
+        backupId:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+      type: object
+    deleteBackup_200_response:
+      example:
+        backupId: backupId
+        message: message
+      properties:
+        message:
+          type: string
+        backupId:
+          type: string
+      type: object
+    listBackups_422_response:
+      example:
+        error: The backup type must be either database or filesystem
+      properties:
+        error:
+          example: The backup type must be either database or filesystem
+          type: string
+      type: object
+    createBackup_request:
+      properties:
+        description:
+          description: Optional backup description
+          type: string
+      type: object
     downloadBackup_200_response:
       example:
         filename: filename
@@ -379,37 +416,6 @@ components:
           example: Found 1 database backup(s)
           type: string
       type: object
-    listBackups_422_response:
-      example:
-        error: The backup type must be either database or filesystem
-      properties:
-        error:
-          example: The backup type must be either database or filesystem
-          type: string
-      type: object
-    createBackup_202_response:
-      example:
-        backupId: backupId
-        message: message
-        status: status
-      properties:
-        backupId:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-      type: object
-    deleteBackup_200_response:
-      example:
-        backupId: backupId
-        message: message
-      properties:
-        message:
-          type: string
-        backupId:
-          type: string
-      type: object
     listBackups_200_response_backups_inner:
       example:
         bucketName: au-prd-manual-backups
@@ -467,12 +473,6 @@ components:
         fileExists:
           example: true
           type: boolean
-      type: object
-    createBackup_request:
-      properties:
-        description:
-          description: Optional backup description
-          type: string
       type: object
   securitySchemes:
     BearerAuth:

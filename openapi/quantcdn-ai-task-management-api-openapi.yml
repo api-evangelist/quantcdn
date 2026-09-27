@@ -435,20 +435,6 @@ paths:
       - AI Task Management
 components:
   schemas:
-    updateTask_200_response:
-      example:
-        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        status: status
-        updatedAt: 0
-      properties:
-        taskId:
-          format: uuid
-          type: string
-        status:
-          type: string
-        updatedAt:
-          type: integer
-      type: object
     listTasks_200_response:
       example:
         dependsOn: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
@@ -538,94 +524,6 @@ components:
           description: Adjacency list with task summaries, dependsOn, and dependents arrays
           type: object
       type: object
-    createTask_201_response:
-      example:
-        createdAt: 0
-        title: title
-        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        orgId: orgId
-        status: status
-      properties:
-        taskId:
-          format: uuid
-          type: string
-        orgId:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-        createdAt:
-          type: integer
-      type: object
-    createTask_request:
-      properties:
-        title:
-          description: Task title
-          example: Process document and create summary
-          type: string
-        description:
-          description: Detailed task description
-          example: Extract text from PDF, analyze content, and generate executive summary
-          type: string
-        taskListId:
-          description: Task list ID for grouping related tasks (implicit - lists are created automatically)
-          example: world-1
-          type: string
-        status:
-          default: pending
-          description: Initial task status
-          enum:
-          - pending
-          - in_progress
-          - completed
-          - failed
-          - cancelled
-          - blocked
-          type: string
-        assignedAgentId:
-          description: Pre-assign task to specific agent
-          example: agent-code-reviewer
-          type: string
-        createdByAgentId:
-          description: Agent ID that created this task
-          example: agent-coordinator
-          type: string
-        dependsOn:
-          description: Task IDs that must complete before this task can start
-          example:
-          - 550e8400-e29b-41d4-a716-446655440000
-          items:
-            format: uuid
-            type: string
-          type: array
-        metadata:
-          description: Flexible JSON metadata for task-specific data
-          example:
-            priority: high
-            tags:
-            - document-processing
-            workflow: document-pipeline
-          type: object
-        maxRetries:
-          default: 3
-          description: Maximum retry attempts on failure
-          maximum: 10
-          minimum: 0
-          type: integer
-        blockedReason:
-          description: Reason task is blocked (when status is blocked)
-          example: Waiting for approval
-          type: string
-        blockedByTaskIds:
-          description: Task IDs that are blocking this task
-          items:
-            format: uuid
-            type: string
-          type: array
-      required:
-      - title
-      type: object
     deleteTask_409_response:
       example:
         dependentTaskIds:
@@ -646,26 +544,19 @@ components:
             type: string
           type: array
       type: object
-    deleteTask_200_response:
+    updateTask_200_response:
       example:
-        deleted: true
-        deletedCount: 1
-        deletedTaskIds:
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        status: status
+        updatedAt: 0
       properties:
-        deleted:
-          example: true
-          type: boolean
-        deletedCount:
-          description: Number of tasks deleted (more than 1 for cascade)
-          example: 1
+        taskId:
+          format: uuid
+          type: string
+        status:
+          type: string
+        updatedAt:
           type: integer
-        deletedTaskIds:
-          items:
-            format: uuid
-            type: string
-          type: array
       type: object
     listTasks_200_response_tasks_inner:
       example:
@@ -738,6 +629,208 @@ components:
         updatedAt:
           example: 1735689700000
           type: integer
+      type: object
+    deleteTask_200_response:
+      example:
+        deleted: true
+        deletedCount: 1
+        deletedTaskIds:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        deleted:
+          example: true
+          type: boolean
+        deletedCount:
+          description: Number of tasks deleted (more than 1 for cascade)
+          example: 1
+          type: integer
+        deletedTaskIds:
+          items:
+            format: uuid
+            type: string
+          type: array
+      type: object
+    createTask_request:
+      properties:
+        title:
+          description: Task title
+          example: Process document and create summary
+          type: string
+        description:
+          description: Detailed task description
+          example: Extract text from PDF, analyze content, and generate executive summary
+          type: string
+        taskListId:
+          description: Task list ID for grouping related tasks (implicit - lists are created automatically)
+          example: world-1
+          type: string
+        status:
+          default: pending
+          description: Initial task status
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          type: string
+        assignedAgentId:
+          description: Pre-assign task to specific agent
+          example: agent-code-reviewer
+          type: string
+        createdByAgentId:
+          description: Agent ID that created this task
+          example: agent-coordinator
+          type: string
+        dependsOn:
+          description: Task IDs that must complete before this task can start
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+          items:
+            format: uuid
+            type: string
+          type: array
+        metadata:
+          description: Flexible JSON metadata for task-specific data
+          example:
+            priority: high
+            tags:
+            - document-processing
+            workflow: document-pipeline
+          type: object
+        maxRetries:
+          default: 3
+          description: Maximum retry attempts on failure
+          maximum: 10
+          minimum: 0
+          type: integer
+        blockedReason:
+          description: Reason task is blocked (when status is blocked)
+          example: Waiting for approval
+          type: string
+        blockedByTaskIds:
+          description: Task IDs that are blocking this task
+          items:
+            format: uuid
+            type: string
+          type: array
+      required:
+      - title
+      type: object
+    createTask_201_response:
+      example:
+        createdAt: 0
+        title: title
+        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        orgId: orgId
+        status: status
+      properties:
+        taskId:
+          format: uuid
+          type: string
+        orgId:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: integer
+      type: object
+    updateTask_request:
+      properties:
+        title:
+          example: Updated task title
+          type: string
+        description:
+          example: Updated description with more details
+          type: string
+        taskListId:
+          description: Move task to different list or remove from list (set null)
+          example: world-2
+          type:
+          - string
+          - 'null'
+        status:
+          description: Task status (triggers automatic timestamp updates)
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          example: in_progress
+          type: string
+        assignedAgentId:
+          description: Reassign task to different agent
+          example: agent-specialist
+          type:
+          - string
+          - 'null'
+        dependsOn:
+          description: Update task dependencies
+          example:
+          - 550e8400-e29b-41d4-a716-446655440000
+          items:
+            format: uuid
+            type: string
+          type: array
+        metadata:
+          description: Update task metadata (replaces entire metadata object)
+          example:
+            priority: urgent
+          type: object
+        progress:
+          description: Progress from 0.0 to 1.0
+          example: 0.75
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+        progressMessage:
+          description: Human-readable progress message
+          example: Processing document 3 of 4...
+          type: string
+        result:
+          description: Task result data (set when completing task)
+          example:
+            summary: Document processed successfully
+            wordCount: 1500
+          type: object
+        error:
+          description: Error message (set when task fails)
+          example: Failed to connect to external API
+          type:
+          - string
+          - 'null'
+        retryCount:
+          description: Update retry count
+          example: 1
+          minimum: 0
+          type: integer
+        maxRetries:
+          description: Update maximum retry attempts
+          example: 5
+          maximum: 10
+          minimum: 0
+          type: integer
+        blockedReason:
+          description: Reason task is blocked (set when status is blocked)
+          example: Waiting for external approval
+          type:
+          - string
+          - 'null'
+        blockedByTaskIds:
+          description: Task IDs that are blocking this task
+          items:
+            format: uuid
+            type: string
+          type:
+          - array
+          - 'null'
       type: object
     getTask_200_response:
       example:
@@ -889,99 +982,6 @@ components:
           format: int64
           type:
           - integer
-          - 'null'
-      type: object
-    updateTask_request:
-      properties:
-        title:
-          example: Updated task title
-          type: string
-        description:
-          example: Updated description with more details
-          type: string
-        taskListId:
-          description: Move task to different list or remove from list (set null)
-          example: world-2
-          type:
-          - string
-          - 'null'
-        status:
-          description: Task status (triggers automatic timestamp updates)
-          enum:
-          - pending
-          - in_progress
-          - completed
-          - failed
-          - cancelled
-          - blocked
-          example: in_progress
-          type: string
-        assignedAgentId:
-          description: Reassign task to different agent
-          example: agent-specialist
-          type:
-          - string
-          - 'null'
-        dependsOn:
-          description: Update task dependencies
-          example:
-          - 550e8400-e29b-41d4-a716-446655440000
-          items:
-            format: uuid
-            type: string
-          type: array
-        metadata:
-          description: Update task metadata (replaces entire metadata object)
-          example:
-            priority: urgent
-          type: object
-        progress:
-          description: Progress from 0.0 to 1.0
-          example: 0.75
-          format: float
-          maximum: 1
-          minimum: 0
-          type: number
-        progressMessage:
-          description: Human-readable progress message
-          example: Processing document 3 of 4...
-          type: string
-        result:
-          description: Task result data (set when completing task)
-          example:
-            summary: Document processed successfully
-            wordCount: 1500
-          type: object
-        error:
-          description: Error message (set when task fails)
-          example: Failed to connect to external API
-          type:
-          - string
-          - 'null'
-        retryCount:
-          description: Update retry count
-          example: 1
-          minimum: 0
-          type: integer
-        maxRetries:
-          description: Update maximum retry attempts
-          example: 5
-          maximum: 10
-          minimum: 0
-          type: integer
-        blockedReason:
-          description: Reason task is blocked (set when status is blocked)
-          example: Waiting for external approval
-          type:
-          - string
-          - 'null'
-        blockedByTaskIds:
-          description: Task IDs that are blocking this task
-          items:
-            format: uuid
-            type: string
-          type:
-          - array
           - 'null'
       type: object
   securitySchemes:

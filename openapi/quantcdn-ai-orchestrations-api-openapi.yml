@@ -451,6 +451,22 @@ paths:
       - AI Orchestrations
 components:
   schemas:
+    listOrchestrations_200_response:
+      example:
+        nextCursor: nextCursor
+        orchestrations:
+        - '{}'
+        - '{}'
+      properties:
+        orchestrations:
+          items:
+            type: object
+          type: array
+        nextCursor:
+          type:
+          - string
+          - 'null'
+      type: object
     listOrchestrationBatches_200_response_batches_inner:
       example:
         completedAt: 2000-01-23 04:56:07+00:00
@@ -490,6 +506,58 @@ components:
           format: date-time
           type: string
         error:
+          type:
+          - string
+          - 'null'
+      type: object
+    createOrchestration_request_stopCondition:
+      properties:
+        type:
+          default: all_complete
+          enum:
+          - all_complete
+          - max_iterations
+          - condition
+          - manual
+          type: string
+        maxIterations:
+          description: Max iterations (for type=max_iterations)
+          minimum: 1
+          type: integer
+        conditionPrompt:
+          description: AI prompt to evaluate stop (for type=condition)
+          type: string
+      type: object
+    listOrchestrationBatches_200_response:
+      example:
+        nextCursor: nextCursor
+        batches:
+        - completedAt: 2000-01-23 04:56:07+00:00
+          failedCount: 5
+          orchestrationId: orchestrationId
+          iteration: 0
+          startedAt: 2000-01-23 04:56:07+00:00
+          batchId: batchId
+          completedCount: 1
+          error: error
+          itemCount: 6
+          status: pending
+        - completedAt: 2000-01-23 04:56:07+00:00
+          failedCount: 5
+          orchestrationId: orchestrationId
+          iteration: 0
+          startedAt: 2000-01-23 04:56:07+00:00
+          batchId: batchId
+          completedCount: 1
+          error: error
+          itemCount: 6
+          status: pending
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/listOrchestrationBatches_200_response_batches_inner'
+          type: array
+        nextCursor:
           type:
           - string
           - 'null'
@@ -553,74 +621,6 @@ components:
       required:
       - inputSource
       - name
-      type: object
-    listOrchestrations_200_response:
-      example:
-        nextCursor: nextCursor
-        orchestrations:
-        - '{}'
-        - '{}'
-      properties:
-        orchestrations:
-          items:
-            type: object
-          type: array
-        nextCursor:
-          type:
-          - string
-          - 'null'
-      type: object
-    listOrchestrationBatches_200_response:
-      example:
-        nextCursor: nextCursor
-        batches:
-        - completedAt: 2000-01-23 04:56:07+00:00
-          failedCount: 5
-          orchestrationId: orchestrationId
-          iteration: 0
-          startedAt: 2000-01-23 04:56:07+00:00
-          batchId: batchId
-          completedCount: 1
-          error: error
-          itemCount: 6
-          status: pending
-        - completedAt: 2000-01-23 04:56:07+00:00
-          failedCount: 5
-          orchestrationId: orchestrationId
-          iteration: 0
-          startedAt: 2000-01-23 04:56:07+00:00
-          batchId: batchId
-          completedCount: 1
-          error: error
-          itemCount: 6
-          status: pending
-      properties:
-        batches:
-          items:
-            $ref: '#/components/schemas/listOrchestrationBatches_200_response_batches_inner'
-          type: array
-        nextCursor:
-          type:
-          - string
-          - 'null'
-      type: object
-    createOrchestration_request_stopCondition:
-      properties:
-        type:
-          default: all_complete
-          enum:
-          - all_complete
-          - max_iterations
-          - condition
-          - manual
-          type: string
-        maxIterations:
-          description: Max iterations (for type=max_iterations)
-          minimum: 1
-          type: integer
-        conditionPrompt:
-          description: AI prompt to evaluate stop (for type=condition)
-          type: string
       type: object
     createOrchestration_request_inputSource:
       properties:

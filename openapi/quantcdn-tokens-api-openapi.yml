@@ -160,14 +160,6 @@ components:
       - error
       - message
       type: object
-    Tokens_delete_200_response:
-      example:
-        message: Token revoked successfully
-      properties:
-        message:
-          example: Token revoked successfully
-          type: string
-      type: object
     Tokens_list_200_response_inner:
       example:
         last_used: 2000-01-23 04:56:07+00:00
@@ -189,6 +181,57 @@ components:
         created_at:
           format: date-time
           type: string
+      type: object
+    Tokens_delete_200_response:
+      example:
+        message: Token revoked successfully
+      properties:
+        message:
+          example: Token revoked successfully
+          type: string
+      type: object
+    Tokens_create_request:
+      properties:
+        name:
+          description: Name for the token
+          example: My CI token
+          type: string
+        preset:
+          description: Preset scope bundle
+          example: content_management
+          type:
+          - string
+          - 'null'
+        scopes:
+          description: Individual scopes (mutually exclusive with preset)
+          example:
+          - projects:read
+          - content:write
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        projects:
+          description: Project IDs to restrict this token to
+          items:
+            type: integer
+          type:
+          - array
+          - 'null'
+        expires_in:
+          description: Token expiration period
+          enum:
+          - 30d
+          - 90d
+          - 365d
+          - never
+          example: 90d
+          type:
+          - string
+          - 'null'
+      required:
+      - name
       type: object
     Tokens_create_201_response:
       example:
@@ -237,49 +280,6 @@ components:
         created_at:
           format: date-time
           type: string
-      type: object
-    Tokens_create_request:
-      properties:
-        name:
-          description: Name for the token
-          example: My CI token
-          type: string
-        preset:
-          description: Preset scope bundle
-          example: content_management
-          type:
-          - string
-          - 'null'
-        scopes:
-          description: Individual scopes (mutually exclusive with preset)
-          example:
-          - projects:read
-          - content:write
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-        projects:
-          description: Project IDs to restrict this token to
-          items:
-            type: integer
-          type:
-          - array
-          - 'null'
-        expires_in:
-          description: Token expiration period
-          enum:
-          - 30d
-          - 90d
-          - 365d
-          - never
-          example: 90d
-          type:
-          - string
-          - 'null'
-      required:
-      - name
       type: object
   securitySchemes:
     BearerAuth:

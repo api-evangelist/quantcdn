@@ -278,6 +278,21 @@ components:
       - error
       - message
       type: object
+    V2Domain_dns_validation_records_inner:
+      properties:
+        name:
+          description: DNS record name (host/subdomain)
+          example: _abc123.example.com
+          type: string
+        type:
+          description: DNS record type (typically CNAME)
+          example: CNAME
+          type: string
+        value:
+          description: DNS record value to point to
+          example: _xyz789.validation.example.com.
+          type: string
+      type: object
     V2DomainRequest:
       example:
         domain: test-domain.com
@@ -363,21 +378,6 @@ components:
         description:
           description: Human-readable instructions for configuring this DNS record
           example: Add a CNAME record with the host set to your subdomain pointing to the CDN endpoint.
-          type: string
-      type: object
-    V2Domain_dns_validation_records_inner:
-      properties:
-        name:
-          description: DNS record name (host/subdomain)
-          example: _abc123.example.com
-          type: string
-        type:
-          description: DNS record type (typically CNAME)
-          example: CNAME
-          type: string
-        value:
-          description: DNS record value to point to
-          example: _xyz789.validation.example.com.
           type: string
       type: object
   securitySchemes:

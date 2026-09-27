@@ -42,7 +42,7 @@ tags:
   - WAF
   - Edge Computing
   - Key-Value Storage
-  - AI Inference
+  - Inference
 tags_raw:
   - CDN
   - Edge
@@ -185,6 +185,8 @@ apis:
   humanURL: https://www.quantcdn.io/home
   baseURL: https://dashboard.quantcdn.io
   tags:
+  - Inference
+  tags_raw:
   - AI Inference
   properties:
   - type: OpenAPI

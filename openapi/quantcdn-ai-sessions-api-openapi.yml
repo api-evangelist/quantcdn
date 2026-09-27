@@ -306,31 +306,44 @@ paths:
       - AI Sessions
 components:
   schemas:
-    extendAISession_200_response:
+    updateAISession_200_response:
       example:
+        totalMessages: 0
         sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        message: Session extended by 60 minutes
-        expiresAt: 2000-01-23 04:56:07+00:00
+        totalTokens: 6
+        status: status
+        updatedAt: 2000-01-23 04:56:07+00:00
       properties:
         sessionId:
           format: uuid
           type: string
-        expiresAt:
+        status:
+          type: string
+        totalMessages:
+          type: integer
+        totalTokens:
+          type: integer
+        updatedAt:
           format: date-time
           type: string
-        message:
-          example: Session extended by 60 minutes
+      type: object
+    createAISession_request_initialMessages_inner:
+      properties:
+        role:
+          enum:
+          - system
+          - user
+          - assistant
+          type: string
+        content:
           type: string
       type: object
-    extendAISession_request:
+    deleteAISession_200_response:
+      example:
+        message: message
       properties:
-        additionalMinutes:
-          default: 60
-          description: Minutes to add to expiration time (default 60, max 1440)
-          example: 60
-          maximum: 1440
-          minimum: 1
-          type: integer
+        message:
+          type: string
       type: object
     createAISession_request:
       properties:
@@ -363,16 +376,72 @@ components:
       required:
       - userId
       type: object
-    createAISession_request_initialMessages_inner:
+    updateAISession_request_newMessages_inner:
       properties:
         role:
           enum:
-          - system
           - user
           - assistant
           type: string
         content:
           type: string
+      type: object
+    extendAISession_200_response:
+      example:
+        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        message: Session extended by 60 minutes
+        expiresAt: 2000-01-23 04:56:07+00:00
+      properties:
+        sessionId:
+          format: uuid
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+        message:
+          example: Session extended by 60 minutes
+          type: string
+      type: object
+    listAISessions_200_response_inner:
+      example:
+        updated_at: 2000-01-23 04:56:07+00:00
+        created_at: 2000-01-23 04:56:07+00:00
+        model: model
+        id: id
+        title: title
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        model:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    updateAISession_request:
+      properties:
+        newMessages:
+          description: New messages to append to conversation
+          items:
+            $ref: '#/components/schemas/updateAISession_request_newMessages_inner'
+          type: array
+        tokensUsed:
+          description: Tokens consumed in this turn
+          type: integer
+        status:
+          description: Update session status
+          enum:
+          - active
+          - completed
+          type: string
+        metadata:
+          description: Update custom metadata
+          type: object
       type: object
     getAISession_200_response:
       example:
@@ -398,78 +467,6 @@ components:
           format: date-time
           type: string
       type: object
-    updateAISession_request_newMessages_inner:
-      properties:
-        role:
-          enum:
-          - user
-          - assistant
-          type: string
-        content:
-          type: string
-      type: object
-    updateAISession_request:
-      properties:
-        newMessages:
-          description: New messages to append to conversation
-          items:
-            $ref: '#/components/schemas/updateAISession_request_newMessages_inner'
-          type: array
-        tokensUsed:
-          description: Tokens consumed in this turn
-          type: integer
-        status:
-          description: Update session status
-          enum:
-          - active
-          - completed
-          type: string
-        metadata:
-          description: Update custom metadata
-          type: object
-      type: object
-    updateAISession_200_response:
-      example:
-        totalMessages: 0
-        sessionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        totalTokens: 6
-        status: status
-        updatedAt: 2000-01-23 04:56:07+00:00
-      properties:
-        sessionId:
-          format: uuid
-          type: string
-        status:
-          type: string
-        totalMessages:
-          type: integer
-        totalTokens:
-          type: integer
-        updatedAt:
-          format: date-time
-          type: string
-      type: object
-    listAISessions_200_response_inner:
-      example:
-        updated_at: 2000-01-23 04:56:07+00:00
-        created_at: 2000-01-23 04:56:07+00:00
-        model: model
-        id: id
-        title: title
-      properties:
-        id:
-          type: string
-        title:
-          type: string
-        model:
-          type: string
-        created_at:
-          format: date-time
-          type: string
-        updated_at:
-          format: date-time
-          type: string
-      type: object
     createAISession_201_response:
       example:
         createdAt: 2000-01-23 04:56:07+00:00
@@ -491,12 +488,15 @@ components:
           format: date-time
           type: string
       type: object
-    deleteAISession_200_response:
-      example:
-        message: message
+    extendAISession_request:
       properties:
-        message:
-          type: string
+        additionalMinutes:
+          default: 60
+          description: Minutes to add to expiration time (default 60, max 1440)
+          example: 60
+          maximum: 1440
+          minimum: 1
+          type: integer
       type: object
   securitySchemes:
     BearerAuth:

@@ -565,62 +565,302 @@ paths:
       - Environments
 components:
   schemas:
-    Container_secrets_inner:
+    patchEnvironmentCompose_400_response:
       example:
-        name: name
-        valueFrom: valueFrom
+        message: message
+        errors: '{}'
       properties:
-        name:
-          description: The environment variable name to be set in the container
+        message:
           type: string
-        valueFrom:
-          description: The key of the secret in the environment's 'app-secrets' store
-          type: string
-      required:
-      - name
-      - valueFrom
+        errors:
+          type: object
       type: object
-    Container_environment_inner:
+    Compose:
       example:
-        name: name
-        value: value
+        spotConfiguration:
+          strategy: spot-only
+        taskMemory: 2
+        maxCapacity: 7
+        containers:
+        - originProtectionConfig:
+            ipAllow:
+            - ipAllow
+            - ipAllow
+            enabled: true
+          memory: 6
+          dependsOn:
+          - condition: START
+            containerName: containerName
+          - condition: START
+            containerName: containerName
+          workingDirectory: workingDirectory
+          exposedPorts:
+          - 5
+          - 5
+          cpu: 0
+          imageReference:
+            identifier: identifier
+            type: internal
+          secrets:
+          - name: name
+            valueFrom: valueFrom
+          - name: name
+            valueFrom: valueFrom
+          memoryReservation: 1
+          command:
+          - command
+          - command
+          environment:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          readonlyRootFilesystem: false
+          originProtection: false
+          healthCheck:
+            retries: 7
+            startPeriod: 279
+            interval: 171
+            command:
+            - command
+            - command
+            timeout: 15
+          name: name
+          mountPoints:
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          entryPoint:
+          - entryPoint
+          - entryPoint
+          user: user
+          essential: true
+        - originProtectionConfig:
+            ipAllow:
+            - ipAllow
+            - ipAllow
+            enabled: true
+          memory: 6
+          dependsOn:
+          - condition: START
+            containerName: containerName
+          - condition: START
+            containerName: containerName
+          workingDirectory: workingDirectory
+          exposedPorts:
+          - 5
+          - 5
+          cpu: 0
+          imageReference:
+            identifier: identifier
+            type: internal
+          secrets:
+          - name: name
+            valueFrom: valueFrom
+          - name: name
+            valueFrom: valueFrom
+          memoryReservation: 1
+          command:
+          - command
+          - command
+          environment:
+          - name: name
+            value: value
+          - name: name
+            value: value
+          readonlyRootFilesystem: false
+          originProtection: false
+          healthCheck:
+            retries: 7
+            startPeriod: 279
+            interval: 171
+            command:
+            - command
+            - command
+            timeout: 15
+          name: name
+          mountPoints:
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          - readOnly: false
+            containerPath: containerPath
+            sourceVolume: sourceVolume
+          entryPoint:
+          - entryPoint
+          - entryPoint
+          user: user
+          essential: true
+        minCapacity: 4
+        taskCpu: 3
+        enableCrossAppNetworking: false
+        architecture: architecture
+        enableCrossEnvNetworking: false
+      properties:
+        containers:
+          items:
+            $ref: '#/components/schemas/Container'
+          type: array
+        architecture:
+          description: CPU architecture (X86_64 or ARM64)
+          type: string
+        taskCpu:
+          description: Task-level CPU units (e.g., 256, 512, 1024)
+          type: integer
+        taskMemory:
+          description: Task-level memory in MB
+          type: integer
+        minCapacity:
+          description: Minimum number of instances
+          type: integer
+        maxCapacity:
+          description: Maximum number of instances
+          type: integer
+        spotConfiguration:
+          $ref: '#/components/schemas/SpotConfiguration'
+        enableCrossEnvNetworking:
+          default: false
+          description: 'Optional. Enable cross-environment networking within the same application. When false (default): Uses shared security group for complete isolation (most secure). When true: Uses app-specific security group to enable communication between environments of the same application (e.g., staging can connect to production database). Note: If enableCrossAppNetworking is true, this setting is overridden.'
+          type:
+          - boolean
+          - 'null'
+        enableCrossAppNetworking:
+          default: false
+          description: 'Optional. Enable cross-application networking within the same organization. When false (default): Uses shared/app-specific security group based on enableCrossEnvNetworking. When true: Uses org-specific security group to enable container-to-container communication with ALL applications in the same organization via service discovery (microservices architecture). This setting takes priority over enableCrossEnvNetworking.'
+          type:
+          - boolean
+          - 'null'
+      type: object
+    EnvironmentSummary:
+      description: Environment summary returned in list responses
+      example:
+        deploymentStatus: COMPLETED
+        envName: production
+        desiredCount: 2
+        runningCount: 2
+        maxCapacity: 5
+        minCapacity: 1
+        status: ACTIVE
+      properties:
+        envName:
+          description: Environment name
+          example: production
+          type: string
+        status:
+          description: Environment status
+          example: ACTIVE
+          type: string
+        deploymentStatus:
+          description: Current deployment status
+          enum:
+          - COMPLETED
+          - IN_PROGRESS
+          - FAILED
+          example: COMPLETED
+          type: string
+        runningCount:
+          description: Number of running tasks
+          example: 2
+          type: integer
+        desiredCount:
+          description: Desired number of tasks
+          example: 2
+          type: integer
+        minCapacity:
+          description: Minimum capacity for autoscaling
+          example: 1
+          type: integer
+        maxCapacity:
+          description: Maximum capacity for autoscaling
+          example: 5
+          type: integer
+      type: object
+    SyncOperation:
+      example:
+        createdAt: createdAt
+        completedAt: completedAt
+        targetEnvironment: targetEnvironment
+        syncType: syncType
+        sourceEnvironment: sourceEnvironment
+        syncId: syncId
+        status: status
+      properties:
+        syncId:
+          type: string
+        syncType:
+          type: string
+        sourceEnvironment:
+          type: string
+        targetEnvironment:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+        completedAt:
+          type: string
+      type: object
+    createEnvironment_request_environment_inner:
       properties:
         name:
-          description: Environment variable name
+          description: Variable name
           type: string
         value:
-          description: Environment variable value
+          description: Variable value
           type: string
-      required:
-      - name
-      - value
       type: object
-    Container_mountPoints_inner:
+    syncToEnvironment_request:
+      properties:
+        sourceEnvironment:
+          type: string
+      type: object
+    Container_healthCheck:
+      description: Container health check configuration
       example:
-        readOnly: false
-        containerPath: containerPath
-        sourceVolume: sourceVolume
+        retries: 7
+        startPeriod: 279
+        interval: 171
+        command:
+        - command
+        - command
+        timeout: 15
       properties:
-        sourceVolume:
-          description: The name of the logical volume
-          type: string
-        containerPath:
-          description: The path inside the container where the volume is mounted
-          type: string
-        readOnly:
-          default: false
-          type: boolean
-      required:
-      - containerPath
-      - sourceVolume
-      type: object
-    updateEnvironmentState_request:
-      properties:
-        action:
-          type: string
-        imageTag:
-          type: string
-      type: object
+        command:
+          description: The command to run to determine if the container is healthy
+          items:
+            type: string
+          type: array
+        interval:
+          default: 30
+          description: Time period (seconds) between health checks
+          maximum: 300
+          minimum: 5
+          type: integer
+        timeout:
+          default: 5
+          description: Time period (seconds) to wait for a health check to return
+          maximum: 60
+          minimum: 2
+          type: integer
+        retries:
+          default: 3
+          description: Number of times to retry a failed health check
+          maximum: 10
+          minimum: 1
+          type: integer
+        startPeriod:
+          description: Grace period (seconds) to ignore unhealthy checks after container starts
+          maximum: 300
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      type:
+      - object
+      - 'null'
     EnvironmentResponse:
       description: Environment response schema with runtime details
       example:
@@ -795,10 +1035,225 @@ components:
       required:
       - envName
       type: object
-    syncToEnvironment_request:
+    Volume:
+      example:
+        createdAt: createdAt
+        accessPointArn: accessPointArn
+        volumeName: volumeName
+        accessPointId: accessPointId
+        volumeId: volumeId
+        description: description
+        rootDirectory: rootDirectory
+        environmentEfsId: environmentEfsId
       properties:
-        sourceEnvironment:
+        volumeId:
           type: string
+        volumeName:
+          type: string
+        description:
+          type: string
+        environmentEfsId:
+          type: string
+        createdAt:
+          type: string
+        rootDirectory:
+          type: string
+        accessPointId:
+          type: string
+        accessPointArn:
+          type: string
+      type: object
+    SpotConfiguration:
+      description: Spot instance strategy configuration for controlling cost vs reliability. Spot instances provide significant cost savings (~70%) but may be interrupted by AWS. Available for non-production environments.
+      example:
+        strategy: spot-only
+      properties:
+        strategy:
+          default: spot-only
+          description: Spot instance strategy. 'off' = On-Demand only (highest reliability, no savings). 'spot-only' = 100% Spot instances (~70% savings, default for non-prod). 'mixed-safe' = 50% Spot instances (~35% savings, requires multiple instances). 'mixed-aggressive' = 80% Spot instances (~56% savings, requires multiple instances).
+          enum:
+          - 'off'
+          - spot-only
+          - mixed-safe
+          - mixed-aggressive
+          example: spot-only
+          type: string
+      required:
+      - strategy
+      type: object
+    Container_dependsOn_inner:
+      example:
+        condition: START
+        containerName: containerName
+      properties:
+        containerName:
+          description: The name of the container this container depends on
+          type: string
+        condition:
+          description: The condition to wait for on the dependency
+          enum:
+          - START
+          - HEALTHY
+          - COMPLETE
+          - SUCCESS
+          type: string
+      required:
+      - containerName
+      type: object
+    Container_imageReference:
+      example:
+        identifier: identifier
+        type: internal
+      properties:
+        type:
+          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
+          enum:
+          - internal
+          - external
+          type: string
+        identifier:
+          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
+          type: string
+      required:
+      - identifier
+      - type
+      type: object
+    getEnvironmentLogs_200_response_logEvents_inner:
+      example:
+        message: message
+        timestamp: 0
+      properties:
+        timestamp:
+          description: Unix timestamp in milliseconds
+          type: integer
+        message:
+          description: Log message content
+          type: string
+      type: object
+    Container_originProtectionConfig:
+      description: Extended origin protection configuration with IP allow list support
+      example:
+        ipAllow:
+        - ipAllow
+        - ipAllow
+        enabled: true
+      properties:
+        enabled:
+          default: true
+          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
+          type: boolean
+        ipAllow:
+          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      type:
+      - object
+      - 'null'
+    Container_mountPoints_inner:
+      example:
+        readOnly: false
+        containerPath: containerPath
+        sourceVolume: sourceVolume
+      properties:
+        sourceVolume:
+          description: The name of the logical volume
+          type: string
+        containerPath:
+          description: The path inside the container where the volume is mounted
+          type: string
+        readOnly:
+          default: false
+          type: boolean
+      required:
+      - containerPath
+      - sourceVolume
+      type: object
+    getEnvironmentLogs_200_response:
+      example:
+        logEvents:
+        - message: message
+          timestamp: 0
+        - message: message
+          timestamp: 0
+        nextToken: nextToken
+      properties:
+        logEvents:
+          description: Array of log events
+          items:
+            $ref: '#/components/schemas/getEnvironmentLogs_200_response_logEvents_inner'
+          type: array
+        nextToken:
+          description: Token for fetching next page of results (null if no more pages)
+          type:
+          - string
+          - 'null'
+      type: object
+    createEnvironment_403_response:
+      example:
+        message: Environment limit reached
+        error: Application my-app has reached the maximum number of allowed environments (5/5). Please contact support to increase your limit.
+      properties:
+        message:
+          example: Environment limit reached
+          type: string
+        error:
+          example: Application my-app has reached the maximum number of allowed environments (5/5). Please contact support to increase your limit.
+          type: string
+      type: object
+    updateEnvironmentState_request:
+      properties:
+        action:
+          type: string
+        imageTag:
+          type: string
+      type: object
+    Container_secrets_inner:
+      example:
+        name: name
+        valueFrom: valueFrom
+      properties:
+        name:
+          description: The environment variable name to be set in the container
+          type: string
+        valueFrom:
+          description: The key of the secret in the environment's 'app-secrets' store
+          type: string
+      required:
+      - name
+      - valueFrom
+      type: object
+    Cron:
+      example:
+        targetContainerName: targetContainerName
+        scheduleExpression: scheduleExpression
+        isEnabled: true
+        name: name
+        description: description
+        command:
+        - command
+        - command
+      properties:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        scheduleExpression:
+          type: string
+        command:
+          items:
+            type: string
+          type: array
+        targetContainerName:
+          type:
+          - string
+          - 'null'
+        isEnabled:
+          type: boolean
       type: object
     Container:
       example:
@@ -958,238 +1413,20 @@ components:
       - imageReference
       - name
       type: object
-    EnvironmentSummary:
-      description: Environment summary returned in list responses
+    Container_environment_inner:
       example:
-        deploymentStatus: COMPLETED
-        envName: production
-        desiredCount: 2
-        runningCount: 2
-        maxCapacity: 5
-        minCapacity: 1
-        status: ACTIVE
+        name: name
+        value: value
       properties:
-        envName:
-          description: Environment name
-          example: production
+        name:
+          description: Environment variable name
           type: string
-        status:
-          description: Environment status
-          example: ACTIVE
-          type: string
-        deploymentStatus:
-          description: Current deployment status
-          enum:
-          - COMPLETED
-          - IN_PROGRESS
-          - FAILED
-          example: COMPLETED
-          type: string
-        runningCount:
-          description: Number of running tasks
-          example: 2
-          type: integer
-        desiredCount:
-          description: Desired number of tasks
-          example: 2
-          type: integer
-        minCapacity:
-          description: Minimum capacity for autoscaling
-          example: 1
-          type: integer
-        maxCapacity:
-          description: Maximum capacity for autoscaling
-          example: 5
-          type: integer
-      type: object
-    SpotConfiguration:
-      description: Spot instance strategy configuration for controlling cost vs reliability. Spot instances provide significant cost savings (~70%) but may be interrupted by AWS. Available for non-production environments.
-      example:
-        strategy: spot-only
-      properties:
-        strategy:
-          default: spot-only
-          description: Spot instance strategy. 'off' = On-Demand only (highest reliability, no savings). 'spot-only' = 100% Spot instances (~70% savings, default for non-prod). 'mixed-safe' = 50% Spot instances (~35% savings, requires multiple instances). 'mixed-aggressive' = 80% Spot instances (~56% savings, requires multiple instances).
-          enum:
-          - 'off'
-          - spot-only
-          - mixed-safe
-          - mixed-aggressive
-          example: spot-only
+        value:
+          description: Environment variable value
           type: string
       required:
-      - strategy
-      type: object
-    Compose:
-      example:
-        spotConfiguration:
-          strategy: spot-only
-        taskMemory: 2
-        maxCapacity: 7
-        containers:
-        - originProtectionConfig:
-            ipAllow:
-            - ipAllow
-            - ipAllow
-            enabled: true
-          memory: 6
-          dependsOn:
-          - condition: START
-            containerName: containerName
-          - condition: START
-            containerName: containerName
-          workingDirectory: workingDirectory
-          exposedPorts:
-          - 5
-          - 5
-          cpu: 0
-          imageReference:
-            identifier: identifier
-            type: internal
-          secrets:
-          - name: name
-            valueFrom: valueFrom
-          - name: name
-            valueFrom: valueFrom
-          memoryReservation: 1
-          command:
-          - command
-          - command
-          environment:
-          - name: name
-            value: value
-          - name: name
-            value: value
-          readonlyRootFilesystem: false
-          originProtection: false
-          healthCheck:
-            retries: 7
-            startPeriod: 279
-            interval: 171
-            command:
-            - command
-            - command
-            timeout: 15
-          name: name
-          mountPoints:
-          - readOnly: false
-            containerPath: containerPath
-            sourceVolume: sourceVolume
-          - readOnly: false
-            containerPath: containerPath
-            sourceVolume: sourceVolume
-          entryPoint:
-          - entryPoint
-          - entryPoint
-          user: user
-          essential: true
-        - originProtectionConfig:
-            ipAllow:
-            - ipAllow
-            - ipAllow
-            enabled: true
-          memory: 6
-          dependsOn:
-          - condition: START
-            containerName: containerName
-          - condition: START
-            containerName: containerName
-          workingDirectory: workingDirectory
-          exposedPorts:
-          - 5
-          - 5
-          cpu: 0
-          imageReference:
-            identifier: identifier
-            type: internal
-          secrets:
-          - name: name
-            valueFrom: valueFrom
-          - name: name
-            valueFrom: valueFrom
-          memoryReservation: 1
-          command:
-          - command
-          - command
-          environment:
-          - name: name
-            value: value
-          - name: name
-            value: value
-          readonlyRootFilesystem: false
-          originProtection: false
-          healthCheck:
-            retries: 7
-            startPeriod: 279
-            interval: 171
-            command:
-            - command
-            - command
-            timeout: 15
-          name: name
-          mountPoints:
-          - readOnly: false
-            containerPath: containerPath
-            sourceVolume: sourceVolume
-          - readOnly: false
-            containerPath: containerPath
-            sourceVolume: sourceVolume
-          entryPoint:
-          - entryPoint
-          - entryPoint
-          user: user
-          essential: true
-        minCapacity: 4
-        taskCpu: 3
-        enableCrossAppNetworking: false
-        architecture: architecture
-        enableCrossEnvNetworking: false
-      properties:
-        containers:
-          items:
-            $ref: '#/components/schemas/Container'
-          type: array
-        architecture:
-          description: CPU architecture (X86_64 or ARM64)
-          type: string
-        taskCpu:
-          description: Task-level CPU units (e.g., 256, 512, 1024)
-          type: integer
-        taskMemory:
-          description: Task-level memory in MB
-          type: integer
-        minCapacity:
-          description: Minimum number of instances
-          type: integer
-        maxCapacity:
-          description: Maximum number of instances
-          type: integer
-        spotConfiguration:
-          $ref: '#/components/schemas/SpotConfiguration'
-        enableCrossEnvNetworking:
-          default: false
-          description: 'Optional. Enable cross-environment networking within the same application. When false (default): Uses shared security group for complete isolation (most secure). When true: Uses app-specific security group to enable communication between environments of the same application (e.g., staging can connect to production database). Note: If enableCrossAppNetworking is true, this setting is overridden.'
-          type:
-          - boolean
-          - 'null'
-        enableCrossAppNetworking:
-          default: false
-          description: 'Optional. Enable cross-application networking within the same organization. When false (default): Uses shared/app-specific security group based on enableCrossEnvNetworking. When true: Uses org-specific security group to enable container-to-container communication with ALL applications in the same organization via service discovery (microservices architecture). This setting takes priority over enableCrossEnvNetworking.'
-          type:
-          - boolean
-          - 'null'
-      type: object
-    createEnvironment_403_response:
-      example:
-        message: Environment limit reached
-        error: Application my-app has reached the maximum number of allowed environments (5/5). Please contact support to increase your limit.
-      properties:
-        message:
-          example: Environment limit reached
-          type: string
-        error:
-          example: Application my-app has reached the maximum number of allowed environments (5/5). Please contact support to increase your limit.
-          type: string
+      - name
+      - value
       type: object
     createEnvironment_request:
       properties:
@@ -1224,143 +1461,6 @@ components:
       required:
       - envName
       type: object
-    Cron:
-      example:
-        targetContainerName: targetContainerName
-        scheduleExpression: scheduleExpression
-        isEnabled: true
-        name: name
-        description: description
-        command:
-        - command
-        - command
-      properties:
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        scheduleExpression:
-          type: string
-        command:
-          items:
-            type: string
-          type: array
-        targetContainerName:
-          type:
-          - string
-          - 'null'
-        isEnabled:
-          type: boolean
-      type: object
-    getEnvironmentLogs_200_response_logEvents_inner:
-      example:
-        message: message
-        timestamp: 0
-      properties:
-        timestamp:
-          description: Unix timestamp in milliseconds
-          type: integer
-        message:
-          description: Log message content
-          type: string
-      type: object
-    getEnvironmentLogs_200_response:
-      example:
-        logEvents:
-        - message: message
-          timestamp: 0
-        - message: message
-          timestamp: 0
-        nextToken: nextToken
-      properties:
-        logEvents:
-          description: Array of log events
-          items:
-            $ref: '#/components/schemas/getEnvironmentLogs_200_response_logEvents_inner'
-          type: array
-        nextToken:
-          description: Token for fetching next page of results (null if no more pages)
-          type:
-          - string
-          - 'null'
-      type: object
-    Container_dependsOn_inner:
-      example:
-        condition: START
-        containerName: containerName
-      properties:
-        containerName:
-          description: The name of the container this container depends on
-          type: string
-        condition:
-          description: The condition to wait for on the dependency
-          enum:
-          - START
-          - HEALTHY
-          - COMPLETE
-          - SUCCESS
-          type: string
-      required:
-      - containerName
-      type: object
-    SyncOperation:
-      example:
-        createdAt: createdAt
-        completedAt: completedAt
-        targetEnvironment: targetEnvironment
-        syncType: syncType
-        sourceEnvironment: sourceEnvironment
-        syncId: syncId
-        status: status
-      properties:
-        syncId:
-          type: string
-        syncType:
-          type: string
-        sourceEnvironment:
-          type: string
-        targetEnvironment:
-          type: string
-        status:
-          type: string
-        createdAt:
-          type: string
-        completedAt:
-          type: string
-      type: object
-    createEnvironment_request_environment_inner:
-      properties:
-        name:
-          description: Variable name
-          type: string
-        value:
-          description: Variable value
-          type: string
-      type: object
-    Container_originProtectionConfig:
-      description: Extended origin protection configuration with IP allow list support
-      example:
-        ipAllow:
-        - ipAllow
-        - ipAllow
-        enabled: true
-      properties:
-        enabled:
-          default: true
-          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
-          type: boolean
-        ipAllow:
-          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-      type:
-      - object
-      - 'null'
     updateEnvironment_request:
       properties:
         composeDefinition:
@@ -1379,106 +1479,6 @@ components:
           - 'null'
       required:
       - composeDefinition
-      type: object
-    Volume:
-      example:
-        createdAt: createdAt
-        accessPointArn: accessPointArn
-        volumeName: volumeName
-        accessPointId: accessPointId
-        volumeId: volumeId
-        description: description
-        rootDirectory: rootDirectory
-        environmentEfsId: environmentEfsId
-      properties:
-        volumeId:
-          type: string
-        volumeName:
-          type: string
-        description:
-          type: string
-        environmentEfsId:
-          type: string
-        createdAt:
-          type: string
-        rootDirectory:
-          type: string
-        accessPointId:
-          type: string
-        accessPointArn:
-          type: string
-      type: object
-    Container_healthCheck:
-      description: Container health check configuration
-      example:
-        retries: 7
-        startPeriod: 279
-        interval: 171
-        command:
-        - command
-        - command
-        timeout: 15
-      properties:
-        command:
-          description: The command to run to determine if the container is healthy
-          items:
-            type: string
-          type: array
-        interval:
-          default: 30
-          description: Time period (seconds) between health checks
-          maximum: 300
-          minimum: 5
-          type: integer
-        timeout:
-          default: 5
-          description: Time period (seconds) to wait for a health check to return
-          maximum: 60
-          minimum: 2
-          type: integer
-        retries:
-          default: 3
-          description: Number of times to retry a failed health check
-          maximum: 10
-          minimum: 1
-          type: integer
-        startPeriod:
-          description: Grace period (seconds) to ignore unhealthy checks after container starts
-          maximum: 300
-          minimum: 0
-          type:
-          - integer
-          - 'null'
-      type:
-      - object
-      - 'null'
-    Container_imageReference:
-      example:
-        identifier: identifier
-        type: internal
-      properties:
-        type:
-          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
-          enum:
-          - internal
-          - external
-          type: string
-        identifier:
-          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
-          type: string
-      required:
-      - identifier
-      - type
-      type: object
-    patchEnvironmentCompose_400_response:
-      example:
-        message: message
-        errors: '{}'
-      properties:
-        message:
-          type: string
-        errors:
-          type: object
       type: object
   securitySchemes:
     BearerAuth:

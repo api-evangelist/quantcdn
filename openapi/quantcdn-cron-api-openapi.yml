@@ -374,59 +374,6 @@ paths:
       - Cron
 components:
   schemas:
-    createCronJob_request:
-      properties:
-        name:
-          type: string
-        description:
-          type:
-          - string
-          - 'null'
-        scheduleExpression:
-          type: string
-        command:
-          items:
-            type: string
-          type: array
-        targetContainerName:
-          type:
-          - string
-          - 'null'
-        isEnabled:
-          default: true
-          type:
-          - boolean
-          - 'null'
-      required:
-      - command
-      - name
-      - scheduleExpression
-      type: object
-    updateCronJob_request:
-      properties:
-        description:
-          type:
-          - string
-          - 'null'
-        scheduleExpression:
-          type:
-          - string
-          - 'null'
-        command:
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-        targetContainerName:
-          type:
-          - string
-          - 'null'
-        isEnabled:
-          type:
-          - boolean
-          - 'null'
-      type: object
     CronRun:
       example:
         output:
@@ -489,6 +436,44 @@ components:
           - string
           - 'null'
       type: object
+    patchEnvironmentCompose_400_response:
+      example:
+        message: message
+        errors: '{}'
+      properties:
+        message:
+          type: string
+        errors:
+          type: object
+      type: object
+    createCronJob_request:
+      properties:
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        scheduleExpression:
+          type: string
+        command:
+          items:
+            type: string
+          type: array
+        targetContainerName:
+          type:
+          - string
+          - 'null'
+        isEnabled:
+          default: true
+          type:
+          - boolean
+          - 'null'
+      required:
+      - command
+      - name
+      - scheduleExpression
+      type: object
     Cron:
       example:
         targetContainerName: targetContainerName
@@ -519,15 +504,30 @@ components:
         isEnabled:
           type: boolean
       type: object
-    patchEnvironmentCompose_400_response:
-      example:
-        message: message
-        errors: '{}'
+    updateCronJob_request:
       properties:
-        message:
-          type: string
-        errors:
-          type: object
+        description:
+          type:
+          - string
+          - 'null'
+        scheduleExpression:
+          type:
+          - string
+          - 'null'
+        command:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        targetContainerName:
+          type:
+          - string
+          - 'null'
+        isEnabled:
+          type:
+          - boolean
+          - 'null'
       type: object
   securitySchemes:
     BearerAuth:

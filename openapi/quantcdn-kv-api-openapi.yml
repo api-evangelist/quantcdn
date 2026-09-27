@@ -666,6 +666,44 @@ paths:
       - KV
 components:
   schemas:
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    V2StoreItemRequest:
+      example:
+        secret: false
+        value: value
+        key: user-session-123
+      properties:
+        key:
+          description: Item key
+          example: user-session-123
+          type: string
+        value:
+          description: Item value (can be JSON string)
+          type: string
+        secret:
+          default: false
+          description: Store as secret with KMS encryption. Secrets cannot be retrieved via GET operations (returns [ENCRYPTED]). Ideal for API keys, passwords, and credentials.
+          type: boolean
+      required:
+      - key
+      - value
+      type: object
     KV_items_create_200_response:
       example:
         success: true
@@ -700,18 +738,6 @@ components:
           - string
           - 'null'
       type: object
-    KV_items_delete_200_response:
-      example:
-        success: true
-        key: user-session-123
-      properties:
-        success:
-          example: true
-          type: boolean
-        key:
-          example: user-session-123
-          type: string
-      type: object
     V2StoreItemUpdateRequest:
       example:
         secret: true
@@ -726,27 +752,6 @@ components:
       required:
       - value
       type: object
-    V2StoreItemRequest:
-      example:
-        secret: false
-        value: value
-        key: user-session-123
-      properties:
-        key:
-          description: Item key
-          example: user-session-123
-          type: string
-        value:
-          description: Item value (can be JSON string)
-          type: string
-        secret:
-          default: false
-          description: Store as secret with KMS encryption. Secrets cannot be retrieved via GET operations (returns [ENCRYPTED]). Ideal for API keys, passwords, and credentials.
-          type: boolean
-      required:
-      - key
-      - value
-      type: object
     V2StoreRequest:
       example:
         name: session-data
@@ -758,22 +763,29 @@ components:
       required:
       - name
       type: object
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
+    KV_link_to_project_request:
       properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
+        project_id:
+          description: Target project ID to link to
+          type: integer
+      required:
+      - project_id
+      type: object
+    KV_items_show_200_response_value:
+      description: Item value (decoded from JSON if applicable). Returns '[ENCRYPTED]' for secret items.
+      oneOf:
+      - type: string
+      - type: object
+    KV_link_to_project_200_response:
+      example:
+        success: true
+        message: message
+      properties:
+        success:
           example: true
           type: boolean
-      required:
-      - error
-      - message
+        message:
+          type: string
       type: object
     KV_items_show_200_response:
       example:
@@ -786,30 +798,6 @@ components:
         value:
           $ref: '#/components/schemas/KV_items_show_200_response_value'
       type: object
-    KV_link_to_project_request:
-      properties:
-        project_id:
-          description: Target project ID to link to
-          type: integer
-      required:
-      - project_id
-      type: object
-    KV_link_to_project_200_response:
-      example:
-        success: true
-        message: message
-      properties:
-        success:
-          example: true
-          type: boolean
-        message:
-          type: string
-      type: object
-    KV_items_show_200_response_value:
-      description: Item value (decoded from JSON if applicable). Returns '[ENCRYPTED]' for secret items.
-      oneOf:
-      - type: string
-      - type: object
     V2Store:
       example:
         name: session-data
@@ -826,6 +814,18 @@ components:
       required:
       - id
       - name
+      type: object
+    KV_items_delete_200_response:
+      example:
+        success: true
+        key: user-session-123
+      properties:
+        success:
+          example: true
+          type: boolean
+        key:
+          example: user-session-123
+          type: string
       type: object
   securitySchemes:
     BearerAuth:

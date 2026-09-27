@@ -84,20 +84,6 @@ paths:
       - Organizations
 components:
   schemas:
-    Organizations_list_200_response_inner:
-      example:
-        name: Test Organization
-        machine_name: test-org
-      properties:
-        name:
-          description: Organization name
-          example: Test Organization
-          type: string
-        machine_name:
-          description: Organization machine name
-          example: test-org
-          type: string
-      type: object
     V2Organization:
       example:
         name: Test Organization
@@ -141,6 +127,20 @@ components:
       required:
       - machine_name
       - name
+      type: object
+    Organizations_list_200_response_inner:
+      example:
+        name: Test Organization
+        machine_name: test-org
+      properties:
+        name:
+          description: Organization name
+          example: Test Organization
+          type: string
+        machine_name:
+          description: Organization machine name
+          example: test-org
+          type: string
       type: object
     V2Error:
       example:

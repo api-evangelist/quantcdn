@@ -191,15 +191,6 @@ paths:
       - Variables
 components:
   schemas:
-    bulkSetEnvironmentVariables_request:
-      properties:
-        environment:
-          items:
-            $ref: '#/components/schemas/bulkSetEnvironmentVariables_request_environment_inner'
-          type: array
-      required:
-      - environment
-      type: object
     bulkSetEnvironmentVariables_request_environment_inner:
       properties:
         name:
@@ -209,6 +200,15 @@ components:
       required:
       - name
       - value
+      type: object
+    bulkSetEnvironmentVariables_request:
+      properties:
+        environment:
+          items:
+            $ref: '#/components/schemas/bulkSetEnvironmentVariables_request_environment_inner'
+          type: array
+      required:
+      - environment
       type: object
     updateEnvironmentVariable_request:
       properties:

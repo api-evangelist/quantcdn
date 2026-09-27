@@ -511,79 +511,6 @@ paths:
       - AI Skills
 components:
   schemas:
-    updateSkill_request:
-      properties:
-        name:
-          type: string
-        description:
-          type: string
-        content:
-          type: string
-        triggerCondition:
-          type: string
-        tags:
-          items:
-            type: string
-          type: array
-        requiredTools:
-          items:
-            type: string
-          type: array
-        source:
-          type: object
-        files:
-          type: object
-        disableModelInvocation:
-          type: boolean
-        allowedTools:
-          items:
-            type: string
-          type: array
-        namespace:
-          type: string
-      type: object
-    updateSkill_200_response:
-      example:
-        success: true
-        skill: '{}'
-        message: Skill updated successfully
-      properties:
-        success:
-          example: true
-          type: boolean
-        skill:
-          type: object
-        message:
-          example: Skill updated successfully
-          type: string
-      type: object
-    getSkill_200_response:
-      example:
-        skill:
-          triggerCondition: triggerCondition
-          requiredTools:
-          - requiredTools
-          - requiredTools
-          installedAt: 2000-01-23 04:56:07+00:00
-          description: description
-          source: '{}'
-          content: content
-          tags:
-          - tags
-          - tags
-          skillId: skillId
-          name: name
-          namespace: namespace
-          files: '{}'
-          disableModelInvocation: true
-          allowedTools:
-          - allowedTools
-          - allowedTools
-          updatedAt: 2000-01-23 04:56:07+00:00
-      properties:
-        skill:
-          $ref: '#/components/schemas/getSkill_200_response_skill'
-      type: object
     listSkills_200_response_skills_inner:
       example:
         skillId: skillId
@@ -621,33 +548,139 @@ components:
           format: date-time
           type: string
       type: object
-    importSkill_request:
+    syncSkillCollection_200_response:
+      example:
+        skills:
+        - '{}'
+        - '{}'
+        synced: 0
+        removedFromSource:
+        - removedFromSource
+        - removedFromSource
+        created: 6
+        namespace: namespace
+        failed: 1
       properties:
-        source:
-          $ref: '#/components/schemas/importSkill_request_source'
+        namespace:
+          type: string
+        synced:
+          type: integer
+        created:
+          type: integer
+        failed:
+          type: integer
+        removedFromSource:
+          items:
+            type: string
+          type: array
+        skills:
+          items:
+            type: object
+          type: array
+      type: object
+    importSkill_201_response:
+      example:
+        skill: '{}'
+        message: message
+      properties:
+        skill:
+          type: object
+        message:
+          type: string
+      type: object
+    listSkillCollections_200_response:
+      example:
+        collections:
+        - skills:
+          - skills
+          - skills
+          namespace: superpowers
+          count: 14
+        - skills:
+          - skills
+          - skills
+          namespace: superpowers
+          count: 14
+      properties:
+        collections:
+          items:
+            $ref: '#/components/schemas/listSkillCollections_200_response_collections_inner'
+          type: array
+      type: object
+    updateSkill_request:
+      properties:
         name:
           type: string
         description:
+          type: string
+        content:
+          type: string
+        triggerCondition:
           type: string
         tags:
           items:
             type: string
           type: array
-        triggerCondition:
-          type: string
         requiredTools:
           items:
             type: string
           type: array
+        source:
+          type: object
+        files:
+          type: object
         disableModelInvocation:
           type: boolean
         allowedTools:
           items:
             type: string
           type: array
+        namespace:
+          type: string
+      type: object
+    getSkill_200_response:
+      example:
+        skill:
+          triggerCondition: triggerCondition
+          requiredTools:
+          - requiredTools
+          - requiredTools
+          installedAt: 2000-01-23 04:56:07+00:00
+          description: description
+          source: '{}'
+          content: content
+          tags:
+          - tags
+          - tags
+          skillId: skillId
+          name: name
+          namespace: namespace
+          files: '{}'
+          disableModelInvocation: true
+          allowedTools:
+          - allowedTools
+          - allowedTools
+          updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        skill:
+          $ref: '#/components/schemas/getSkill_200_response_skill'
+      type: object
+    importSkillCollection_request:
+      properties:
+        namespace:
+          example: superpowers
+          pattern: ^[a-z0-9][a-z0-9-]{0,62}[a-z0-9]$
+          type: string
+        source:
+          $ref: '#/components/schemas/importSkillCollection_request_source'
+        tags:
+          items:
+            type: string
+          type: array
         installedBy:
           type: string
       required:
+      - namespace
       - source
       type: object
     listSkills_200_response:
@@ -684,85 +717,24 @@ components:
         count:
           type: integer
       type: object
-    listSkillCollections_200_response:
-      example:
-        collections:
-        - skills:
-          - skills
-          - skills
-          namespace: superpowers
-          count: 14
-        - skills:
-          - skills
-          - skills
-          namespace: superpowers
-          count: 14
-      properties:
-        collections:
-          items:
-            $ref: '#/components/schemas/listSkillCollections_200_response_collections_inner'
-          type: array
-      type: object
-    syncSkillCollection_200_response:
+    listSkillCollections_200_response_collections_inner:
       example:
         skills:
-        - '{}'
-        - '{}'
-        synced: 0
-        removedFromSource:
-        - removedFromSource
-        - removedFromSource
-        created: 6
-        namespace: namespace
-        failed: 1
+        - skills
+        - skills
+        namespace: superpowers
+        count: 14
       properties:
         namespace:
+          example: superpowers
           type: string
-        synced:
+        count:
+          example: 14
           type: integer
-        created:
-          type: integer
-        failed:
-          type: integer
-        removedFromSource:
+        skills:
           items:
             type: string
           type: array
-        skills:
-          items:
-            type: object
-          type: array
-      type: object
-    deleteSkill_200_response:
-      example:
-        success: true
-        message: Skill deleted successfully
-      properties:
-        success:
-          example: true
-          type: boolean
-        message:
-          example: Skill deleted successfully
-          type: string
-      type: object
-    importSkillCollection_request_source:
-      properties:
-        type:
-          enum:
-          - github
-          type: string
-        repo:
-          example: obra/superpowers
-          type: string
-        path:
-          example: skills
-          type: string
-        version:
-          example: main
-          type: string
-      required:
-      - repo
-      - type
       type: object
     createSkill_request:
       properties:
@@ -830,41 +802,73 @@ components:
             type: object
           type: array
       type: object
-    importSkillCollection_request:
+    importSkill_request:
       properties:
-        namespace:
-          example: superpowers
-          pattern: ^[a-z0-9][a-z0-9-]{0,62}[a-z0-9]$
-          type: string
         source:
-          $ref: '#/components/schemas/importSkillCollection_request_source'
+          $ref: '#/components/schemas/importSkill_request_source'
+        name:
+          type: string
+        description:
+          type: string
         tags:
+          items:
+            type: string
+          type: array
+        triggerCondition:
+          type: string
+        requiredTools:
+          items:
+            type: string
+          type: array
+        disableModelInvocation:
+          type: boolean
+        allowedTools:
           items:
             type: string
           type: array
         installedBy:
           type: string
       required:
-      - namespace
       - source
       type: object
-    importSkill_request_source:
+    createSkill_201_response:
+      example:
+        success: true
+        skill: '{}'
+        message: Skill created successfully
       properties:
-        type:
-          enum:
-          - skills.sh
-          - github
+        success:
+          example: true
+          type: boolean
+        skill:
+          type: object
+        message:
+          example: Skill created successfully
           type: string
-        url:
+      type: object
+    deleteSkillCollection_200_response:
+      example:
+        success: true
+        message: Collection deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Collection deleted successfully
           type: string
-        repo:
+      type: object
+    deleteSkill_200_response:
+      example:
+        success: true
+        message: Skill deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Skill deleted successfully
           type: string
-        path:
-          type: string
-        version:
-          type: string
-      required:
-      - type
       type: object
     getSkill_200_response_skill:
       example:
@@ -926,11 +930,48 @@ components:
           format: date-time
           type: string
       type: object
-    createSkill_201_response:
+    importSkillCollection_request_source:
+      properties:
+        type:
+          enum:
+          - github
+          type: string
+        repo:
+          example: obra/superpowers
+          type: string
+        path:
+          example: skills
+          type: string
+        version:
+          example: main
+          type: string
+      required:
+      - repo
+      - type
+      type: object
+    importSkill_request_source:
+      properties:
+        type:
+          enum:
+          - skills.sh
+          - github
+          type: string
+        url:
+          type: string
+        repo:
+          type: string
+        path:
+          type: string
+        version:
+          type: string
+      required:
+      - type
+      type: object
+    updateSkill_200_response:
       example:
         success: true
         skill: '{}'
-        message: Skill created successfully
+        message: Skill updated successfully
       properties:
         success:
           example: true
@@ -938,48 +979,7 @@ components:
         skill:
           type: object
         message:
-          example: Skill created successfully
-          type: string
-      type: object
-    listSkillCollections_200_response_collections_inner:
-      example:
-        skills:
-        - skills
-        - skills
-        namespace: superpowers
-        count: 14
-      properties:
-        namespace:
-          example: superpowers
-          type: string
-        count:
-          example: 14
-          type: integer
-        skills:
-          items:
-            type: string
-          type: array
-      type: object
-    deleteSkillCollection_200_response:
-      example:
-        success: true
-        message: Collection deleted successfully
-      properties:
-        success:
-          example: true
-          type: boolean
-        message:
-          example: Collection deleted successfully
-          type: string
-      type: object
-    importSkill_201_response:
-      example:
-        skill: '{}'
-        message: message
-      properties:
-        skill:
-          type: object
-        message:
+          example: Skill updated successfully
           type: string
       type: object
   securitySchemes:

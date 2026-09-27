@@ -162,62 +162,18 @@ paths:
       - Compose
 components:
   schemas:
-    Container_secrets_inner:
-      example:
-        name: name
-        valueFrom: valueFrom
+    patchEnvironmentCompose_request_spotConfiguration:
       properties:
-        name:
-          description: The environment variable name to be set in the container
+        strategy:
+          enum:
+          - 'off'
+          - spot-only
+          - mixed-safe
+          - mixed-aggressive
           type: string
-        valueFrom:
-          description: The key of the secret in the environment's 'app-secrets' store
-          type: string
-      required:
-      - name
-      - valueFrom
-      type: object
-    patchEnvironmentCompose_request:
-      properties:
-        architecture:
-          type:
-          - string
-          - 'null'
-        taskCpu:
-          type:
-          - string
-          - 'null'
-        taskMemory:
-          type:
-          - string
-          - 'null'
-        minCapacity:
-          minimum: 0
-          type:
-          - integer
-          - 'null'
-        maxCapacity:
-          minimum: 1
-          type:
-          - integer
-          - 'null'
-        containers:
-          items:
-            type: object
-          type:
-          - array
-          - 'null'
-        spotConfiguration:
-          $ref: '#/components/schemas/patchEnvironmentCompose_request_spotConfiguration'
-        enableCrossEnvNetworking:
-          type:
-          - boolean
-          - 'null'
-        enableCrossAppNetworking:
-          type:
-          - boolean
-          - 'null'
-      type: object
+      type:
+      - object
+      - 'null'
     Container_dependsOn_inner:
       example:
         condition: START
@@ -237,29 +193,6 @@ components:
       required:
       - containerName
       type: object
-    validateCompose_422_response:
-      example:
-        error: Invalid YAML
-      properties:
-        error:
-          example: Invalid YAML
-          type: string
-      type: object
-    Container_environment_inner:
-      example:
-        name: name
-        value: value
-      properties:
-        name:
-          description: Environment variable name
-          type: string
-        value:
-          description: Environment variable value
-          type: string
-      required:
-      - name
-      - value
-      type: object
     validateCompose_request:
       properties:
         compose:
@@ -275,24 +208,35 @@ components:
       required:
       - compose
       type: object
-    Container_mountPoints_inner:
+    patchEnvironmentCompose_400_response:
       example:
-        readOnly: false
-        containerPath: containerPath
-        sourceVolume: sourceVolume
+        message: message
+        errors: '{}'
       properties:
-        sourceVolume:
-          description: The name of the logical volume
+        message:
           type: string
-        containerPath:
-          description: The path inside the container where the volume is mounted
+        errors:
+          type: object
+      type: object
+    validateCompose_422_response:
+      example:
+        error: Invalid YAML
+      properties:
+        error:
+          example: Invalid YAML
           type: string
-        readOnly:
-          default: false
+      type: object
+    patchEnvironmentCompose_202_response_spotConfiguration:
+      example:
+        tolerateDowntime: true
+        strategy: 'off'
+      properties:
+        strategy:
+          example: 'off'
+          type: string
+        tolerateDowntime:
+          example: true
           type: boolean
-      required:
-      - containerPath
-      - sourceVolume
       type: object
     patchEnvironmentCompose_202_response:
       example:
@@ -337,116 +281,6 @@ components:
         enableCrossAppNetworking:
           example: true
           type: boolean
-      type: object
-    Container_originProtectionConfig:
-      description: Extended origin protection configuration with IP allow list support
-      example:
-        ipAllow:
-        - ipAllow
-        - ipAllow
-        enabled: true
-      properties:
-        enabled:
-          default: true
-          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
-          type: boolean
-        ipAllow:
-          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-      type:
-      - object
-      - 'null'
-    patchEnvironmentCompose_202_response_spotConfiguration:
-      example:
-        tolerateDowntime: true
-        strategy: 'off'
-      properties:
-        strategy:
-          example: 'off'
-          type: string
-        tolerateDowntime:
-          example: true
-          type: boolean
-      type: object
-    patchEnvironmentCompose_request_spotConfiguration:
-      properties:
-        strategy:
-          enum:
-          - 'off'
-          - spot-only
-          - mixed-safe
-          - mixed-aggressive
-          type: string
-      type:
-      - object
-      - 'null'
-    validateCompose_200_response:
-      example:
-        translatedComposeDefinition: '{}'
-        translationWarnings:
-        - Service 'db' uses 'build' directive, image will be internal with a generated tag.
-        - Volume 'cache' uses a relative path source, interpreted as logical volume name.
-        message: Docker-compose YAML translated and validated successfully.
-      properties:
-        message:
-          example: Docker-compose YAML translated and validated successfully.
-          type: string
-        translatedComposeDefinition:
-          description: The translated internal compose definition format
-          type: object
-        translationWarnings:
-          description: Optional warnings encountered during translation
-          example:
-          - Service 'db' uses 'build' directive, image will be internal with a generated tag.
-          - Volume 'cache' uses a relative path source, interpreted as logical volume name.
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-      required:
-      - message
-      - translatedComposeDefinition
-      type: object
-    SpotConfiguration:
-      description: Spot instance strategy configuration for controlling cost vs reliability. Spot instances provide significant cost savings (~70%) but may be interrupted by AWS. Available for non-production environments.
-      example:
-        strategy: spot-only
-      properties:
-        strategy:
-          default: spot-only
-          description: Spot instance strategy. 'off' = On-Demand only (highest reliability, no savings). 'spot-only' = 100% Spot instances (~70% savings, default for non-prod). 'mixed-safe' = 50% Spot instances (~35% savings, requires multiple instances). 'mixed-aggressive' = 80% Spot instances (~56% savings, requires multiple instances).
-          enum:
-          - 'off'
-          - spot-only
-          - mixed-safe
-          - mixed-aggressive
-          example: spot-only
-          type: string
-      required:
-      - strategy
-      type: object
-    Container_imageReference:
-      example:
-        identifier: identifier
-        type: internal
-      properties:
-        type:
-          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
-          enum:
-          - internal
-          - external
-          type: string
-        identifier:
-          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
-          type: string
-      required:
-      - identifier
-      - type
       type: object
     Compose:
       example:
@@ -607,6 +441,24 @@ components:
           - boolean
           - 'null'
       type: object
+    Container_imageReference:
+      example:
+        identifier: identifier
+        type: internal
+      properties:
+        type:
+          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
+          enum:
+          - internal
+          - external
+          type: string
+        identifier:
+          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
+          type: string
+      required:
+      - identifier
+      - type
+      type: object
     Container_healthCheck:
       description: Container health check configuration
       example:
@@ -651,6 +503,47 @@ components:
       type:
       - object
       - 'null'
+    Container_originProtectionConfig:
+      description: Extended origin protection configuration with IP allow list support
+      example:
+        ipAllow:
+        - ipAllow
+        - ipAllow
+        enabled: true
+      properties:
+        enabled:
+          default: true
+          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
+          type: boolean
+        ipAllow:
+          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      type:
+      - object
+      - 'null'
+    Container_mountPoints_inner:
+      example:
+        readOnly: false
+        containerPath: containerPath
+        sourceVolume: sourceVolume
+      properties:
+        sourceVolume:
+          description: The name of the logical volume
+          type: string
+        containerPath:
+          description: The path inside the container where the volume is mounted
+          type: string
+        readOnly:
+          default: false
+          type: boolean
+      required:
+      - containerPath
+      - sourceVolume
+      type: object
     Container:
       example:
         originProtectionConfig:
@@ -809,15 +702,122 @@ components:
       - imageReference
       - name
       type: object
-    patchEnvironmentCompose_400_response:
+    validateCompose_200_response:
       example:
-        message: message
-        errors: '{}'
+        translatedComposeDefinition: '{}'
+        translationWarnings:
+        - Service 'db' uses 'build' directive, image will be internal with a generated tag.
+        - Volume 'cache' uses a relative path source, interpreted as logical volume name.
+        message: Docker-compose YAML translated and validated successfully.
       properties:
         message:
+          example: Docker-compose YAML translated and validated successfully.
           type: string
-        errors:
+        translatedComposeDefinition:
+          description: The translated internal compose definition format
           type: object
+        translationWarnings:
+          description: Optional warnings encountered during translation
+          example:
+          - Service 'db' uses 'build' directive, image will be internal with a generated tag.
+          - Volume 'cache' uses a relative path source, interpreted as logical volume name.
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      required:
+      - message
+      - translatedComposeDefinition
+      type: object
+    patchEnvironmentCompose_request:
+      properties:
+        architecture:
+          type:
+          - string
+          - 'null'
+        taskCpu:
+          type:
+          - string
+          - 'null'
+        taskMemory:
+          type:
+          - string
+          - 'null'
+        minCapacity:
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+        maxCapacity:
+          minimum: 1
+          type:
+          - integer
+          - 'null'
+        containers:
+          items:
+            type: object
+          type:
+          - array
+          - 'null'
+        spotConfiguration:
+          $ref: '#/components/schemas/patchEnvironmentCompose_request_spotConfiguration'
+        enableCrossEnvNetworking:
+          type:
+          - boolean
+          - 'null'
+        enableCrossAppNetworking:
+          type:
+          - boolean
+          - 'null'
+      type: object
+    Container_environment_inner:
+      example:
+        name: name
+        value: value
+      properties:
+        name:
+          description: Environment variable name
+          type: string
+        value:
+          description: Environment variable value
+          type: string
+      required:
+      - name
+      - value
+      type: object
+    SpotConfiguration:
+      description: Spot instance strategy configuration for controlling cost vs reliability. Spot instances provide significant cost savings (~70%) but may be interrupted by AWS. Available for non-production environments.
+      example:
+        strategy: spot-only
+      properties:
+        strategy:
+          default: spot-only
+          description: Spot instance strategy. 'off' = On-Demand only (highest reliability, no savings). 'spot-only' = 100% Spot instances (~70% savings, default for non-prod). 'mixed-safe' = 50% Spot instances (~35% savings, requires multiple instances). 'mixed-aggressive' = 80% Spot instances (~56% savings, requires multiple instances).
+          enum:
+          - 'off'
+          - spot-only
+          - mixed-safe
+          - mixed-aggressive
+          example: spot-only
+          type: string
+      required:
+      - strategy
+      type: object
+    Container_secrets_inner:
+      example:
+        name: name
+        valueFrom: valueFrom
+      properties:
+        name:
+          description: The environment variable name to be set in the container
+          type: string
+        valueFrom:
+          description: The key of the secret in the environment's 'app-secrets' store
+          type: string
+      required:
+      - name
+      - valueFrom
       type: object
   securitySchemes:
     BearerAuth:
