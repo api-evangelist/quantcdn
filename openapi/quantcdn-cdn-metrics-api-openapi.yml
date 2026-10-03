@@ -289,6 +289,74 @@ paths:
       - CDN Metrics
 components:
   schemas:
+    V2MetricDataPoint:
+      properties:
+        timestamp:
+          $ref: '#/components/schemas/V2MetricDataPoint_timestamp'
+        value:
+          description: Metric value at this timestamp
+          example: 150
+          type: number
+      required:
+      - timestamp
+      - value
+      type: object
+    V2MetricsMeta:
+      example:
+        start_time: 2026-01-29 12:00:00+00:00
+        period: hourly
+        granularity: minute
+        domain: domain
+        end_time: 2026-01-29 13:00:00+00:00
+        metrics:
+        - hits
+        - bytes
+      properties:
+        period:
+          description: The period type for this data
+          enum:
+          - hourly
+          - daily
+          - monthly
+          example: hourly
+          type: string
+        granularity:
+          description: The granularity of data points
+          enum:
+          - minute
+          - day
+          - month
+          example: minute
+          type: string
+        start_time:
+          description: Start time of the data range (ISO8601 or Unix timestamp based on timestamp_format parameter)
+          example: 2026-01-29 12:00:00+00:00
+          type: string
+        end_time:
+          description: End time of the data range (ISO8601 or Unix timestamp based on timestamp_format parameter)
+          example: 2026-01-29 13:00:00+00:00
+          type: string
+        metrics:
+          description: List of metrics included in the response
+          example:
+          - hits
+          - bytes
+          items:
+            type: string
+          type: array
+        domain:
+          description: Domain filter applied (if any)
+          type:
+          - string
+          - 'null'
+          example: null
+      required:
+      - end_time
+      - granularity
+      - metrics
+      - period
+      - start_time
+      type: object
     V2MetricsResponse:
       example:
         data:
@@ -350,6 +418,15 @@ components:
       - data
       - meta
       type: object
+    V2MetricDataPoint_timestamp:
+      description: Timestamp for this data point (format depends on timestamp_format parameter)
+      example: 2026-01-29 12:00:00+00:00
+      oneOf:
+      - description: ISO8601 timestamp
+        format: date-time
+        type: string
+      - description: Unix timestamp
+        type: integer
     V2MetricData:
       properties:
         series:
@@ -375,83 +452,6 @@ components:
       - period_average
       - period_total
       - series
-      type: object
-    V2MetricDataPoint_timestamp:
-      description: Timestamp for this data point (format depends on timestamp_format parameter)
-      example: 2026-01-29 12:00:00+00:00
-      oneOf:
-      - description: ISO8601 timestamp
-        format: date-time
-        type: string
-      - description: Unix timestamp
-        type: integer
-    V2MetricsMeta:
-      example:
-        start_time: 2026-01-29 12:00:00+00:00
-        period: hourly
-        granularity: minute
-        domain: domain
-        end_time: 2026-01-29 13:00:00+00:00
-        metrics:
-        - hits
-        - bytes
-      properties:
-        period:
-          description: The period type for this data
-          enum:
-          - hourly
-          - daily
-          - monthly
-          example: hourly
-          type: string
-        granularity:
-          description: The granularity of data points
-          enum:
-          - minute
-          - day
-          - month
-          example: minute
-          type: string
-        start_time:
-          description: Start time of the data range (ISO8601 or Unix timestamp based on timestamp_format parameter)
-          example: 2026-01-29 12:00:00+00:00
-          type: string
-        end_time:
-          description: End time of the data range (ISO8601 or Unix timestamp based on timestamp_format parameter)
-          example: 2026-01-29 13:00:00+00:00
-          type: string
-        metrics:
-          description: List of metrics included in the response
-          example:
-          - hits
-          - bytes
-          items:
-            type: string
-          type: array
-        domain:
-          description: Domain filter applied (if any)
-          type:
-          - string
-          - 'null'
-          example: null
-      required:
-      - end_time
-      - granularity
-      - metrics
-      - period
-      - start_time
-      type: object
-    V2MetricDataPoint:
-      properties:
-        timestamp:
-          $ref: '#/components/schemas/V2MetricDataPoint_timestamp'
-        value:
-          description: Metric value at this timestamp
-          example: 150
-          type: number
-      required:
-      - timestamp
-      - value
       type: object
   securitySchemes:
     BearerAuth:

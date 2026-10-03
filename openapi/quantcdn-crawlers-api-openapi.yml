@@ -474,6 +474,19 @@ paths:
       - Crawlers
 components:
   schemas:
+    Crawlers_run_request:
+      properties:
+        urls:
+          description: Optional URLs to crawl (overrides crawler's default URL configuration). If not provided, the crawler will use its configured URLs or perform a full crawl.
+          example:
+          - /
+          - /about
+          - /contact
+          items:
+            example: /
+            type: string
+          type: array
+      type: object
     V2Error:
       example:
         message: The requested resource was not found
@@ -490,65 +503,6 @@ components:
       required:
       - error
       - message
-      type: object
-    V2Crawler_assets:
-      description: Asset harvesting configuration
-      example:
-        network_intercept:
-          enabled: true
-          timeout: 30
-          execute_js: false
-        parser:
-          enabled: true
-      properties:
-        network_intercept:
-          $ref: '#/components/schemas/V2Crawler_assets_network_intercept'
-        parser:
-          $ref: '#/components/schemas/V2Crawler_assets_parser'
-      type: object
-    V2Crawler_sitemap_inner:
-      properties:
-        url:
-          description: Sitemap URL
-          example: /sitemap.xml
-          type: string
-        recursive:
-          description: Recursively follow sitemap links
-          example: true
-          type: boolean
-      type: object
-    V2Crawler_assets_parser:
-      description: Parser configuration for asset extraction
-      properties:
-        enabled:
-          description: Enable parser
-          example: true
-          type: boolean
-      type: object
-    V2Crawler_assets_network_intercept:
-      description: Network intercept configuration for asset collection
-      properties:
-        enabled:
-          description: Enable network intercept
-          example: true
-          type: boolean
-        timeout:
-          description: Request timeout in seconds
-          example: 30
-          type: integer
-        execute_js:
-          description: Execute JavaScript during asset collection
-          example: false
-          type: boolean
-      type: object
-    Crawlers_run_200_response:
-      example:
-        run_id: '12345'
-      properties:
-        run_id:
-          description: The crawler run ID
-          example: '12345'
-          type: string
       type: object
     V2CrawlerRequest:
       example:
@@ -730,6 +684,34 @@ components:
           type: integer
       required:
       - domain
+      type: object
+    Crawlers_run_200_response:
+      example:
+        run_id: '12345'
+      properties:
+        run_id:
+          description: The crawler run ID
+          example: '12345'
+          type: string
+      type: object
+    V2Crawler_assets_parser:
+      description: Parser configuration for asset extraction
+      properties:
+        enabled:
+          description: Enable parser
+          example: true
+          type: boolean
+      type: object
+    V2Crawler_sitemap_inner:
+      properties:
+        url:
+          description: Sitemap URL
+          example: /sitemap.xml
+          type: string
+        recursive:
+          description: Recursively follow sitemap links
+          example: true
+          type: boolean
       type: object
     V2Crawler:
       example:
@@ -944,6 +926,21 @@ components:
       - project_id
       - uuid
       type: object
+    V2Crawler_assets:
+      description: Asset harvesting configuration
+      example:
+        network_intercept:
+          enabled: true
+          timeout: 30
+          execute_js: false
+        parser:
+          enabled: true
+      properties:
+        network_intercept:
+          $ref: '#/components/schemas/V2Crawler_assets_network_intercept'
+        parser:
+          $ref: '#/components/schemas/V2Crawler_assets_parser'
+      type: object
     V2CrawlerRun:
       example:
         completed_at: 1705749600
@@ -1005,18 +1002,21 @@ components:
       - project_id
       - task_id
       type: object
-    Crawlers_run_request:
+    V2Crawler_assets_network_intercept:
+      description: Network intercept configuration for asset collection
       properties:
-        urls:
-          description: Optional URLs to crawl (overrides crawler's default URL configuration). If not provided, the crawler will use its configured URLs or perform a full crawl.
-          example:
-          - /
-          - /about
-          - /contact
-          items:
-            example: /
-            type: string
-          type: array
+        enabled:
+          description: Enable network intercept
+          example: true
+          type: boolean
+        timeout:
+          description: Request timeout in seconds
+          example: 30
+          type: integer
+        execute_js:
+          description: Execute JavaScript during asset collection
+          example: false
+          type: boolean
       type: object
   securitySchemes:
     BearerAuth:

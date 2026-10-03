@@ -407,172 +407,6 @@ paths:
       - AI Tools
 components:
   schemas:
-    getAIToolExecutionStatus_200_response:
-      example:
-        result:
-          images:
-          - data:image/jpeg;base64,/9j/4AAQSkZJRg...
-          s3Urls:
-          - https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...
-        duration: 11
-        executionId: exec_abc123def456
-        createdAt: 1730271600
-        completedAt: 1730271612
-        startedAt: 1730271601
-        error: 'Image generation failed: Invalid prompt'
-        toolName: generate_image
-        status: complete
-      properties:
-        executionId:
-          example: exec_abc123def456
-          type: string
-        toolName:
-          example: generate_image
-          type: string
-        status:
-          description: 'Execution status: pending, running, complete, or failed'
-          example: complete
-          type: string
-        result:
-          $ref: '#/components/schemas/getAIToolExecutionStatus_200_response_result'
-        error:
-          description: Error message (only present when status='failed')
-          example: 'Image generation failed: Invalid prompt'
-          type: string
-        createdAt:
-          description: Unix timestamp when execution was created
-          example: 1730271600
-          type: integer
-        startedAt:
-          description: Unix timestamp when execution started (if status >= 'running')
-          example: 1730271601
-          type: integer
-        completedAt:
-          description: Unix timestamp when execution completed (if status in ['complete', 'failed'])
-          example: 1730271612
-          type: integer
-        duration:
-          description: Execution duration in seconds (if completed)
-          example: 11
-          type: number
-      required:
-      - createdAt
-      - executionId
-      - status
-      - toolName
-      type: object
-    listAIToolNames_200_response:
-      example:
-        count: 4
-        tools:
-        - get_weather
-        - calculate
-        - search_web
-        - generate_image
-      properties:
-        tools:
-          description: Array of tool names
-          example:
-          - get_weather
-          - calculate
-          - search_web
-          - generate_image
-          items:
-            type: string
-          type: array
-        count:
-          description: Number of tools
-          example: 4
-          type: integer
-      required:
-      - count
-      - tools
-      type: object
-    listAITools_200_response_tools_inner_toolSpec_inputSchema:
-      example:
-        json:
-          type: object
-          properties:
-            location:
-              type: string
-              description: City name
-            unit:
-              type: string
-              enum:
-              - celsius
-              - fahrenheit
-          required:
-          - location
-      properties:
-        json:
-          description: JSON Schema defining function parameters
-          example:
-            type: object
-            properties:
-              location:
-                type: string
-                description: City name
-              unit:
-                type: string
-                enum:
-                - celsius
-                - fahrenheit
-            required:
-            - location
-          type: object
-      type: object
-    listAITools_200_response:
-      example:
-        count: 4
-        tools:
-        - toolSpec:
-            inputSchema:
-              json:
-                type: object
-                properties:
-                  location:
-                    type: string
-                    description: City name
-                  unit:
-                    type: string
-                    enum:
-                    - celsius
-                    - fahrenheit
-                required:
-                - location
-            name: get_weather
-            description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
-        - toolSpec:
-            inputSchema:
-              json:
-                type: object
-                properties:
-                  location:
-                    type: string
-                    description: City name
-                  unit:
-                    type: string
-                    enum:
-                    - celsius
-                    - fahrenheit
-                required:
-                - location
-            name: get_weather
-            description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
-      properties:
-        tools:
-          description: Array of available tool specifications
-          items:
-            $ref: '#/components/schemas/listAITools_200_response_tools_inner'
-          type: array
-        count:
-          description: Number of available tools
-          example: 4
-          type: integer
-      required:
-      - count
-      - tools
-      type: object
     listAIToolExecutions_200_response_executions_inner:
       example:
         executionId: exec_abc123def456
@@ -597,74 +431,6 @@ components:
         completedAt:
           format: date-time
           type: string
-      type: object
-    getAIToolExecutionStatus_200_response_result:
-      description: Tool execution result (only present when status='complete'). Structure varies by tool type.
-      example:
-        images:
-        - data:image/jpeg;base64,/9j/4AAQSkZJRg...
-        s3Urls:
-        - https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...
-      properties:
-        images:
-          description: 'For image generation: Array of base64-encoded data URIs for inline display/preview'
-          items:
-            example: data:image/jpeg;base64,/9j/4AAQSkZJRg...
-            type: string
-          type: array
-        s3Urls:
-          description: 'For image generation: Array of signed S3 URLs for high-quality downloads (expire after 1 hour)'
-          items:
-            example: https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...?X-Amz-Security-Token=...
-            type: string
-          type: array
-      type: object
-    getAIOrchestrationStatus_404_response:
-      example:
-        orchestrationId: orch_abc123def456789012345678901234
-        error: Orchestration not found
-      properties:
-        error:
-          example: Orchestration not found
-          type: string
-        orchestrationId:
-          example: orch_abc123def456789012345678901234
-          type: string
-      type: object
-    listAIToolExecutions_200_response:
-      example:
-        executions:
-        - executionId: exec_abc123def456
-          createdAt: 2000-01-23 04:56:07+00:00
-          completedAt: 2000-01-23 04:56:07+00:00
-          toolName: generate_image
-          status: complete
-        - executionId: exec_abc123def456
-          createdAt: 2000-01-23 04:56:07+00:00
-          completedAt: 2000-01-23 04:56:07+00:00
-          toolName: generate_image
-          status: complete
-        count: 0
-        orgId: orgId
-        status: status
-      properties:
-        executions:
-          items:
-            $ref: '#/components/schemas/listAIToolExecutions_200_response_executions_inner'
-          type: array
-        count:
-          description: Number of executions returned
-          type: integer
-        orgId:
-          description: Organization identifier
-          type: string
-        status:
-          description: Filter applied (or 'all')
-          type: string
-      required:
-      - count
-      - executions
-      - orgId
       type: object
     getAIOrchestrationStatus_200_response:
       example:
@@ -736,11 +502,19 @@ components:
       - status
       - toolCount
       type: object
-    getAIOrchestrationStatus_200_response_tools_inner:
+    getAIToolExecutionStatus_200_response:
       example:
-        result: '{}'
+        result:
+          images:
+          - data:image/jpeg;base64,/9j/4AAQSkZJRg...
+          s3Urls:
+          - https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...
+        duration: 11
         executionId: exec_abc123def456
-        error: error
+        createdAt: 1730271600
+        completedAt: 1730271612
+        startedAt: 1730271601
+        error: 'Image generation failed: Invalid prompt'
         toolName: generate_image
         status: complete
       properties:
@@ -751,31 +525,139 @@ components:
           example: generate_image
           type: string
         status:
-          enum:
-          - pending
-          - running
-          - complete
-          - failed
+          description: 'Execution status: pending, running, complete, or failed'
           example: complete
           type: string
         result:
-          description: Tool result (if complete)
-          type: object
+          $ref: '#/components/schemas/getAIToolExecutionStatus_200_response_result'
         error:
-          description: Error message (if failed)
+          description: Error message (only present when status='failed')
+          example: 'Image generation failed: Invalid prompt'
           type: string
+        createdAt:
+          description: Unix timestamp when execution was created
+          example: 1730271600
+          type: integer
+        startedAt:
+          description: Unix timestamp when execution started (if status >= 'running')
+          example: 1730271601
+          type: integer
+        completedAt:
+          description: Unix timestamp when execution completed (if status in ['complete', 'failed'])
+          example: 1730271612
+          type: integer
+        duration:
+          description: Execution duration in seconds (if completed)
+          example: 11
+          type: number
+      required:
+      - createdAt
+      - executionId
+      - status
+      - toolName
       type: object
-    getAIToolExecutionStatus_404_response:
+    listAITools_200_response_tools_inner:
       example:
-        executionId: exec_abc123def456
-        error: Execution not found
+        toolSpec:
+          inputSchema:
+            json:
+              type: object
+              properties:
+                location:
+                  type: string
+                  description: City name
+                unit:
+                  type: string
+                  enum:
+                  - celsius
+                  - fahrenheit
+              required:
+              - location
+          name: get_weather
+          description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+      properties:
+        toolSpec:
+          $ref: '#/components/schemas/listAITools_200_response_tools_inner_toolSpec'
+      type: object
+    getAIOrchestrationStatus_404_response:
+      example:
+        orchestrationId: orch_abc123def456789012345678901234
+        error: Orchestration not found
       properties:
         error:
-          example: Execution not found
+          example: Orchestration not found
           type: string
-        executionId:
-          example: exec_abc123def456
+        orchestrationId:
+          example: orch_abc123def456789012345678901234
           type: string
+      type: object
+    listAITools_200_response_tools_inner_toolSpec_inputSchema:
+      example:
+        json:
+          type: object
+          properties:
+            location:
+              type: string
+              description: City name
+            unit:
+              type: string
+              enum:
+              - celsius
+              - fahrenheit
+          required:
+          - location
+      properties:
+        json:
+          description: JSON Schema defining function parameters
+          example:
+            type: object
+            properties:
+              location:
+                type: string
+                description: City name
+              unit:
+                type: string
+                enum:
+                - celsius
+                - fahrenheit
+            required:
+            - location
+          type: object
+      type: object
+    listAIToolExecutions_200_response:
+      example:
+        executions:
+        - executionId: exec_abc123def456
+          createdAt: 2000-01-23 04:56:07+00:00
+          completedAt: 2000-01-23 04:56:07+00:00
+          toolName: generate_image
+          status: complete
+        - executionId: exec_abc123def456
+          createdAt: 2000-01-23 04:56:07+00:00
+          completedAt: 2000-01-23 04:56:07+00:00
+          toolName: generate_image
+          status: complete
+        count: 0
+        orgId: orgId
+        status: status
+      properties:
+        executions:
+          items:
+            $ref: '#/components/schemas/listAIToolExecutions_200_response_executions_inner'
+          type: array
+        count:
+          description: Number of executions returned
+          type: integer
+        orgId:
+          description: Organization identifier
+          type: string
+        status:
+          description: Filter applied (or 'all')
+          type: string
+      required:
+      - count
+      - executions
+      - orgId
       type: object
     listAITools_200_response_tools_inner_toolSpec:
       example:
@@ -805,28 +687,146 @@ components:
         inputSchema:
           $ref: '#/components/schemas/listAITools_200_response_tools_inner_toolSpec_inputSchema'
       type: object
-    listAITools_200_response_tools_inner:
+    getAIToolExecutionStatus_404_response:
       example:
-        toolSpec:
-          inputSchema:
-            json:
-              type: object
-              properties:
-                location:
-                  type: string
-                  description: City name
-                unit:
-                  type: string
-                  enum:
-                  - celsius
-                  - fahrenheit
-              required:
-              - location
-          name: get_weather
-          description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+        executionId: exec_abc123def456
+        error: Execution not found
       properties:
-        toolSpec:
-          $ref: '#/components/schemas/listAITools_200_response_tools_inner_toolSpec'
+        error:
+          example: Execution not found
+          type: string
+        executionId:
+          example: exec_abc123def456
+          type: string
+      type: object
+    listAITools_200_response:
+      example:
+        count: 4
+        tools:
+        - toolSpec:
+            inputSchema:
+              json:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: City name
+                  unit:
+                    type: string
+                    enum:
+                    - celsius
+                    - fahrenheit
+                required:
+                - location
+            name: get_weather
+            description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+        - toolSpec:
+            inputSchema:
+              json:
+                type: object
+                properties:
+                  location:
+                    type: string
+                    description: City name
+                  unit:
+                    type: string
+                    enum:
+                    - celsius
+                    - fahrenheit
+                required:
+                - location
+            name: get_weather
+            description: Get current weather for a location. Returns temperature, conditions, humidity, wind, and more.
+      properties:
+        tools:
+          description: Array of available tool specifications
+          items:
+            $ref: '#/components/schemas/listAITools_200_response_tools_inner'
+          type: array
+        count:
+          description: Number of available tools
+          example: 4
+          type: integer
+      required:
+      - count
+      - tools
+      type: object
+    getAIOrchestrationStatus_200_response_tools_inner:
+      example:
+        result: '{}'
+        executionId: exec_abc123def456
+        error: error
+        toolName: generate_image
+        status: complete
+      properties:
+        executionId:
+          example: exec_abc123def456
+          type: string
+        toolName:
+          example: generate_image
+          type: string
+        status:
+          enum:
+          - pending
+          - running
+          - complete
+          - failed
+          example: complete
+          type: string
+        result:
+          description: Tool result (if complete)
+          type: object
+        error:
+          description: Error message (if failed)
+          type: string
+      type: object
+    getAIToolExecutionStatus_200_response_result:
+      description: Tool execution result (only present when status='complete'). Structure varies by tool type.
+      example:
+        images:
+        - data:image/jpeg;base64,/9j/4AAQSkZJRg...
+        s3Urls:
+        - https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...
+      properties:
+        images:
+          description: 'For image generation: Array of base64-encoded data URIs for inline display/preview'
+          items:
+            example: data:image/jpeg;base64,/9j/4AAQSkZJRg...
+            type: string
+          type: array
+        s3Urls:
+          description: 'For image generation: Array of signed S3 URLs for high-quality downloads (expire after 1 hour)'
+          items:
+            example: https://au-stg-ai-images.s3.amazonaws.com/generated/exec_abc123...?X-Amz-Security-Token=...
+            type: string
+          type: array
+      type: object
+    listAIToolNames_200_response:
+      example:
+        count: 4
+        tools:
+        - get_weather
+        - calculate
+        - search_web
+        - generate_image
+      properties:
+        tools:
+          description: Array of tool names
+          example:
+          - get_weather
+          - calculate
+          - search_web
+          - generate_image
+          items:
+            type: string
+          type: array
+        count:
+          description: Number of tools
+          example: 4
+          type: integer
+      required:
+      - count
+      - tools
       type: object
   securitySchemes:
     BearerAuth:

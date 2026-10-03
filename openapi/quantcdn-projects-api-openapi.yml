@@ -233,22 +233,39 @@ paths:
       - Projects
 components:
   schemas:
-    V2Error:
+    V2Project:
       example:
-        message: The requested resource was not found
-        error: true
+        name: Test Project
+        id: 123
+        machine_name: test-project
+        write_token: abc123token
+        uuid: 550e8400-e29b-41d4-a716-446655440000
       properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
+        id:
+          description: Project ID
+          example: 123
+          type: integer
+        uuid:
+          description: Project UUID
+          example: 550e8400-e29b-41d4-a716-446655440000
           type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
+        name:
+          description: Project name
+          example: Test Project
+          type: string
+        machine_name:
+          description: Project machine name
+          example: test-project
+          type: string
+        write_token:
+          description: Write token for API access
+          example: abc123token
+          type: string
       required:
-      - error
-      - message
+      - id
+      - machine_name
+      - name
+      - uuid
       type: object
     V2ProjectRequest:
       example:
@@ -295,39 +312,22 @@ components:
           example: true
           type: boolean
       type: object
-    V2Project:
+    V2Error:
       example:
-        name: Test Project
-        id: 123
-        machine_name: test-project
-        write_token: abc123token
-        uuid: 550e8400-e29b-41d4-a716-446655440000
+        message: The requested resource was not found
+        error: true
       properties:
-        id:
-          description: Project ID
-          example: 123
-          type: integer
-        uuid:
-          description: Project UUID
-          example: 550e8400-e29b-41d4-a716-446655440000
+        message:
+          description: Error message
+          example: The requested resource was not found
           type: string
-        name:
-          description: Project name
-          example: Test Project
-          type: string
-        machine_name:
-          description: Project machine name
-          example: test-project
-          type: string
-        write_token:
-          description: Write token for API access
-          example: abc123token
-          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
       required:
-      - id
-      - machine_name
-      - name
-      - uuid
+      - error
+      - message
       type: object
   securitySchemes:
     BearerAuth:

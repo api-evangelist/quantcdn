@@ -42,13 +42,6 @@ paths:
       - AI Usage
 components:
   schemas:
-    getMyUsage_200_response_daily:
-      example:
-        spendCents: 1
-      properties:
-        spendCents:
-          type: integer
-      type: object
     getMyUsage_200_response:
       example:
         daily:
@@ -82,6 +75,13 @@ components:
         spendCents:
           type: integer
         requestCount:
+          type: integer
+      type: object
+    getMyUsage_200_response_daily:
+      example:
+        spendCents: 1
+      properties:
+        spendCents:
           type: integer
       type: object
     getMyUsage_200_response_quota:

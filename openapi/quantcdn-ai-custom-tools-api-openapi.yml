@@ -172,61 +172,44 @@ paths:
       - AI Custom Tools
 components:
   schemas:
-    createCustomTool_request:
+    deleteCustomTool_200_response:
+      example:
+        success: true
+        message: Custom tool deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Custom tool deleted successfully
+          type: string
+      type: object
+    listCustomTools_200_response_tools_inner:
+      example:
+        createdAt: 2000-01-23 04:56:07+00:00
+        inputSchema: '{}'
+        isAsync: false
+        name: check_inventory
+        description: Check product inventory levels
+        edgeFunctionUrl: https://my-edge-function.quant.cloud
       properties:
         name:
-          description: Unique tool name (alphanumeric and underscores only)
           example: check_inventory
           type: string
         description:
-          description: Human-readable description of what the tool does
-          example: Check product inventory levels in warehouse
+          example: Check product inventory levels
           type: string
-        edgeFunctionCode:
-          description: JavaScript source code for the edge function
+        edgeFunctionUrl:
+          example: https://my-edge-function.quant.cloud
           type: string
-        inputSchema:
-          description: JSON Schema defining the tool's input parameters
-          type: object
         isAsync:
-          default: false
-          description: Whether this tool runs asynchronously (>5 seconds)
+          example: false
           type: boolean
-        timeoutSeconds:
-          default: 30
-          description: Tool execution timeout
-          maximum: 300
-          minimum: 5
-          type: integer
-        outputSchema:
-          description: JSON Schema defining the tool's output structure
-          type:
-          - object
-          - 'null'
-        outputSchemaDescription:
-          description: Human-readable description of the tool's output
-          type:
-          - string
-          - 'null'
-        category:
-          description: Category to group related tools
-          maxLength: 100
-          type:
-          - string
-          - 'null'
-        responseMode:
-          description: 'How the tool response is handled: llm (passed back to model) or direct (returned to user)'
-          enum:
-          - llm
-          - direct
-          type:
-          - string
-          - 'null'
-      required:
-      - description
-      - edgeFunctionCode
-      - inputSchema
-      - name
+        inputSchema:
+          type: object
+        createdAt:
+          format: date-time
+          type: string
       type: object
     getCustomTool_200_response_tool:
       example:
@@ -300,6 +283,30 @@ components:
         tool:
           $ref: '#/components/schemas/getCustomTool_200_response_tool'
       type: object
+    listCustomTools_200_response:
+      example:
+        count: 0
+        tools:
+        - createdAt: 2000-01-23 04:56:07+00:00
+          inputSchema: '{}'
+          isAsync: false
+          name: check_inventory
+          description: Check product inventory levels
+          edgeFunctionUrl: https://my-edge-function.quant.cloud
+        - createdAt: 2000-01-23 04:56:07+00:00
+          inputSchema: '{}'
+          isAsync: false
+          name: check_inventory
+          description: Check product inventory levels
+          edgeFunctionUrl: https://my-edge-function.quant.cloud
+      properties:
+        tools:
+          items:
+            $ref: '#/components/schemas/listCustomTools_200_response_tools_inner'
+          type: array
+        count:
+          type: integer
+      type: object
     createCustomTool_201_response:
       example:
         success: true
@@ -328,68 +335,61 @@ components:
           example: Custom tool deployed successfully
           type: string
       type: object
-    listCustomTools_200_response_tools_inner:
-      example:
-        createdAt: 2000-01-23 04:56:07+00:00
-        inputSchema: '{}'
-        isAsync: false
-        name: check_inventory
-        description: Check product inventory levels
-        edgeFunctionUrl: https://my-edge-function.quant.cloud
+    createCustomTool_request:
       properties:
         name:
+          description: Unique tool name (alphanumeric and underscores only)
           example: check_inventory
           type: string
         description:
-          example: Check product inventory levels
+          description: Human-readable description of what the tool does
+          example: Check product inventory levels in warehouse
           type: string
-        edgeFunctionUrl:
-          example: https://my-edge-function.quant.cloud
+        edgeFunctionCode:
+          description: JavaScript source code for the edge function
           type: string
-        isAsync:
-          example: false
-          type: boolean
         inputSchema:
+          description: JSON Schema defining the tool's input parameters
           type: object
-        createdAt:
-          format: date-time
-          type: string
-      type: object
-    listCustomTools_200_response:
-      example:
-        count: 0
-        tools:
-        - createdAt: 2000-01-23 04:56:07+00:00
-          inputSchema: '{}'
-          isAsync: false
-          name: check_inventory
-          description: Check product inventory levels
-          edgeFunctionUrl: https://my-edge-function.quant.cloud
-        - createdAt: 2000-01-23 04:56:07+00:00
-          inputSchema: '{}'
-          isAsync: false
-          name: check_inventory
-          description: Check product inventory levels
-          edgeFunctionUrl: https://my-edge-function.quant.cloud
-      properties:
-        tools:
-          items:
-            $ref: '#/components/schemas/listCustomTools_200_response_tools_inner'
-          type: array
-        count:
-          type: integer
-      type: object
-    deleteCustomTool_200_response:
-      example:
-        success: true
-        message: Custom tool deleted successfully
-      properties:
-        success:
-          example: true
+        isAsync:
+          default: false
+          description: Whether this tool runs asynchronously (>5 seconds)
           type: boolean
-        message:
-          example: Custom tool deleted successfully
-          type: string
+        timeoutSeconds:
+          default: 30
+          description: Tool execution timeout
+          maximum: 300
+          minimum: 5
+          type: integer
+        outputSchema:
+          description: JSON Schema defining the tool's output structure
+          type:
+          - object
+          - 'null'
+        outputSchemaDescription:
+          description: Human-readable description of the tool's output
+          type:
+          - string
+          - 'null'
+        category:
+          description: Category to group related tools
+          maxLength: 100
+          type:
+          - string
+          - 'null'
+        responseMode:
+          description: 'How the tool response is handled: llm (passed back to model) or direct (returned to user)'
+          enum:
+          - llm
+          - direct
+          type:
+          - string
+          - 'null'
+      required:
+      - description
+      - edgeFunctionCode
+      - inputSchema
+      - name
       type: object
   securitySchemes:
     BearerAuth:

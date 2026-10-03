@@ -297,6 +297,22 @@ paths:
       - CrawlerSchedules
 components:
   schemas:
+    V2CrawlerScheduleRequest:
+      example:
+        schedule_cron_string: 0 2 * * *
+        name: Daily Crawl
+      properties:
+        name:
+          description: Schedule name. If not provided, defaults to 'Schedule {crawler_name}'.
+          example: Daily Crawl
+          type: string
+        schedule_cron_string:
+          description: 'Standard Unix cron expression with 5 space-separated fields: minute, hour, day-of-month, month, day-of-week. Example: 0 2 * * * for daily at 2 AM.'
+          example: 0 2 * * *
+          type: string
+      required:
+      - schedule_cron_string
+      type: object
     V2Error:
       example:
         message: The requested resource was not found
@@ -369,22 +385,6 @@ components:
       - crawler_last_run_id
       - id
       - project_id
-      - schedule_cron_string
-      type: object
-    V2CrawlerScheduleRequest:
-      example:
-        schedule_cron_string: 0 2 * * *
-        name: Daily Crawl
-      properties:
-        name:
-          description: Schedule name. If not provided, defaults to 'Schedule {crawler_name}'.
-          example: Daily Crawl
-          type: string
-        schedule_cron_string:
-          description: 'Standard Unix cron expression with 5 space-separated fields: minute, hour, day-of-month, month, day-of-week. Example: 0 2 * * * for daily at 2 AM.'
-          example: 0 2 * * *
-          type: string
-      required:
       - schedule_cron_string
       type: object
   securitySchemes:

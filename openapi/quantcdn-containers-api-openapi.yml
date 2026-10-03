@@ -109,109 +109,21 @@ paths:
       - Containers
 components:
   schemas:
-    Container_dependsOn_inner:
+    Container_environment_inner:
       example:
-        condition: START
-        containerName: containerName
+        name: name
+        value: value
       properties:
-        containerName:
-          description: The name of the container this container depends on
+        name:
+          description: Environment variable name
           type: string
-        condition:
-          description: The condition to wait for on the dependency
-          enum:
-          - START
-          - HEALTHY
-          - COMPLETE
-          - SUCCESS
+        value:
+          description: Environment variable value
           type: string
       required:
-      - containerName
+      - name
+      - value
       type: object
-    Container_imageReference:
-      example:
-        identifier: identifier
-        type: internal
-      properties:
-        type:
-          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
-          enum:
-          - internal
-          - external
-          type: string
-        identifier:
-          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
-          type: string
-      required:
-      - identifier
-      - type
-      type: object
-    Container_healthCheck:
-      description: Container health check configuration
-      example:
-        retries: 7
-        startPeriod: 279
-        interval: 171
-        command:
-        - command
-        - command
-        timeout: 15
-      properties:
-        command:
-          description: The command to run to determine if the container is healthy
-          items:
-            type: string
-          type: array
-        interval:
-          default: 30
-          description: Time period (seconds) between health checks
-          maximum: 300
-          minimum: 5
-          type: integer
-        timeout:
-          default: 5
-          description: Time period (seconds) to wait for a health check to return
-          maximum: 60
-          minimum: 2
-          type: integer
-        retries:
-          default: 3
-          description: Number of times to retry a failed health check
-          maximum: 10
-          minimum: 1
-          type: integer
-        startPeriod:
-          description: Grace period (seconds) to ignore unhealthy checks after container starts
-          maximum: 300
-          minimum: 0
-          type:
-          - integer
-          - 'null'
-      type:
-      - object
-      - 'null'
-    Container_originProtectionConfig:
-      description: Extended origin protection configuration with IP allow list support
-      example:
-        ipAllow:
-        - ipAllow
-        - ipAllow
-        enabled: true
-      properties:
-        enabled:
-          default: true
-          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
-          type: boolean
-        ipAllow:
-          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-      type:
-      - object
-      - 'null'
     Container_mountPoints_inner:
       example:
         readOnly: false
@@ -389,20 +301,24 @@ components:
       - imageReference
       - name
       type: object
-    Container_environment_inner:
+    Container_dependsOn_inner:
       example:
-        name: name
-        value: value
+        condition: START
+        containerName: containerName
       properties:
-        name:
-          description: Environment variable name
+        containerName:
+          description: The name of the container this container depends on
           type: string
-        value:
-          description: Environment variable value
+        condition:
+          description: The condition to wait for on the dependency
+          enum:
+          - START
+          - HEALTHY
+          - COMPLETE
+          - SUCCESS
           type: string
       required:
-      - name
-      - value
+      - containerName
       type: object
     Container_secrets_inner:
       example:
@@ -419,6 +335,90 @@ components:
       - name
       - valueFrom
       type: object
+    Container_imageReference:
+      example:
+        identifier: identifier
+        type: internal
+      properties:
+        type:
+          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
+          enum:
+          - internal
+          - external
+          type: string
+        identifier:
+          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
+          type: string
+      required:
+      - identifier
+      - type
+      type: object
+    Container_healthCheck:
+      description: Container health check configuration
+      example:
+        retries: 7
+        startPeriod: 279
+        interval: 171
+        command:
+        - command
+        - command
+        timeout: 15
+      properties:
+        command:
+          description: The command to run to determine if the container is healthy
+          items:
+            type: string
+          type: array
+        interval:
+          default: 30
+          description: Time period (seconds) between health checks
+          maximum: 300
+          minimum: 5
+          type: integer
+        timeout:
+          default: 5
+          description: Time period (seconds) to wait for a health check to return
+          maximum: 60
+          minimum: 2
+          type: integer
+        retries:
+          default: 3
+          description: Number of times to retry a failed health check
+          maximum: 10
+          minimum: 1
+          type: integer
+        startPeriod:
+          description: Grace period (seconds) to ignore unhealthy checks after container starts
+          maximum: 300
+          minimum: 0
+          type:
+          - integer
+          - 'null'
+      type:
+      - object
+      - 'null'
+    Container_originProtectionConfig:
+      description: Extended origin protection configuration with IP allow list support
+      example:
+        ipAllow:
+        - ipAllow
+        - ipAllow
+        enabled: true
+      properties:
+        enabled:
+          default: true
+          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
+          type: boolean
+        ipAllow:
+          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      type:
+      - object
+      - 'null'
   securitySchemes:
     BearerAuth:
       bearerFormat: JWT

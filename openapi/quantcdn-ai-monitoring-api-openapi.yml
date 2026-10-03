@@ -49,6 +49,15 @@ paths:
       - AI Monitoring
 components:
   schemas:
+    getAIUsageStats_200_response_by_model_value:
+      properties:
+        requests:
+          description: Number of requests for this model
+          type: integer
+        tokens:
+          description: Total tokens for this model
+          type: integer
+      type: object
     getAIUsageStats_200_response:
       example:
         by_model:
@@ -81,15 +90,6 @@ components:
               requests: 50
               tokens: 20000
           type: object
-      type: object
-    getAIUsageStats_200_response_by_model_value:
-      properties:
-        requests:
-          description: Number of requests for this model
-          type: integer
-        tokens:
-          description: Total tokens for this model
-          type: integer
       type: object
   securitySchemes:
     BearerAuth:

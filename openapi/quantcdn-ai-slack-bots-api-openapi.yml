@@ -292,6 +292,163 @@ paths:
       - AI Slack Bots
 components:
   schemas:
+    searchSlackWorkspaceChannels_200_response_results_inner:
+      example:
+        name: name
+        id: id
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+      type: object
+    listSlackBots_200_response_bots_inner:
+      example:
+        assignedSkills:
+        - assignedSkills
+        - assignedSkills
+        guardrailPreset: guardrailPreset
+        modelId: modelId
+        connected: true
+        systemPrompt: systemPrompt
+        allowedSubAgents:
+        - allowedSubAgents
+        - allowedSubAgents
+        createdAt: 2000-01-23 04:56:07+00:00
+        sessionTtlDays: 1
+        setupType: quant
+        longContext: true
+        keywordsEnabled: true
+        name: name
+        temperature: 0.8008281904610115
+        maxTokens: 6
+        allowedCollections:
+        - allowedCollections
+        - allowedCollections
+        botId: botId
+        filterPolicies:
+        - filterPolicies
+        - filterPolicies
+        status: active
+        allowedTools:
+        - allowedTools
+        - allowedTools
+      properties:
+        botId:
+          type: string
+        name:
+          type: string
+        setupType:
+          enum:
+          - quant
+          - byo
+          type: string
+        status:
+          enum:
+          - active
+          - inactive
+          type: string
+        connected:
+          type: boolean
+        systemPrompt:
+          type: string
+        modelId:
+          type: string
+        temperature:
+          type: number
+        maxTokens:
+          type: integer
+        allowedTools:
+          items:
+            type: string
+          type: array
+        assignedSkills:
+          items:
+            type: string
+          type: array
+        allowedCollections:
+          items:
+            type: string
+          type: array
+        allowedSubAgents:
+          items:
+            type: string
+          type: array
+        guardrailPreset:
+          type: string
+        filterPolicies:
+          items:
+            type: string
+          type: array
+        longContext:
+          type: boolean
+        sessionTtlDays:
+          type: integer
+        keywordsEnabled:
+          type: boolean
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    createSlackBot_201_response:
+      example:
+        bot: '{}'
+      properties:
+        bot:
+          type: object
+      type: object
+    getSlackBot_200_response:
+      example:
+        bot:
+          assignedSkills:
+          - assignedSkills
+          - assignedSkills
+          keywords:
+          - keywords
+          - keywords
+          modelId: modelId
+          allowedSubAgents:
+          - allowedSubAgents
+          - allowedSubAgents
+          createdAt: 2000-01-23 04:56:07+00:00
+          homeTabContent: homeTabContent
+          sessionTtlDays: 1
+          longContext: true
+          temperature: 0.8008281904610115
+          maxTokens: 6
+          botId: botId
+          allowedChannels:
+          - allowedChannels
+          - allowedChannels
+          deniedUsers:
+          - deniedUsers
+          - deniedUsers
+          updatedAt: 2000-01-23 04:56:07+00:00
+          guardrailPreset: guardrailPreset
+          connected: true
+          systemPrompt: systemPrompt
+          allowGuests: true
+          setupType: quant
+          keywordsEnabled: true
+          name: name
+          allowedCollections:
+          - allowedCollections
+          - allowedCollections
+          allowedUsers:
+          - allowedUsers
+          - allowedUsers
+          filterPolicies:
+          - filterPolicies
+          - filterPolicies
+          agentAccessControl: '{}'
+          status: active
+          allowedTools:
+          - allowedTools
+          - allowedTools
+      properties:
+        bot:
+          $ref: '#/components/schemas/getSlackBot_200_response_bot'
+      type: object
     listSlackBots_200_response:
       example:
         bots:
@@ -359,19 +516,6 @@ components:
             $ref: '#/components/schemas/listSlackBots_200_response_bots_inner'
           type: array
       type: object
-    searchSlackWorkspaceUsers_200_response_results_inner:
-      example:
-        name: name
-        real_name: real_name
-        id: id
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        real_name:
-          type: string
-      type: object
     searchSlackWorkspaceChannels_200_response:
       example:
         results:
@@ -385,15 +529,128 @@ components:
             $ref: '#/components/schemas/searchSlackWorkspaceChannels_200_response_results_inner'
           type: array
       type: object
-    searchSlackWorkspaceChannels_200_response_results_inner:
+    searchSlackWorkspaceUsers_200_response_results_inner:
       example:
         name: name
+        real_name: real_name
         id: id
       properties:
         id:
           type: string
         name:
           type: string
+        real_name:
+          type: string
+      type: object
+    updateSlackBot_request:
+      properties:
+        name:
+          description: Display name for the bot
+          type: string
+        status:
+          description: Enable or disable the bot
+          enum:
+          - active
+          - inactive
+          type: string
+        systemPrompt:
+          description: System prompt for the backing AI agent
+          type: string
+        modelId:
+          description: AI model identifier
+          type: string
+        temperature:
+          description: Sampling temperature
+          maximum: 2
+          minimum: 0
+          type: number
+        maxTokens:
+          description: Maximum response tokens
+          minimum: 1
+          type: integer
+        allowedTools:
+          description: Tools the agent may use
+          items:
+            type: string
+          type: array
+        assignedSkills:
+          description: Skills assigned to the agent
+          items:
+            type: string
+          type: array
+        allowedCollections:
+          description: Vector DB collections the agent may query
+          items:
+            type: string
+          type: array
+        allowedSubAgents:
+          description: Sub-agents the agent may call
+          items:
+            type: string
+          type: array
+        guardrailPreset:
+          description: Guardrail preset name
+          type: string
+        filterPolicies:
+          description: Content filter policies
+          items:
+            type: string
+          type: array
+        longContext:
+          description: Enable long context mode
+          type: boolean
+        sessionTtlDays:
+          description: Session TTL in days
+          maximum: 90
+          minimum: 1
+          type: integer
+        allowedChannels:
+          description: Slack channel IDs the bot may respond in
+          items:
+            type: string
+          type: array
+        allowedUsers:
+          description: Slack user IDs allowed to interact with the bot
+          items:
+            type: string
+          type: array
+        deniedUsers:
+          description: Slack user IDs denied from interacting with the bot
+          items:
+            type: string
+          type: array
+        allowGuests:
+          description: Whether guest users may interact with the bot
+          type: boolean
+        homeTabContent:
+          description: Content shown on the bot's Home tab in Slack
+          type: string
+        agentAccessControl:
+          description: Agent-level access control settings
+          type: object
+        keywordsEnabled:
+          description: Whether keyword triggers are enabled
+          type: boolean
+        keywords:
+          description: Keywords that trigger the bot
+          items:
+            type: string
+          type: array
+      type: object
+    searchSlackWorkspaceUsers_200_response:
+      example:
+        results:
+        - name: name
+          real_name: real_name
+          id: id
+        - name: name
+          real_name: real_name
+          id: id
+      properties:
+        results:
+          items:
+            $ref: '#/components/schemas/searchSlackWorkspaceUsers_200_response_results_inner'
+          type: array
       type: object
     deleteSlackBot_200_response:
       example:
@@ -536,65 +793,6 @@ components:
           format: date-time
           type: string
       type: object
-    createSlackBot_201_response:
-      example:
-        bot: '{}'
-      properties:
-        bot:
-          type: object
-      type: object
-    getSlackBot_200_response:
-      example:
-        bot:
-          assignedSkills:
-          - assignedSkills
-          - assignedSkills
-          keywords:
-          - keywords
-          - keywords
-          modelId: modelId
-          allowedSubAgents:
-          - allowedSubAgents
-          - allowedSubAgents
-          createdAt: 2000-01-23 04:56:07+00:00
-          homeTabContent: homeTabContent
-          sessionTtlDays: 1
-          longContext: true
-          temperature: 0.8008281904610115
-          maxTokens: 6
-          botId: botId
-          allowedChannels:
-          - allowedChannels
-          - allowedChannels
-          deniedUsers:
-          - deniedUsers
-          - deniedUsers
-          updatedAt: 2000-01-23 04:56:07+00:00
-          guardrailPreset: guardrailPreset
-          connected: true
-          systemPrompt: systemPrompt
-          allowGuests: true
-          setupType: quant
-          keywordsEnabled: true
-          name: name
-          allowedCollections:
-          - allowedCollections
-          - allowedCollections
-          allowedUsers:
-          - allowedUsers
-          - allowedUsers
-          filterPolicies:
-          - filterPolicies
-          - filterPolicies
-          agentAccessControl: '{}'
-          status: active
-          allowedTools:
-          - allowedTools
-          - allowedTools
-      properties:
-        bot:
-          $ref: '#/components/schemas/getSlackBot_200_response_bot'
-      type: object
     createSlackBot_request:
       properties:
         name:
@@ -694,204 +892,6 @@ components:
       - name
       - setupType
       - systemPrompt
-      type: object
-    listSlackBots_200_response_bots_inner:
-      example:
-        assignedSkills:
-        - assignedSkills
-        - assignedSkills
-        guardrailPreset: guardrailPreset
-        modelId: modelId
-        connected: true
-        systemPrompt: systemPrompt
-        allowedSubAgents:
-        - allowedSubAgents
-        - allowedSubAgents
-        createdAt: 2000-01-23 04:56:07+00:00
-        sessionTtlDays: 1
-        setupType: quant
-        longContext: true
-        keywordsEnabled: true
-        name: name
-        temperature: 0.8008281904610115
-        maxTokens: 6
-        allowedCollections:
-        - allowedCollections
-        - allowedCollections
-        botId: botId
-        filterPolicies:
-        - filterPolicies
-        - filterPolicies
-        status: active
-        allowedTools:
-        - allowedTools
-        - allowedTools
-      properties:
-        botId:
-          type: string
-        name:
-          type: string
-        setupType:
-          enum:
-          - quant
-          - byo
-          type: string
-        status:
-          enum:
-          - active
-          - inactive
-          type: string
-        connected:
-          type: boolean
-        systemPrompt:
-          type: string
-        modelId:
-          type: string
-        temperature:
-          type: number
-        maxTokens:
-          type: integer
-        allowedTools:
-          items:
-            type: string
-          type: array
-        assignedSkills:
-          items:
-            type: string
-          type: array
-        allowedCollections:
-          items:
-            type: string
-          type: array
-        allowedSubAgents:
-          items:
-            type: string
-          type: array
-        guardrailPreset:
-          type: string
-        filterPolicies:
-          items:
-            type: string
-          type: array
-        longContext:
-          type: boolean
-        sessionTtlDays:
-          type: integer
-        keywordsEnabled:
-          type: boolean
-        createdAt:
-          format: date-time
-          type: string
-      type: object
-    searchSlackWorkspaceUsers_200_response:
-      example:
-        results:
-        - name: name
-          real_name: real_name
-          id: id
-        - name: name
-          real_name: real_name
-          id: id
-      properties:
-        results:
-          items:
-            $ref: '#/components/schemas/searchSlackWorkspaceUsers_200_response_results_inner'
-          type: array
-      type: object
-    updateSlackBot_request:
-      properties:
-        name:
-          description: Display name for the bot
-          type: string
-        status:
-          description: Enable or disable the bot
-          enum:
-          - active
-          - inactive
-          type: string
-        systemPrompt:
-          description: System prompt for the backing AI agent
-          type: string
-        modelId:
-          description: AI model identifier
-          type: string
-        temperature:
-          description: Sampling temperature
-          maximum: 2
-          minimum: 0
-          type: number
-        maxTokens:
-          description: Maximum response tokens
-          minimum: 1
-          type: integer
-        allowedTools:
-          description: Tools the agent may use
-          items:
-            type: string
-          type: array
-        assignedSkills:
-          description: Skills assigned to the agent
-          items:
-            type: string
-          type: array
-        allowedCollections:
-          description: Vector DB collections the agent may query
-          items:
-            type: string
-          type: array
-        allowedSubAgents:
-          description: Sub-agents the agent may call
-          items:
-            type: string
-          type: array
-        guardrailPreset:
-          description: Guardrail preset name
-          type: string
-        filterPolicies:
-          description: Content filter policies
-          items:
-            type: string
-          type: array
-        longContext:
-          description: Enable long context mode
-          type: boolean
-        sessionTtlDays:
-          description: Session TTL in days
-          maximum: 90
-          minimum: 1
-          type: integer
-        allowedChannels:
-          description: Slack channel IDs the bot may respond in
-          items:
-            type: string
-          type: array
-        allowedUsers:
-          description: Slack user IDs allowed to interact with the bot
-          items:
-            type: string
-          type: array
-        deniedUsers:
-          description: Slack user IDs denied from interacting with the bot
-          items:
-            type: string
-          type: array
-        allowGuests:
-          description: Whether guest users may interact with the bot
-          type: boolean
-        homeTabContent:
-          description: Content shown on the bot's Home tab in Slack
-          type: string
-        agentAccessControl:
-          description: Agent-level access control settings
-          type: object
-        keywordsEnabled:
-          description: Whether keyword triggers are enabled
-          type: boolean
-        keywords:
-          description: Keywords that trigger the bot
-          items:
-            type: string
-          type: array
       type: object
   securitySchemes:
     BearerAuth:

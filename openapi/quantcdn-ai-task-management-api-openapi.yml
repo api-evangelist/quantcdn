@@ -435,95 +435,6 @@ paths:
       - AI Task Management
 components:
   schemas:
-    listTasks_200_response:
-      example:
-        dependsOn: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        count: 2
-        taskIds:
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        tasks:
-        - createdAt: 1735689600000
-          assignedAgentId: agent-123
-          blockedByTaskIds:
-          - blockedByTaskIds
-          - blockedByTaskIds
-          blockedReason: blockedReason
-          description: Extract text from PDF, analyze content
-          progress: 0.5
-          taskListId: world-1
-          title: Process document and create summary
-          taskId: 550e8400-e29b-41d4-a716-446655440000
-          orgId: quant
-          status: in_progress
-          updatedAt: 1735689700000
-        - createdAt: 1735689600000
-          assignedAgentId: agent-123
-          blockedByTaskIds:
-          - blockedByTaskIds
-          - blockedByTaskIds
-          blockedReason: blockedReason
-          description: Extract text from PDF, analyze content
-          progress: 0.5
-          taskListId: world-1
-          title: Process document and create summary
-          taskId: 550e8400-e29b-41d4-a716-446655440000
-          orgId: quant
-          status: in_progress
-          updatedAt: 1735689700000
-      properties:
-        tasks:
-          items:
-            $ref: '#/components/schemas/listTasks_200_response_tasks_inner'
-          type: array
-        taskIds:
-          description: Task IDs (only with dependsOn filter)
-          items:
-            format: uuid
-            type: string
-          type: array
-        count:
-          example: 2
-          type: integer
-        dependsOn:
-          description: The queried task ID (only with dependsOn filter)
-          format: uuid
-          type: string
-      type: object
-    getDependencyGraph_200_response:
-      example:
-        taskCount: 4
-        leaves:
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        taskListId: world-1
-        roots:
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        graph: '{}'
-      properties:
-        taskListId:
-          example: world-1
-          type: string
-        taskCount:
-          example: 4
-          type: integer
-        roots:
-          description: Task IDs with no dependencies
-          items:
-            format: uuid
-            type: string
-          type: array
-        leaves:
-          description: Task IDs with no dependents
-          items:
-            format: uuid
-            type: string
-          type: array
-        graph:
-          description: Adjacency list with task summaries, dependsOn, and dependents arrays
-          type: object
-      type: object
     deleteTask_409_response:
       example:
         dependentTaskIds:
@@ -544,90 +455,24 @@ components:
             type: string
           type: array
       type: object
-    updateTask_200_response:
+    createTask_201_response:
       example:
+        createdAt: 0
+        title: title
         taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        orgId: orgId
         status: status
-        updatedAt: 0
       properties:
         taskId:
-          format: uuid
-          type: string
-        status:
-          type: string
-        updatedAt:
-          type: integer
-      type: object
-    listTasks_200_response_tasks_inner:
-      example:
-        createdAt: 1735689600000
-        assignedAgentId: agent-123
-        blockedByTaskIds:
-        - blockedByTaskIds
-        - blockedByTaskIds
-        blockedReason: blockedReason
-        description: Extract text from PDF, analyze content
-        progress: 0.5
-        taskListId: world-1
-        title: Process document and create summary
-        taskId: 550e8400-e29b-41d4-a716-446655440000
-        orgId: quant
-        status: in_progress
-        updatedAt: 1735689700000
-      properties:
-        taskId:
-          example: 550e8400-e29b-41d4-a716-446655440000
           format: uuid
           type: string
         orgId:
-          example: quant
           type: string
-        taskListId:
-          example: world-1
-          type:
-          - string
-          - 'null'
         title:
-          example: Process document and create summary
-          type: string
-        description:
-          example: Extract text from PDF, analyze content
           type: string
         status:
-          enum:
-          - pending
-          - in_progress
-          - completed
-          - failed
-          - cancelled
-          - blocked
-          example: in_progress
           type: string
-        assignedAgentId:
-          example: agent-123
-          type:
-          - string
-          - 'null'
-        progress:
-          example: 0.5
-          maximum: 1
-          minimum: 0
-          type: number
-        blockedReason:
-          type:
-          - string
-          - 'null'
-        blockedByTaskIds:
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
         createdAt:
-          example: 1735689600000
-          type: integer
-        updatedAt:
-          example: 1735689700000
           type: integer
       type: object
     deleteTask_200_response:
@@ -719,25 +564,39 @@ components:
       required:
       - title
       type: object
-    createTask_201_response:
+    getDependencyGraph_200_response:
       example:
-        createdAt: 0
-        title: title
-        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        orgId: orgId
-        status: status
+        taskCount: 4
+        leaves:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        taskListId: world-1
+        roots:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        graph: '{}'
       properties:
-        taskId:
-          format: uuid
+        taskListId:
+          example: world-1
           type: string
-        orgId:
-          type: string
-        title:
-          type: string
-        status:
-          type: string
-        createdAt:
+        taskCount:
+          example: 4
           type: integer
+        roots:
+          description: Task IDs with no dependencies
+          items:
+            format: uuid
+            type: string
+          type: array
+        leaves:
+          description: Task IDs with no dependents
+          items:
+            format: uuid
+            type: string
+          type: array
+        graph:
+          description: Adjacency list with task summaries, dependsOn, and dependents arrays
+          type: object
       type: object
     updateTask_request:
       properties:
@@ -831,6 +690,133 @@ components:
           type:
           - array
           - 'null'
+      type: object
+    listTasks_200_response_tasks_inner:
+      example:
+        createdAt: 1735689600000
+        assignedAgentId: agent-123
+        blockedByTaskIds:
+        - blockedByTaskIds
+        - blockedByTaskIds
+        blockedReason: blockedReason
+        description: Extract text from PDF, analyze content
+        progress: 0.5
+        taskListId: world-1
+        title: Process document and create summary
+        taskId: 550e8400-e29b-41d4-a716-446655440000
+        orgId: quant
+        status: in_progress
+        updatedAt: 1735689700000
+      properties:
+        taskId:
+          example: 550e8400-e29b-41d4-a716-446655440000
+          format: uuid
+          type: string
+        orgId:
+          example: quant
+          type: string
+        taskListId:
+          example: world-1
+          type:
+          - string
+          - 'null'
+        title:
+          example: Process document and create summary
+          type: string
+        description:
+          example: Extract text from PDF, analyze content
+          type: string
+        status:
+          enum:
+          - pending
+          - in_progress
+          - completed
+          - failed
+          - cancelled
+          - blocked
+          example: in_progress
+          type: string
+        assignedAgentId:
+          example: agent-123
+          type:
+          - string
+          - 'null'
+        progress:
+          example: 0.5
+          maximum: 1
+          minimum: 0
+          type: number
+        blockedReason:
+          type:
+          - string
+          - 'null'
+        blockedByTaskIds:
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+        createdAt:
+          example: 1735689600000
+          type: integer
+        updatedAt:
+          example: 1735689700000
+          type: integer
+      type: object
+    listTasks_200_response:
+      example:
+        dependsOn: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        count: 2
+        taskIds:
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        tasks:
+        - createdAt: 1735689600000
+          assignedAgentId: agent-123
+          blockedByTaskIds:
+          - blockedByTaskIds
+          - blockedByTaskIds
+          blockedReason: blockedReason
+          description: Extract text from PDF, analyze content
+          progress: 0.5
+          taskListId: world-1
+          title: Process document and create summary
+          taskId: 550e8400-e29b-41d4-a716-446655440000
+          orgId: quant
+          status: in_progress
+          updatedAt: 1735689700000
+        - createdAt: 1735689600000
+          assignedAgentId: agent-123
+          blockedByTaskIds:
+          - blockedByTaskIds
+          - blockedByTaskIds
+          blockedReason: blockedReason
+          description: Extract text from PDF, analyze content
+          progress: 0.5
+          taskListId: world-1
+          title: Process document and create summary
+          taskId: 550e8400-e29b-41d4-a716-446655440000
+          orgId: quant
+          status: in_progress
+          updatedAt: 1735689700000
+      properties:
+        tasks:
+          items:
+            $ref: '#/components/schemas/listTasks_200_response_tasks_inner'
+          type: array
+        taskIds:
+          description: Task IDs (only with dependsOn filter)
+          items:
+            format: uuid
+            type: string
+          type: array
+        count:
+          example: 2
+          type: integer
+        dependsOn:
+          description: The queried task ID (only with dependsOn filter)
+          format: uuid
+          type: string
       type: object
     getTask_200_response:
       example:
@@ -983,6 +969,20 @@ components:
           type:
           - integer
           - 'null'
+      type: object
+    updateTask_200_response:
+      example:
+        taskId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        status: status
+        updatedAt: 0
+      properties:
+        taskId:
+          format: uuid
+          type: string
+        status:
+          type: string
+        updatedAt:
+          type: integer
       type: object
   securitySchemes:
     BearerAuth:

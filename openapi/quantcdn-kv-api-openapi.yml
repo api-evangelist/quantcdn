@@ -666,6 +666,31 @@ paths:
       - KV
 components:
   schemas:
+    V2StoreItemUpdateRequest:
+      example:
+        secret: true
+        value: value
+      properties:
+        value:
+          description: Item value (can be JSON string)
+          type: string
+        secret:
+          description: 'Store as secret with KMS encryption. Note: Encryption status cannot be changed after initial creation - this value is preserved from the original item.'
+          type: boolean
+      required:
+      - value
+      type: object
+    KV_items_show_200_response:
+      example:
+        value: KV_items_show_200_response_value
+        key: user-session-123
+      properties:
+        key:
+          example: user-session-123
+          type: string
+        value:
+          $ref: '#/components/schemas/KV_items_show_200_response_value'
+      type: object
     V2Error:
       example:
         message: The requested resource was not found
@@ -682,6 +707,65 @@ components:
       required:
       - error
       - message
+      type: object
+    KV_link_to_project_200_response:
+      example:
+        success: true
+        message: message
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          type: string
+      type: object
+    V2StoreRequest:
+      example:
+        name: session-data
+      properties:
+        name:
+          description: Store name
+          example: session-data
+          type: string
+      required:
+      - name
+      type: object
+    V2Store:
+      example:
+        name: session-data
+        id: kv-store-123
+      properties:
+        id:
+          description: Store ID
+          example: kv-store-123
+          type: string
+        name:
+          description: Store name
+          example: session-data
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    KV_link_to_project_request:
+      properties:
+        project_id:
+          description: Target project ID to link to
+          type: integer
+      required:
+      - project_id
+      type: object
+    KV_items_delete_200_response:
+      example:
+        success: true
+        key: user-session-123
+      properties:
+        success:
+          example: true
+          type: boolean
+        key:
+          example: user-session-123
+          type: string
       type: object
     V2StoreItemRequest:
       example:
@@ -719,6 +803,11 @@ components:
         value:
           type: string
       type: object
+    KV_items_show_200_response_value:
+      description: Item value (decoded from JSON if applicable). Returns '[ENCRYPTED]' for secret items.
+      oneOf:
+      - type: string
+      - type: object
     V2StoreItemsListResponse:
       example:
         next_cursor: next-page-token
@@ -737,95 +826,6 @@ components:
           type:
           - string
           - 'null'
-      type: object
-    V2StoreItemUpdateRequest:
-      example:
-        secret: true
-        value: value
-      properties:
-        value:
-          description: Item value (can be JSON string)
-          type: string
-        secret:
-          description: 'Store as secret with KMS encryption. Note: Encryption status cannot be changed after initial creation - this value is preserved from the original item.'
-          type: boolean
-      required:
-      - value
-      type: object
-    V2StoreRequest:
-      example:
-        name: session-data
-      properties:
-        name:
-          description: Store name
-          example: session-data
-          type: string
-      required:
-      - name
-      type: object
-    KV_link_to_project_request:
-      properties:
-        project_id:
-          description: Target project ID to link to
-          type: integer
-      required:
-      - project_id
-      type: object
-    KV_items_show_200_response_value:
-      description: Item value (decoded from JSON if applicable). Returns '[ENCRYPTED]' for secret items.
-      oneOf:
-      - type: string
-      - type: object
-    KV_link_to_project_200_response:
-      example:
-        success: true
-        message: message
-      properties:
-        success:
-          example: true
-          type: boolean
-        message:
-          type: string
-      type: object
-    KV_items_show_200_response:
-      example:
-        value: KV_items_show_200_response_value
-        key: user-session-123
-      properties:
-        key:
-          example: user-session-123
-          type: string
-        value:
-          $ref: '#/components/schemas/KV_items_show_200_response_value'
-      type: object
-    V2Store:
-      example:
-        name: session-data
-        id: kv-store-123
-      properties:
-        id:
-          description: Store ID
-          example: kv-store-123
-          type: string
-        name:
-          description: Store name
-          example: session-data
-          type: string
-      required:
-      - id
-      - name
-      type: object
-    KV_items_delete_200_response:
-      example:
-        success: true
-        key: user-session-123
-      properties:
-        success:
-          example: true
-          type: boolean
-        key:
-          example: user-session-123
-          type: string
       type: object
   securitySchemes:
     BearerAuth:

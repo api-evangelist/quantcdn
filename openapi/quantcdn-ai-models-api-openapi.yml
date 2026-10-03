@@ -120,36 +120,84 @@ paths:
       - AI Models
 components:
   schemas:
-    listAIModels_200_response:
+    getAIModel_200_response_pricing:
       example:
-        models:
-        - capabilities:
-            embeddings: true
-            streaming: true
-            toolUse: true
-            multimodal: true
-            text: true
-          provider: Amazon
-          name: Amazon Nova Lite
-          id: amazon.nova-lite-v1:0
-        - capabilities:
-            embeddings: true
-            streaming: true
-            toolUse: true
-            multimodal: true
-            text: true
-          provider: Amazon
-          name: Amazon Nova Lite
-          id: amazon.nova-lite-v1:0
-        count: 10
+        outputPerMToken: 0.24
+        currency: USD
+        inputPerMToken: 0.06
       properties:
-        count:
-          example: 10
-          type: integer
-        models:
-          items:
-            $ref: '#/components/schemas/listAIModels_200_response_models_inner'
-          type: array
+        inputPerMToken:
+          example: 0.06
+          format: float
+          type: number
+        outputPerMToken:
+          example: 0.24
+          format: float
+          type: number
+        currency:
+          example: USD
+          type: string
+      type: object
+    listAIModels_200_response_models_inner_capabilities:
+      description: Model capabilities and features
+      example:
+        embeddings: true
+        streaming: true
+        toolUse: true
+        multimodal: true
+        text: true
+      properties:
+        text:
+          description: Supports text generation
+          type: boolean
+        multimodal:
+          description: Supports images/video
+          type: boolean
+        embeddings:
+          description: Supports embeddings
+          type: boolean
+        streaming:
+          description: Supports streaming responses
+          type: boolean
+        toolUse:
+          description: Supports function calling
+          type: boolean
+      type: object
+    listAIModels_200_response_models_inner:
+      example:
+        capabilities:
+          embeddings: true
+          streaming: true
+          toolUse: true
+          multimodal: true
+          text: true
+        provider: Amazon
+        name: Amazon Nova Lite
+        id: amazon.nova-lite-v1:0
+      properties:
+        id:
+          example: amazon.nova-lite-v1:0
+          type: string
+        name:
+          example: Amazon Nova Lite
+          type: string
+        provider:
+          example: Amazon
+          type: string
+        capabilities:
+          $ref: '#/components/schemas/listAIModels_200_response_models_inner_capabilities'
+      type: object
+    getAIModel_404_response:
+      example:
+        code: MODEL_NOT_FOUND
+        message: Model not found
+      properties:
+        message:
+          example: Model not found
+          type: string
+        code:
+          example: MODEL_NOT_FOUND
+          type: string
       type: object
     getAIModel_200_response:
       example:
@@ -206,42 +254,36 @@ components:
           example: true
           type: boolean
       type: object
-    getAIModel_404_response:
+    listAIModels_200_response:
       example:
-        code: MODEL_NOT_FOUND
-        message: Model not found
+        models:
+        - capabilities:
+            embeddings: true
+            streaming: true
+            toolUse: true
+            multimodal: true
+            text: true
+          provider: Amazon
+          name: Amazon Nova Lite
+          id: amazon.nova-lite-v1:0
+        - capabilities:
+            embeddings: true
+            streaming: true
+            toolUse: true
+            multimodal: true
+            text: true
+          provider: Amazon
+          name: Amazon Nova Lite
+          id: amazon.nova-lite-v1:0
+        count: 10
       properties:
-        message:
-          example: Model not found
-          type: string
-        code:
-          example: MODEL_NOT_FOUND
-          type: string
-      type: object
-    listAIModels_200_response_models_inner_capabilities:
-      description: Model capabilities and features
-      example:
-        embeddings: true
-        streaming: true
-        toolUse: true
-        multimodal: true
-        text: true
-      properties:
-        text:
-          description: Supports text generation
-          type: boolean
-        multimodal:
-          description: Supports images/video
-          type: boolean
-        embeddings:
-          description: Supports embeddings
-          type: boolean
-        streaming:
-          description: Supports streaming responses
-          type: boolean
-        toolUse:
-          description: Supports function calling
-          type: boolean
+        count:
+          example: 10
+          type: integer
+        models:
+          items:
+            $ref: '#/components/schemas/listAIModels_200_response_models_inner'
+          type: array
       type: object
     getAIModel_200_response_capabilities:
       example:
@@ -266,48 +308,6 @@ components:
         supportsStreaming:
           example: true
           type: boolean
-      type: object
-    listAIModels_200_response_models_inner:
-      example:
-        capabilities:
-          embeddings: true
-          streaming: true
-          toolUse: true
-          multimodal: true
-          text: true
-        provider: Amazon
-        name: Amazon Nova Lite
-        id: amazon.nova-lite-v1:0
-      properties:
-        id:
-          example: amazon.nova-lite-v1:0
-          type: string
-        name:
-          example: Amazon Nova Lite
-          type: string
-        provider:
-          example: Amazon
-          type: string
-        capabilities:
-          $ref: '#/components/schemas/listAIModels_200_response_models_inner_capabilities'
-      type: object
-    getAIModel_200_response_pricing:
-      example:
-        outputPerMToken: 0.24
-        currency: USD
-        inputPerMToken: 0.06
-      properties:
-        inputPerMToken:
-          example: 0.06
-          format: float
-          type: number
-        outputPerMToken:
-          example: 0.24
-          format: float
-          type: number
-        currency:
-          example: USD
-          type: string
       type: object
   securitySchemes:
     BearerAuth:

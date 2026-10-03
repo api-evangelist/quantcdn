@@ -204,6 +204,24 @@ paths:
       - Volumes
 components:
   schemas:
+    createVolume_request:
+      properties:
+        volumeName:
+          description: Volume name
+          type: string
+        description:
+          description: Volume description
+          type:
+          - string
+          - 'null'
+        rootDirectory:
+          description: Root directory path
+          type:
+          - string
+          - 'null'
+      required:
+      - volumeName
+      type: object
     Volume:
       example:
         createdAt: createdAt
@@ -231,24 +249,6 @@ components:
           type: string
         accessPointArn:
           type: string
-      type: object
-    createVolume_request:
-      properties:
-        volumeName:
-          description: Volume name
-          type: string
-        description:
-          description: Volume description
-          type:
-          - string
-          - 'null'
-        rootDirectory:
-          description: Root directory path
-          type:
-          - string
-          - 'null'
-      required:
-      - volumeName
       type: object
   securitySchemes:
     BearerAuth:

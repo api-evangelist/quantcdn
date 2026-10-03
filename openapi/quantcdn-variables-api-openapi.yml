@@ -191,6 +191,11 @@ paths:
       - Variables
 components:
   schemas:
+    updateEnvironmentVariable_request:
+      properties:
+        value:
+          type: string
+      type: object
     bulkSetEnvironmentVariables_request_environment_inner:
       properties:
         name:
@@ -209,11 +214,6 @@ components:
           type: array
       required:
       - environment
-      type: object
-    updateEnvironmentVariable_request:
-      properties:
-        value:
-          type: string
       type: object
   securitySchemes:
     BearerAuth:

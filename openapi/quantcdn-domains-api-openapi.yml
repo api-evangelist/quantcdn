@@ -261,49 +261,6 @@ paths:
       - Domains
 components:
   schemas:
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
-      properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
-      required:
-      - error
-      - message
-      type: object
-    V2Domain_dns_validation_records_inner:
-      properties:
-        name:
-          description: DNS record name (host/subdomain)
-          example: _abc123.example.com
-          type: string
-        type:
-          description: DNS record type (typically CNAME)
-          example: CNAME
-          type: string
-        value:
-          description: DNS record value to point to
-          example: _xyz789.validation.example.com.
-          type: string
-      type: object
-    V2DomainRequest:
-      example:
-        domain: test-domain.com
-      properties:
-        domain:
-          description: Domain name
-          example: test-domain.com
-          type: string
-      required:
-      - domain
-      type: object
     V2Domain:
       example:
         dns_validation_records:
@@ -358,6 +315,49 @@ components:
       - dns_engaged
       - domain
       - id
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    V2Domain_dns_validation_records_inner:
+      properties:
+        name:
+          description: DNS record name (host/subdomain)
+          example: _abc123.example.com
+          type: string
+        type:
+          description: DNS record type (typically CNAME)
+          example: CNAME
+          type: string
+        value:
+          description: DNS record value to point to
+          example: _xyz789.validation.example.com.
+          type: string
+      type: object
+    V2DomainRequest:
+      example:
+        domain: test-domain.com
+      properties:
+        domain:
+          description: Domain name
+          example: test-domain.com
+          type: string
+      required:
+      - domain
       type: object
     V2Domain_dns_go_live_records_inner:
       properties:

@@ -95,46 +95,6 @@ paths:
       - AI Governance
 components:
   schemas:
-    getGovernanceConfig_200_response_spendLimits:
-      example:
-        monthlyBudgetCents: 0
-        perUserDailyBudgetCents: 5
-        warningThresholdPercent: 5
-        perUserMonthlyBudgetCents: 1
-        dailyBudgetCents: 6
-      properties:
-        monthlyBudgetCents:
-          type:
-          - integer
-          - 'null'
-        dailyBudgetCents:
-          type:
-          - integer
-          - 'null'
-        perUserMonthlyBudgetCents:
-          type:
-          - integer
-          - 'null'
-        perUserDailyBudgetCents:
-          type:
-          - integer
-          - 'null'
-        warningThresholdPercent:
-          type:
-          - integer
-          - 'null'
-      type: object
-    updateGovernanceConfig_200_response:
-      example:
-        success: true
-        config: '{}'
-      properties:
-        success:
-          example: true
-          type: boolean
-        config:
-          type: object
-      type: object
     getGovernanceConfig_200_response:
       example:
         mandatoryFilterPolicies:
@@ -182,6 +142,17 @@ components:
         version:
           type: integer
       type: object
+    updateGovernanceConfig_200_response:
+      example:
+        success: true
+        config: '{}'
+      properties:
+        success:
+          example: true
+          type: boolean
+        config:
+          type: object
+      type: object
     getGovernanceSpend_200_response_userTotal:
       example:
         dailySpendCents: 7
@@ -194,6 +165,37 @@ components:
       type:
       - object
       - 'null'
+    getGovernanceSpend_200_response:
+      example:
+        todayTotal:
+          requestCount: 5
+          spendCents: 1
+        dailyBudget:
+          usedPercent: 3.6160767
+          remainingCents: 2
+          dailyBudgetCents: 9
+        userTotal:
+          dailySpendCents: 7
+          monthlySpendCents: 4
+        orgTotal:
+          requestCount: 6
+          spendCents: 0
+        budget:
+          monthlyBudgetCents: 5
+          usedPercent: 2.302136
+          remainingCents: 7
+      properties:
+        orgTotal:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_orgTotal'
+        todayTotal:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_todayTotal'
+        budget:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_budget'
+        dailyBudget:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_dailyBudget'
+        userTotal:
+          $ref: '#/components/schemas/getGovernanceSpend_200_response_userTotal'
+      type: object
     getGovernanceSpend_200_response_todayTotal:
       example:
         requestCount: 5
@@ -266,6 +268,35 @@ components:
       - aiEnabled
       - modelPolicy
       type: object
+    getGovernanceConfig_200_response_spendLimits:
+      example:
+        monthlyBudgetCents: 0
+        perUserDailyBudgetCents: 5
+        warningThresholdPercent: 5
+        perUserMonthlyBudgetCents: 1
+        dailyBudgetCents: 6
+      properties:
+        monthlyBudgetCents:
+          type:
+          - integer
+          - 'null'
+        dailyBudgetCents:
+          type:
+          - integer
+          - 'null'
+        perUserMonthlyBudgetCents:
+          type:
+          - integer
+          - 'null'
+        perUserDailyBudgetCents:
+          type:
+          - integer
+          - 'null'
+        warningThresholdPercent:
+          type:
+          - integer
+          - 'null'
+      type: object
     getGovernanceSpend_200_response_budget:
       example:
         monthlyBudgetCents: 5
@@ -282,37 +313,6 @@ components:
       type:
       - object
       - 'null'
-    getGovernanceSpend_200_response:
-      example:
-        todayTotal:
-          requestCount: 5
-          spendCents: 1
-        dailyBudget:
-          usedPercent: 3.6160767
-          remainingCents: 2
-          dailyBudgetCents: 9
-        userTotal:
-          dailySpendCents: 7
-          monthlySpendCents: 4
-        orgTotal:
-          requestCount: 6
-          spendCents: 0
-        budget:
-          monthlyBudgetCents: 5
-          usedPercent: 2.302136
-          remainingCents: 7
-      properties:
-        orgTotal:
-          $ref: '#/components/schemas/getGovernanceSpend_200_response_orgTotal'
-        todayTotal:
-          $ref: '#/components/schemas/getGovernanceSpend_200_response_todayTotal'
-        budget:
-          $ref: '#/components/schemas/getGovernanceSpend_200_response_budget'
-        dailyBudget:
-          $ref: '#/components/schemas/getGovernanceSpend_200_response_dailyBudget'
-        userTotal:
-          $ref: '#/components/schemas/getGovernanceSpend_200_response_userTotal'
-      type: object
   securitySchemes:
     BearerAuth:
       bearerFormat: JWT

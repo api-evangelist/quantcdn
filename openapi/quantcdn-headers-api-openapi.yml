@@ -160,23 +160,6 @@ paths:
       - Headers
 components:
   schemas:
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
-      properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
-      required:
-      - error
-      - message
-      type: object
     V2CustomHeaderRequest:
       example:
         headers:
@@ -193,6 +176,23 @@ components:
           type: object
       required:
       - headers
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
       type: object
     V2CustomHeader:
       additionalProperties:
