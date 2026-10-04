@@ -463,79 +463,6 @@ paths:
       - AI Vector Database
 components:
   schemas:
-    queryVectorCollection_200_response_pagination:
-      description: Pagination info (listByMetadata mode only)
-      example:
-        sortOrder: asc
-        limit: 5
-        sortBy: created_at
-      properties:
-        sortBy:
-          enum:
-          - created_at
-          - document_id
-          type: string
-        sortOrder:
-          enum:
-          - asc
-          - desc
-          type: string
-        limit:
-          type: integer
-      type:
-      - object
-      - 'null'
-    createVectorCollection_201_response:
-      example:
-        success: true
-        collection:
-          name: name
-          description: description
-          embeddingModel: embeddingModel
-          collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          dimensions: 0
-        message: Collection created successfully
-      properties:
-        success:
-          example: true
-          type: boolean
-        collection:
-          $ref: '#/components/schemas/createVectorCollection_201_response_collection'
-        message:
-          example: Collection created successfully
-          type: string
-      type: object
-    getVectorCollection_200_response_collection:
-      example:
-        documentCount: 0
-        createdAt: 2000-01-23 04:56:07+00:00
-        name: name
-        description: description
-        embeddingModel: embeddingModel
-        collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        dimensions: 6
-        updatedAt: 2000-01-23 04:56:07+00:00
-      properties:
-        collectionId:
-          format: uuid
-          type: string
-        name:
-          type: string
-        description:
-          type: string
-        documentCount:
-          type: integer
-        embeddingModel:
-          type: string
-        dimensions:
-          type: integer
-        createdAt:
-          format: date-time
-          type: string
-        updatedAt:
-          format: date-time
-          type: string
-      type: object
     uploadVectorDocuments_request_documents_inner:
       properties:
         content:
@@ -549,30 +476,6 @@ components:
           $ref: '#/components/schemas/uploadVectorDocuments_request_documents_inner_metadata'
       required:
       - content
-      type: object
-    getVectorCollection_200_response:
-      example:
-        collection:
-          documentCount: 0
-          createdAt: 2000-01-23 04:56:07+00:00
-          name: name
-          description: description
-          embeddingModel: embeddingModel
-          collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          dimensions: 6
-          updatedAt: 2000-01-23 04:56:07+00:00
-      properties:
-        collection:
-          $ref: '#/components/schemas/getVectorCollection_200_response_collection'
-      type: object
-    uploadVectorDocuments_request:
-      properties:
-        documents:
-          items:
-            $ref: '#/components/schemas/uploadVectorDocuments_request_documents_inner'
-          type: array
-      required:
-      - documents
       type: object
     listVectorCollections_200_response:
       example:
@@ -598,207 +501,27 @@ components:
         count:
           type: integer
       type: object
-    listVectorCollections_200_response_collections_inner:
-      example:
-        documentCount: 0
-        createdAt: 2000-01-23 04:56:07+00:00
-        name: product-docs
-        description: description
-        embeddingModel: amazon.titan-embed-text-v2:0
-        collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+    queryVectorCollection_request_filter:
+      description: Filter results by metadata fields. Applied AFTER semantic search (or alone in listByMetadata mode). All conditions use AND logic.
       properties:
-        collectionId:
-          format: uuid
-          type: string
-        name:
-          example: product-docs
-          type: string
-        description:
-          type: string
-        documentCount:
-          type: integer
-        embeddingModel:
-          example: amazon.titan-embed-text-v2:0
-          type: string
-        createdAt:
-          format: date-time
-          type: string
-      type: object
-    queryVectorCollection_200_response_results_inner:
-      example:
-        metadata:
-          key: ''
-        similarity: 0.08008282
-        documentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        embedding:
-        - 6.027456183070403
-        - 6.027456183070403
-        content: content
-      properties:
-        documentId:
-          format: uuid
-          type: string
-        content:
-          description: Document text content
-          type: string
-        similarity:
-          description: Cosine similarity score (1.0 for metadata-only queries)
-          format: float
-          maximum: 1
-          minimum: 0
-          type: number
-        metadata:
+        exact:
           additionalProperties: true
-          type: object
-        embedding:
-          description: Vector embedding (only if includeEmbeddings=true)
-          items:
-            type: number
-          type: array
-      type: object
-    deleteVectorDocuments_request_metadata:
-      properties:
-        field:
-          description: Metadata field name (e.g., 'drupal_entity_id')
-          type: string
-        values:
-          description: Values to match (OR logic)
-          items:
-            type: string
-          type: array
-      type: object
-    deleteVectorDocuments_request:
-      properties:
-        purgeAll:
-          description: Delete ALL documents in collection
-          type: boolean
-        documentIds:
-          description: Delete specific documents by UUID
-          items:
-            format: uuid
-            type: string
-          type: array
-        keys:
-          description: Delete documents by key
-          items:
-            maxLength: 512
-            type: string
-          type: array
-        metadata:
-          $ref: '#/components/schemas/deleteVectorDocuments_request_metadata'
-      type: object
-    createVectorCollection_request:
-      properties:
-        name:
-          description: Collection name (used for reference)
-          example: product-documentation
-          type: string
-        description:
-          example: Product user guides and API documentation
-          type: string
-        embeddingModel:
-          description: 'Embedding model to use. Supported: amazon.titan-embed-text-v2:0, cohere.embed-english-v3, cohere.embed-multilingual-v3'
-          example: amazon.titan-embed-text-v2:0
-          type: string
-        dimensions:
-          description: 'Embedding dimensions (default: 1024)'
-          example: 1024
-          type: integer
-      required:
-      - embeddingModel
-      - name
-      type: object
-    uploadVectorDocuments_200_response:
-      example:
-        chunksCreated: 0
-        success: true
-        message: message
-        documentIds:
-        - documentIds
-        - documentIds
-      properties:
-        success:
-          example: true
-          type: boolean
-        documentIds:
-          items:
-            type: string
-          type: array
-        chunksCreated:
-          type: integer
-        message:
-          type: string
-      type: object
-    deleteSkillCollection_200_response:
-      example:
-        success: true
-        message: Collection deleted successfully
-      properties:
-        success:
-          example: true
-          type: boolean
-        message:
-          example: Collection deleted successfully
-          type: string
-      type: object
-    queryVectorCollection_request:
-      properties:
-        query:
-          description: Natural language search query (mutually exclusive with vector)
-          example: How do I authenticate with the API?
-          maxLength: 1000
-          minLength: 3
-          type: string
-        vector:
-          description: Pre-computed embedding vector (mutually exclusive with query). Array length must match collection dimension.
+          description: Exact match on metadata fields. Keys are metadata field names, values are expected values.
           example:
-          - 0.0234
-          - -0.0891
-          - 0.0456
-          items:
-            format: float
-            type: number
-          type: array
-        limit:
-          default: 5
-          description: Maximum number of results to return
-          maximum: 20
-          minimum: 1
-          type: integer
-        threshold:
-          default: 0.7
-          description: Minimum similarity score (0-1, higher = more relevant)
-          format: float
-          maximum: 1
-          minimum: 0
-          type: number
-        includeEmbeddings:
-          default: false
-          description: Include embedding vectors in response (for debugging)
-          type: boolean
-        filter:
-          $ref: '#/components/schemas/queryVectorCollection_request_filter'
-        listByMetadata:
-          default: false
-          description: If true, skip semantic search and return all documents matching the filter. Requires filter. Supports cursor pagination.
-          type: boolean
-        cursor:
-          description: Pagination cursor for listByMetadata mode. Use nextCursor from previous response. Opaque format - do not construct manually.
-          type: string
-        sortBy:
-          default: created_at
-          description: Field to sort by in listByMetadata mode
-          enum:
-          - created_at
-          - document_id
-          type: string
-        sortOrder:
-          default: desc
-          description: Sort direction in listByMetadata mode
-          enum:
-          - asc
-          - desc
-          type: string
+            buildingId: building-123
+            type: research-report
+          type: object
+        contains:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          description: Array contains filter for array metadata fields (like tags). Returns documents where the metadata array contains ANY of the specified values.
+          example:
+            tags:
+            - important
+            - reviewed
+          type: object
       type: object
     queryVectorCollection_200_response:
       example:
@@ -873,6 +596,114 @@ components:
         pagination:
           $ref: '#/components/schemas/queryVectorCollection_200_response_pagination'
       type: object
+    deleteSkillCollection_200_response:
+      example:
+        success: true
+        message: Collection deleted successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          example: Collection deleted successfully
+          type: string
+      type: object
+    queryVectorCollection_200_response_pagination:
+      description: Pagination info (listByMetadata mode only)
+      example:
+        sortOrder: asc
+        limit: 5
+        sortBy: created_at
+      properties:
+        sortBy:
+          enum:
+          - created_at
+          - document_id
+          type: string
+        sortOrder:
+          enum:
+          - asc
+          - desc
+          type: string
+        limit:
+          type: integer
+      type:
+      - object
+      - 'null'
+    deleteVectorDocuments_request_metadata:
+      properties:
+        field:
+          description: Metadata field name (e.g., 'drupal_entity_id')
+          type: string
+        values:
+          description: Values to match (OR logic)
+          items:
+            type: string
+          type: array
+      type: object
+    getVectorCollection_200_response_collection:
+      example:
+        documentCount: 0
+        createdAt: 2000-01-23 04:56:07+00:00
+        name: name
+        description: description
+        embeddingModel: embeddingModel
+        collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        dimensions: 6
+        updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        collectionId:
+          format: uuid
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        documentCount:
+          type: integer
+        embeddingModel:
+          type: string
+        dimensions:
+          type: integer
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      type: object
+    queryVectorCollection_200_response_results_inner:
+      example:
+        metadata:
+          key: ''
+        similarity: 0.08008282
+        documentId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        embedding:
+        - 6.027456183070403
+        - 6.027456183070403
+        content: content
+      properties:
+        documentId:
+          format: uuid
+          type: string
+        content:
+          description: Document text content
+          type: string
+        similarity:
+          description: Cosine similarity score (1.0 for metadata-only queries)
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+        metadata:
+          additionalProperties: true
+          type: object
+        embedding:
+          description: Vector embedding (only if includeEmbeddings=true)
+          items:
+            type: number
+          type: array
+      type: object
     deleteVectorDocuments_200_response:
       example:
         deletedCount: 0
@@ -886,40 +717,161 @@ components:
         deletedCount:
           type: integer
       type: object
-    uploadVectorDocuments_request_documents_inner_metadata:
+    uploadVectorDocuments_200_response:
+      example:
+        chunksCreated: 0
+        success: true
+        message: message
+        documentIds:
+        - documentIds
+        - documentIds
       properties:
-        title:
-          type: string
-        source_url:
-          type: string
-        section:
-          type: string
-        tags:
+        success:
+          example: true
+          type: boolean
+        documentIds:
           items:
             type: string
           type: array
+        chunksCreated:
+          type: integer
+        message:
+          type: string
       type: object
-    queryVectorCollection_request_filter:
-      description: Filter results by metadata fields. Applied AFTER semantic search (or alone in listByMetadata mode). All conditions use AND logic.
+    queryVectorCollection_request:
       properties:
-        exact:
-          additionalProperties: true
-          description: Exact match on metadata fields. Keys are metadata field names, values are expected values.
+        query:
+          description: Natural language search query (mutually exclusive with vector)
+          example: How do I authenticate with the API?
+          maxLength: 1000
+          minLength: 3
+          type: string
+        vector:
+          description: Pre-computed embedding vector (mutually exclusive with query). Array length must match collection dimension.
           example:
-            buildingId: building-123
-            type: research-report
-          type: object
-        contains:
-          additionalProperties:
-            items:
-              type: string
-            type: array
-          description: Array contains filter for array metadata fields (like tags). Returns documents where the metadata array contains ANY of the specified values.
-          example:
-            tags:
-            - important
-            - reviewed
-          type: object
+          - 0.0234
+          - -0.0891
+          - 0.0456
+          items:
+            format: float
+            type: number
+          type: array
+        limit:
+          default: 5
+          description: Maximum number of results to return
+          maximum: 20
+          minimum: 1
+          type: integer
+        threshold:
+          default: 0.7
+          description: Minimum similarity score (0-1, higher = more relevant)
+          format: float
+          maximum: 1
+          minimum: 0
+          type: number
+        includeEmbeddings:
+          default: false
+          description: Include embedding vectors in response (for debugging)
+          type: boolean
+        filter:
+          $ref: '#/components/schemas/queryVectorCollection_request_filter'
+        listByMetadata:
+          default: false
+          description: If true, skip semantic search and return all documents matching the filter. Requires filter. Supports cursor pagination.
+          type: boolean
+        cursor:
+          description: Pagination cursor for listByMetadata mode. Use nextCursor from previous response. Opaque format - do not construct manually.
+          type: string
+        sortBy:
+          default: created_at
+          description: Field to sort by in listByMetadata mode
+          enum:
+          - created_at
+          - document_id
+          type: string
+        sortOrder:
+          default: desc
+          description: Sort direction in listByMetadata mode
+          enum:
+          - asc
+          - desc
+          type: string
+      type: object
+    createVectorCollection_201_response:
+      example:
+        success: true
+        collection:
+          name: name
+          description: description
+          embeddingModel: embeddingModel
+          collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          dimensions: 0
+        message: Collection created successfully
+      properties:
+        success:
+          example: true
+          type: boolean
+        collection:
+          $ref: '#/components/schemas/createVectorCollection_201_response_collection'
+        message:
+          example: Collection created successfully
+          type: string
+      type: object
+    createVectorCollection_request:
+      properties:
+        name:
+          description: Collection name (used for reference)
+          example: product-documentation
+          type: string
+        description:
+          example: Product user guides and API documentation
+          type: string
+        embeddingModel:
+          description: 'Embedding model to use. Supported: amazon.titan-embed-text-v2:0, cohere.embed-english-v3, cohere.embed-multilingual-v3'
+          example: amazon.titan-embed-text-v2:0
+          type: string
+        dimensions:
+          description: 'Embedding dimensions (default: 1024)'
+          example: 1024
+          type: integer
+      required:
+      - embeddingModel
+      - name
+      type: object
+    listVectorCollections_200_response_collections_inner:
+      example:
+        documentCount: 0
+        createdAt: 2000-01-23 04:56:07+00:00
+        name: product-docs
+        description: description
+        embeddingModel: amazon.titan-embed-text-v2:0
+        collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        collectionId:
+          format: uuid
+          type: string
+        name:
+          example: product-docs
+          type: string
+        description:
+          type: string
+        documentCount:
+          type: integer
+        embeddingModel:
+          example: amazon.titan-embed-text-v2:0
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+    uploadVectorDocuments_request:
+      properties:
+        documents:
+          items:
+            $ref: '#/components/schemas/uploadVectorDocuments_request_documents_inner'
+          type: array
+      required:
+      - documents
       type: object
     createVectorCollection_201_response_collection:
       example:
@@ -940,6 +892,54 @@ components:
           type: string
         dimensions:
           type: integer
+      type: object
+    deleteVectorDocuments_request:
+      properties:
+        purgeAll:
+          description: Delete ALL documents in collection
+          type: boolean
+        documentIds:
+          description: Delete specific documents by UUID
+          items:
+            format: uuid
+            type: string
+          type: array
+        keys:
+          description: Delete documents by key
+          items:
+            maxLength: 512
+            type: string
+          type: array
+        metadata:
+          $ref: '#/components/schemas/deleteVectorDocuments_request_metadata'
+      type: object
+    getVectorCollection_200_response:
+      example:
+        collection:
+          documentCount: 0
+          createdAt: 2000-01-23 04:56:07+00:00
+          name: name
+          description: description
+          embeddingModel: embeddingModel
+          collectionId: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          dimensions: 6
+          updatedAt: 2000-01-23 04:56:07+00:00
+      properties:
+        collection:
+          $ref: '#/components/schemas/getVectorCollection_200_response_collection'
+      type: object
+    uploadVectorDocuments_request_documents_inner_metadata:
+      properties:
+        title:
+          type: string
+        source_url:
+          type: string
+        section:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
       type: object
   securitySchemes:
     BearerAuth:

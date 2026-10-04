@@ -126,6 +126,11 @@ paths:
       - Commands
 components:
   schemas:
+    createCommand_request:
+      properties:
+        command:
+          type: string
+      type: object
     Command:
       example:
         output:
@@ -162,11 +167,6 @@ components:
         scheduleName:
           type: string
         targetContainerName:
-          type: string
-      type: object
-    createCommand_request:
-      properties:
-        command:
           type: string
       type: object
   securitySchemes:

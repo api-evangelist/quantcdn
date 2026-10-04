@@ -313,12 +313,6 @@ paths:
       - Backup Management
 components:
   schemas:
-    createBackup_request:
-      properties:
-        description:
-          description: Optional backup description
-          type: string
-      type: object
     listBackups_200_response:
       example:
         nextToken: nextToken
@@ -426,6 +420,35 @@ components:
           example: true
           type: boolean
       type: object
+    createBackup_request:
+      properties:
+        description:
+          description: Optional backup description
+          type: string
+      type: object
+    deleteBackup_200_response:
+      example:
+        backupId: backupId
+        message: message
+      properties:
+        message:
+          type: string
+        backupId:
+          type: string
+      type: object
+    createBackup_202_response:
+      example:
+        backupId: backupId
+        message: message
+        status: status
+      properties:
+        backupId:
+          type: string
+        status:
+          type: string
+        message:
+          type: string
+      type: object
     listBackups_422_response:
       example:
         error: The backup type must be either database or filesystem
@@ -449,29 +472,6 @@ components:
           type: string
         filename:
           description: Suggested filename for download
-          type: string
-      type: object
-    createBackup_202_response:
-      example:
-        backupId: backupId
-        message: message
-        status: status
-      properties:
-        backupId:
-          type: string
-        status:
-          type: string
-        message:
-          type: string
-      type: object
-    deleteBackup_200_response:
-      example:
-        backupId: backupId
-        message: message
-      properties:
-        message:
-          type: string
-        backupId:
           type: string
       type: object
   securitySchemes:

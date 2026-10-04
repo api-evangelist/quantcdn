@@ -249,6 +249,24 @@ components:
       - name
       - rules
       type: object
+    createFilterPolicy_request_rules_inner:
+      properties:
+        name:
+          type: string
+        match:
+          $ref: '#/components/schemas/createFilterPolicy_request_rules_inner_match'
+        action:
+          enum:
+          - BLOCK
+          - REDACT
+          type: string
+        applyTo:
+          enum:
+          - input
+          - output
+          - both
+          type: string
+      type: object
     updateFilterPolicy_request:
       properties:
         name:
@@ -267,24 +285,6 @@ components:
           maxItems: 100
           minItems: 1
           type: array
-      type: object
-    createFilterPolicy_request_rules_inner:
-      properties:
-        name:
-          type: string
-        match:
-          $ref: '#/components/schemas/createFilterPolicy_request_rules_inner_match'
-        action:
-          enum:
-          - BLOCK
-          - REDACT
-          type: string
-        applyTo:
-          enum:
-          - input
-          - output
-          - both
-          type: string
       type: object
     createFilterPolicy_request_rules_inner_match:
       description: Match criteria

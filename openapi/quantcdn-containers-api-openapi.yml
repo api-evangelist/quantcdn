@@ -109,6 +109,43 @@ paths:
       - Containers
 components:
   schemas:
+    Container_originProtectionConfig:
+      description: Extended origin protection configuration with IP allow list support
+      example:
+        ipAllow:
+        - ipAllow
+        - ipAllow
+        enabled: true
+      properties:
+        enabled:
+          default: true
+          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
+          type: boolean
+        ipAllow:
+          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
+          items:
+            type: string
+          type:
+          - array
+          - 'null'
+      type:
+      - object
+      - 'null'
+    Container_secrets_inner:
+      example:
+        name: name
+        valueFrom: valueFrom
+      properties:
+        name:
+          description: The environment variable name to be set in the container
+          type: string
+        valueFrom:
+          description: The key of the secret in the environment's 'app-secrets' store
+          type: string
+      required:
+      - name
+      - valueFrom
+      type: object
     Container_environment_inner:
       example:
         name: name
@@ -123,25 +160,6 @@ components:
       required:
       - name
       - value
-      type: object
-    Container_mountPoints_inner:
-      example:
-        readOnly: false
-        containerPath: containerPath
-        sourceVolume: sourceVolume
-      properties:
-        sourceVolume:
-          description: The name of the logical volume
-          type: string
-        containerPath:
-          description: The path inside the container where the volume is mounted
-          type: string
-        readOnly:
-          default: false
-          type: boolean
-      required:
-      - containerPath
-      - sourceVolume
       type: object
     Container:
       example:
@@ -301,6 +319,25 @@ components:
       - imageReference
       - name
       type: object
+    Container_mountPoints_inner:
+      example:
+        readOnly: false
+        containerPath: containerPath
+        sourceVolume: sourceVolume
+      properties:
+        sourceVolume:
+          description: The name of the logical volume
+          type: string
+        containerPath:
+          description: The path inside the container where the volume is mounted
+          type: string
+        readOnly:
+          default: false
+          type: boolean
+      required:
+      - containerPath
+      - sourceVolume
+      type: object
     Container_dependsOn_inner:
       example:
         condition: START
@@ -319,39 +356,6 @@ components:
           type: string
       required:
       - containerName
-      type: object
-    Container_secrets_inner:
-      example:
-        name: name
-        valueFrom: valueFrom
-      properties:
-        name:
-          description: The environment variable name to be set in the container
-          type: string
-        valueFrom:
-          description: The key of the secret in the environment's 'app-secrets' store
-          type: string
-      required:
-      - name
-      - valueFrom
-      type: object
-    Container_imageReference:
-      example:
-        identifier: identifier
-        type: internal
-      properties:
-        type:
-          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
-          enum:
-          - internal
-          - external
-          type: string
-        identifier:
-          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
-          type: string
-      required:
-      - identifier
-      - type
       type: object
     Container_healthCheck:
       description: Container health check configuration
@@ -397,28 +401,24 @@ components:
       type:
       - object
       - 'null'
-    Container_originProtectionConfig:
-      description: Extended origin protection configuration with IP allow list support
+    Container_imageReference:
       example:
-        ipAllow:
-        - ipAllow
-        - ipAllow
-        enabled: true
+        identifier: identifier
+        type: internal
       properties:
-        enabled:
-          default: true
-          description: Whether origin protection is enabled. Defaults to true if this config object is provided.
-          type: boolean
-        ipAllow:
-          description: List of IP addresses or CIDR ranges that can bypass origin protection for direct access (e.g., VPN IPs)
-          items:
-            type: string
-          type:
-          - array
-          - 'null'
-      type:
-      - object
-      - 'null'
+        type:
+          description: Specifies whether the image is internal (ECR) or external (e.g., Docker Hub)
+          enum:
+          - internal
+          - external
+          type: string
+        identifier:
+          description: The image identifier. For 'internal' type, this is the image tag. For 'external' type, this is the full image name.
+          type: string
+      required:
+      - identifier
+      - type
+      type: object
   securitySchemes:
     BearerAuth:
       bearerFormat: JWT

@@ -289,18 +289,6 @@ paths:
       - CDN Metrics
 components:
   schemas:
-    V2MetricDataPoint:
-      properties:
-        timestamp:
-          $ref: '#/components/schemas/V2MetricDataPoint_timestamp'
-        value:
-          description: Metric value at this timestamp
-          example: 150
-          type: number
-      required:
-      - timestamp
-      - value
-      type: object
     V2MetricsMeta:
       example:
         start_time: 2026-01-29 12:00:00+00:00
@@ -357,6 +345,53 @@ components:
       - period
       - start_time
       type: object
+    V2MetricData:
+      properties:
+        series:
+          description: Time series data points
+          items:
+            $ref: '#/components/schemas/V2MetricDataPoint'
+          type: array
+        period_total:
+          description: Total value for the period
+          example: 8523
+          type: number
+        all_time_total:
+          description: All-time total value
+          example: 1284567
+          type: number
+        period_average:
+          description: Average value per time unit in the period
+          example: 142.05
+          format: float
+          type: number
+      required:
+      - all_time_total
+      - period_average
+      - period_total
+      - series
+      type: object
+    V2MetricDataPoint:
+      properties:
+        timestamp:
+          $ref: '#/components/schemas/V2MetricDataPoint_timestamp'
+        value:
+          description: Metric value at this timestamp
+          example: 150
+          type: number
+      required:
+      - timestamp
+      - value
+      type: object
+    V2MetricDataPoint_timestamp:
+      description: Timestamp for this data point (format depends on timestamp_format parameter)
+      example: 2026-01-29 12:00:00+00:00
+      oneOf:
+      - description: ISO8601 timestamp
+        format: date-time
+        type: string
+      - description: Unix timestamp
+        type: integer
     V2MetricsResponse:
       example:
         data:
@@ -417,41 +452,6 @@ components:
       required:
       - data
       - meta
-      type: object
-    V2MetricDataPoint_timestamp:
-      description: Timestamp for this data point (format depends on timestamp_format parameter)
-      example: 2026-01-29 12:00:00+00:00
-      oneOf:
-      - description: ISO8601 timestamp
-        format: date-time
-        type: string
-      - description: Unix timestamp
-        type: integer
-    V2MetricData:
-      properties:
-        series:
-          description: Time series data points
-          items:
-            $ref: '#/components/schemas/V2MetricDataPoint'
-          type: array
-        period_total:
-          description: Total value for the period
-          example: 8523
-          type: number
-        all_time_total:
-          description: All-time total value
-          example: 1284567
-          type: number
-        period_average:
-          description: Average value per time unit in the period
-          example: 142.05
-          format: float
-          type: number
-      required:
-      - all_time_total
-      - period_average
-      - period_total
-      - series
       type: object
   securitySchemes:
     BearerAuth:

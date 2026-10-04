@@ -261,6 +261,44 @@ paths:
       - Domains
 components:
   schemas:
+    V2Domain_dns_go_live_records_inner:
+      properties:
+        type:
+          description: DNS record type (CNAME, A, or ALIAS)
+          example: CNAME
+          type: string
+        name:
+          description: DNS record name/host (@ for apex/root domains, subdomain name for subdomains)
+          example: www
+          type: string
+        value:
+          description: DNS record value (IP addresses for A records, domain name for CNAME/ALIAS)
+          example: cdn.example.com
+          type:
+          - string
+          - 'null'
+        description:
+          description: Human-readable instructions for configuring this DNS record
+          example: Add a CNAME record with the host set to your subdomain pointing to the CDN endpoint.
+          type: string
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
     V2Domain:
       example:
         dns_validation_records:
@@ -316,23 +354,6 @@ components:
       - domain
       - id
       type: object
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
-      properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
-      required:
-      - error
-      - message
-      type: object
     V2Domain_dns_validation_records_inner:
       properties:
         name:
@@ -358,27 +379,6 @@ components:
           type: string
       required:
       - domain
-      type: object
-    V2Domain_dns_go_live_records_inner:
-      properties:
-        type:
-          description: DNS record type (CNAME, A, or ALIAS)
-          example: CNAME
-          type: string
-        name:
-          description: DNS record name/host (@ for apex/root domains, subdomain name for subdomains)
-          example: www
-          type: string
-        value:
-          description: DNS record value (IP addresses for A records, domain name for CNAME/ALIAS)
-          example: cdn.example.com
-          type:
-          - string
-          - 'null'
-        description:
-          description: Human-readable instructions for configuring this DNS record
-          example: Add a CNAME record with the host set to your subdomain pointing to the CDN endpoint.
-          type: string
       type: object
   securitySchemes:
     BearerAuth:

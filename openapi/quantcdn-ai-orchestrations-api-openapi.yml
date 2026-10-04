@@ -451,45 +451,93 @@ paths:
       - AI Orchestrations
 components:
   schemas:
-    listOrchestrationBatches_200_response_batches_inner:
-      example:
-        completedAt: 2000-01-23 04:56:07+00:00
-        failedCount: 5
-        orchestrationId: orchestrationId
-        iteration: 0
-        startedAt: 2000-01-23 04:56:07+00:00
-        batchId: batchId
-        completedCount: 1
-        error: error
-        itemCount: 6
-        status: pending
+    createOrchestration_request_stopCondition:
       properties:
-        batchId:
-          type: string
-        orchestrationId:
-          type: string
-        iteration:
-          type: integer
-        itemCount:
-          type: integer
-        completedCount:
-          type: integer
-        failedCount:
-          type: integer
-        status:
+        type:
+          default: all_complete
           enum:
-          - pending
-          - running
-          - completed
-          - failed
+          - all_complete
+          - max_iterations
+          - condition
+          - manual
           type: string
-        startedAt:
-          format: date-time
+        maxIterations:
+          description: Max iterations (for type=max_iterations)
+          minimum: 1
+          type: integer
+        conditionPrompt:
+          description: AI prompt to evaluate stop (for type=condition)
           type: string
-        completedAt:
-          format: date-time
+      type: object
+    listOrchestrations_200_response:
+      example:
+        nextCursor: nextCursor
+        orchestrations:
+        - '{}'
+        - '{}'
+      properties:
+        orchestrations:
+          items:
+            type: object
+          type: array
+        nextCursor:
+          type:
+          - string
+          - 'null'
+      type: object
+    createOrchestration_request_inputSource:
+      properties:
+        type:
+          description: Input source type (api type not yet supported)
+          enum:
+          - static
+          - task_query
+          - generator
           type: string
-        error:
+        items:
+          description: Static items (for type=static)
+          items:
+            type: object
+          type: array
+        taskQuery:
+          description: Task query filters (for type=task_query)
+          type: object
+        generatorPrompt:
+          description: AI prompt (for type=generator)
+          type: string
+      required:
+      - type
+      type: object
+    listOrchestrationBatches_200_response:
+      example:
+        nextCursor: nextCursor
+        batches:
+        - completedAt: 2000-01-23 04:56:07+00:00
+          failedCount: 5
+          orchestrationId: orchestrationId
+          iteration: 0
+          startedAt: 2000-01-23 04:56:07+00:00
+          batchId: batchId
+          completedCount: 1
+          error: error
+          itemCount: 6
+          status: pending
+        - completedAt: 2000-01-23 04:56:07+00:00
+          failedCount: 5
+          orchestrationId: orchestrationId
+          iteration: 0
+          startedAt: 2000-01-23 04:56:07+00:00
+          batchId: batchId
+          completedCount: 1
+          error: error
+          itemCount: 6
+          status: pending
+      properties:
+        batches:
+          items:
+            $ref: '#/components/schemas/listOrchestrationBatches_200_response_batches_inner'
+          type: array
+        nextCursor:
           type:
           - string
           - 'null'
@@ -554,96 +602,48 @@ components:
       - inputSource
       - name
       type: object
-    listOrchestrationBatches_200_response:
+    listOrchestrationBatches_200_response_batches_inner:
       example:
-        nextCursor: nextCursor
-        batches:
-        - completedAt: 2000-01-23 04:56:07+00:00
-          failedCount: 5
-          orchestrationId: orchestrationId
-          iteration: 0
-          startedAt: 2000-01-23 04:56:07+00:00
-          batchId: batchId
-          completedCount: 1
-          error: error
-          itemCount: 6
-          status: pending
-        - completedAt: 2000-01-23 04:56:07+00:00
-          failedCount: 5
-          orchestrationId: orchestrationId
-          iteration: 0
-          startedAt: 2000-01-23 04:56:07+00:00
-          batchId: batchId
-          completedCount: 1
-          error: error
-          itemCount: 6
-          status: pending
+        completedAt: 2000-01-23 04:56:07+00:00
+        failedCount: 5
+        orchestrationId: orchestrationId
+        iteration: 0
+        startedAt: 2000-01-23 04:56:07+00:00
+        batchId: batchId
+        completedCount: 1
+        error: error
+        itemCount: 6
+        status: pending
       properties:
-        batches:
-          items:
-            $ref: '#/components/schemas/listOrchestrationBatches_200_response_batches_inner'
-          type: array
-        nextCursor:
-          type:
-          - string
-          - 'null'
-      type: object
-    listOrchestrations_200_response:
-      example:
-        nextCursor: nextCursor
-        orchestrations:
-        - '{}'
-        - '{}'
-      properties:
-        orchestrations:
-          items:
-            type: object
-          type: array
-        nextCursor:
-          type:
-          - string
-          - 'null'
-      type: object
-    createOrchestration_request_inputSource:
-      properties:
-        type:
-          description: Input source type (api type not yet supported)
-          enum:
-          - static
-          - task_query
-          - generator
+        batchId:
           type: string
-        items:
-          description: Static items (for type=static)
-          items:
-            type: object
-          type: array
-        taskQuery:
-          description: Task query filters (for type=task_query)
-          type: object
-        generatorPrompt:
-          description: AI prompt (for type=generator)
+        orchestrationId:
           type: string
-      required:
-      - type
-      type: object
-    createOrchestration_request_stopCondition:
-      properties:
-        type:
-          default: all_complete
-          enum:
-          - all_complete
-          - max_iterations
-          - condition
-          - manual
-          type: string
-        maxIterations:
-          description: Max iterations (for type=max_iterations)
-          minimum: 1
+        iteration:
           type: integer
-        conditionPrompt:
-          description: AI prompt to evaluate stop (for type=condition)
+        itemCount:
+          type: integer
+        completedCount:
+          type: integer
+        failedCount:
+          type: integer
+        status:
+          enum:
+          - pending
+          - running
+          - completed
+          - failed
           type: string
+        startedAt:
+          format: date-time
+          type: string
+        completedAt:
+          format: date-time
+          type: string
+        error:
+          type:
+          - string
+          - 'null'
       type: object
   securitySchemes:
     BearerAuth:

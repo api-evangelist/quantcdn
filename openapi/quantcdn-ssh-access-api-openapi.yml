@@ -63,6 +63,23 @@ paths:
       - SSH Access
 components:
   schemas:
+    getSshAccessCredentials_200_response_credentials:
+      example:
+        accessKeyId: accessKeyId
+        secretAccessKey: secretAccessKey
+        sessionToken: sessionToken
+        expiration: 2000-01-23 04:56:07+00:00
+      properties:
+        accessKeyId:
+          type: string
+        secretAccessKey:
+          type: string
+        sessionToken:
+          type: string
+        expiration:
+          format: date-time
+          type: string
+      type: object
     getSshAccessCredentials_200_response:
       example:
         expiresIn: 0
@@ -100,23 +117,6 @@ components:
         expiresIn:
           type: integer
         organizationScope:
-          type: string
-      type: object
-    getSshAccessCredentials_200_response_credentials:
-      example:
-        accessKeyId: accessKeyId
-        secretAccessKey: secretAccessKey
-        sessionToken: sessionToken
-        expiration: 2000-01-23 04:56:07+00:00
-      properties:
-        accessKeyId:
-          type: string
-        secretAccessKey:
-          type: string
-        sessionToken:
-          type: string
-        expiration:
-          format: date-time
           type: string
       type: object
   securitySchemes:

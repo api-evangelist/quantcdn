@@ -120,6 +120,30 @@ paths:
       - AI Models
 components:
   schemas:
+    listAIModels_200_response_models_inner:
+      example:
+        capabilities:
+          embeddings: true
+          streaming: true
+          toolUse: true
+          multimodal: true
+          text: true
+        provider: Amazon
+        name: Amazon Nova Lite
+        id: amazon.nova-lite-v1:0
+      properties:
+        id:
+          example: amazon.nova-lite-v1:0
+          type: string
+        name:
+          example: Amazon Nova Lite
+          type: string
+        provider:
+          example: Amazon
+          type: string
+        capabilities:
+          $ref: '#/components/schemas/listAIModels_200_response_models_inner_capabilities'
+      type: object
     getAIModel_200_response_pricing:
       example:
         outputPerMToken: 0.24
@@ -137,6 +161,30 @@ components:
         currency:
           example: USD
           type: string
+      type: object
+    getAIModel_200_response_capabilities:
+      example:
+        supportsStructuredOutput: false
+        supportsMultimodal: true
+        supportsVision: true
+        supportsStreaming: true
+        supportsTools: false
+      properties:
+        supportsTools:
+          example: false
+          type: boolean
+        supportsStructuredOutput:
+          example: false
+          type: boolean
+        supportsMultimodal:
+          example: true
+          type: boolean
+        supportsVision:
+          example: true
+          type: boolean
+        supportsStreaming:
+          example: true
+          type: boolean
       type: object
     listAIModels_200_response_models_inner_capabilities:
       description: Model capabilities and features
@@ -162,42 +210,6 @@ components:
         toolUse:
           description: Supports function calling
           type: boolean
-      type: object
-    listAIModels_200_response_models_inner:
-      example:
-        capabilities:
-          embeddings: true
-          streaming: true
-          toolUse: true
-          multimodal: true
-          text: true
-        provider: Amazon
-        name: Amazon Nova Lite
-        id: amazon.nova-lite-v1:0
-      properties:
-        id:
-          example: amazon.nova-lite-v1:0
-          type: string
-        name:
-          example: Amazon Nova Lite
-          type: string
-        provider:
-          example: Amazon
-          type: string
-        capabilities:
-          $ref: '#/components/schemas/listAIModels_200_response_models_inner_capabilities'
-      type: object
-    getAIModel_404_response:
-      example:
-        code: MODEL_NOT_FOUND
-        message: Model not found
-      properties:
-        message:
-          example: Model not found
-          type: string
-        code:
-          example: MODEL_NOT_FOUND
-          type: string
       type: object
     getAIModel_200_response:
       example:
@@ -254,6 +266,18 @@ components:
           example: true
           type: boolean
       type: object
+    getAIModel_404_response:
+      example:
+        code: MODEL_NOT_FOUND
+        message: Model not found
+      properties:
+        message:
+          example: Model not found
+          type: string
+        code:
+          example: MODEL_NOT_FOUND
+          type: string
+      type: object
     listAIModels_200_response:
       example:
         models:
@@ -284,30 +308,6 @@ components:
           items:
             $ref: '#/components/schemas/listAIModels_200_response_models_inner'
           type: array
-      type: object
-    getAIModel_200_response_capabilities:
-      example:
-        supportsStructuredOutput: false
-        supportsMultimodal: true
-        supportsVision: true
-        supportsStreaming: true
-        supportsTools: false
-      properties:
-        supportsTools:
-          example: false
-          type: boolean
-        supportsStructuredOutput:
-          example: false
-          type: boolean
-        supportsMultimodal:
-          example: true
-          type: boolean
-        supportsVision:
-          example: true
-          type: boolean
-        supportsStreaming:
-          example: true
-          type: boolean
       type: object
   securitySchemes:
     BearerAuth:

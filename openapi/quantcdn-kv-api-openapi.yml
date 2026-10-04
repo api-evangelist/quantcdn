@@ -666,6 +666,66 @@ paths:
       - KV
 components:
   schemas:
+    KV_link_to_project_200_response:
+      example:
+        success: true
+        message: message
+      properties:
+        success:
+          example: true
+          type: boolean
+        message:
+          type: string
+      type: object
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
+    V2Store:
+      example:
+        name: session-data
+        id: kv-store-123
+      properties:
+        id:
+          description: Store ID
+          example: kv-store-123
+          type: string
+        name:
+          description: Store name
+          example: session-data
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    KV_items_create_200_response:
+      example:
+        success: true
+        value: value
+        key: user-session-123
+      properties:
+        success:
+          example: true
+          type: boolean
+        key:
+          example: user-session-123
+          type: string
+        value:
+          type: string
+      type: object
     V2StoreItemUpdateRequest:
       example:
         secret: true
@@ -691,62 +751,6 @@ components:
         value:
           $ref: '#/components/schemas/KV_items_show_200_response_value'
       type: object
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
-      properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
-      required:
-      - error
-      - message
-      type: object
-    KV_link_to_project_200_response:
-      example:
-        success: true
-        message: message
-      properties:
-        success:
-          example: true
-          type: boolean
-        message:
-          type: string
-      type: object
-    V2StoreRequest:
-      example:
-        name: session-data
-      properties:
-        name:
-          description: Store name
-          example: session-data
-          type: string
-      required:
-      - name
-      type: object
-    V2Store:
-      example:
-        name: session-data
-        id: kv-store-123
-      properties:
-        id:
-          description: Store ID
-          example: kv-store-123
-          type: string
-        name:
-          description: Store name
-          example: session-data
-          type: string
-      required:
-      - id
-      - name
-      type: object
     KV_link_to_project_request:
       properties:
         project_id:
@@ -754,18 +758,6 @@ components:
           type: integer
       required:
       - project_id
-      type: object
-    KV_items_delete_200_response:
-      example:
-        success: true
-        key: user-session-123
-      properties:
-        success:
-          example: true
-          type: boolean
-        key:
-          example: user-session-123
-          type: string
       type: object
     V2StoreItemRequest:
       example:
@@ -788,10 +780,14 @@ components:
       - key
       - value
       type: object
-    KV_items_create_200_response:
+    KV_items_show_200_response_value:
+      description: Item value (decoded from JSON if applicable). Returns '[ENCRYPTED]' for secret items.
+      oneOf:
+      - type: string
+      - type: object
+    KV_items_delete_200_response:
       example:
         success: true
-        value: value
         key: user-session-123
       properties:
         success:
@@ -800,14 +796,7 @@ components:
         key:
           example: user-session-123
           type: string
-        value:
-          type: string
       type: object
-    KV_items_show_200_response_value:
-      description: Item value (decoded from JSON if applicable). Returns '[ENCRYPTED]' for secret items.
-      oneOf:
-      - type: string
-      - type: object
     V2StoreItemsListResponse:
       example:
         next_cursor: next-page-token
@@ -826,6 +815,17 @@ components:
           type:
           - string
           - 'null'
+      type: object
+    V2StoreRequest:
+      example:
+        name: session-data
+      properties:
+        name:
+          description: Store name
+          example: session-data
+          type: string
+      required:
+      - name
       type: object
   securitySchemes:
     BearerAuth:

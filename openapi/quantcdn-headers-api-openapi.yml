@@ -160,23 +160,6 @@ paths:
       - Headers
 components:
   schemas:
-    V2CustomHeaderRequest:
-      example:
-        headers:
-          X-Custom-Header: value
-          Cache-Control: max-age=3600
-      properties:
-        headers:
-          additionalProperties:
-            type: string
-          description: Custom headers
-          example:
-            X-Custom-Header: value
-            Cache-Control: max-age=3600
-          type: object
-      required:
-      - headers
-      type: object
     V2Error:
       example:
         message: The requested resource was not found
@@ -201,6 +184,23 @@ components:
       example:
         X-Custom-Header: value
         Cache-Control: max-age=3600
+      type: object
+    V2CustomHeaderRequest:
+      example:
+        headers:
+          X-Custom-Header: value
+          Cache-Control: max-age=3600
+      properties:
+        headers:
+          additionalProperties:
+            type: string
+          description: Custom headers
+          example:
+            X-Custom-Header: value
+            Cache-Control: max-age=3600
+          type: object
+      required:
+      - headers
       type: object
   securitySchemes:
     BearerAuth:

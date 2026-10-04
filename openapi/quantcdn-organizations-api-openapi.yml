@@ -84,6 +84,23 @@ paths:
       - Organizations
 components:
   schemas:
+    V2Error:
+      example:
+        message: The requested resource was not found
+        error: true
+      properties:
+        message:
+          description: Error message
+          example: The requested resource was not found
+          type: string
+        error:
+          description: Error flag
+          example: true
+          type: boolean
+      required:
+      - error
+      - message
+      type: object
     V2Organization:
       example:
         name: Test Organization
@@ -127,23 +144,6 @@ components:
       required:
       - machine_name
       - name
-      type: object
-    V2Error:
-      example:
-        message: The requested resource was not found
-        error: true
-      properties:
-        message:
-          description: Error message
-          example: The requested resource was not found
-          type: string
-        error:
-          description: Error flag
-          example: true
-          type: boolean
-      required:
-      - error
-      - message
       type: object
     Organizations_list_200_response_inner:
       example:
