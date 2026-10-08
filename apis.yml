@@ -982,6 +982,8 @@ apis:
   - type: SDKs
     url: https://github.com/quantcdn/quant-admin-go
 common:
+  - type: FinOps
+    url: finops/quantcdn-finops.yml
   - type: RateLimits
     url: rate-limits/quantcdn-rate-limits.yml
   - type: Pricing
