@@ -72,3 +72,71 @@ plans:
   price_text: Lifetime free hosting for open source projects
   period: none
   included_quota: static hosting, forms, and search
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - compute
+  plans:
+  - name: Standard
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Teams
+    access: other
+    model: hybrid
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: Enterprise
+    access: other
+    model: subscription
+    model_how: derived
+    units: []
+    periods:
+    - month
+  - name: QuantGov Cloud
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
+  - name: Cloud Applications Small
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Cloud Applications Medium
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Cloud Applications Large
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - month
+  - name: Free for Open Source
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods:
+    - none
